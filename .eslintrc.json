@@ -1,5 +1,30 @@
 {
-  "extends": ["next", "plugin:prettier/recommended"],
+  "root": true,
+  "parser": "@typescript-eslint/parser", //코드 분석에 사용할 파서 지정
+  "plugins": [
+    "@typescript-eslint", //TypeScript를 지원하는 ESLint 플러그인
+    "prettier", //Prettier와 ESLint를 함께 사용할 때 유용한 플러그인
+    "next"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "env": {
+    "browser": true, // 브라우저 환경 전역 변수 활성화
+    "node": true, // Node.js 환경 전역 변수 활성화
+    "es6": true, // ES6 환경 전역 변수 활성화
+    "jest": true // Jest 환경 전역 변수 활성화
+  },
+  "extends": [
+    "airbnb", //Airbnb의 JavaScript 스타일 가이드를 기반으로 한 ESLint 설정
+    "airbnb-typescript", //Airbnb 스타일 가이드에 TypeScript 관련 규칙을 추가한 설정
+    "airbnb/hooks", // React Hooks 관련 규칙을 추가한 Airbnb 설정
+    "next/core-web-vitals", // Next.js 프로젝트에서 권장되는 기본 ESLint 설정
+    "plugin:@typescript-eslint/recommended", // ts 권장
+    "plugin:react-hooks/recommended", //React Hooks 사용 시 유용한 규칙
+    "prettier" // prettier와 중복된 eslint 규칙 제거
+  ],
+
   "rules": {
     "react/react-in-jsx-scope": "off",
     "prettier/prettier": [
