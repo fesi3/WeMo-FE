@@ -1,0 +1,80 @@
+name: WeMo CI
+on:
+  push:
+    branches:
+      - dev
+      - "feat/**"
+jobs:
+  run-test-and-build:
+    name: Run Test and Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Codes
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js and Cache Dependencies
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: yarn
+
+      - name: Cache node_modules
+      - uses: actions/cache@v4
+        id: yarn-cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+
+      - name: Cache Next.js build
+        uses: actions/cache@v4
+        with:
+          path: .next
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/next.config.js', '**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-
+
+      - if: steps.yarn-cache.outputs.cache-hit == 'true'
+        run: echo 'yarn-cache hit!'
+
+      - if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: echo 'yarn-cache missed!'
+
+      - name: Install Dependencies
+        run: yarn ci
+
+      - name: Run Test
+        run: yarn run test
+
+      - name: Run Build
+        run: yarn run build
+
+    create-pr:
+      name: Create PR
+      runs-on: ubuntu-latest
+      needs: run-test-and-build
+      steps:
+        - name: Get Codes
+          uses: actions/checkout@v4
+
+        - name: Create PR
+          if: startsWith(github.ref, 'refs/heads/feat/') || github.ref == 'refs/heads/dev'
+          uses: peter-evans/create-pull-request@v7
+         with:
+           title: |
+             ${{ 
+               startsWith(github.ref, 'refs/heads/feature/') && 
+               format('chore: create PR for {0}', github.ref_name.split('/')[1]) || 
+               'chore: create PR from dev branch' 
+             }}
+           body: |
+             ${{ 
+               startsWith(github.ref, 'refs/heads/feature/') && 
+               format('This PR merges the feature branch "{0}" into dev.', github.ref_name.split('/')[1]) || 
+               'This PR merges the dev branch into main.'
+             }}
+            base: ${{ github.ref_name == 'dev' && 'main' || 'dev' }}
+            branch: ${{ github.ref_name }}
+            token: ${{ secrets.ACCESS_TOKEN_FOR_WEMO_CI }}
+      
