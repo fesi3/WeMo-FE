@@ -64,15 +64,15 @@ jobs:
         with:
           title: |
             ${{ 
-              startsWith(github.ref, 'refs/heads/feature/') && 
-              format('chore: create PR for {0}', github.ref_name.split('/')[1]) || 
+              startsWith(github.ref, 'refs/heads/feat/') && 
+              'chore: create PR for feature branch' || 
               'chore: create PR from dev branch' 
             }}
           body: |
             ${{ 
-              startsWith(github.ref, 'refs/heads/feature/') && 
-              format('This PR merges the feature branch "{0}" into dev.', github.ref_name.split('/')[1]) || 
-              'This PR merges the dev branch into main.'
+              startsWith(github.ref, 'refs/heads/feat/') && 
+              'This PR merges the feature branch into dev.' || 
+              'This PR merges the dev branch into main.' 
             }}
           base: ${{ github.ref_name == 'dev' && 'main' || 'dev' }}
           branch: ${{ github.ref_name }}
