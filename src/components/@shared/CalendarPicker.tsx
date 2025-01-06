@@ -7,11 +7,17 @@ interface CalendarPickerProps {
   onChange?: (date: Date) => void;
   /** 달력을 감싸는 최상단 css */
   className?: string;
+  locale?: string;
+  minDate?: Date;
+  maxDate?: Date;
 }
 
 const CalendarPicker: React.FC<CalendarPickerProps> = ({
   onChange,
   className = 'bg-white rounded p-4 shadow',
+  locale = 'ko-KR',
+  minDate, //={new Date('2025-01-01')},
+  maxDate,
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
@@ -23,9 +29,13 @@ const CalendarPicker: React.FC<CalendarPickerProps> = ({
   return (
     <div className={className}>
       <Calendar
+        prevLabel="◀"
+        nextLabel="▶"
         onChange={(value) => handleChange(value as Date)}
         value={selectedDate}
-        locale="ko-KR"
+        locale={locale}
+        minDate={minDate}
+        maxDate={maxDate}
       />
     </div>
   );
