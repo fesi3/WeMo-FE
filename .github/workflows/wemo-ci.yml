@@ -42,7 +42,7 @@ jobs:
         run: echo 'yarn-cache missed!'
 
       - name: Install Dependencies
-        run: yarn ci
+        run: yarn install --frozen-lockfile
 
       - name: Run Test
         run: yarn run test
