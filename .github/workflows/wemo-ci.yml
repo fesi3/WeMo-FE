@@ -51,9 +51,9 @@ jobs:
         run: yarn run build
 
     create-pr:
+      needs: run-test-and-build
       name: Create PR
       runs-on: ubuntu-latest
-      needs: run-test-and-build
       steps:
         - name: Get Codes
           uses: actions/checkout@v4
