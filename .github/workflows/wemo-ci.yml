@@ -62,29 +62,24 @@ jobs:
           title: |
             ${{ 
               startsWith(github.ref, 'refs/heads/feat/') && 
-              'feature 브랜치 작업으로 자동 생성된 PR 입니다.' || 
-              'dev 브랜치 작업으로 자동 생성된 PR 입니다.' 
+              '[feature] feature 브랜치 작업으로 자동 생성된 PR (제목을 편집해주세요!)' || 
+              '[dev] dev 브랜치 작업으로 자동 생성된 PR (제목을 편집해주세요!)' 
             }}
 
-          body: |
-            ## 🛠 Merge Details
-            - **Source Branch**: `{{ github.head_ref }}`
-            - **Target Branch**: `{{ github.base_ref }}`
-            - This PR merges the feature branch into the development branch if it's from `feat/*` or merges `dev` into `main`.
+          body: |         
+            ## 📝 작업 내용
+            <!-- 이 PR에 포함된 작업 내용을 설명하세요. 주요 변경 사항, 버그 수정 또는 구현된 기능을 포함해주세요. -->
           
-            ## 📝 Work Content
-            <!-- Describe the specific work included in this PR. Include key changes, bug fixes, or features implemented. -->
+            ## 📸 스크린샷 (선택)
+            <!-- 공유하고 싶은 사진이 있다면 올려주세요! -->
           
-            ## 📸 Screenshot (Optional)
-            <!-- If you have screenshots to showcase your changes, add them here. -->
+            ## ✅ 리뷰 요구사항 (선택)
+            - 확인해주세요!:
+              - [ ] 요구사항1
+              - [ ] 요구사항2
+              - [ ] 요구사항3
           
-            ## ✅ Review Requirements
-            - Please verify:
-              1. Code quality and adherence to standards.
-              2. No breaking changes introduced.
-              3. Tests, if applicable, have been updated or added.
-          
-            > <!-- Additional notes for the reviewer -->
+            > <!-- 리뷰어가 확인했으면 하는 내용을 중점으로 작성해주세요. -->
 
 
           base: ${{ github.ref == 'dev' && 'main' || 'dev' }}
