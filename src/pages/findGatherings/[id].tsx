@@ -1,1 +1,3 @@
-// This file is used to keep the directory tracked in Git
+export default function FindGatherings() {
+  return <div>FindGatherings</div>;
+}

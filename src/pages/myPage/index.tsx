@@ -1,1 +1,3 @@
-// This file is used to keep the directory tracked in Git
+export default function MyPage() {
+  return <div>MyPage</div>;
+}
