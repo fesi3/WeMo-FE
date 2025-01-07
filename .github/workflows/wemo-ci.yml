@@ -4,6 +4,9 @@ on:
     branches:
       - dev
       - "feat/**"
+
+env:
+  NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
 jobs:
   run-test-and-build:
     name: Run Test and Build
