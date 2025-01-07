@@ -15,12 +15,6 @@ jobs:
       - name: Get Codes
         uses: actions/checkout@v4
 
-      - name: Setup Node.js and Cache Dependencies
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
-          cache: yarn
-
       - name: Cache node_modules
         uses: actions/cache@v4
         id: yarn-cache
@@ -68,15 +62,31 @@ jobs:
           title: |
             ${{ 
               startsWith(github.ref, 'refs/heads/feat/') && 
-              'chore: create PR for feature branch' || 
-              'chore: create PR from dev branch' 
+              'feature 브랜치 작업으로 자동 생성된 PR 입니다.' || 
+              'dev 브랜치 작업으로 자동 생성된 PR 입니다.' 
             }}
+
           body: |
-            ${{ 
-              startsWith(github.ref, 'refs/heads/feat/') && 
-              'This PR merges the feature branch into dev.' || 
-              'This PR merges the dev branch into main.' 
-            }}
+            ## 🛠 Merge Details
+            - **Source Branch**: `{{ github.head_ref }}`
+            - **Target Branch**: `{{ github.base_ref }}`
+            - This PR merges the feature branch into the development branch if it's from `feat/*` or merges `dev` into `main`.
+          
+            ## 📝 Work Content
+            <!-- Describe the specific work included in this PR. Include key changes, bug fixes, or features implemented. -->
+          
+            ## 📸 Screenshot (Optional)
+            <!-- If you have screenshots to showcase your changes, add them here. -->
+          
+            ## ✅ Review Requirements
+            - Please verify:
+              1. Code quality and adherence to standards.
+              2. No breaking changes introduced.
+              3. Tests, if applicable, have been updated or added.
+          
+            > <!-- Additional notes for the reviewer -->
+
+
           base: ${{ github.ref == 'dev' && 'main' || 'dev' }}
           branch: ${{ github.ref }}
           token: ${{ secrets.ACCESS_TOKEN_FOR_CI }}
