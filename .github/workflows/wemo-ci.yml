@@ -77,6 +77,6 @@ jobs:
               'This PR merges the feature branch into dev.' || 
               'This PR merges the dev branch into main.' 
             }}
-          base: ${{ github.ref_name == 'dev' && 'main' || 'dev' }}
-          branch: ${{ github.ref_name }}
+          base: ${{ github.ref == 'dev' && 'main' || 'dev' }}
+          branch: ${{ github.ref }}
           token: ${{ secrets.ACCESS_TOKEN_FOR_CI }}
