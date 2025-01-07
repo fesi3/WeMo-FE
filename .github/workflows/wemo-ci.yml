@@ -1,0 +1,87 @@
+name: WeMo CI
+on:
+  push:
+    branches:
+      - dev
+      - "feat/**"
+
+env:
+  NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+jobs:
+  run-test-and-build:
+    name: Run Test and Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Codes
+        uses: actions/checkout@v4
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        id: yarn-cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+
+      - name: Cache Next.js build
+        uses: actions/cache@v4
+        with:
+          path: .next
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/next.config.js', '**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-
+
+      - if: steps.yarn-cache.outputs.cache-hit == 'true'
+        run: echo 'yarn-cache hit!'
+
+      - if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: echo 'yarn-cache missed!'
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      # - name: Run Test
+      #   run: yarn run test
+
+      - name: Run Build
+        run: yarn run build
+
+  create-pr:
+    needs: run-test-and-build
+    name: Create PR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Codes
+        uses: actions/checkout@v4
+
+      - name: Create PR
+        if: startsWith(github.ref, 'refs/heads/feat/') || github.ref == 'refs/heads/dev'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          title: |
+            ${{ 
+              startsWith(github.ref, 'refs/heads/feat/') && 
+              '[feature] feature 브랜치 작업으로 자동 생성된 PR (제목을 편집해주세요!)' || 
+              '[dev] dev 브랜치 작업으로 자동 생성된 PR (제목을 편집해주세요!)' 
+            }}
+
+          body: |         
+            ## 📝 작업 내용
+            <!-- 이 PR에 포함된 작업 내용을 설명하세요. 주요 변경 사항, 버그 수정 또는 구현된 기능을 포함해주세요. -->
+          
+            ## 📸 스크린샷 (선택)
+            <!-- 공유하고 싶은 사진이 있다면 올려주세요! -->
+          
+            ## ✅ 리뷰 요구사항 (선택)
+            - 확인해주세요!:
+              - [ ] 요구사항1
+              - [ ] 요구사항2
+              - [ ] 요구사항3
+          
+            > <!-- 리뷰어가 확인했으면 하는 내용을 중점으로 작성해주세요. -->
+
+
+          base: ${{ github.ref == 'dev' && 'main' || 'dev' }}
+          branch: ${{ github.ref }}
+          token: ${{ secrets.ACCESS_TOKEN_FOR_CI }}
