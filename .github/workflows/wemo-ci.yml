@@ -79,4 +79,4 @@ jobs:
             }}
           base: ${{ github.ref_name == 'dev' && 'main' || 'dev' }}
           branch: ${{ github.ref_name }}
-          token: ${{ secrets.ACCESS_TOKEN_FOR_WEMO_CI }}
+          token: ${{ secrets.ACCESS_TOKEN_FOR_CI }}
