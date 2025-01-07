@@ -1,5 +1,6 @@
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 import ModalPortal from './ModalPortal';
+import ModalBackDrop from './ModalBackDrop';
 
 interface ModalFrameProps {
   onClose: () => void;
@@ -13,12 +14,25 @@ export default function ModalFrame({
   isOpen,
   title,
 }: PropsWithChildren<ModalFrameProps>) {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   return (
     isOpen && (
       <ModalPortal>
-        <div className="flex flex-col absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-black w-full max-w-screen-md p-6">
+        <ModalBackDrop />
+        <div className="flex flex-col fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-black w-full max-w-screen-md p-6">
           <div className="flex justify-end pb-10">
-            {title ? <span className="grow">title</span> : null}
+            {title ? <span className="grow">{title}</span> : null}
             <button onClick={onClose}>닫기버튼</button>
           </div>
           <div className="w-full h-full">{children}</div>
