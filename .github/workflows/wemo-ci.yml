@@ -63,7 +63,6 @@ jobs:
         if: startsWith(github.ref, 'refs/heads/feature/') || github.ref == 'refs/heads/dev'
         uses: peter-evans/create-pull-request@v7
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           title: |
             ${{ 
               startsWith(github.ref, 'refs/heads/feature/') && 
@@ -89,3 +88,4 @@ jobs:
 
           base: ${{ github.ref == 'dev' && 'main' || 'dev' }}
           branch: ${{ github.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
