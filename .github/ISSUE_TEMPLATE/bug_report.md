@@ -1,10 +1,9 @@
 ---
 name: Bug report
 about: 버그를 보고하고 추적하기 위한 이슈입니다.
-title: "[BUG]"
+title: '[BUG]'
 labels: ''
 assignees: ''
-
 ---
 
 ## ✏️ 버그 내용 요약
