@@ -51,6 +51,9 @@ jobs:
     needs: run-test-and-build
     name: Create PR
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: Get Codes
         uses: actions/checkout@v4
@@ -84,4 +87,4 @@ jobs:
 
           base: ${{ github.ref == 'dev' && 'main' || 'dev' }}
           branch: ${{ github.ref }}
-          token: ${{ secrets.ACCESS_TOKEN_FOR_CI }}
+          token: ${{ secrets.GITHUB_TOKEN }}
