@@ -84,4 +84,4 @@ jobs:
 
           base: ${{ github.ref == 'dev' && 'main' || 'dev' }}
           branch: ${{ github.ref }}
-          token: ${{ secrets.ACCESS_TOKEN_FOR_CI }}
+          token: ${{ secrets.GITHUB_TOKEN }}
