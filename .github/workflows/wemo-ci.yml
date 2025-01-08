@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - dev
-      - "feat/**"
+      - "feature/**"
 
 env:
   NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
