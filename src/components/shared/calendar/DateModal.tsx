@@ -17,12 +17,16 @@ export default function DateModal() {
   // 달력에서 날짜를 선택했을 때 실행되는 함수
   const handleDateChange = (date: Date) => {
     setSelectedDate(date);
-    //추가 로직 여기서 처리
+    setIsModalOpen(false);
   };
+
+  const buttonText = selectedDate
+    ? selectedDate.toLocaleDateString() // or 원하는 포맷
+    : '날짜 전체';
 
   return (
     <div>
-      <button onClick={handleOpenModal}>날짜 전체</button>
+      <button onClick={handleOpenModal}>{buttonText}</button>
       <ModalFrame
         isOpen={isModalOpen}
         onClose={handleCloseModal}
