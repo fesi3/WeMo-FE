@@ -41,6 +41,7 @@ jobs:
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
 
+      # 테스트 코드 작성 후 주석 삭제 예정
       # - name: Run Test
       #   run: yarn run test
 
