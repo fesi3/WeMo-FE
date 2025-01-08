@@ -4,7 +4,7 @@
  */
 import React, { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
-import Card from '../../components/findGatherings/Card';
+import Card from '../../components/findGatherings/card/Card';
 
 type PlanData = {
   planId: number;
@@ -39,7 +39,7 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-wrap justify-center p-4">
+    <div className="flex min-h-screen flex-wrap justify-center bg-gray-100 p-4">
       {plans.map((plan) => (
         <Card
           key={plan.planId}
