@@ -56,12 +56,12 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create PR
-        if: startsWith(github.ref, 'refs/heads/feat/') || github.ref == 'refs/heads/dev'
+        if: startsWith(github.ref, 'refs/heads/feature/') || github.ref == 'refs/heads/dev'
         uses: peter-evans/create-pull-request@v7
         with:
           title: |
             ${{ 
-              startsWith(github.ref, 'refs/heads/feat/') && 
+              startsWith(github.ref, 'refs/heads/feature/') && 
               '[feature] feature 브랜치 작업으로 자동 생성된 PR (제목을 편집해주세요!)' || 
               '[dev] dev 브랜치 작업으로 자동 생성된 PR (제목을 편집해주세요!)' 
             }}
