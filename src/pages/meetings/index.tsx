@@ -1,3 +1,10 @@
+import React from 'react';
+import DateModal from '../../components/shared/calendar/DateModal';
+
 export default function Home() {
-  return <div> 초기 화면</div>;
+  return (
+    <div>
+      <DateModal />
+    </div>
+  );
 }

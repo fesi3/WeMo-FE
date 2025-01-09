@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css'; // 기본 스타일
+// import 'react-calendar/dist/Calendar.css'; // 기본 스타일
 
 interface CalendarPickerProps {
   onChange?: (date: Date) => void;
@@ -12,8 +12,6 @@ interface CalendarPickerProps {
 const CalendarPicker: React.FC<CalendarPickerProps> = ({
   onChange,
   locale = 'en-US',
-  minDate,
-  maxDate,
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
@@ -23,7 +21,7 @@ const CalendarPicker: React.FC<CalendarPickerProps> = ({
   };
 
   return (
-    <div className="react-calendar">
+    <div className="react-calendar mx-auto w-full max-w-md rounded-lg border bg-white p-4 text-center shadow-md">
       <Calendar
         prevLabel="◀"
         prev2Label={null}
@@ -32,8 +30,15 @@ const CalendarPicker: React.FC<CalendarPickerProps> = ({
         onChange={(value) => handleChange(value as Date)}
         value={selectedDate}
         locale={locale}
-        minDate={minDate}
-        maxDate={maxDate}
+        tileClassName={({ date, view }) =>
+          view === 'month'
+            ? `p-2 text-center ${
+                date.toDateString() === selectedDate.toDateString()
+                  ? 'bg-orange-500 text-white rounded-full font semibold'
+                  : 'hover:bg-orange-100'
+              }`
+            : 'text-gray-700 text-sm p-2 text-center rounded-lg transition-colors'
+        }
       />
     </div>
   );

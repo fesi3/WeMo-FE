@@ -24,10 +24,10 @@ export default function DateModal() {
       <Modal isOpen={isOpen} handleClose={handleClose} title="날짜 선택 모달">
         <div>
           <CalendarPicker onChange={handleDateChange} />
-          <p>
+          {/* <p>
             선택된 날짜:{' '}
             {selectedDate ? selectedDate.toLocaleDateString() : '없음'}
-          </p>
+          </p> */}
         </div>
       </Modal>
     </div>

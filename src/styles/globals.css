@@ -27,11 +27,6 @@ body {
 
 /* =============== react-calendar 글로벌 오버라이딩 =============== */
 
-/* 달력 최상단 컨테이너 */
-.react-calendar {
-  @apply bg-white p-4 rounded-lg shadow-md;
-}
-
 /* 달력 상단 네비게이션 부분 */
 .react-calendar__navigation {
   @apply flex items-center justify-between mb-3;
@@ -40,13 +35,11 @@ body {
 .react-calendar__navigation button {
   @apply text-gray-700 hover:text-black transition-colors px-2 py-1;
 }
-
-/* 월/년 표시 라벨 (예: May 2024) */
 .react-calendar__navigation__label {
   @apply text-lg text-gray-900 font-bold;
 }
 
-/* 요일 이름 영역 (Sun, Mon, Tue...) */
+/* 요일 이름 영역*/
 .react-calendar__month-view__weekdays,
 .react-calendar__month-view__weekdays__weekday abbr {
   @apply text-gray-500 font-medium;
@@ -54,23 +47,7 @@ body {
   text-transform: capitalize;
 }
 
-/* 날짜(일) 버튼 기본 스타일 */
-.react-calendar__tile {
-  @apply text-gray-700 text-sm p-2 text-center rounded-lg transition-colors;
-}
-
-/* 오늘 날짜 (예: .react-calendar__tile--now) 
-.react-calendar__tile--now {
-  @apply text-orange-500 font-semibold;
+/* 선택된 날짜 */
+/* .react-calendar__tile--active {
+  @apply bg-orange-500 text-white rounded-full font semibold;
 } */
-
-/* 선택된 날짜 (예: .react-calendar__tile--active)
-.react-calendar__tile--active {
-  @apply bg-orange-500 text-white rounded-lg;
-}
-
-.react-calendar__tile--active:enabled:hover,
-.react-calendar__tile--active:enabled:focus {
-  @apply bg-orange-500 text-white;
-}
- */
