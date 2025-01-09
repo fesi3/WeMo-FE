@@ -1,9 +1,5 @@
 import { useState } from 'react';
-
-interface CroppedImageType {
-  objectURL: string;
-  blobImg: Blob;
-}
+import { CroppedImageType } from '@/components/types/cropperType';
 
 /**
  *
