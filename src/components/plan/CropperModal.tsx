@@ -6,6 +6,7 @@ interface CropperModalProps {
   imageSrc: string;
   onCrop: (croppedImage: CroppedImageType) => void;
   handleClose: () => void;
+  round?: boolean;
 }
 
 interface CroppedImageType {
@@ -29,6 +30,7 @@ export default function CropperModal({
   imageSrc,
   onCrop,
   handleClose,
+  round = false,
 }: CropperModalProps) {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -52,7 +54,8 @@ export default function CropperModal({
           image={imageSrc}
           crop={crop}
           zoom={zoom}
-          aspect={5 / 3}
+          cropShape={round ? 'round' : 'rect'}
+          aspect={round ? 1 / 1 : 5 / 3}
           onCropChange={setCrop}
           onZoomChange={setZoom}
           showGrid={false}
