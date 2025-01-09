@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
-// import 'react-calendar/dist/Calendar.css'; // 기본 스타일
 
 interface CalendarPickerProps {
   onChange?: (date: Date) => void;
@@ -39,6 +38,7 @@ const CalendarPicker: React.FC<CalendarPickerProps> = ({
               }`
             : 'text-gray-700 text-sm p-2 text-center rounded-lg transition-colors'
         }
+        //선택된 날짜 효과 추후 추가
       />
     </div>
   );
