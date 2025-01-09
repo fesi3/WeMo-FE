@@ -30,7 +30,6 @@ export default function Login() {
           name="아이디"
           placeholder="아이디를 입력해 주세요."
         />
-        <Input placeholder="모임을 검색해 보세요!" />
         <InputWithLabel
           id="groupName"
           name="모임이름"
@@ -41,6 +40,7 @@ export default function Login() {
           name="모집정원"
           placeholder="모집 정원을 입력해 주세요."
         />
+        <Input id="search" placeholder="모임을 검색해 보세요!" />
       </div>
     </div>
   );
