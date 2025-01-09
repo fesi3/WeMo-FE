@@ -25,6 +25,7 @@ type Area = {
  * @param imageSrc createObjectURL을 사용해 string type으로 이미지를 넘겨주세요
  * @param onCrop useCropper 훅에서 연결해주세요
  * @param handleClose useToggle 훅에서 연결해주세요
+ * @param round true전달 시 이미지를 동그랗게 자릅니다.
  */
 export default function CropperModal({
   imageSrc,
