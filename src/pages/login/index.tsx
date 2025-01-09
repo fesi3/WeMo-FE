@@ -1,3 +1,14 @@
+import Input from '@/components/shared/input';
+
 export default function Login() {
-  return <div>Login</div>;
+  return (
+    <>
+      <Input />
+      <Input />
+      <Input />
+      <Input />
+      <Input />
+      <Input />
+    </>
+  );
 }

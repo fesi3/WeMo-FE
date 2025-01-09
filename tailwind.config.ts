@@ -12,6 +12,10 @@ export default {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
       },
+      spacing: {
+        'mobileInputHeight': '40px',
+        'tabletInputHeight': '44px',
+      }
     },
   },
   plugins: [],
