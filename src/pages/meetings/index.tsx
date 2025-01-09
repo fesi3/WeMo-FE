@@ -1,56 +1,127 @@
-/**
- * 카드 컴포넌트 확인하기 위해 메인페이지에 불러옴.
- * 실제로는 card-list 컴포넌트 만들어서 가져올 예정.
- */
-import React, { useEffect, useState } from 'react';
-import type { NextPage } from 'next';
-import Card from '../../components/findGatherings/card/Card';
+import React, { useState, useRef, useEffect } from 'react';
+import type { NextPage, GetServerSideProps } from 'next';
+import axios from 'axios';
+import CardList from '../../components/findGatherings/card/CardList';
 
-type PlanData = {
-  planId: number;
+//타입정의 폴더 추후 이동
+interface PlanData {
+  planId: string;
   planName: string;
   dateTime: string;
   registrationEnd: string;
-  content: string;
-};
+}
 
-const Home: NextPage = () => {
-  const [plans, setPlans] = useState<PlanData[]>([]);
+interface PlanListData {
+  planCount: number;
+  planList: PlanData[];
+  nextCursor: number;
+}
 
+interface PlanListResponse {
+  success: boolean;
+  message: string;
+  data: PlanListData;
+}
+
+interface HomeProps {
+  initialPlans: PlanData[];
+}
+
+const Home: NextPage<HomeProps> = ({ initialPlans }) => {
+  const [plans, setPlans] = useState<PlanData[]>(initialPlans);
+  const [page, setPage] = useState<number>(1);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
+
+  //로딩 트리거용 ref
+  const loaderRef = useRef<HTMLDivElement | null>(null);
+
+  //무한 스크롤 로직 (목데이터에서는 주석 처리)
   useEffect(() => {
-    // 예시 데이터, 실제로는 API 호출하여 데이터를 받아옴.
-    const sample = [
-      {
-        planId: 1,
-        planName: '달램핏 오피스 스트레칭',
-        dateTime: '2025-01-07T17:50:00',
-        registrationEnd: '2025-01-07T21:00:00',
-        content: '오피스에서 간단 스트레칭 모임',
+    const observer = new IntersectionObserver(
+      async (entries) => {
+        const target = entries[0];
+        if (target.isIntersecting && !isFetching) {
+          setIsFetching(true);
+          const nextPage = page + 1;
+          // 다음 페이지 호출
+          try {
+            const res = await axios.get<PlanListResponse>(
+              `https://677e23a294bde1c1252a8cc0.mockapi.io/plans?page=${nextPage}&limit=10`,
+            );
+            const newData = res.data;
+
+            // API 데이터 형태변환
+            const formatted = newData.data.planList.map((item: PlanData) => ({
+              planId: item.planId,
+              planName: item.planName || '제목없음',
+              dateTime: item.dateTime || '',
+              registrationEnd: item.registrationEnd || '',
+            }));
+
+            // 이전 plans + 신규 plans 합치기
+            setPlans((prev) => [...prev, ...formatted]);
+            setPage(nextPage);
+          } catch (error) {
+            console.error('추가 데이터 로딩 실패:', error);
+          } finally {
+            setIsFetching(false);
+          }
+        }
       },
       {
-        planId: 2,
-        planName: '코딩딩 오프라인 모임',
-        dateTime: '2025-01-15T17:00:00',
-        registrationEnd: '2025-01-15T21:00:00',
-        content: '코딩 및 네트워킹',
+        threshold: 0.1,
       },
-    ];
-    setPlans(sample);
-  }, []);
+    );
+
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [page, isFetching]);
 
   return (
-    <div className="flex min-h-screen flex-wrap justify-center bg-gray-100 p-4">
-      {plans.map((plan) => (
-        <Card
-          key={plan.planId}
-          title={plan.planName}
-          dateTime={plan.dateTime}
-          registrationEnd={plan.registrationEnd}
-          content={plan.content}
-        />
-      ))}
+    <div>
+      <CardList plans={plans} />
+      <div ref={loaderRef} className="h-px"></div>
     </div>
   );
+};
+
+// SSR로 초기 10개 목록
+export const getServerSideProps: GetServerSideProps = async () => {
+  try {
+    const res = await axios.get<PlanListResponse>(
+      'https://677e23a294bde1c1252a8cc0.mockapi.io/plans',
+    );
+    const data = res.data;
+    console.log('데이터 확인:', data);
+
+    // API 데이터 형태 변환
+    const initialPlans: PlanData[] = data.data.planList.map(
+      (item: PlanData) => ({
+        planId: item.planId,
+        planName: item.planName,
+        dateTime: item.dateTime,
+        registrationEnd: item.registrationEnd,
+      }),
+    );
+
+    return {
+      props: {
+        initialPlans,
+      },
+    };
+  } catch (error) {
+    console.error('초기 데이터 로딩 실패:', error);
+    return {
+      props: {
+        initialPlans: [],
+      },
+    };
+  }
 };
 
 export default Home;
