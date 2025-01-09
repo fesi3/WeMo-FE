@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import type { NextPage, GetServerSideProps } from 'next';
 import axios from 'axios';
+import DateModal from '../../components/shared/calendar/DateModal';
 import CardList from '../../components/findGatherings/card/CardList';
 
 //타입정의 폴더 추후 이동
@@ -84,6 +85,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans }) => {
 
   return (
     <div>
+      <DateModal />
       <CardList plans={plans} />
       <div ref={loaderRef} className="h-px"></div>
     </div>
