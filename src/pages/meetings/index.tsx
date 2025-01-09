@@ -10,6 +10,13 @@ interface PlanData {
   planName: string;
   dateTime: string;
   registrationEnd: string;
+  meetingName: string;
+  province: string;
+  district: string;
+  participants: string;
+  capacity: string;
+  isOpened: boolean;
+  isLiked: boolean;
 }
 
 interface PlanListData {
@@ -53,10 +60,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans }) => {
 
             // API 데이터 형태변환
             const formatted = newData.data.planList.map((item: PlanData) => ({
-              planId: item.planId,
-              planName: item.planName || '제목없음',
-              dateTime: item.dateTime || '',
-              registrationEnd: item.registrationEnd || '',
+              ...item,
             }));
 
             // 이전 plans + 신규 plans 합치기
@@ -95,19 +99,16 @@ const Home: NextPage<HomeProps> = ({ initialPlans }) => {
 // SSR로 초기 10개 목록
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    const res = await axios.get<PlanListResponse>(
+    const res = await axios.get(
       'https://677e23a294bde1c1252a8cc0.mockapi.io/plans',
     );
     const data = res.data;
-    console.log('데이터 확인:', data);
+    console.log('데이터 확인:', data.data);
 
     // API 데이터 형태 변환
     const initialPlans: PlanData[] = data.data.planList.map(
       (item: PlanData) => ({
-        planId: item.planId,
-        planName: item.planName,
-        dateTime: item.dateTime,
-        registrationEnd: item.registrationEnd,
+        ...item,
       }),
     );
 

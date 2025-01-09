@@ -1,11 +1,19 @@
 import React from 'react';
 import Card from './Card';
 
+//타입 파일 따로 생성하면, 불러오도록 수정
 type PlanData = {
   planId: string;
   planName: string;
-  dateTime: string;
   registrationEnd: string;
+  dateTime: string;
+  meetingName: string;
+  province: string;
+  district: string;
+  participants: string;
+  capacity: string;
+  isOpened: boolean;
+  isLiked: boolean;
 };
 
 interface CardListProps {
@@ -21,6 +29,13 @@ const CardList: React.FC<CardListProps> = ({ plans }) => {
           title={plan.planName}
           dateTime={plan.dateTime}
           registrationEnd={plan.registrationEnd}
+          meetingName={plan.meetingName}
+          province={plan.province}
+          district={plan.district}
+          participants={plan.participants}
+          capacity={plan.capacity}
+          isOpened={plan.isOpened}
+          isLiked={plan.isLiked}
         />
       ))}
     </div>
