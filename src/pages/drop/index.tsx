@@ -1,94 +1,93 @@
 import React, { useState } from 'react';
-import Dropdown from '@/components/shared/DropDown';
+import useToggle from '@/hooks/useToggle'; // 상태 관리 훅
+import ReviewModal from '@/components/shared/modals/ReviewsModal';
+import Modal from '@/components/shared/modals/Modal'; // 모달 컴포넌트
 
-interface Option {
-  id: number;
-  name: string;
-  subOptions?: Option[];
-}
+export default function AllReviews() {
+  const [mode, setMode] = useState<'create' | 'edit'>('create'); // 작성/수정 구분 상태
+  const { toggleValue: isOpen, handleOpen, handleClose } = useToggle(); // useToggle 사용
+  const [selectedReview, setSelectedReview] = useState<
+    | {
+        score: number;
+        comment: string;
+      }
+    | undefined
+  >(undefined); // 수정 시 선택된 리뷰 데이터
 
-export default function Reviews() {
-  const options1 = [
-    { id: 1, name: '김민규' },
-    { id: 2, name: '김세환' },
-    { id: 3, name: '김선화' },
-  ];
-  const options: Option[] = [
-    {
-      id: 1,
-      name: '서울시',
-      subOptions: [
-        { id: 101, name: '양천구' },
-        { id: 102, name: '동대문구' },
-        { id: 103, name: '구로구' },
-      ],
-    },
-    {
-      id: 2,
-      name: '강릉시',
-      subOptions: [
-        { id: 201, name: '옥계면' },
-        { id: 202, name: '사천면' },
-      ],
-    },
-    {
-      id: 3,
-      name: '울산시',
-      subOptions: [
-        { id: 301, name: '남구' },
-        { id: 302, name: '중구' },
-      ],
-    },
-  ];
+  // 작성 모드로 모달 열기
+  const openCreateModal = () => {
+    setMode('create');
+    setSelectedReview(undefined); // 초기화
+    handleOpen();
+  };
 
-  const [selectedCity1, setSelectedCity1] = useState<Option | null>(null);
-  const [selectedCity, setSelectedCity] = useState<Option | null>(null);
-  const [selectedDistrict, setSelectedDistrict] = useState<Option | null>(null);
+  // 수정 모드로 모달 열기
+  const openEditModal = (review: { score: number; comment: string }) => {
+    setMode('edit');
+    setSelectedReview(review); // 수정할 리뷰 데이터 설정
+    handleOpen();
+  };
+
+  // 서버로 리뷰 데이터 전송하는 로직
+  const submitReviewToServer = async (data: {
+    score: number;
+    comment: string;
+  }) => {
+    try {
+      const method = mode === 'create' ? 'POST' : 'PUT';
+      const url =
+        mode === 'create' ? `/api/reviews/planId` : `/api/reviews/reviewId`;
+      const response = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) throw new Error('리뷰 전송 실패');
+      alert(
+        mode === 'create' ? '리뷰가 작성되었습니다!' : '리뷰가 수정되었습니다!',
+      );
+    } catch (error) {
+      console.error(error);
+      alert('리뷰 전송 중 오류가 발생했습니다.');
+    } finally {
+      handleClose();
+    }
+  };
 
   return (
     <div className="mx-auto max-w-lg p-6">
-      <h1 className="mb-4 text-2xl font-bold">Headless UI 드롭다운</h1>
-      <div className="mb-4">
-        <Dropdown
-          options={options1}
-          selectedOption={selectedCity1}
-          onSelect={(option1) => {
-            setSelectedCity1(option1);
-          }}
-          placeholder="이름 선택"
-        />
-      </div>
-
-      {/* 첫 번째 드롭다운 */}
-      <div className="flex">
-        <Dropdown
-          options={options}
-          selectedOption={selectedCity}
-          onSelect={(option) => {
-            setSelectedCity(option);
-            setSelectedDistrict(null); // 새로운 도시 선택 시 하위 옵션 초기화
-          }}
-          placeholder="도시 선택"
-        />
-
-        {/* 두 번째 드롭다운 */}
-        {selectedCity?.subOptions && (
-          <div className="ml-4 w-[8rem]">
-            <Dropdown
-              options={selectedCity.subOptions}
-              selectedOption={selectedDistrict}
-              onSelect={setSelectedDistrict}
-              placeholder="구/군 선택"
-            />
-          </div>
-        )}
-      </div>
-
-      <div className="mt-6">
-        <h2 className="text-lg font-semibold">선택 결과:</h2>
-        <p>도시: {selectedCity?.name || '없음'}</p>
-        <p>구/군: {selectedDistrict?.name || '없음'}</p>
-      </div>
+      <h1 className="mb-4 text-2xl font-bold text-gray-800">리뷰 목록</h1>
+      <button
+        onClick={openCreateModal}
+        className="rounded-lg bg-orange-500 px-4 py-2 text-white hover:bg-orange-600"
+      >
+        리뷰 작성하기
+      </button>
+      <button
+        onClick={() =>
+          openEditModal({
+            score: 4,
+            comment: '이 서비스 정말 좋았습니다!',
+          })
+        }
+        className="ml-2 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+      >
+        리뷰 수정하기
+      </button>
+      {isOpen && (
+        <Modal
+          isOpen={isOpen}
+          handleClose={handleClose}
+          title={mode === 'create' ? '리뷰 작성' : '리뷰 수정'}
+        >
+          <ReviewModal
+            mode={mode}
+            initialData={mode === 'edit' ? selectedReview : undefined} // 수정 모드일 경우 초기 데이터 전달
+            onSubmit={submitReviewToServer}
+            onClose={handleClose}
+          />
+        </Modal>
+      )}
     </div>
   );
 }

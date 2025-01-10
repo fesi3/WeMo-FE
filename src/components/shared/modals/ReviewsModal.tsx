@@ -1,53 +1,71 @@
-import React, { useState } from 'react';
-import ModalFrame from './ModalFrame';
-import HeartRating from '@/components/shared/HeartRating';
+import React, { useState, useEffect } from 'react';
+import HeartRating from '@/components/shared/HeartRating'; // 평점 컴포넌트
 
 interface ReviewModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onSubmit: (data: { rating: number; review: string }) => void;
+  mode: 'create' | 'edit'; // 모드 추가
+  initialData?: { score: number; comment: string }; // 수정 모드에서 초기값
+  onSubmit: (data: { score: number; comment: string }) => void; // 리뷰 제출 함수
+  onClose: () => void; // 모달 닫기 함수
 }
 
 export default function ReviewModal({
-  isOpen,
-  onClose,
+  mode,
+  initialData,
   onSubmit,
+  onClose,
 }: ReviewModalProps) {
-  const [rating, setRating] = useState(0); // 평점 상태
-  const [review, setReview] = useState(''); // 리뷰 텍스트 상태
+  const [score, setScore] = useState(0); // 평점 상태
+  const [comment, setComment] = useState(''); // 리뷰 텍스트 상태
 
+  useEffect(() => {
+    if (mode === 'edit' && initialData) {
+      setScore(initialData.score);
+      setComment(initialData.comment);
+    } else if (mode === 'create') {
+      setScore(0);
+      setComment('');
+    }
+  }, [mode, initialData]);
+
+  // 리뷰 제출 처리
   const handleSubmit = () => {
-    if (!rating) {
+    if (!score) {
       alert('평점을 선택해주세요!');
       return;
     }
-    if (!review.trim()) {
+    if (!comment.trim()) {
       alert('리뷰 내용을 작성해주세요!');
       return;
     }
 
-    onSubmit({ rating, review }); // 부모 컴포넌트로 데이터 전달
-    setRating(0);
-    setReview('');
-    onClose(); // 모달 닫기
+    onSubmit({ score, comment }); // 부모 컴포넌트에 데이터 전달한다.
+    resetForm(); // 상태를 초기화 해준다.
+  };
+
+  // 상태 초기화
+  const resetForm = () => {
+    setScore(0);
+    setComment('');
   };
 
   return (
-    <ModalFrame isOpen={isOpen} onClose={onClose} title={'리뷰 쓰기'}>
-      <p className="mb-4 text-left text-lg">만족스러운 경험이었나요?</p>
+    <div>
+      <p className="mb-4 text-left text-lg font-bold">
+        {mode === 'create'
+          ? '만족스러운 경험이었나요?'
+          : '리뷰를 수정해주세요.'}
+      </p>
+
       <div className="justify-left mb-6 flex">
-        <HeartRating
-          rating={rating}
-          onRate={(newRating) => setRating(newRating)}
-        />
+        <HeartRating rating={score} onRate={(newScore) => setScore(newScore)} />
       </div>
 
-      <p className="text-bold mb-2 text-lg">경험에 대해 남겨주세요.</p>
+      <p className="mb-2 text-lg font-bold">경험에 대해 남겨주세요.</p>
       <textarea
         placeholder="남겨주신 리뷰는 프로그램 운영 및 다른 분들께 큰 도움이 됩니다."
-        value={review}
-        onChange={(e) => setReview(e.target.value)}
-        className="text-bold mt-2 h-32 w-full rounded-lg border border-gray-300 p-3 text-black placeholder-gray-400 outline-none focus:ring-2 focus:ring-orange-500"
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+        className="mt-2 h-32 w-full rounded-lg border border-gray-300 p-3 text-black placeholder-gray-400 outline-none focus:ring-2 focus:ring-orange-500"
       />
 
       <div className="mt-6 flex items-center justify-between">
@@ -60,15 +78,15 @@ export default function ReviewModal({
         <button
           onClick={handleSubmit}
           className={`rounded-lg px-6 py-2 transition ${
-            rating && review.trim()
+            score && comment.trim()
               ? 'bg-orange-500 text-white hover:bg-orange-600'
               : 'cursor-not-allowed bg-gray-300 text-gray-500'
           }`}
-          disabled={!rating || !review.trim()}
+          disabled={!score || !comment.trim()}
         >
-          리뷰 등록
+          {mode === 'create' ? '리뷰 등록' : '리뷰 수정'}
         </button>
       </div>
-    </ModalFrame>
+    </div>
   );
 }
