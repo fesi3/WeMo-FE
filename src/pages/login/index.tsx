@@ -3,7 +3,7 @@ import InputWithLabel from '@/components/shared/input/HOC/inputWithLabel';
 
 export default function Login() {
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center bg-zinc-500">
       <div className="flex w-[300px] flex-col gap-4">
         <InputWithLabel
           id="company"
@@ -40,7 +40,12 @@ export default function Login() {
           name="모집정원"
           placeholder="모집 정원을 입력해 주세요."
         />
-        <Input id="search" placeholder="모임을 검색해 보세요!" />
+        <Input
+          aria-label=""
+          id="search"
+          placeholder="모임을 검색해 보세요!"
+          className="bg-pink-200"
+        />
       </div>
     </div>
   );
