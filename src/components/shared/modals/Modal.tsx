@@ -2,7 +2,7 @@ import { PropsWithChildren, useEffect } from 'react';
 import ModalPortal from './ModalPortal';
 import ModalBackDrop from './ModalBackDrop';
 
-interface ModalFrameProps {
+interface ModalProps {
   handleClose: () => void;
   isOpen: boolean;
   title: string;
@@ -14,7 +14,7 @@ export default function Modal({
   handleClose,
   isOpen,
   title,
-}: PropsWithChildren<ModalFrameProps>) {
+}: PropsWithChildren<ModalProps>) {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
