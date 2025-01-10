@@ -1,5 +1,5 @@
 import withLabel from './withLabel';
-import Input from '.';
+import Input from '..';
 
 const InputWithLabel = withLabel(Input);
 

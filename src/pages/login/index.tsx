@@ -1,5 +1,5 @@
 import Input from '@/components/shared/input';
-import InputWithLabel from '@/components/shared/input/inputWithLabel';
+import InputWithLabel from '@/components/shared/input/HOC/inputWithLabel';
 
 export default function Login() {
   return (

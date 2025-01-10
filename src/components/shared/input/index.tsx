@@ -1,5 +1,12 @@
 import React from 'react';
-import { InputProps } from './type';
+import { InputType } from './type';
+
+export interface InputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  type?: InputType;
+  id: string;
+  ariaLabel?: string;
+}
 
 // props 추가 작성 가능
 // className 추가 작성 가능
