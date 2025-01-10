@@ -3,14 +3,15 @@ import ModalPortal from './ModalPortal';
 import ModalBackDrop from './ModalBackDrop';
 
 interface ModalFrameProps {
-  onClose: () => void;
+  handleClose: () => void;
   isOpen: boolean;
-  title?: string;
+  title: string;
 }
 
-export default function ModalFrame({
+//useToggle hook에서 isOpen과 handleClose를 연결해 주세요요
+export default function Modal({
   children,
-  onClose,
+  handleClose,
   isOpen,
   title,
 }: PropsWithChildren<ModalFrameProps>) {
@@ -30,12 +31,12 @@ export default function ModalFrame({
     isOpen && (
       <ModalPortal>
         <ModalBackDrop />
-        <div className="flex flex-col fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-black w-full max-w-screen-md p-6">
+        <div className="fixed left-1/2 top-1/2 flex w-full max-w-screen-md -translate-x-1/2 -translate-y-1/2 flex-col bg-white p-6 text-black">
           <div className="flex justify-end pb-10">
             {title ? <span className="grow">{title}</span> : null}
-            <button onClick={onClose}>닫기버튼</button>
+            <button onClick={handleClose}>닫기버튼</button>
           </div>
-          <div className="w-full h-full">{children}</div>
+          <div className="h-full w-full">{children}</div>
         </div>
       </ModalPortal>
     )
