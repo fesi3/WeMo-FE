@@ -63,7 +63,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans }) => {
   //로딩 트리거용 ref
   const loaderRef = useRef<HTMLDivElement | null>(null);
 
-  //무한 스크롤 로직 (목데이터에서는 주석 처리)
+  //무한 스크롤 로직, 추후 코드 분리
   useEffect(() => {
     const observer = new IntersectionObserver(
       async (entries) => {
@@ -74,6 +74,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans }) => {
           // 다음 페이지 호출
           try {
             const res = await axios.get<PlanListResponse>(
+              //커서 기반 로직으로 추후 수정
               `https://677e23a294bde1c1252a8cc0.mockapi.io/plans?page=${nextPage}&limit=10`,
             );
             const newData = res.data;
@@ -122,7 +123,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans }) => {
   );
 };
 
-// SSR로 초기 10개 목록
+// SSR로 초기 10개 목록, 추후 로직 분리
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const res = await axios.get(
