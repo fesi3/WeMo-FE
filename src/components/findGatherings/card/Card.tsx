@@ -8,9 +8,8 @@ import DeadlineBadge from './DeadlinBadge';
 import MeetingDate from '../MeetingDate';
 import MeetingTime from '../MeetingTime';
 
-//타입 파일 따로 생성하면, 불러오도록 수정
-type CardProps = {
-  title: string;
+interface CardProps {
+  planName: string;
   registrationEnd: string;
   dateTime: string;
   meetingName: string;
@@ -20,10 +19,10 @@ type CardProps = {
   capacity: string;
   isOpened: boolean;
   isLiked: boolean;
-};
+}
 
 const Card: React.FC<CardProps> = ({
-  title,
+  planName,
   registrationEnd,
   dateTime,
   meetingName,
@@ -42,7 +41,7 @@ const Card: React.FC<CardProps> = ({
       </div>
 
       {/* 모임 제목 */}
-      <h2 className="mb-1 text-xl font-bold text-black">{title}</h2>
+      <h2 className="mb-1 text-xl font-bold text-black">{planName}</h2>
 
       {/* 모임 상세 정보 */}
       <div className="mb-2">
