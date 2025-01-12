@@ -1,7 +1,9 @@
 import Input from '@/components/shared/input';
-import InputWithLabel from '@/components/shared/input/HOC/inputWithLabel';
+import withLabel from '@/components/shared/input/HoC/withLabel';
 
 export default function Login() {
+  const InputWithLabel = withLabel(Input);
+
   return (
     <div className="flex flex-col items-center justify-center bg-zinc-500">
       <div className="flex w-[300px] flex-col gap-4">
