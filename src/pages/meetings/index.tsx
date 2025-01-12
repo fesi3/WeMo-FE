@@ -3,11 +3,13 @@ import type { NextPage, GetServerSideProps } from 'next';
 import axios from 'axios';
 import DateModal from '../../components/shared/calendar/DateModal';
 import CardList from '../../components/findGatherings/card/CardList';
+import Tabs from '../../components/findGatherings/tab/tab';
 
 //타입정의 폴더 추후 이동
 interface PlanData {
   planId: string;
   planName: string;
+  category: string;
   dateTime: string;
   registrationEnd: string;
   meetingName: string;
@@ -39,6 +41,24 @@ const Home: NextPage<HomeProps> = ({ initialPlans }) => {
   const [plans, setPlans] = useState<PlanData[]>(initialPlans);
   const [page, setPage] = useState<number>(1);
   const [isFetching, setIsFetching] = useState<boolean>(false);
+
+  //PlanList에서 받아오는걸로 수정필요
+  const tabs = [{ category: '달램핏' }, { category: '워케이션' }];
+
+  // => 선택된 label을 받고, 거기에 맞는 데이터 + 공통 UI를 반환
+  const renderTabContent = (selectedLabel: string) => {
+    //카테고리에 맞는 데이터 필터
+    const filteredPlans = plans.filter((p) => p.category === selectedLabel);
+
+    //날짜/지역/정렬 필터 컴포넌트, 카드 컴포넌트 렌더링 필요
+    return (
+      <>
+        <DateModal />
+        {/* 공통 UI 추가 */}
+        <CardList plans={filteredPlans} />
+      </>
+    );
+  };
 
   //로딩 트리거용 ref
   const loaderRef = useRef<HTMLDivElement | null>(null);
@@ -88,9 +108,8 @@ const Home: NextPage<HomeProps> = ({ initialPlans }) => {
   }, [page, isFetching]);
 
   return (
-    <div>
-      <DateModal />
-      <CardList plans={plans} />
+    <div className="mx-auto max-w-md px-4 py-6">
+      <Tabs tabs={tabs} defaultTab="달램핏" renderContent={renderTabContent} />
       <div ref={loaderRef} className="h-px"></div>
     </div>
   );
