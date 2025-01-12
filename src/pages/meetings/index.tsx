@@ -84,7 +84,14 @@ const Home: NextPage<HomeProps> = ({ initialPlans }) => {
             }));
 
             // 이전 plans + 신규 plans 합치기
-            setPlans((prev) => [...prev, ...formatted]);
+            setPlans((prev) => {
+              // 동일한 PlanId 가지는 데이터 거르기 (중복 데이터 제거)
+              const filtered = formatted.filter(
+                (newItem) =>
+                  !prev.some((oldItem) => oldItem.planId === newItem.planId),
+              );
+              return [...prev, ...filtered];
+            });
             setPage(nextPage);
           } catch (error) {
             console.error('추가 데이터 로딩 실패:', error);
