@@ -8,22 +8,6 @@ export default {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        sans: [
-          'Roboto',
-          'Noto Sans',
-          'ui-sans-serif',
-          'system-ui',
-          '-apple-system',
-          'BlinkMacSystemFont',
-          '"Segoe UI"',
-          'Arial',
-          '"Helvetica Neue"',
-          '"Noto Sans CJK KR"',
-          'sans-serif',
-        ],
-        // sans: ['Arial', 'sans-serif'], // Test with a basic font
-      },
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
