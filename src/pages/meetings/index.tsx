@@ -4,6 +4,7 @@ import axios from 'axios';
 import DateModal from '../../components/shared/calendar/DateModal';
 import CardList from '../../components/findGatherings/card/CardList';
 import Tabs from '../../components/findGatherings/tab/tab';
+import Greeting from '../../components/findGatherings/Greeting';
 import { PlanDataWithCategory } from '@/components/types/plans';
 
 interface PlanListData {
@@ -45,6 +46,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans }) => {
 
     return (
       <>
+        <Greeting />
         <DateModal onDateSelect={setSelectedDate} />
         {/* 공통 UI 추가 */}
         <CardList plans={filteredPlans} />
