@@ -5,8 +5,8 @@
 
 import React from 'react';
 import DeadlineBadge from './DeadlinBadge';
-import MeetingDate from '../MeetingDate';
-import MeetingTime from '../MeetingTime';
+import MeetingDate from '../../shared/badges/MeetingDate';
+import MeetingTime from '../../shared/badges/MeetingTime';
 
 interface CardProps {
   planName: string;

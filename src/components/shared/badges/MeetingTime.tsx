@@ -14,7 +14,7 @@ function formatTime(dateString: string) {
 
 const MeetingTime: React.FC<MeetingTimeProps> = ({ dateTime }) => {
   const time = formatTime(dateTime);
-  return <span className="text-gray-600 text-sm">{time}</span>;
+  return <span className="rounded bg-white text-sm text-gray-600">{time}</span>;
 };
 
 export default MeetingTime;
