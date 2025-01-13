@@ -50,7 +50,7 @@ const Button = ({
     case 'signup':
     case 'companyName':
       sizeClass =
-        'w-[324px] h-[42px] text-base font-semibold bg-[#000000] text-[#ffffff]';
+        'w-[324px] h-[42px] text-base font-semibold bg-primary-10 text-[#ffffff]';
       break;
 
     case 'meeting_create': // 모임 만들기(메인페이지)
