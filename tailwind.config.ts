@@ -31,6 +31,12 @@ export default {
         },
         heart: "#FF0040"
       },
+      fontSize: {
+        title: ['16pt', { lineHeight: '1.5' }],
+        basic: ['14pt', { lineHeight: '1.5' }],
+        small: ['12pt', { lineHeight: '1.5' }],
+        tiny: ['10pt', { lineHeight: '1.5' }],
+      },
       spacing: {
         'mobileInputHeight': '40px',
         'tabletInputHeight': '44px',
