@@ -4,26 +4,11 @@ import axios from 'axios';
 import DateModal from '../../components/shared/calendar/DateModal';
 import CardList from '../../components/findGatherings/card/CardList';
 import Tabs from '../../components/findGatherings/tab/tab';
-
-//타입정의 폴더 추후 이동
-interface PlanData {
-  planId: string;
-  planName: string;
-  category: string;
-  dateTime: string;
-  registrationEnd: string;
-  meetingName: string;
-  province: string;
-  district: string;
-  participants: string;
-  capacity: string;
-  isOpened: boolean;
-  isLiked: boolean;
-}
+import { PlanDataWithCategory } from '@/components/types/plans';
 
 interface PlanListData {
   planCount: number;
-  planList: PlanData[];
+  planList: PlanDataWithCategory[];
   nextCursor: number;
 }
 
@@ -34,11 +19,11 @@ interface PlanListResponse {
 }
 
 interface HomeProps {
-  initialPlans: PlanData[];
+  initialPlans: PlanDataWithCategory[];
 }
 
 const Home: NextPage<HomeProps> = ({ initialPlans }) => {
-  const [plans, setPlans] = useState<PlanData[]>(initialPlans);
+  const [plans, setPlans] = useState<PlanDataWithCategory[]>(initialPlans);
   const [page, setPage] = useState<number>(1);
   const [isFetching, setIsFetching] = useState<boolean>(false);
 
@@ -80,9 +65,11 @@ const Home: NextPage<HomeProps> = ({ initialPlans }) => {
             const newData = res.data;
 
             // API 데이터 형태변환
-            const formatted = newData.data.planList.map((item: PlanData) => ({
-              ...item,
-            }));
+            const formatted = newData.data.planList.map(
+              (item: PlanDataWithCategory) => ({
+                ...item,
+              }),
+            );
 
             // 이전 plans + 신규 plans 합치기
             setPlans((prev) => {
@@ -133,8 +120,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
     console.log('데이터 확인:', data.data);
 
     // API 데이터 형태 변환
-    const initialPlans: PlanData[] = data.data.planList.map(
-      (item: PlanData) => ({
+    const initialPlans: PlanDataWithCategory[] = data.data.planList.map(
+      (item: PlanDataWithCategory) => ({
         ...item,
       }),
     );

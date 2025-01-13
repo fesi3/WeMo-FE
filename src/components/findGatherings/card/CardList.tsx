@@ -1,20 +1,6 @@
 import React from 'react';
 import Card from './Card';
-
-//타입 파일 따로 생성하면, 불러오도록 수정
-interface PlanData {
-  planId: string;
-  planName: string;
-  registrationEnd: string;
-  dateTime: string;
-  meetingName: string;
-  province: string;
-  district: string;
-  participants: string;
-  capacity: string;
-  isOpened: boolean;
-  isLiked: boolean;
-}
+import { PlanData } from '../../types/plans';
 
 interface CardListProps {
   plans: PlanData[];

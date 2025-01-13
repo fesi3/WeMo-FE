@@ -7,22 +7,9 @@ import React from 'react';
 import DeadlineBadge from './DeadlinBadge';
 import MeetingDate from '../../shared/badges/MeetingDate';
 import MeetingTime from '../../shared/badges/MeetingTime';
+import { PlanData } from '@/components/types/plans';
 
-interface CardProps {
-  planName: string;
-  registrationEnd: string;
-  dateTime: string;
-  meetingName: string;
-  province: string;
-  district: string;
-  participants: string;
-  capacity: string;
-  isOpened: boolean;
-  isLiked: boolean;
-  planImagePath: string;
-}
-
-const Card: React.FC<CardProps> = ({
+const Card: React.FC<PlanData> = ({
   planName,
   registrationEnd,
   dateTime,
