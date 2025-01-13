@@ -3,14 +3,20 @@ import Modal from '../../../components/shared/modals/Modal';
 import CalendarPicker from './CalendarPicker';
 import useToggle from '../../../hooks/useToggle';
 
-export default function DateModal() {
+interface DateModalProps {
+  onDateSelect: (date: string | null) => void;
+}
+
+export default function DateModal({ onDateSelect }: DateModalProps) {
   const { toggleValue: isOpen, handleOpen, handleClose } = useToggle();
-  //const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   // 달력에서 날짜를 선택했을 때 실행되는 함수
   const handleDateChange = (date: Date) => {
     setSelectedDate(date);
+    const formattedDate = date.toLocaleDateString();
+    onDateSelect(formattedDate); // 날짜를 ISO 문자열로 변환하여 상위 컴포넌트로 전달
+    console.log(formattedDate);
     handleClose();
   };
 
@@ -24,10 +30,6 @@ export default function DateModal() {
       <Modal isOpen={isOpen} handleClose={handleClose} title="날짜 선택 모달">
         <div>
           <CalendarPicker onChange={handleDateChange} />
-          {/* <p>
-            선택된 날짜:{' '}
-            {selectedDate ? selectedDate.toLocaleDateString() : '없음'}
-          </p> */}
         </div>
       </Modal>
     </div>

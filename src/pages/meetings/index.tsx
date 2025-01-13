@@ -26,19 +26,25 @@ const Home: NextPage<HomeProps> = ({ initialPlans }) => {
   const [plans, setPlans] = useState<PlanDataWithCategory[]>(initialPlans);
   const [page, setPage] = useState<number>(1);
   const [isFetching, setIsFetching] = useState<boolean>(false);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
-  //PlanList에서 받아오는걸로 수정필요
+  //PlanList에서 동적으로 받아오는 게 좋을 지?? 하드코딩 유지할 지?? 멘토님께 여쭤보기
   const tabs = [{ category: '달램핏' }, { category: '워케이션' }];
 
-  // => 선택된 label을 받고, 거기에 맞는 데이터 + 공통 UI를 반환
-  const renderTabContent = (selectedLabel: string) => {
-    //카테고리에 맞는 데이터 필터
-    const filteredPlans = plans.filter((p) => p.category === selectedLabel);
+  const renderTabContent = (selectedCategory: string) => {
+    const filteredPlans = plans.filter((p) => {
+      const planDate = new Date(p.dateTime).toLocaleDateString(); // 'YYYY-MM-DD'
+      return (
+        p.category === selectedCategory &&
+        (!selectedDate || planDate === selectedDate)
+      );
+    });
 
     //날짜/지역/정렬 필터 컴포넌트, 카드 컴포넌트 렌더링 필요
+
     return (
       <>
-        <DateModal />
+        <DateModal onDateSelect={setSelectedDate} />
         {/* 공통 UI 추가 */}
         <CardList plans={filteredPlans} />
       </>
