@@ -8,27 +8,33 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Roboto', 'ui-sans-serif', 'system-ui'],
+      },
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
-        gray: {
-          50: "#F9FAFB",
-          100: "#F3F4F6",
-          200: "#E5E7EB",
-          300: "#D1D5DB",
-          400: "#9CA3AF",
-          500: "#6B7280",
-          600: "#4B5563",
-          700: "#374151",
-          800: "#1F2937",
-          900: "#111827",
-          950: "#030712",
+        primary: {
+          0: "#000",
+          10: "#00B6AD",
+          20: "#1ABDB5",
+          30: "#33C5BD",
+          40: "#4DCCC6",
+          50: "#66D3CE",
+          60: "#80DBD6",
+          70: "#99E2DE",
+          80: "#B2E9E6",
+          90: "#CCF0EF",
+          95: "#F2FBFB",
+          99: "#FCFEFE",
+          100: "#FFFFFF"
         },
+        heart: "#FF0040"
       },
       spacing: {
         'mobileInputHeight': '40px',
         'tabletInputHeight': '44px',
-      }
+      },
     },
   },
   plugins: [],

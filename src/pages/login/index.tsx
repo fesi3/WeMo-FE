@@ -46,7 +46,7 @@ export default function Login() {
           placeholder="모임을 검색해 보세요!"
           className="bg-pink-200"
         />
-        <h1>제목 태그 입니다.</h1>
+        <h1 className="text-heart">제목 태그 입니다.</h1>
         <h2>제목 태그 입니다.</h2>
       </div>
     </div>
