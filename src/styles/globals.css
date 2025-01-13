@@ -1,4 +1,12 @@
 @tailwind base;
+@layer utilities {
+  .chip {
+    @apply text-tiny font-medium
+  }
+  .badge {
+    @apply text-tiny font-bold uppercase;
+  }
+}
 @tailwind components;
 @tailwind utilities;
 
@@ -17,13 +25,7 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
 }
-
-/* global.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 /* =============== react-calendar 글로벌 오버라이딩 =============== */
 
