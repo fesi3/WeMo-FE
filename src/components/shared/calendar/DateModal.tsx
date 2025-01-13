@@ -20,16 +20,24 @@ export default function DateModal({ onDateSelect }: DateModalProps) {
     handleClose();
   };
 
+  // 날짜 초기화
+  const handleReset = () => {
+    setSelectedDate(null);
+    onDateSelect(null);
+    handleClose();
+  };
+
   const buttonText = selectedDate
     ? selectedDate.toLocaleDateString() // or 원하는 포맷
     : '날짜 전체';
 
   return (
-    <div>
-      <button onClick={handleOpen}>{buttonText}</button>
+    <div className="flex items-center gap-4">
+      <button onClick={handleOpen}> {buttonText} </button>
       <Modal isOpen={isOpen} handleClose={handleClose} title="날짜 선택 모달">
         <div>
           <CalendarPicker onChange={handleDateChange} />
+          <button onClick={handleReset}> 전체보기 </button>
         </div>
       </Modal>
     </div>

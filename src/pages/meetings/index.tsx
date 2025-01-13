@@ -33,14 +33,15 @@ const Home: NextPage<HomeProps> = ({ initialPlans }) => {
 
   const renderTabContent = (selectedCategory: string) => {
     const filteredPlans = plans.filter((p) => {
-      const planDate = new Date(p.dateTime).toLocaleDateString(); // 'YYYY-MM-DD'
+      const planDate = new Date(p.dateTime).toLocaleDateString();
       return (
         p.category === selectedCategory &&
         (!selectedDate || planDate === selectedDate)
       );
     });
 
-    //날짜/지역/정렬 필터 컴포넌트, 카드 컴포넌트 렌더링 필요
+    //지역/정렬 필터 컴포넌트 추가
+    //로컬스토리지 저장, 리액트쿼리 사용용
 
     return (
       <>
