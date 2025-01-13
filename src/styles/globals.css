@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    @apply font-sans;
+  }
+}
+
 @layer utilities {
   .chip {
     @apply text-tiny font-medium;
