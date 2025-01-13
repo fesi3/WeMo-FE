@@ -4,7 +4,7 @@ interface ButtonProps {
   textColor?: string;
   backColor?: string;
   border?: string;
-  onClick?: () => void; // 버튼 클릭 시 실행할 함수
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void; // 버튼 클릭 시 실행할 함수
   isActive?: boolean; // 버튼 or 탭 클릭 시 "UI 스타일만" 변경(배경 or text)
   disable?: boolean; // 버튼 비활성화 버튼(비활성화+UI스타일 변경 - form 에 사용)
 }
