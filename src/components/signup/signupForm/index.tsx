@@ -2,20 +2,20 @@ import Input from '@/components/shared/input';
 import withLabel from '@/components/shared/input/HOC/withLabel';
 import Button from '@/components/shared/Button';
 
-function SignupForm() {
+interface SignupFormProps {
+  handleSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;
+}
+
+function SignupForm(props: SignupFormProps) {
+  const { handleSubmit } = props;
   const InputWithLabel = withLabel(Input);
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    console.log('폼 제출 완료!');
-  };
   return (
     <form className="flex w-[324px] flex-col gap-[68px]">
-      <div className="flex w-[324px] flex-col gap-6">
+      <div className="flex flex-col gap-6">
         <InputWithLabel
           id={'name'}
           placeholder={'이름을 입력해 주세요.'}
           name={'이름'}
-          className=""
           labelClassName="label"
         />
         <InputWithLabel

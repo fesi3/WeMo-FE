@@ -2,9 +2,13 @@ import SignupLayout from '@/components/signup/signupLayout';
 import SignupForm from '@/components/signup/signupForm';
 
 function Signup() {
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    console.log('폼 제출 완료!');
+  };
   return (
     <div className="flex w-full justify-center">
-      <SignupForm />
+      <SignupForm handleSubmit={handleSubmit} />
     </div>
   );
 }
