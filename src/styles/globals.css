@@ -20,11 +20,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* global.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 /* =============== react-calendar 글로벌 오버라이딩 =============== */
 
 /* 달력 상단 네비게이션 부분 */
