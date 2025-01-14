@@ -15,7 +15,7 @@ export default function Avatar({ imageUrl, className }: AvatarProps) {
       <div
         className={`relative h-20 w-20 overflow-hidden rounded-full border-2 border-white ${className}`}
       >
-        <Image sizes="20vw" src={imageUrl} alt="유저 프로필" fill />
+        <Image sizes="20vw" priority src={imageUrl} alt="유저 프로필" fill />
       </div>
     </>
   );
