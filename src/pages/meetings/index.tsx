@@ -6,11 +6,12 @@ import CardList from '../../components/findGatherings/card/CardList';
 import Tabs from '../../components/findGatherings/tab/tab';
 import Greeting from '../../components/findGatherings/Greeting';
 import { PlanDataWithCategory } from '@/components/types/plans';
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 interface PlanListData {
   planCount: number;
   planList: PlanDataWithCategory[];
-  nextCursor: number;
+  nextCursor: number | null;
 }
 
 interface PlanListResponse {
@@ -21,40 +22,116 @@ interface PlanListResponse {
 
 interface HomeProps {
   initialPlans: PlanDataWithCategory[];
+  initialCursor: number | null;
 }
 
-const Home: NextPage<HomeProps> = ({ initialPlans }) => {
+//카테고리 string을 categoryId로 매핑
+const getCategoryId = (
+  selectedCategory: string,
+  selectedSubCategory: string | null,
+) => {
+  // "달램핏" 탭
+  if (selectedCategory === '달램핏') {
+    if (selectedSubCategory === '오피스 스트레칭') return 3;
+    if (selectedSubCategory === '마인드풀니스') return 4;
+    return 1; // 서브 필터가 없으면 달램핏 전체 = 1
+  }
+  // "워케이션" 탭
+  if (selectedCategory === '워케이션') {
+    return 2;
+  }
+  return 0;
+};
+
+const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
   const [plans, setPlans] = useState<PlanDataWithCategory[]>(initialPlans);
-  const [page, setPage] = useState<number>(1);
+  const [cursor, setCursor] = useState<number | null>(initialCursor);
+
   const [isFetching, setIsFetching] = useState<boolean>(false);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  // 달램핏 탭일 때만 사용하는 ‘서브 필터’(오피스 스트레칭, 마인드풀니스)
+  const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(
+    null,
+  );
 
   //PlanList에서 동적으로 받아오는 게 좋을 지?? 하드코딩 유지할 지?? 멘토님께 여쭤보기
   const tabs = [{ category: '달램핏' }, { category: '워케이션' }];
 
   const renderTabContent = (selectedCategory: string) => {
+    // 1) 달램핏 탭 선택 시 → 서브 필터 UI 표시
+    const isDalFit = selectedCategory === '달램핏';
+
+    return (
+      <>
+        {/* (1) 서브필터 버튼들 */}
+        {isDalFit && (
+          <div className="mb-4 flex gap-2">
+            <button
+              className={`rounded border px-3 py-1 ${
+                selectedSubCategory === null ? 'bg-blue-400 text-white' : ''
+              }`}
+              onClick={() => setSelectedSubCategory(null)}
+            >
+              전체
+            </button>
+            <button
+              className={`rounded border px-3 py-1 ${
+                selectedSubCategory === '오피스 스트레칭'
+                  ? 'bg-blue-400 text-white'
+                  : ''
+              }`}
+              onClick={() => setSelectedSubCategory('오피스 스트레칭')}
+            >
+              오피스 스트레칭
+            </button>
+            <button
+              className={`rounded border px-3 py-1 ${
+                selectedSubCategory === '마인드풀니스'
+                  ? 'bg-blue-400 text-white'
+                  : ''
+              }`}
+              onClick={() => setSelectedSubCategory('마인드풀니스')}
+            >
+              마인드풀니스
+            </button>
+          </div>
+        )}
+
+        {/* (2) 일정 목록 렌더링 */}
+        {renderPlanList(selectedCategory)}
+      </>
+    );
+  };
+
+  // 탭하위 일정 목록 필터링링
+  const renderPlanList = (selectedCategory: string) => {
+    const actualCategory =
+      selectedCategory === '달램핏' && selectedSubCategory
+        ? selectedSubCategory
+        : selectedCategory;
+
     const filteredPlans = plans.filter((p) => {
       const planDate = new Date(p.dateTime).toLocaleDateString();
+
+      // 만약 category(문자열)가 '달램핏', '오피스 스트레칭', '마인드풀니스', '워케이션' 이렇게 들어온다고 할 때,
+      // plan의 p.category가 actualCategory와 같고,
+      // 날짜 필터(selectedDate)도 만족하는 것만 남긴다.
       return (
-        p.category === selectedCategory &&
+        p.category === actualCategory &&
         (!selectedDate || planDate === selectedDate)
       );
     });
-
-    //지역/정렬 필터 컴포넌트 추가
-    //로컬스토리지 저장, 리액트쿼리 사용용
 
     return (
       <>
         <Greeting />
         <DateModal onDateSelect={setSelectedDate} />
-        {/* 공통 UI 추가 */}
         <CardList plans={filteredPlans} />
       </>
     );
   };
 
-  //로딩 트리거용 ref
+  //로딩 트리거용 ref -> 커서 기반으로 수정정
   const loaderRef = useRef<HTMLDivElement | null>(null);
 
   //무한 스크롤 로직, 추후 코드 분리
@@ -62,14 +139,12 @@ const Home: NextPage<HomeProps> = ({ initialPlans }) => {
     const observer = new IntersectionObserver(
       async (entries) => {
         const target = entries[0];
-        if (target.isIntersecting && !isFetching) {
+        if (target.isIntersecting && !isFetching && cursor !== null) {
           setIsFetching(true);
-          const nextPage = page + 1;
-          // 다음 페이지 호출
           try {
+            const categoryId = getCategoryId('달램핏', selectedSubCategory);
             const res = await axios.get<PlanListResponse>(
-              //커서 기반 로직으로 추후 수정
-              `https://677e23a294bde1c1252a8cc0.mockapi.io/plans?page=${nextPage}&limit=10`,
+              `${baseUrl}/api/plans?cursor=${cursor}&size=10&categoryId=${categoryId}`,
             );
             const newData = res.data;
 
@@ -80,6 +155,8 @@ const Home: NextPage<HomeProps> = ({ initialPlans }) => {
               }),
             );
 
+            const nextCursor = newData.data.nextCursor;
+
             // 이전 plans + 신규 plans 합치기
             setPlans((prev) => {
               // 동일한 PlanId 가지는 데이터 거르기 (중복 데이터 제거)
@@ -89,7 +166,8 @@ const Home: NextPage<HomeProps> = ({ initialPlans }) => {
               );
               return [...prev, ...filtered];
             });
-            setPage(nextPage);
+
+            setCursor(nextCursor);
           } catch (error) {
             console.error('추가 데이터 로딩 실패:', error);
           } finally {
@@ -109,7 +187,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans }) => {
     return () => {
       observer.disconnect();
     };
-  }, [page, isFetching]);
+  }, [cursor, isFetching, selectedSubCategory]);
 
   return (
     <div className="mx-auto max-w-md px-4 py-6">
@@ -122,8 +200,8 @@ const Home: NextPage<HomeProps> = ({ initialPlans }) => {
 // SSR로 초기 10개 목록, 추후 로직 분리
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    const res = await axios.get(
-      'https://677e23a294bde1c1252a8cc0.mockapi.io/plans',
+    const res = await axios.get<PlanListResponse>(
+      '${baseUrl}/api/plans?cursor=0&size=10&categoryId=1',
     );
     const data = res.data;
     console.log('데이터 확인:', data.data);
@@ -135,9 +213,12 @@ export const getServerSideProps: GetServerSideProps = async () => {
       }),
     );
 
+    const nextCursor = data.data.nextCursor;
+
     return {
       props: {
         initialPlans,
+        initialCursor: nextCursor !== undefined ? nextCursor : null,
       },
     };
   } catch (error) {
@@ -145,6 +226,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     return {
       props: {
         initialPlans: [],
+        initialCursor: null,
       },
     };
   }
