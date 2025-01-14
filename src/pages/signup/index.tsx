@@ -13,10 +13,10 @@ function Signup() {
 
   // 입력창 제어 함수
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { id, value } = e.target;
     setSignupFormValue((prev) => ({
       ...prev,
-      [name]: value,
+      [id]: value,
     }));
   };
 
@@ -28,7 +28,11 @@ function Signup() {
 
   return (
     <div className="flex w-full justify-center">
-      <SignupForm handleSubmit={handleSubmit} handleChange={handleChange} />
+      <SignupForm
+        formValues={signupFormValue}
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+      />
     </div>
   );
 }
