@@ -16,28 +16,17 @@ const InputWithLabel = withLabel(InputWithMessage);
 
 function SignupForm(props: SignupFormProps) {
   const { handleSubmit, handleChange, formValues, errors } = props;
-  const { name, nickname, companyName, email, password, passwordVerification } =
-    formValues;
+  const { nickname, companyName, email, password, passwordCheck } = formValues;
   const {
-    name: nameError,
     nickname: nicknameError,
     companyName: companyNameError,
     email: emailError,
     password: passwordError,
-    passwordVerification: passwordVerificationError,
+    passwordCheck: passwordCheckError,
   } = errors;
   return (
     <form className="flex w-[324px] flex-col gap-[68px]">
       <div className="flex flex-col gap-6">
-        <InputWithLabel
-          id={'name'}
-          labelName={'이름'}
-          placeholder={'이름을 입력해 주세요.'}
-          labelClassName="label"
-          onChange={handleChange}
-          value={name}
-          error={nameError}
-        />
         <InputWithLabel
           id={'nickname'}
           labelName={'닉네임'}
@@ -79,13 +68,13 @@ function SignupForm(props: SignupFormProps) {
           />
           <InputWithMessage
             type={'password'}
-            id={'passwordVerification'}
-            name={'passwordVerification'}
-            aria-label={'passwordVerification'}
+            id={'passwordCheck'}
+            name={'passwordCheck'}
+            aria-label={'passwordCheck'}
             placeholder={'비밀번호를 다시 입력해 주세요.'}
             onChange={handleChange}
-            value={passwordVerification}
-            error={passwordVerificationError}
+            value={passwordCheck}
+            error={passwordCheckError}
           />
         </div>
       </div>

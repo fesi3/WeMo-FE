@@ -22,7 +22,7 @@ function withError<T extends object>(WrappedComponent: React.ComponentType<T>) {
         />
         {/* 에러 메세지 */}
         {error && (
-          <span className="absolute right-0 top-12 text-small text-red-400">
+          <span className="absolute right-0 top-10 text-tiny text-red-400">
             {error}
           </span>
         )}

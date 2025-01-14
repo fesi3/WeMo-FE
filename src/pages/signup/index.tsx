@@ -19,7 +19,10 @@ function Signup() {
       }),
     onSuccess: () => {
       alert('회원가입이 완료되었습니다!');
-      router.push('/');
+      router.push('/login');
+    },
+    onError: () => {
+      alert('회원가입이 실패했습니다!');
     },
   });
 

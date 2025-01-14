@@ -3,34 +3,29 @@ import { useState } from 'react';
 
 function useSignupForm() {
   const [signupFormValue, setSignupFormValue] = useState({
-    name: '',
+    email: '',
     nickname: '',
     companyName: '',
-    email: '',
     password: '',
-    passwordVerification: '',
+    passwordCheck: '',
   });
 
   const [errors, setErrors] = useState({
-    name: '',
     nickname: '',
     companyName: '',
     email: '',
     password: '',
-    passwordVerification: '',
+    passwordCheck: '',
   });
 
   const validateFrom = (name: string, value: string) => {
     let errorMessage;
     switch (name) {
-      case 'name':
-        if (!value) {
-          errorMessage = '이름을 작성해주세요.';
-        }
-        break;
       case 'nickname':
         if (!value) {
           errorMessage = '닉네임을 작성해주세요.';
+        } else if (value.length < 2 || value.length > 20) {
+          errorMessage = '닉네임은 최소 2자, 최대 20자 이어야 합니다.';
         }
         break;
       case 'companyName':
@@ -48,16 +43,25 @@ function useSignupForm() {
       case 'password':
         if (!value) {
           errorMessage = '비밀번호를 작성해주세요.';
+        } else if (
+          !/(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])/g.test(
+            value,
+          )
+        ) {
+          errorMessage = '문자, 숫자, 특수기호를 하나 이상 포함해야 합니다.';
         } else if (value.length < 8) {
           errorMessage = '비밀번호는 8자리 이상 이어야 합니다.';
         }
         break;
-      case 'passwordVerification':
+      case 'passwordCheck':
         if (!value) {
           errorMessage = '비밀번호를 작성해주세요.';
         } else if (value !== signupFormValue.password) {
           errorMessage = '비밀번호가 일치하지 않습니다.';
         }
+        break;
+      default:
+        errorMessage = '';
         break;
     }
     return errorMessage;
