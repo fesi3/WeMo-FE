@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 import PlanDetailMain from '@/components/plan/PlanDetailMain';
+import EditMeetingButton from '@/components/findGatherings/EditMeeting/EditMeetingButton';
 
 export default function PlanDetailPage() {
   const [mock, setMock] = useState<GET_PLAN_DETAIL_RESPONSE | null>(null);
@@ -27,6 +28,7 @@ export default function PlanDetailPage() {
   return (
     <div className="min-h-screen">
       <PlanDetailMain planData={mock?.data} />
+      <EditMeetingButton />
     </div>
   );
 }
