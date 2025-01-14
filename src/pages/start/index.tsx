@@ -1,11 +1,10 @@
 import React from 'react';
+import Button from '@/components/shared/Button';
 
 const StartPage = () => {
   return (
     <div className="flex h-screen flex-col items-center justify-center bg-white">
-      <button className="mb-4 h-12 w-72 rounded-lg border border-gray-400 font-medium text-gray-800">
-        비회원으로 시작하기
-      </button>
+      <Button text={'비회원으로 시작하기'} type={'start'} />
       <button className="mb-6 h-12 w-72 rounded-lg bg-teal-500 font-bold text-white">
         회원 가입
       </button>

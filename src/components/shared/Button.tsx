@@ -44,7 +44,8 @@ const Button = ({
   switch (type) {
     // 로그인, 회원가입, 비회원으로 시작하기
     case 'start':
-      sizeClass = 'w-[300px] h-[42px] text-base font-semibold';
+      sizeClass =
+        'w-[300px] h-[42px] mb-4 text-base font-semibold rounded-lg border border-gray-400';
       break;
     // 회원 가입 버튼, 회사명 입력 버튼
     case 'signup':
