@@ -4,7 +4,7 @@ interface ButtonProps {
   textColor?: string;
   backColor?: string;
   border?: string;
-  onClick?: () => void; // 버튼 클릭 시 실행할 함수
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void; // 버튼 클릭 시 실행할 함수
   isActive?: boolean; // 버튼 or 탭 클릭 시 "UI 스타일만" 변경(배경 or text)
   disable?: boolean; // 버튼 비활성화 버튼(비활성화+UI스타일 변경 - form 에 사용)
 }
@@ -44,22 +44,27 @@ const Button = ({
   switch (type) {
     // 로그인, 회원가입, 비회원으로 시작하기
     case 'start':
-      sizeClass = 'w-[300px] h-[42px] text-base font-semibold';
+      sizeClass =
+        'w-[300px] h-[42px] mb-4 text-base font-semibold rounded-lg border border-gray-400';
+      break;
+    case 'start-signup':
+      sizeClass =
+        'w-[300px] h-[42px] mb-4 text-base font-semibold rounded-lg border bg-primary-10 text-primary-100';
       break;
     // 회원 가입 버튼, 회사명 입력 버튼
     case 'signup':
     case 'companyName':
       sizeClass =
-        'w-[324px] h-[42px] text-base font-semibold bg-[#000000] text-[#ffffff]';
+        'w-[324px] h-[42px] mb-6 text-base font-semibold rounded-lg bg-primary-10 text-primary-100';
       break;
 
     case 'meeting_create': // 모임 만들기(메인페이지)
       sizeClass =
-        'w-[336px] h-[42px] text-base font-medium bg-[#000000] text-[#ffffff]';
+        'w-[336px] h-[42px] text-base font-medium bg-[#000000] text-primary-100';
       break;
     case 'no_meeting': // 모임 보러가기(찜한 목록에서 모임 없을 때)
       sizeClass =
-        'w-[160px] h-[42px] text-base font-medium bg-[#000000] text-[#ffffff]';
+        'w-[160px] h-[42px] text-base font-medium bg-[#000000] text-primary-100';
       break;
 
     // 모임 참석/참석 취소 버튼(모임 상세)
@@ -70,7 +75,7 @@ const Button = ({
 
     case 'meetingImg': // 모임 이미지 선택(모임 모달)
       sizeClass =
-        'w-[318px] h-[36px] text-sm font-medium bg-[rgba(0,0,0,0.5)] text-[#ffffff]';
+        'w-[318px] h-[36px] text-sm font-medium bg-[rgba(0,0,0,0.5)] text-primary-100';
       break;
     case 'meetingD': // 달램핏(모임 모달)
       sizeClass =
@@ -84,7 +89,7 @@ const Button = ({
       break;
     case 'meetingSubmit': // 제출하기(모임 모달)
       sizeClass =
-        'w-[318px] h-[42px] text-base font-semibold bg-[#000000] text-[#ffffff]';
+        'w-[318px] h-[42px] text-base font-semibold bg-[#000000] text-primary-100';
       break;
     case 'meeting_modify_submit': // 모임 수정 제출하기(모임 모달)
       sizeClass = 'w-[151px] h-[36px] text-base font-semibold';
@@ -92,7 +97,7 @@ const Button = ({
 
     case 'review_create': // 리뷰 작성하기(모임 컴포넌트 내)
       sizeClass =
-        'w-[125px] h-[36px] text-base font-medium bg-[#000000] text-[#ffffff]';
+        'w-[125px] h-[36px] text-base font-medium bg-[#000000] text-primary-100';
       break;
     case 'reviewSubmit': // 리뷰 작성 제출하기(리뷰 모달)
       sizeClass = 'w-[139.5px] h-[42px] text-base font-semibold rounded-[12px]';
@@ -101,13 +106,13 @@ const Button = ({
     case 'tabLeft': // 탭(왼쪽)
       sizeClass = 'w-[169px] h-[42px] text-base font-medium rounded-e-none ';
       activeClass = isActive
-        ? 'bg-[#000000] text-[#ffffff] font-semibold'
+        ? 'bg-[#000000] text-primary-100 font-semibold'
         : 'border border-black';
       break;
     case 'tabRight': // 탭(오른쪽)
       sizeClass = 'w-[169px] h-[42px] text-base font-medium rounded-s-none';
       activeClass = isActive
-        ? 'bg-[#000000] text-[#ffffff] font-semibold'
+        ? 'bg-[#000000] text-primary-100 font-semibold'
         : 'border border-black';
       break;
 

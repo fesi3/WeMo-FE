@@ -1,3 +1,5 @@
+import { twMerge } from 'tailwind-merge';
+
 export interface WithLabelProps
   extends React.LabelHTMLAttributes<HTMLLabelElement> {
   id: string;
@@ -17,7 +19,7 @@ function withLabel<T extends object>(WrappedComponent: React.ComponentType<T>) {
     const { id, name, labelClassName = '', ...rest } = props;
     return (
       <div className="flex flex-col gap-2">
-        <label htmlFor={id} className={`text-sm ${labelClassName}`}>
+        <label htmlFor={id} className={twMerge('text-sm', labelClassName)}>
           {name}
         </label>
         <WrappedComponent id={id} {...(rest as T)} />

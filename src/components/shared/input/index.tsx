@@ -20,7 +20,7 @@ function Input(props: InputProps) {
     ...rest
   } = props;
   const inputClassName = twMerge(
-    `h-mobileInputHeight shrink-0 flex-grow rounded-xl bg-gray-50 p-3 pt-2 text-base placeholder-gray-500 md:h-tabletInputHeight`,
+    `h-mobileInputHeight drop-shadow shrink-0 flex-grow rounded-[4px] bg-gray-50 p-3 text-base placeholder-gray-500 md:h-tabletInputHeight`,
     className,
   );
   return (
