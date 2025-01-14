@@ -7,19 +7,7 @@ type Props = {
 };
 
 function QueryProvider({ children }: Props) {
-  const [queryClient] = React.useState(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: {
-            refetchOnWindowFocus: false,
-            refetchOnReconnect: false,
-            retry: false,
-            retryDelay: 3000,
-          },
-        },
-      }),
-  );
+  const queryClient = new QueryClient();
 
   return (
     <QueryClientProvider client={queryClient}>
