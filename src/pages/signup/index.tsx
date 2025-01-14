@@ -1,5 +1,5 @@
-import SignupLayout from '@/components/signup/signupLayout';
-import SignupForm from '@/components/signup/signupForm';
+import SignupLayout from '@/components/auth/signup/signupLayout';
+import SignupForm from '@/components/auth/signup/signupForm';
 
 function Signup() {
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {

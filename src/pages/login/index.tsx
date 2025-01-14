@@ -1,4 +1,4 @@
-import LoginForm from '@/components/login/loginForm';
+import LoginForm from '@/components/auth/login/loginForm';
 
 function Login() {
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
