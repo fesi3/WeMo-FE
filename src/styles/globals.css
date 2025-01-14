@@ -1,4 +1,13 @@
 @tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply font-sans;
+  }
+}
+
 @layer utilities {
   .chip {
     @apply text-tiny font-medium;
@@ -6,26 +15,11 @@
   .badge {
     @apply text-tiny font-bold uppercase;
   }
-}
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  .label {
+    @apply text-title font-semibold;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-}
 
 /* =============== react-calendar 글로벌 오버라이딩 =============== */
 
@@ -54,3 +48,4 @@ body {
     @apply flex flex-col gap-1 text-sm;
   }
 }
+
