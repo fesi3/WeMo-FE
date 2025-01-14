@@ -17,9 +17,9 @@ interface ButtonProps {
   /* <Button
         type="start"
         text="비회원으로 시작하기"
-        textColor="#ffffff"
-        backColor="#000000"
-        border="1px solid #000000"
+        textColor="#ffffff" or 'text-primary-0'
+        backColor="#000000" or 'bg-primary-0'
+        border=" #000000"  // border는 1px solid가 default 입니다! 다른 border 사용 시 DM 주세요!
       />
    */
 }
@@ -38,87 +38,123 @@ const Button = ({
   let sizeClass = '';
   let activeClass = '';
 
+  /*text-base(16px디폴트) / 텍스트 흰색 기본*/
   const baseClass =
-    'rounded-[8px] text-center text-nowrap  '; /* border border-blue-950*/
+    ' text-center text-nowrap font-medium text-base text-primary-100 ';
+
+  const style = {
+    color: textColor,
+    backgroundColor: backColor,
+    border: `1px solid ${border}`,
+  };
 
   switch (type) {
-    // 로그인, 회원가입, 비회원으로 시작하기
+    // 비회원으로 시작하기
     case 'start':
       sizeClass =
-        'w-[300px] h-[42px] mb-4 text-base font-semibold rounded-lg border border-gray-400';
+        'w-[300px] h-[42px] border border-black bg-primary-100 text-primary-0 rounded-[8px]';
       break;
-    case 'start-signup':
+    // 회원가입/로그인으로 시작하기
+    case 'start_signup':
+    case 'start_login':
       sizeClass =
-        'w-[300px] h-[42px] mb-4 text-base font-semibold rounded-lg border bg-primary-10 text-primary-100';
+        'w-[300px] h-[42px] font-semibold bg-primary-10 rounded-[8px]';
       break;
     // 회원 가입 버튼, 회사명 입력 버튼
     case 'signup':
     case 'companyName':
       sizeClass =
-        'w-[324px] h-[42px] mb-6 text-base font-semibold rounded-lg bg-primary-10 text-primary-100';
+        'w-[324px] h-[42px] font-semibold bg-primary-10 rounded-[8px]';
       break;
-
     case 'meeting_create': // 모임 만들기(메인페이지)
-      sizeClass =
-        'w-[336px] h-[42px] text-base font-medium bg-[#000000] text-primary-100';
+      sizeClass = 'w-[336px] h-[42px] bg-primary-10 rounded-[8px]';
       break;
     case 'no_meeting': // 모임 보러가기(찜한 목록에서 모임 없을 때)
-      sizeClass =
-        'w-[160px] h-[42px] text-base font-medium bg-[#000000] text-primary-100';
+      sizeClass = 'w-[160px] h-[42px] bg-primary-10 rounded-[8px]';
       break;
 
     // 모임 참석/참석 취소 버튼(모임 상세)
     case 'attend': // 참석하기 버튼
     case 'attendCancle': // 참석 취소하기 버튼
-      sizeClass = 'w-[296px] h-[42px] text-base font-medium ';
+      sizeClass =
+        'w-[296px] h-[42px] font-semibold bg-primary-10 rounded-[8px]';
       break;
 
     case 'meetingImg': // 모임 이미지 선택(모임 모달)
       sizeClass =
-        'w-[318px] h-[36px] text-sm font-medium bg-[rgba(0,0,0,0.5)] text-primary-100';
+        'w-[318px] h-[36px] text-sm bg-[rgba(0,0,0,0.5)] border rounded-[6px]';
       break;
     case 'meetingD': // 달램핏(모임 모달)
       sizeClass =
-        'w-[55px] h-[36px] text-sm font-normal bg-gray-200 rounded-[6px]';
-      activeClass = isActive ? 'bg-green-100 font-semibold' : '';
+        'w-[55px] h-[36px] text-sm font-normal bg-gray-200 rounded-[6px] text-primary-0';
+      activeClass = isActive ? 'bg-primary-70 font-semibold' : '';
       break;
     case 'meetingW': // 워케이션(모임 모달)
       sizeClass =
-        'w-[68px] h-[36px] text-sm font-normal bg-gray-200 rounded-[6px]';
-      activeClass = isActive ? 'bg-green-100 font-semibold' : '';
+        'w-[68px] h-[36px] text-sm font-normal bg-gray-200 rounded-[6px] text-primary-0';
+      activeClass = isActive ? 'bg-primary-70 font-semibold' : '';
       break;
-    case 'meetingSubmit': // 제출하기(모임 모달)
+
+    case 'meeting_modify_submit': // 모임 제출하기(모임 모달) - 취소/수정
       sizeClass =
-        'w-[318px] h-[42px] text-base font-semibold bg-[#000000] text-primary-100';
-      break;
-    case 'meeting_modify_submit': // 모임 수정 제출하기(모임 모달)
-      sizeClass = 'w-[151px] h-[36px] text-base font-semibold';
+        'w-[151px] h-[36px] font-semibold bg-primary-10 rounded-[12px] ';
       break;
 
     case 'review_create': // 리뷰 작성하기(모임 컴포넌트 내)
-      sizeClass =
-        'w-[125px] h-[36px] text-base font-medium bg-[#000000] text-primary-100';
+      sizeClass = 'w-[125px] h-[36px] bg-primary-10 rounded-[8px]';
       break;
-    case 'reviewSubmit': // 리뷰 작성 제출하기(리뷰 모달)
-      sizeClass = 'w-[139.5px] h-[42px] text-base font-semibold rounded-[12px]';
+    case 'reviewSubmit': // 리뷰 작성 제출하기(리뷰 모달) - 취소/등록
+      sizeClass =
+        'w-[139.5px] h-[42px] font-semibold bg-primary-10 rounded-[12px] ';
       break;
 
     case 'tabLeft': // 탭(왼쪽)
-      sizeClass = 'w-[169px] h-[42px] text-base font-medium rounded-e-none ';
+      sizeClass = 'w-[169px] h-[42px] rounded-e-none rounded-s-[8px] ';
       activeClass = isActive
-        ? 'bg-[#000000] text-primary-100 font-semibold'
-        : 'border border-black';
+        ? 'bg-primary-10 font-semibold'
+        : 'bg-[#EAEAEA] text-primary-0';
       break;
     case 'tabRight': // 탭(오른쪽)
-      sizeClass = 'w-[169px] h-[42px] text-base font-medium rounded-s-none';
+      sizeClass = 'w-[169px] h-[42px] rounded-s-none rounded-e-[8px] ';
       activeClass = isActive
-        ? 'bg-[#000000] text-primary-100 font-semibold'
-        : 'border border-black';
+        ? 'bg-primary-10 font-semibold'
+        : 'bg-[#EAEAEA] text-primary-0';
       break;
 
-    case 'profile_modify': // 프로필 수정하기 버튼(프로필 수정 모달)
-      sizeClass = 'w-[131.5px] h-[42px] text-base font-medium';
+    case 'profile_modify': // 프로필 수정하기 버튼(프로필 수정 모달) -수정하기/취소
+      sizeClass = 'w-[131.5px] h-[42px] bg-primary-10 rounded-[8px] ';
       break;
+
+    //========= 추가된 스타일 ==============/
+    case 'modify_mypage': // 마이페이지에서 수정/삭제버튼
+      sizeClass =
+        'w-[54px] h-[32px] text-sm font-medium border border-[#A4A4A4] rounded-[12px] ';
+      break;
+    case 'exit_meeting': // 마이페이지에서 모임 탈퇴
+      sizeClass =
+        'w-[90px] h-[32px] text-sm font-medium border border-[#A4A4A4] rounded-[12px] ';
+      break;
+
+    case 'main_tab_total': // 메인 전체 탭
+    case 'main_tab_office': // 메인 오피스 탭
+      sizeClass =
+        'w-[80px] h-[30px] text-sm font-bold bg-primary-40 rounded-[8px]  ';
+      break;
+
+    case 'main_tab_mind': // 메인 마인드 풀 탭
+      sizeClass =
+        'w-[121px] h-[30px] text-sm font-bold bg-primary-40 rounded-[8px]  ';
+      break;
+
+    case 'plan_detail': // 일정 상세정보-일정 변경하기
+      sizeClass = 'w-[318px] h-[42px] bg-primary-10 rounded-[8px] ';
+      break;
+
+    case 'plan_modal': // 일정 모달 버튼
+      sizeClass =
+        'w-[318px] h-[42px] font-semibold bg-primary-10 rounded-[8px] ';
+      break;
+
     default: // 아무 타입 지정하지 않았을 때
       sizeClass = 'text-[14px] w-[120px] h-[40px] bg-orange-200 ';
       break;
@@ -132,6 +168,7 @@ const Button = ({
       className={className} /*  px-[12px] py-[10px]  */
       disabled={disable}
       onClick={onClick}
+      style={style} // border, textCol, borderCol 스타일 임의 변경 가능하도록
     >
       {text}
     </button>
