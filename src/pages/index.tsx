@@ -1,6 +1,6 @@
 // pages/index.tsx
 import React, { useState } from 'react';
-import CalendarPicker from '../components/@shared/CalendarPicker';
+import CalendarPicker from '@/components/shared/calendar/CalendarPicker';
 
 export default function Home() {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
