@@ -1,10 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
 import type { NextPage, GetServerSideProps } from 'next';
 import axios from 'axios';
-import DateModal from '../../components/shared/calendar/DateModal';
-import CardList from '../../components/findGatherings/card/CardList';
-import Tabs from '../../components/findGatherings/tab/tab';
 import Greeting from '../../components/findGatherings/Greeting';
+import Tabs from '../../components/findGatherings/tab/tab';
+import DateModal from '../../components/shared/calendar/DateModal';
+import RegionDropdown from '../../components/shared/dropdown/RegionDropdown';
+import {
+  RegionOption,
+  SubRegionOption,
+} from '../../components/types/reviewType';
+
+import CardList from '../../components/findGatherings/card/CardList';
+
 import { PlanDataWithCategory } from '@/components/types/plans';
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -49,6 +56,13 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
 
   const [isFetching, setIsFetching] = useState<boolean>(false);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+
+  const [selectedRegion, setSelectedRegion] = useState<RegionOption | null>(
+    null,
+  );
+  const [selectedSubRegion, setSelectedSubRegion] =
+    useState<SubRegionOption | null>(null);
+
   // 달램핏 탭일 때만 사용하는 ‘서브 필터’(오피스 스트레칭, 마인드풀니스)
   const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(
     null,
@@ -125,7 +139,21 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
     return (
       <>
         <Greeting />
-        <DateModal onDateSelect={setSelectedDate} />
+        <div className="mb-4 flex gap-4">
+          <DateModal onDateSelect={setSelectedDate} />
+          <RegionDropdown
+            selectedRegion={selectedRegion}
+            selectedSubRegion={selectedSubRegion}
+            onRegionChange={(region) => {
+              setSelectedRegion(region);
+              // 아직 필터링 로직은 없음
+              setSelectedSubRegion(null); // 상위 지역 바뀌면 하위 초기화
+            }}
+            onSubRegionChange={(sub) => {
+              setSelectedSubRegion(sub);
+            }}
+          />
+        </div>
         <CardList plans={filteredPlans} />
       </>
     );
