@@ -42,3 +42,10 @@
   text-decoration: none;
   text-transform: capitalize;
 }
+
+@layer utilities {
+  .form-label {
+    @apply flex flex-col gap-1 text-sm;
+  }
+}
+
