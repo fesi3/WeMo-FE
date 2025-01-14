@@ -1,7 +1,7 @@
 @tailwind base;
 @layer utilities {
   .chip {
-    @apply text-tiny font-medium
+    @apply text-tiny font-medium;
   }
   .badge {
     @apply text-tiny font-bold uppercase;
@@ -31,21 +31,26 @@ body {
 
 /* 달력 상단 네비게이션 부분 */
 .react-calendar__navigation {
-  @apply flex items-center justify-between mb-3;
+  @apply mb-3 flex items-center justify-between;
 }
 
 .react-calendar__navigation button {
-  @apply text-gray-700 hover:text-black transition-colors px-2 py-1;
+  @apply px-2 py-1 text-gray-700 transition-colors hover:text-black;
 }
 .react-calendar__navigation__label {
-  @apply text-lg text-gray-900 font-bold;
+  @apply text-lg font-bold text-gray-900;
 }
 
 /* 요일 이름 영역*/
 .react-calendar__month-view__weekdays,
 .react-calendar__month-view__weekdays__weekday abbr {
-  @apply text-gray-500 font-semibold mb-2;
+  @apply mb-2 font-semibold text-gray-500;
   text-decoration: none;
   text-transform: capitalize;
 }
 
+@layer utilities {
+  .form-label {
+    @apply flex flex-col gap-1 text-sm;
+  }
+}
