@@ -1,13 +1,13 @@
 import Input, { InputProps } from '@/components/shared/input';
 import withLabel from '@/components/shared/input/HOC/withLabel';
 import Button from '@/components/shared/Button';
-import { formValuesType } from '../type';
+import { SignupFormTypes } from '../../type';
 import withError from '@/components/shared/input/HOC/withError';
 
 interface SignupFormProps {
   handleSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  formValues: formValuesType;
+  formValues: SignupFormTypes;
   errors: { [key: string]: string };
 }
 
@@ -16,10 +16,12 @@ const InputWithLabel = withLabel(InputWithMessage);
 
 function SignupForm(props: SignupFormProps) {
   const { handleSubmit, handleChange, formValues, errors } = props;
-  const { name, company, email, password, passwordVerification } = formValues;
+  const { name, nickname, companyName, email, password, passwordVerification } =
+    formValues;
   const {
     name: nameError,
-    company: companyError,
+    nickname: nicknameError,
+    companyName: companyNameError,
     email: emailError,
     password: passwordError,
     passwordVerification: passwordVerificationError,
@@ -37,13 +39,22 @@ function SignupForm(props: SignupFormProps) {
           error={nameError}
         />
         <InputWithLabel
-          id={'company'}
+          id={'nickname'}
+          labelName={'닉네임'}
+          placeholder={'닉네임을 입력해 주세요.'}
+          labelClassName="label"
+          onChange={handleChange}
+          value={nickname}
+          error={nicknameError}
+        />
+        <InputWithLabel
+          id={'companyName'}
           placeholder={'회사명을 입력해 주세요.'}
           labelName={'회사명'}
           labelClassName="label"
           onChange={handleChange}
-          value={company}
-          error={companyError}
+          value={companyName}
+          error={companyNameError}
         />
         <InputWithLabel
           type={'email'}

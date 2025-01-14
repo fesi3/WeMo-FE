@@ -11,17 +11,21 @@ function withError<T extends object>(WrappedComponent: React.ComponentType<T>) {
     const { error, ...rest } = props;
 
     return (
-      <div className="flex flex-col">
+      <div className="relative flex flex-col">
         {/* Wrapped Input */}
         <WrappedComponent
           {...(rest as T)}
           className={twMerge(
             `rounded border p-2`,
-            error ? 'border-red-500' : 'border-gray-300',
+            error ? 'border-red-400' : 'border-gray-300',
           )}
         />
         {/* 에러 메세지 */}
-        {error && <span className="text-sm text-red-500">{error}</span>}
+        {error && (
+          <span className="absolute right-0 top-12 text-small text-red-400">
+            {error}
+          </span>
+        )}
       </div>
     );
   };

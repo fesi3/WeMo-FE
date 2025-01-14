@@ -4,7 +4,8 @@ import { useState } from 'react';
 function useSignupForm() {
   const [signupFormValue, setSignupFormValue] = useState({
     name: '',
-    company: '',
+    nickname: '',
+    companyName: '',
     email: '',
     password: '',
     passwordVerification: '',
@@ -12,7 +13,8 @@ function useSignupForm() {
 
   const [errors, setErrors] = useState({
     name: '',
-    company: '',
+    nickname: '',
+    companyName: '',
     email: '',
     password: '',
     passwordVerification: '',
@@ -26,7 +28,12 @@ function useSignupForm() {
           errorMessage = '이름을 작성해주세요.';
         }
         break;
-      case 'company':
+      case 'nickname':
+        if (!value) {
+          errorMessage = '닉네임을 작성해주세요.';
+        }
+        break;
+      case 'companyName':
         if (!value) {
           errorMessage = '회사명을 작성해주세요.';
         }
