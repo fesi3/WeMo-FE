@@ -30,6 +30,7 @@ export default {
           100: '#FFFFFF',
         },
         heart: '#FF0040',
+        'black-sub': '#A4A4A4',
       },
       fontSize: {
         title: ['16pt', { lineHeight: '1.5' }],
