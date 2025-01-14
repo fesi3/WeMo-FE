@@ -86,7 +86,7 @@ export default function Tabs({ tabs, defaultTab, renderContent }: TabsProps) {
         <motion.div
           layout
           transition={{ type: 'spring', stiffness: 500, damping: 40 }}
-          className="absolute bottom-0 h-[2px] bg-white"
+          className="absolute bottom-0 h-[2px] bg-gray-600"
           style={{
             width: underlineStyle.width,
             left: underlineStyle.left,

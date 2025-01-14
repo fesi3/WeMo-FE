@@ -68,7 +68,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
           <div className="mb-4 flex gap-2">
             <button
               className={`rounded border px-3 py-1 ${
-                selectedSubCategory === null ? 'bg-blue-400 text-white' : ''
+                selectedSubCategory === null ? 'bg-primary-10 text-white' : ''
               }`}
               onClick={() => setSelectedSubCategory(null)}
             >
@@ -77,7 +77,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
             <button
               className={`rounded border px-3 py-1 ${
                 selectedSubCategory === '오피스 스트레칭'
-                  ? 'bg-blue-400 text-white'
+                  ? 'bg-primary-10 text-white'
                   : ''
               }`}
               onClick={() => setSelectedSubCategory('오피스 스트레칭')}
@@ -87,7 +87,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
             <button
               className={`rounded border px-3 py-1 ${
                 selectedSubCategory === '마인드풀니스'
-                  ? 'bg-blue-400 text-white'
+                  ? 'bg-primary-10 text-white'
                   : ''
               }`}
               onClick={() => setSelectedSubCategory('마인드풀니스')}
@@ -201,7 +201,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const res = await axios.get<PlanListResponse>(
-      '${baseUrl}/api/plans?cursor=0&size=10&categoryId=1',
+      `${baseUrl}/api/plans?cursor=0&size=10&categoryId=1`,
     );
     const data = res.data;
     console.log('데이터 확인:', data.data);
