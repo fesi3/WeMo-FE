@@ -49,6 +49,7 @@ const RegionDropdown: React.FC<RegionDropdownProps> = ({
         const res = await axios.get(`${baseUrl}/api/region/province`);
         const { provinceList } = res.data.data;
         setProvinces(provinceList);
+        //null일 때 처리 로직 추가 필요
       } catch (error) {
         console.error('시, 도 데이터 가져오지 못함: ', error);
       }
@@ -76,6 +77,7 @@ const RegionDropdown: React.FC<RegionDropdownProps> = ({
       );
       const { provinceList } = res.data.data;
       setDistricts(provinceList);
+      //null일 때 처리 로직 추가 필요
     } catch (error) {
       console.error('구,도 데이터 가져오지 못함', error);
     }

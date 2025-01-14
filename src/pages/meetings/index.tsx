@@ -77,9 +77,10 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
 
     return (
       <>
-        {/* (1) 서브필터 버튼들 */}
+        {/* 서브필터 버튼들 */}
         {isDalFit && (
           <div className="mb-4 flex gap-2">
+            {/* 추후 공통컴포넌트(버튼)으로 변경 */}
             <button
               className={`rounded border px-3 py-1 ${
                 selectedSubCategory === null ? 'bg-primary-10 text-white' : ''
@@ -111,13 +112,13 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
           </div>
         )}
 
-        {/* (2) 일정 목록 렌더링 */}
+        {/* 일정 목록 렌더링 */}
         {renderPlanList(selectedCategory)}
       </>
     );
   };
 
-  // 탭하위 일정 목록 필터링링
+  // 탭하위 일정 목록 필터링
   const renderPlanList = (selectedCategory: string) => {
     const actualCategory =
       selectedCategory === '달램핏' && selectedSubCategory
@@ -127,12 +128,22 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
     const filteredPlans = plans.filter((p) => {
       const planDate = new Date(p.dateTime).toLocaleDateString();
 
-      // 만약 category(문자열)가 '달램핏', '오피스 스트레칭', '마인드풀니스', '워케이션' 이렇게 들어온다고 할 때,
-      // plan의 p.category가 actualCategory와 같고,
-      // 날짜 필터(selectedDate)도 만족하는 것만 남긴다.
+      const dateCondition = !selectedDate || planDate === selectedDate;
+      const categoryCondition = p.category === actualCategory;
+      const provinceCondition =
+        !selectedRegion || selectedRegion.id === 0 // "전체" or 미선택
+          ? true
+          : p.province === selectedRegion.name;
+      const districtCondition =
+        !selectedSubRegion || selectedSubRegion.id === 0
+          ? true
+          : p.district === selectedSubRegion.name;
+
       return (
-        p.category === actualCategory &&
-        (!selectedDate || planDate === selectedDate)
+        dateCondition &&
+        categoryCondition &&
+        provinceCondition &&
+        districtCondition
       );
     });
 
@@ -146,8 +157,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
             selectedSubRegion={selectedSubRegion}
             onRegionChange={(region) => {
               setSelectedRegion(region);
-              // 아직 필터링 로직은 없음
-              setSelectedSubRegion(null); // 상위 지역 바뀌면 하위 초기화
+              setSelectedSubRegion(null);
             }}
             onSubRegionChange={(sub) => {
               setSelectedSubRegion(sub);
@@ -171,8 +181,16 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
           setIsFetching(true);
           try {
             const categoryId = getCategoryId('달램핏', selectedSubCategory);
+            const provinceParam =
+              selectedRegion && selectedRegion.id > 0
+                ? `&province=${selectedRegion.name}`
+                : '';
+            const districtParam =
+              selectedSubRegion && selectedSubRegion.id > 0
+                ? `&district=${selectedSubRegion.name}`
+                : '';
             const res = await axios.get<PlanListResponse>(
-              `${baseUrl}/api/plans?cursor=${cursor}&size=10&categoryId=${categoryId}`,
+              `${baseUrl}/api/plans?cursor=${cursor}&size=10&categoryId=${categoryId}${provinceParam}${districtParam}`,
             );
             const newData = res.data;
 
@@ -215,7 +233,13 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
     return () => {
       observer.disconnect();
     };
-  }, [cursor, isFetching, selectedSubCategory]);
+  }, [
+    cursor,
+    isFetching,
+    selectedSubCategory,
+    selectedRegion,
+    selectedSubRegion,
+  ]);
 
   return (
     <div className="mx-auto max-w-md px-4 py-6">
