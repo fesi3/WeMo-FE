@@ -9,7 +9,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Roboto', 'ui-sans-serif', 'system-ui'],
+        sans: ['Noto Sans KR', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       colors: {
         background: 'var(--background)',

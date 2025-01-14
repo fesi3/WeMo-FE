@@ -1,4 +1,13 @@
 @tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply font-sans;
+  }
+}
+
 @layer utilities {
   .chip {
     @apply text-tiny font-medium;
@@ -6,9 +15,11 @@
   .badge {
     @apply text-tiny font-bold uppercase;
   }
+  .label {
+    @apply text-title font-semibold;
+  }
 }
-@tailwind components;
-@tailwind utilities;
+
 
 /* =============== react-calendar 글로벌 오버라이딩 =============== */
 
