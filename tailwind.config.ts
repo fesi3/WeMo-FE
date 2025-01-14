@@ -36,7 +36,6 @@ export default {
         basic: ['14pt', { lineHeight: '1.5' }],
         small: ['12pt', { lineHeight: '1.5' }],
         tiny: ['10pt', { lineHeight: '1.5' }],
-        label: ['18pt', { lineHeight: '1.5' }],
       },
       spacing: {
         mobileInputHeight: '40px',
