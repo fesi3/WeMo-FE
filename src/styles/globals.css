@@ -1,26 +1,36 @@
 @tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply font-sans;
+  }
+}
+
 @layer utilities {
   .chip {
-    @apply text-tiny font-medium
+    @apply text-tiny font-medium;
   }
   .badge {
     @apply text-tiny font-bold uppercase;
   }
+  .label {
+    @apply text-title font-semibold;
+  }
 }
-@tailwind components;
-@tailwind utilities;
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 body {
   color: var(--foreground);
