@@ -1,6 +1,7 @@
-interface User {
+export interface User {
   nickname: string;
   profileImagePath: string;
+  createdAt: string;
 }
 
 interface MeetingInfo {
@@ -10,7 +11,7 @@ interface MeetingInfo {
   meetingImagePath: string;
 }
 
-interface PlanData {
+export interface PlanData {
   planId: number;
   nickname: string;
   profileImagePath: string;
