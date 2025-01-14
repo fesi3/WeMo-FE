@@ -1,24 +1,9 @@
 import SignupLayout from '@/components/auth/signup/signupLayout';
 import SignupForm from '@/components/auth/signup/signupForm';
-import { useState } from 'react';
+import useSignupForm from '@/hooks/useSignupForm';
 
 function Signup() {
-  const [signupFormValue, setSignupFormValue] = useState({
-    name: '',
-    company: '',
-    email: '',
-    password: '',
-    passwordVerification: '',
-  });
-
-  // 입력창 제어 함수
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-    setSignupFormValue((prev) => ({
-      ...prev,
-      [id]: value,
-    }));
-  };
+  const { signupFormValue, handleChange, errors } = useSignupForm();
 
   // 폼 제출 함수
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -32,6 +17,7 @@ function Signup() {
         formValues={signupFormValue}
         handleSubmit={handleSubmit}
         handleChange={handleChange}
+        errors={errors}
       />
     </div>
   );
