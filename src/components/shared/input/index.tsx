@@ -7,6 +7,7 @@ export interface InputProps
   type?: InputType;
   id: string;
   className?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 // props 추가 작성 가능
@@ -17,6 +18,7 @@ function Input(props: InputProps) {
     type = 'text',
     placeholder = '입력해 주세요.',
     className,
+    onChange,
     ...rest
   } = props;
   const inputClassName = twMerge(
@@ -28,6 +30,7 @@ function Input(props: InputProps) {
       className={inputClassName}
       type={type}
       placeholder={placeholder}
+      onChange={onChange}
       {...rest}
     />
   );

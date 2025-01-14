@@ -1,14 +1,15 @@
-import Input from '@/components/shared/input';
+import Input, { InputProps } from '@/components/shared/input';
 import withLabel from '@/components/shared/input/HOC/withLabel';
 import Button from '@/components/shared/Button';
 
 interface SignupFormProps {
   handleSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 function SignupForm(props: SignupFormProps) {
-  const { handleSubmit } = props;
-  const InputWithLabel = withLabel(Input);
+  const { handleSubmit, handleChange } = props;
+  const InputWithLabel = withLabel<InputProps>(Input);
   return (
     <form className="flex w-[324px] flex-col gap-[68px]">
       <div className="flex flex-col gap-6">
@@ -17,9 +18,10 @@ function SignupForm(props: SignupFormProps) {
           placeholder={'이름을 입력해 주세요.'}
           name={'이름'}
           labelClassName="label"
+          inputOnChange={handleChange}
         />
         <InputWithLabel
-          id={'company-name'}
+          id={'company'}
           placeholder={'회사명을 입력해 주세요.'}
           name={'회사명'}
           labelClassName="label"
@@ -29,6 +31,7 @@ function SignupForm(props: SignupFormProps) {
           placeholder={'이메일 주소를 입력해 주세요.'}
           name={'이메일 주소'}
           labelClassName="label"
+          inputOnChange={handleChange}
         />
         <div className="flex flex-col gap-6">
           <InputWithLabel
@@ -36,11 +39,13 @@ function SignupForm(props: SignupFormProps) {
             placeholder={'비밀번호를 입력해 주세요.'}
             name={'비밀번호'}
             labelClassName="label"
+            inputOnChange={handleChange}
           />
           <Input
-            id={'password-verifing'}
-            aria-label={'password-verifing'}
+            id={'passwordVerification'}
+            aria-label={'passwordVerification'}
             placeholder={'비밀번호를 다시 입력해 주세요.'}
+            onChange={handleChange}
           />
         </div>
       </div>

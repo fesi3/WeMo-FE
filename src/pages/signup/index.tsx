@@ -1,14 +1,34 @@
 import SignupLayout from '@/components/auth/signup/signupLayout';
 import SignupForm from '@/components/auth/signup/signupForm';
+import { useState } from 'react';
 
 function Signup() {
+  const [signupFormValue, setSignupFormValue] = useState({
+    name: '',
+    company: '',
+    email: '',
+    password: '',
+    passwordVerification: '',
+  });
+
+  // 입력창 제어 함수
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setSignupFormValue((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // 폼 제출 함수
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log('폼 제출 완료!');
+    console.log(signupFormValue);
   };
+
   return (
     <div className="flex w-full justify-center">
-      <SignupForm handleSubmit={handleSubmit} />
+      <SignupForm handleSubmit={handleSubmit} handleChange={handleChange} />
     </div>
   );
 }

@@ -5,6 +5,7 @@ export interface WithLabelProps
   id: string;
   name: string;
   labelClassName?: string;
+  inputOnChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 // HOC 패턴을 활용한 withLabel 컴포넌트
@@ -16,13 +17,13 @@ export interface WithLabelProps
 
 function withLabel<T extends object>(WrappedComponent: React.ComponentType<T>) {
   return (props: WithLabelProps & T) => {
-    const { id, name, labelClassName = '', ...rest } = props;
+    const { id, name, inputOnChange, labelClassName = '', ...rest } = props;
     return (
       <div className="flex flex-col gap-2">
         <label htmlFor={id} className={twMerge('text-sm', labelClassName)}>
           {name}
         </label>
-        <WrappedComponent id={id} {...(rest as T)} />
+        <WrappedComponent id={id} onChange={inputOnChange} {...(rest as T)} />
       </div>
     );
   };
