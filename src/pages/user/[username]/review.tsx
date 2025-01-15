@@ -1,13 +1,47 @@
 import Button from '@/components/shared/Button';
-import meetingImg from '@/assets/images/Rectangle 6188.png';
 import ReviewCard from '@/components/mypage/ReviewCard';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReviewableCard from '@/components/mypage/ReviewableCard';
+import axios from 'axios';
+import { StaticImageData } from 'next/image';
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_KEY;
+
+export interface ReviewData {
+  reviewId: number; // 리뷰 상세로 이동
+
+  planName: string;
+  dateTime: string;
+  category: string;
+  address: string;
+  score: number;
+  comment: string;
+  reivewImagePath: string | StaticImageData;
+
+  planId: number; // 일정 상세로 이동
+}
+
+export interface ReviewPlanData {
+  planId: number;
+  planName: string;
+  dateTime: string;
+  category: string;
+  address: string;
+  planImagePath: string | StaticImageData;
+  capacity: number;
+  participants: number;
+  createdAt: string;
+  updatedAt: string;
+}
 
 export default function MyReview() {
   const [activeTab, setActiveTab] = useState<'tabLeft' | 'tabRight' | null>(
     'tabLeft',
   );
+
+  // 데이터 상태
+  const [reviewData, setReviewData] = useState<ReviewData[]>([]);
+  const [reviewableData, setReviewableData] = useState<ReviewPlanData[]>([]);
 
   // 탭 클릭 시 상태 변경
   const handleButtonClick = (newTab: 'tabLeft' | 'tabRight') => {
@@ -18,77 +52,51 @@ export default function MyReview() {
   };
   console.log('클릭', activeTab);
 
-  const reviewableData = [
-    {
-      planId: 2,
-      planName: '이니미니마이니모',
-      dateTime: '2025-01-06 12:00:00',
-      category: '오피스 스트레칭',
-      address: '서울 중구 을지로 2가 6',
-      planImagePath: meetingImg,
-      capacity: 3,
-      participants: 2,
-    },
-    {
-      planId: 3,
-      planName: '노래방팟',
-      dateTime: '2025-03-06 12:00:00',
-      category: '워케이션',
-      address: '강남구',
-      planImagePath: meetingImg,
-      capacity: 6,
-      participants: 2,
-    },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!setActiveTab) return;
 
-  const reviewData = [
-    {
-      planId: 1,
-      planName: '배드민턴 치기',
-      dateTime: '2019-03-02 10:00',
-      category: '달램핏',
-      address: '강남구',
-      reivewImagePath: meetingImg,
-      reviewId: 3,
-      score: 4,
-      comment: '너무너무 재밌었어요',
-    },
-    {
-      planId: 4,
-      planName: '노래방 가기',
-      dateTime: '2019-03-02 10:00',
-      category: '워케이션',
-      address: '아산시',
-      reivewImagePath: meetingImg,
-      reviewId: 2,
-      score: 1,
-      comment: '노래방 기기가 별로였어요ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ 다음부터 안갈랭',
-    },
-  ];
-  // 데이터 상태
-  // const [reviewData, setReviewData] = useState<ReviewProps[]>([]);
+      const apiUrl =
+        activeTab === 'tabLeft'
+          ? `${BASE_URL}/my_review`
+          : `${BASE_URL}/my_reviewable`;
 
-  // useEffect(() => {
-  //   setReviewData([]); // 탭 이동때문에 넣음
-  //   const fetchData = async () => {
-  //     if (!setActiveTab) return;
+      try {
+        const response = await axios.get(apiUrl);
 
-  //     const apiUrl =
-  //       activeTab === 'tabLeft'
-  //         ? 'https://677e23a294bde1c1252a8cc0.mockapi.io/users/1/review'
-  //         : 'https://677e23a294bde1c1252a8cc0.mockapi.io/users/1/review/1/available';
+        const userReviewableData = response.data.data.planList;
+        const userReviewableCount = response.data.data.planCount;
+        const userReviewData = response.data.data.reviewList;
+        const userReviewCount = response.data.data.reviewCount;
 
-  //     try {
-  //       const response = await axios.get(apiUrl);
-  //       setReviewData(response.data.data.planList);
-  //       console.log(reviewData);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
+        console.log('(api응답)리뷰수', userReviewCount, userReviewData);
+        console.log(
+          '(api응답)일정 수',
+          userReviewableCount,
+          userReviewableData,
+        );
 
-  //   fetchData();
-  // }, [activeTab]);
+        // activeTab에 따라서 데이터 처리
+        if (activeTab === 'tabLeft') {
+          setReviewData(userReviewData);
+        } else {
+          // tabRight 일 때 (reviewableData가 존재할 때만 업데이트)
+          if (userReviewableData && userReviewableData.length > 0) {
+            setReviewableData(userReviewableData);
+          } else {
+            setReviewableData([]); // 없으면 빈 배열로
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [activeTab]);
+
+  console.log('업데이트 된 리뷰 ', reviewData);
+  console.log('업데이트 된 리뷰가능 목록 ', reviewableData);
 
   return (
     <>
@@ -117,9 +125,9 @@ export default function MyReview() {
         {activeTab === 'tabLeft' ? (
           <section className="flex flex-col">
             <ul>
-              {reviewData.map((plan) => (
-                <li key={plan.planId}>
-                  <ReviewCard reviewed={plan} />
+              {reviewData.map((review) => (
+                <li key={review.reviewId}>
+                  <ReviewCard reviewed={review} />
                 </li>
               ))}
             </ul>

@@ -1,18 +1,12 @@
-import { StaticImageData } from 'next/image';
 import Image from 'next/image';
 import Button from '../shared/Button';
+import { ReviewPlanData } from '@/pages/user/[username]/review';
 
-export interface ReviewableProps {
-  reviewable: {
-    planName: string;
-    category: string;
-    dateTime: string;
-    address: string;
-    planImagePath: StaticImageData;
-    planId: number; // 일정 상세로 이동
-  };
+interface reviewableProps {
+  reviewable: ReviewPlanData;
 }
-const ReviewableCard = ({ reviewable }: ReviewableProps) => {
+
+const ReviewableCard = ({ reviewable }: reviewableProps) => {
   const { planName, category, dateTime, planImagePath, planId } = reviewable;
 
   const goPlanDetail = (planId: number) => {

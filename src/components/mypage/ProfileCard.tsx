@@ -1,42 +1,39 @@
-import Image, { StaticImageData } from 'next/image';
-// 프로필 유저 정보
-export interface User {
-  nickname: string;
-  companyName: string;
-  profileImagePath: StaticImageData;
-  myPlan: number;
-  myMeeting: number;
-  myReview: number;
+import { UserData } from '@/pages/user/[username]';
+import Image from 'next/image';
+
+interface UserProps {
+  user: UserData | null; // planData의 타입을 PlanData로 변경
 }
 
-const ProfileCard = ({ user }: { user: User | null }) => {
+const ProfileCard = ({ user }: UserProps) => {
   if (!user) {
     return <p>로딩 중</p>;
   }
+  const {
+    nickname,
+    profileImagePath,
+    companyName,
+    joinedPlanCount,
+    likedPlanCount,
+    writtenReviewCount,
+  } = user;
 
   const statistics = [
-    { text: '나의 일정', value: user.myPlan },
-    { text: '나의 모임', value: user.myMeeting },
-    { text: '작성 리뷰', value: user.myReview, hasNotification: true },
+    { text: '나의 일정', value: joinedPlanCount },
+    { text: '나의 모임', value: likedPlanCount },
+    { text: '작성 리뷰', value: writtenReviewCount, hasNotification: true },
   ];
 
   return (
     <div className="flex flex-col justify-center gap-3">
-      {/* 상단 부분분 */}
+      {/* 상단 부분 */}
       <div className="flex items-center justify-center gap-3 py-3.5">
         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200">
-          <Image
-            src={user.profileImagePath}
-            alt="profile"
-            width={30}
-            height={30}
-          />
+          <Image src={profileImagePath} alt="profile" width={30} height={30} />
         </div>
         <div className="flex-1 text-start">
-          <p className="text-base font-semibold leading-[24px]">
-            {user.nickname}
-          </p>
-          <p className="text-xs text-gray-500">{user.companyName}</p>
+          <p className="text-base font-semibold leading-[24px]">{nickname}</p>
+          <p className="text-xs text-gray-500">{companyName}</p>
         </div>
         <button className="self-end text-xs text-[#808080]">
           프로필 편집 &gt;

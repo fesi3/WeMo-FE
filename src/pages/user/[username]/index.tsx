@@ -1,46 +1,49 @@
-import ProfileCard, { User } from '@/components/mypage/ProfileCard';
+import ProfileCard from '@/components/mypage/ProfileCard';
 import React, { useEffect, useState } from 'react';
 // import axios from 'axios';
-import profileImg from '@/assets/images/profile.png'; // 이미지 경로를 import
 import IndexNav from '@/components/mypage/IndexNav';
+import axios from 'axios';
+import { StaticImageData } from 'next/image';
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_KEY;
+
+export interface UserData {
+  email: string;
+  nickname: string;
+  profileImagePath: string | StaticImageData;
+  companyName: string;
+  loginType: string;
+  createdAt: string;
+  joinedPlanCount: number;
+  likedPlanCount: number;
+  writtenReviewCount: number;
+}
 
 export default function MyPage() {
-  const [userData, setUserData] = useState<User | null>(null);
+  const [userData, setUserData] = useState<UserData | null>(null);
   console.log(userData);
-  // //최초 렌더링 시에만 api 호출
-  // useEffect(() => {
-  //   async function fetchUserData() {
-  //     try {
-  //       const response = await axios.get(
-  //         '', //api 호출 경로
-
-  //         {
-  //           headers: {
-  //             Authorization: ``, // JWT 토큰
-  //           },
-  //         },
-  //       );
-  //       setUserData(response.data.planList);
-  //     } catch (error) {
-  //       console.error('api 에러', error);
-  //     }
-  //   }
-
-  //   fetchUserData();
-  // }, []);
 
   useEffect(() => {
-    // 임시 데이터
-    const tempUser: User = {
-      nickname: '지원',
-      companyName: '코드잇',
-      profileImagePath: profileImg,
-      myPlan: 5,
-      myMeeting: 3,
-      myReview: 10,
-    };
+    async function fetchUserData() {
+      try {
+        const response = await axios.get(
+          `${BASE_URL}/my_user`, //api 호출 경로
+          // {
+          //   headers: {
+          //     Authorization: ``, // JWT 토큰
+          //   },
+          // },
+        );
+        const responseData = response.data.data;
 
-    setUserData(tempUser);
+        console.log(responseData);
+        setUserData(responseData);
+      } catch (error) {
+        console.error('api 에러', error);
+      }
+    }
+
+    fetchUserData();
   }, []);
 
   const listItem = [
