@@ -1,4 +1,4 @@
-import MeetingDetailMain from '@/components/meetings/meetingDetailMain';
+import MeetingDetailMain from '@/components/meetings/MeetingDetailMain';
 
 export default function MeetingDetailPage() {
   return (
