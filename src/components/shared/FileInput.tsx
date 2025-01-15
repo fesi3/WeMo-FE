@@ -66,18 +66,17 @@ export default function FileInput<T extends FieldValues>({
             </div>
           ))}
         {croppedImages.length < 5 && (
-          <div className="flex aspect-[5/3] w-[30%] shrink-0 cursor-pointer items-center justify-center rounded-md bg-gray-200 opacity-40">
-            <label className="">
-              <Image
-                src="/assets/icons/camera.svg"
-                alt="사진 업로드"
-                width={30}
-                height={30}
-                priority
-              />
-              <input className="hidden" type="file" {...register(name)} />
-            </label>
-          </div>
+          <label className="flex aspect-[5/3] w-[30%] shrink-0 cursor-pointer items-center justify-center rounded-md bg-gray-200 opacity-40">
+            <Image
+              className="cursor-pointer"
+              src="/assets/icons/camera.svg"
+              alt="사진 업로드"
+              width={30}
+              height={30}
+              priority
+            />
+            <input className="hidden" type="file" {...register(name)} />
+          </label>
         )}
       </div>
       <Modal

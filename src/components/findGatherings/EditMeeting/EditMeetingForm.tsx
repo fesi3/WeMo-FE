@@ -4,14 +4,13 @@ import useToggle from '@/hooks/useToggle';
 import useCropper from '@/hooks/useCropper';
 import FileInput from '../../shared/FileInput';
 import Button from '@/components/shared/Button';
-import CategoryRadioInput from '@/components/findGatherings/EditMeeting/CategoryRadioInput';
+import CategoryRadioInput from '@/components/findGatherings/editMeeting/CategoryRadioInput';
 
 interface FormValues {
   meetingName: string;
   description: string;
   categoryId: string;
   imageFiles: File[];
-  handleCloseThisModal: () => void;
 }
 
 interface EditMeetingFormProps {
