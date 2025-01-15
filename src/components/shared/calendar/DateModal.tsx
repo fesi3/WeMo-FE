@@ -29,11 +29,16 @@ export default function DateModal({ onDateSelect }: DateModalProps) {
 
   const buttonText = selectedDate
     ? selectedDate.toLocaleDateString() // or 원하는 포맷
-    : '날짜 전체';
+    : '날짜 선택';
 
   return (
     <div className="flex items-center gap-4">
-      <button onClick={handleOpen}> {buttonText} </button>
+      <button
+        onClick={handleOpen}
+        className="rounded-lg border border-gray-300 px-4 py-2 text-sm shadow-md focus:ring-2 focus:ring-blue-500"
+      >
+        {buttonText}
+      </button>
       <Modal isOpen={isOpen} handleClose={handleClose} title="날짜 선택 모달">
         <div>
           <CalendarPicker onChange={handleDateChange} />

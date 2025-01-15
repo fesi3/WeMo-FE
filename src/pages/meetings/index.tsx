@@ -9,8 +9,9 @@ import {
   RegionOption,
   SubRegionOption,
 } from '../../components/types/reviewType';
-
+import EditMeetingButton from '../../components/findGatherings/EditMeeting/EditMeetingButton';
 import CardList from '../../components/findGatherings/card/CardList';
+import Button from '@/components/shared/Button';
 
 import { PlanDataWithCategory } from '@/components/types/plans';
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -76,45 +77,48 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
     const isDalFit = selectedCategory === '달램핏';
 
     return (
-      <>
+      <div className="container mx-auto p-4">
+        <Greeting />
         {/* 서브필터 버튼들 */}
         {isDalFit && (
           <div className="mb-4 flex gap-2">
             {/* 추후 공통컴포넌트(버튼)으로 변경 */}
-            <button
-              className={`rounded border px-3 py-1 ${
-                selectedSubCategory === null ? 'bg-primary-10 text-white' : ''
-              }`}
+            <Button
+              type="main_tab_total"
+              text="전체"
               onClick={() => setSelectedSubCategory(null)}
-            >
-              전체
-            </button>
-            <button
-              className={`rounded border px-3 py-1 ${
-                selectedSubCategory === '오피스 스트레칭'
-                  ? 'bg-primary-10 text-white'
-                  : ''
-              }`}
+              isActive={selectedSubCategory === null}
+              backColor={selectedSubCategory === '전체' ? 'bg-gray' : ''}
+              textColor={selectedSubCategory === '전체' ? 'text-white' : ''}
+            />
+            <Button
+              type="main_tab_office"
+              text="오피스"
               onClick={() => setSelectedSubCategory('오피스 스트레칭')}
-            >
-              오피스 스트레칭
-            </button>
-            <button
-              className={`rounded border px-3 py-1 ${
-                selectedSubCategory === '마인드풀니스'
-                  ? 'bg-primary-10 text-white'
-                  : ''
-              }`}
+              isActive={selectedSubCategory === '오피스 스트레칭'}
+              backColor={
+                selectedSubCategory === '오피스 스트레칭' ? 'bg-gray' : ''
+              }
+              textColor={
+                selectedSubCategory === '오피스 스트레칭' ? 'text-white' : ''
+              }
+            />
+            <Button
+              type="main_tab_mind"
+              text="마인드풀니스"
               onClick={() => setSelectedSubCategory('마인드풀니스')}
-            >
-              마인드풀니스
-            </button>
+              isActive={selectedSubCategory === '마인드풀니스'}
+              backColor={
+                selectedSubCategory === '마인드풀니스' ? 'bg-gray' : ''
+              }
+              textColor={
+                selectedSubCategory === '마인드풀니스' ? 'text-white' : ''
+              }
+            />
           </div>
         )}
-
-        {/* 일정 목록 렌더링 */}
         {renderPlanList(selectedCategory)}
-      </>
+      </div>
     );
   };
 
@@ -148,8 +152,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
     });
 
     return (
-      <>
-        <Greeting />
+      <div className="container mx-auto">
         <div className="mb-4 flex gap-4">
           <DateModal onDateSelect={setSelectedDate} />
           <RegionDropdown
@@ -164,8 +167,11 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
             }}
           />
         </div>
+        <div className="mb-6 flex justify-end">
+          <EditMeetingButton />
+        </div>
         <CardList plans={filteredPlans} />
-      </>
+      </div>
     );
   };
 
