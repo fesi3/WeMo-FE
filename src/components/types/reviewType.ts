@@ -2,8 +2,8 @@ export interface Review {
   reviewId: number;
   score: number;
   comment: string;
-  gatheringImage: string;
-  groupName: string;
+  planImagePath: string;
+  planName: string;
   location: string;
   createdAt: string;
 }
