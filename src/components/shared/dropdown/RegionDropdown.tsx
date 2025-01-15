@@ -46,7 +46,7 @@ const RegionDropdown: React.FC<RegionDropdownProps> = ({
   useEffect(() => {
     const fetchProvinceList = async () => {
       try {
-        const res = await axios.get(`${baseUrl}/api/region/province`);
+        const res = await axios.get(`${baseUrl}/api/regions/province`);
         const { provinceList } = res.data.data;
         setProvinces(provinceList);
         //null일 때 처리 로직 추가 필요
@@ -65,15 +65,14 @@ const RegionDropdown: React.FC<RegionDropdownProps> = ({
       setDistricts([]); // 서브 지역 초기화
       return;
     }
-
     // 일반 케이스
     onRegionChange(province);
-    onSubRegionChange(null); // 서브 지역 초기화
+    // onSubRegionChange(null); // 서브 지역 초기화
 
     //district 목록 가져오기
     try {
       const res = await axios.get(
-        `${baseUrl}/api/region/district?provinceId=${province.id}`,
+        `${baseUrl}/api/regions/district?provinceId=${province.id}`,
       );
       const { provinceList } = res.data.data;
       setDistricts(provinceList);
@@ -97,15 +96,15 @@ const RegionDropdown: React.FC<RegionDropdownProps> = ({
     }
   }, [selectedRegion]);
 
-  const extendedProvinces: RegionOption[] =
-    provinces.length === 0
-      ? [{ id: 0, name: '전체', subRegions: [] }, ...provinces]
-      : provinces;
+  const extendedProvinces: RegionOption[] = [
+    { id: 0, name: '전체', subRegions: [] },
+    ...provinces,
+  ];
 
-  const extendedDistricts: SubRegionOption[] =
-    districts.length === 0
-      ? [{ id: 0, name: '전체' }, ...districts]
-      : districts;
+  const extendedDistricts: SubRegionOption[] = [
+    { id: 0, name: '전체' },
+    ...districts,
+  ];
 
   return (
     <div className="flex gap-4">
@@ -122,7 +121,7 @@ const RegionDropdown: React.FC<RegionDropdownProps> = ({
         options={extendedDistricts} // 상위 지역에 따라 하위 카테고리 표시
         selectedOption={selectedSubRegion}
         onSelect={handleDistrictSelect}
-        placeholder={selectedRegion ? '구 선택' : '지역 먼저 선택'}
+        placeholder={selectedRegion ? '하위 지역' : '지역 먼저 선택'}
         className={!selectedRegion ? 'pointer-events-none opacity-50' : ''} // 지역 선택 안 했을 때 비활성화
       />
     </div>
