@@ -31,12 +31,14 @@ export default function Modal({
     isOpen && (
       <ModalPortal>
         <ModalBackDrop />
-        <div className="fixed left-1/2 top-1/2 flex w-full max-w-screen-md -translate-x-1/2 -translate-y-1/2 flex-col bg-white p-6 text-black">
-          <div className="flex justify-end pb-10">
-            {title ? <span className="grow">{title}</span> : null}
-            <button onClick={handleClose}>닫기버튼</button>
+        <div className="fixed left-1/2 top-1/2 flex w-full max-w-screen-md -translate-x-1/2 -translate-y-1/2 p-6">
+          <div className="flex w-full flex-col rounded-lg bg-white p-6 text-black">
+            <div className="flex justify-end pb-10">
+              {title ? <span className="grow">{title}</span> : null}
+              <button onClick={handleClose}>닫기버튼</button>
+            </div>
+            <div className="h-full w-full">{children}</div>
           </div>
-          <div className="h-full w-full">{children}</div>
         </div>
       </ModalPortal>
     )
