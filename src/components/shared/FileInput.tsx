@@ -1,5 +1,5 @@
 import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
-import CropperModal from '../plan/CropperModal';
+import CropperModal from '../plans/CropperModal';
 import Modal from './modals/Modal';
 import { CroppedImageType } from '../types/cropperType';
 import Image from 'next/image';
