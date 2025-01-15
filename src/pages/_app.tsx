@@ -21,10 +21,10 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return getLayout(
-    <div className={noto.className}>
+    <main className={noto.className}>
       <QueryProvider>
         <Component {...pageProps} />
       </QueryProvider>
-    </div>,
+    </main>,
   );
 }
