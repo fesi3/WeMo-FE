@@ -46,7 +46,7 @@ function Signup() {
 }
 
 Signup.getLayout = function getLayout(page: React.ReactElement) {
-  return <SignupLayout title={'회원가입'}>{page}</SignupLayout>;
+  return <SignupLayout layoutTitle={'회원가입'}>{page}</SignupLayout>;
 };
 
 export default Signup;
