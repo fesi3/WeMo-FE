@@ -1,7 +1,7 @@
 import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 import CropperModal from '../plan/CropperModal';
 import Modal from './modals/Modal';
-import { CroppedImageType } from '../types/cropperType';
+import { CroppedImageType } from '../../types/cropperType';
 
 /**
  * @param croppedImages : 이미지를 자른 후 저장하는 배열 (useCropper)

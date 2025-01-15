@@ -1,4 +1,4 @@
-import { GET_PLAN_DETAIL_RESPONSE } from '@/components/types/api/plan';
+import { GET_PLAN_DETAIL_RESPONSE } from '@/types/api/plan';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';

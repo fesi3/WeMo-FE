@@ -1,4 +1,4 @@
-import { PlanData, User } from '../types/api/plan';
+import { PlanData, User } from '../../types/api/plan';
 
 import Carousel from '@/components/shared/Carousel';
 import ProgressBar from '@/components/shared/ProgressBar';

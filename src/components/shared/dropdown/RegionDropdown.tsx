@@ -1,6 +1,6 @@
 import React from 'react';
 import Dropdown from '@/components/shared/dropdown/DropDown';
-import { RegionOption, SubRegionOption } from '@/components/types/reviewType';
+import { RegionOption, SubRegionOption } from '@/types/reviewType';
 
 const regionOptions: RegionOption[] = [
   {
