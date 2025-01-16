@@ -38,6 +38,7 @@ export default function EditPlanForm({
     useForm<FormValues>({
       defaultValues: {
         coordinate: { lat: INITIAL_POSITION.lat, lng: INITIAL_POSITION.lng },
+        capacity: 20,
       },
     });
 
@@ -67,6 +68,7 @@ export default function EditPlanForm({
   const imageFieldValue = watch('imageFiles');
   const coordinateValue = watch('coordinate');
   const capacityValue = watch('capacity');
+
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     const { id } = router.query;
     const imageFiles = croppedImages.map((image) => image.blobImg);
