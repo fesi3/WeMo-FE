@@ -9,6 +9,7 @@ interface TabsProps {
   tabs: TabItem[];
   defaultTab?: string;
   renderContent: (selectedLabel: string) => React.ReactNode;
+  onTabChange?: (selectedLabel: string) => void;
 }
 
 const UNDERLINE_OFFSET = 120;
@@ -19,7 +20,12 @@ const fadeVariants = {
   exit: { opacity: 0 },
 };
 
-export default function Tabs({ tabs, defaultTab, renderContent }: TabsProps) {
+export default function Tabs({
+  tabs,
+  defaultTab,
+  renderContent,
+  onTabChange,
+}: TabsProps) {
   const [selectedTab, setSelectedTab] = useState<string>(
     defaultTab || tabs[0]?.category,
   );
@@ -46,8 +52,11 @@ export default function Tabs({ tabs, defaultTab, renderContent }: TabsProps) {
     };
   }
 
-  const handleTabClick = (tabcategory: string) => {
-    setSelectedTab(tabcategory);
+  const handleTabClick = (tabCategory: string) => {
+    setSelectedTab(tabCategory);
+    if (onTabChange) {
+      onTabChange(tabCategory);
+    }
   };
 
   useEffect(() => {
@@ -86,7 +95,7 @@ export default function Tabs({ tabs, defaultTab, renderContent }: TabsProps) {
         <motion.div
           layout
           transition={{ type: 'spring', stiffness: 500, damping: 40 }}
-          className="absolute bottom-0 h-[2px] bg-white"
+          className="absolute bottom-0 h-[2px] bg-gray-600"
           style={{
             width: underlineStyle.width,
             left: underlineStyle.left,
@@ -107,7 +116,7 @@ export default function Tabs({ tabs, defaultTab, renderContent }: TabsProps) {
                 exit="exit"
                 transition={{ duration: 0.3 }}
               >
-                {renderContent(selectedTab)}
+                {renderContent(tab.category)}
               </motion.div>
             ) : null,
           )}
