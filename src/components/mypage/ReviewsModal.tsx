@@ -98,7 +98,7 @@ export default function ReviewModal({
         </span>
         <textarea
           {...register('comment', { required: '리뷰 내용을 입력해주세요.' })}
-          placeholder="남겨주신 리뷰는 프로그램 운영 및 다른 회원 분들께 큰 도움이 됍니다."
+          placeholder="남겨주신 리뷰는 프로그램 운영 및 다른 회원 분들께 큰 도움이 됩니다."
           className="h-32 w-full rounded-md border border-gray-300 p-3"
         />
       </label>
