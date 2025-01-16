@@ -85,7 +85,7 @@ export default function Tabs({
                 tabRefs.current[idx] = el;
               }}
               onClick={() => handleTabClick(tab.category)}
-              className={`flex-1 py-2 text-center text-base transition-colors ${isActive ? 'font-bold' : 'text-gray-400'} `}
+              className={`flex-1 py-2 text-center text-base transition-colors ${isActive ? 'font-bold text-primary-40' : 'text-gray-500'} `}
             >
               {tab.category}
             </button>
@@ -96,7 +96,7 @@ export default function Tabs({
         <motion.div
           layout
           transition={{ type: 'spring', stiffness: 500, damping: 40 }}
-          className="absolute bottom-0 h-[2px] bg-gray-600"
+          className="absolute bottom-0 h-[3px] bg-primary-30"
           style={{
             width: underlineStyle.width,
             left: underlineStyle.left,
