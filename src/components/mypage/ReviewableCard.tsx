@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Button from '../shared/Button';
 import { ReviewPlanData } from '@/pages/user/[username]/review';
+import { fromNow } from '@/utils/dateUtils';
 
 interface reviewableProps {
   reviewable: ReviewPlanData;
@@ -20,7 +21,7 @@ const ReviewableCard = ({ reviewable }: reviewableProps) => {
   };
   return (
     <div className="my-5 flex flex-col gap-3 rounded-md border border-[#A4A4A4] px-4 py-3">
-      <div className="text-[#A4A4A4]">{dateTime} 이용</div>
+      <div className="text-[#A4A4A4]">{fromNow(dateTime)} 이용완료</div>
 
       <div className="mb-3 flex gap-3">
         <div className="relative h-[60px] w-[70px]">

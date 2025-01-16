@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Button from '../shared/Button';
 import { ReviewData } from '@/pages/user/[username]/review';
+import { formatTime } from '@/utils/dateUtils';
 
 interface ReviewProps {
   reviewed: ReviewData;
@@ -59,7 +60,7 @@ const ReviewCard = ({ reviewed }: ReviewProps) => {
           <div className="my-1 text-base font-semibold">{planName}</div>
 
           <div className="text-sm text-[#A4A4A4]">
-            {address} | {dateTime} 이용
+            {address} | {formatTime(dateTime)} 이용
           </div>
         </div>
       </div>
