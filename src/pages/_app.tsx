@@ -3,6 +3,7 @@ import { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import { Noto_Sans_KR } from 'next/font/google';
 import { ReactElement, ReactNode } from 'react';
+import QueryProvider from '@/components/react-query/queryProvider';
 
 const noto = Noto_Sans_KR({
   subsets: ['latin'],
@@ -21,7 +22,9 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
   return getLayout(
     <div className={noto.className}>
-      <Component {...pageProps} />
+      <QueryProvider>
+        <Component {...pageProps} />
+      </QueryProvider>
     </div>,
   );
 }
