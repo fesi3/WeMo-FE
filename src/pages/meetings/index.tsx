@@ -3,7 +3,7 @@ import type { NextPage, GetServerSideProps } from 'next';
 import axios from 'axios';
 import Greeting from '@/components/findGatherings/Greeting';
 import Tabs from '@/components/findGatherings/tab/tab';
-import EditMeetingButton from '@/components/findGatherings/EditMeeting/EditMeetingButton';
+import EditMeetingButton from '@/components/findGatherings/editMeeting/EditMeetingButton';
 import SubCategoryFilter from '@/components/findGatherings/SubCategoryFilter';
 import PlanFilter from '@/components/findGatherings/PlanFilter';
 import PlanList from '@/components/findGatherings/PlanList';
