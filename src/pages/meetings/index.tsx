@@ -1,5 +1,4 @@
-// pages/findGatherings/index.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { NextPage, GetServerSideProps } from 'next';
 import axios from 'axios';
 import Greeting from '@/components/findGatherings/Greeting';
@@ -9,7 +8,7 @@ import SubCategoryFilter from '@/components/findGatherings/SubCategoryFilter';
 import PlanFilter from '@/components/findGatherings/PlanFilter';
 import PlanList from '@/components/findGatherings/PlanList';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
-//import { getCategoryId } from '@/utils/categoryUtils';
+import { getCategoryId } from '@/utils/categoryUtils';
 import { PlanDataWithCategory } from '@/components/types/plans';
 import { RegionOption, SubRegionOption } from '@/components/types/reviewType';
 
@@ -113,21 +112,35 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
     );
   };
 
+  //콘솔테스트용
+  useEffect(() => {
+    console.log(
+      '클라이언트에서 초기 데이터 확인:',
+      initialPlans,
+      initialCursor,
+    );
+  }, []);
+
   return (
     <div className="mx-auto max-w-md px-4 py-6">
       <Tabs tabs={tabs} defaultTab="달램핏" renderContent={renderTabContent} />
-      <div ref={loaderRef} className="h-px"></div>
+      <div ref={loaderRef} className="h-12"></div>
     </div>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
+    const categoryId = getCategoryId('달램핏', null);
+
+    console.log(categoryId);
     const res = await axios.get<PlanListResponse>(
-      `${baseUrl}/api/plans?cursor=0&size=10&categoryId=1`,
+      //`https://677e23a294bde1c1252a8cc0.mockapi.io/plans`,
+      `${baseUrl}/api/plans?size=10&page=0`,
+      //탭선택시에 category 1또는 2넘겨주는 로직 추가하기
     );
     const data = res.data;
-
+    console.log(data);
     // API 데이터 전처리
     const initialPlans: PlanDataWithCategory[] = data.data.planList.map(
       (item: PlanDataWithCategory) => ({ ...item }),

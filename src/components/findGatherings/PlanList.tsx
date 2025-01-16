@@ -1,4 +1,3 @@
-// components/findGatherings/PlanList.tsx
 import React from 'react';
 import CardList from '@/components/findGatherings/card/CardList';
 import { filterPlans } from '@/utils/planUtils';
