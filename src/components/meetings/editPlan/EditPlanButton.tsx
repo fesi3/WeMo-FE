@@ -14,7 +14,7 @@ export default function EditPlanButton() {
         onClick={handleOpen}
       />
       <Modal isOpen={toggleValue} handleClose={handleClose} title="일정 만들기">
-        <EditPlanForm />
+        <EditPlanForm handleCloseThisModal={handleClose} />
       </Modal>
     </>
   );

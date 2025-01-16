@@ -1,26 +1,16 @@
 import { PATHS } from '@/constants/apiPath';
 import fetchData from './fetchData';
+import { POST_PLAN_DETAIL_REQUEST_BODY } from '@/types/api/plan';
 
 //코드 이동 예정
-export interface POST_PLAN_DETAIL_REQUEST {
-  planName: string;
-  dateTime: string;
-  address: string;
-  addressDetail: string;
-  longitude: number;
-  latitude: number;
-  capacity: number;
-  content: string;
-  registrationEnd: string;
-  fileUrls: string[];
-}
+
 interface PostPlanParams {
   meetingId: string;
-  requestData: POST_PLAN_DETAIL_REQUEST;
+  requestData: POST_PLAN_DETAIL_REQUEST_BODY;
 }
 
 export const postPlan = async ({ meetingId, requestData }: PostPlanParams) => {
-  const response = await fetchData<POST_PLAN_DETAIL_REQUEST>({
+  const response = await fetchData<POST_PLAN_DETAIL_REQUEST_BODY>({
     param: PATHS.PLAN.CREATE(meetingId),
     method: 'post',
     requestData,

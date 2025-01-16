@@ -9,9 +9,10 @@ import AddressInput from './AddressInput';
 import { coordinateToAddress } from '@/utils/coordinateToAddress';
 import { INITIAL_POSITION } from '@/constants/address';
 import { Coordinate } from '@/components/types/mapType';
-import { POST_PLAN_DETAIL_REQUEST, postPlan } from '@/api/plan';
+import { postPlan } from '@/api/plan';
 import { useRouter } from 'next/router';
 import { getImageUrls } from '@/api/image';
+import { POST_PLAN_DETAIL_REQUEST_BODY } from '@/types/api/plan';
 
 interface FormValues {
   planName: string;
@@ -25,7 +26,13 @@ interface FormValues {
   imageFiles: File[];
 }
 
-export default function EditPlanForm() {
+interface EditPlanFormProps {
+  handleCloseThisModal: () => void;
+}
+
+export default function EditPlanForm({
+  handleCloseThisModal,
+}: EditPlanFormProps) {
   const { croppedImages, onCrop, removeCroppedImage } = useCropper();
   const { setValue, register, handleSubmit, watch, resetField } =
     useForm<FormValues>({
@@ -65,7 +72,7 @@ export default function EditPlanForm() {
     const imageFiles = croppedImages.map((image) => image.blobImg);
     const fileUrls = await getImageUrls(imageFiles);
     if (!fileUrls) return;
-    const requestData: POST_PLAN_DETAIL_REQUEST = {
+    const requestData: POST_PLAN_DETAIL_REQUEST_BODY = {
       planName: data.planName,
       dateTime: dayjs(data.dateTime).format('YYYY-MM-DDTHH:mm:ss'),
       address: data.address,
@@ -210,6 +217,22 @@ export default function EditPlanForm() {
             imageURL={imageURL}
             onCrop={onCrop}
           />
+        </div>
+        <div className="flex gap-4">
+          <button
+            type="button"
+            onClick={handleCloseThisModal}
+            className="h-10 w-full rounded-md border border-primary-10 font-semibold text-primary-10"
+          >
+            취소
+          </button>
+
+          <button
+            type="submit"
+            className="h-10 w-full rounded-md border bg-primary-10 font-semibold text-white"
+          >
+            만들기
+          </button>
         </div>
       </form>
     </div>
