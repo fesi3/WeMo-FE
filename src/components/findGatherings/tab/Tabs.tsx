@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
+//추후 UI컴포넌트와 기능 로직 분리리
 type TabItem = {
   category: string;
 };
