@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { motion, useMotionValue } from 'motion/react';
+import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/20/solid';
 
 interface CarouselProps {
   images: string[];
@@ -46,12 +47,13 @@ export default function Carousel({ images }: CarouselProps) {
           <div
             className="relative w-full shrink-0 pt-[60%]"
             key={index} /**바꿔야댐 */
+            onClick={(e) => e.preventDefault()}
           >
             <Image
               src={image}
               alt="일정 상세 이미지지"
               fill
-              className="object-contain"
+              className="pointer-events-none object-contain"
               sizes="50vw"
               priority
             />
@@ -70,17 +72,17 @@ export default function Carousel({ images }: CarouselProps) {
         onClick={() => {
           handleImageIndex('left');
         }}
-        className="absolute left-[3%] top-1/2 hidden h-[30px] w-[30px] -translate-y-1/2 items-center justify-center rounded-full bg-white text-xl md:flex"
+        className="absolute left-[2%] top-1/2 hidden h-[50px] w-[50px] -translate-y-1/2 items-center justify-center rounded-full bg-black text-xl opacity-60 md:flex"
       >
-        좌
+        <ArrowLeftIcon color="white" />
       </button>
       <button
         onClick={() => {
           handleImageIndex('right');
         }}
-        className="absolute right-[3%] top-1/2 hidden h-[30px] w-[30px] -translate-y-1/2 items-center justify-center rounded-full bg-white text-xl md:flex"
+        className="absolute right-[2%] top-1/2 hidden h-[50px] w-[50px] -translate-y-1/2 items-center justify-center rounded-full bg-black text-xl opacity-60 md:flex"
       >
-        우
+        <ArrowRightIcon color="white" />
       </button>
     </div>
   );
