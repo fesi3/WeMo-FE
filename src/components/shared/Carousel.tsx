@@ -32,7 +32,7 @@ export default function Carousel({ images }: CarouselProps) {
   };
 
   return (
-    <div className="relative flex w-full overflow-hidden rounded-md bg-black">
+    <div className="relative flex w-full overflow-hidden rounded-md bg-primary-10">
       <motion.div
         drag="x"
         dragConstraints={{ right: 0, left: 0 }}
