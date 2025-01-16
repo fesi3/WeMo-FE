@@ -43,7 +43,7 @@ export interface GET_PLAN_DETAIL_RESPONSE {
   data: PlanData;
 }
 
-export interface POST_PLAN_DETAIL_REQUEST_BODY {
+export interface POST_PLAN_REQUEST_BODY {
   planName: string;
   dateTime: string;
   address: string;
