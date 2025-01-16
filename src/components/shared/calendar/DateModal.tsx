@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Modal from '../../../components/shared/modals/Modal';
 import CalendarPicker from './CalendarPicker';
 import useToggle from '../../../hooks/useToggle';
+import dayjs from 'dayjs';
 
 interface DateModalProps {
   onDateSelect: (date: string | null) => void;
@@ -14,7 +15,8 @@ export default function DateModal({ onDateSelect }: DateModalProps) {
   // 달력에서 날짜를 선택했을 때 실행되는 함수
   const handleDateChange = (date: Date) => {
     setSelectedDate(date);
-    const formattedDate = date.toLocaleDateString();
+
+    const formattedDate = dayjs(date).format('YYYY-MM-DD');
     onDateSelect(formattedDate); // 날짜를 ISO 문자열로 변환하여 상위 컴포넌트로 전달
     console.log(formattedDate);
     handleClose();

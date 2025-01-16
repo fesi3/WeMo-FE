@@ -108,7 +108,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
           selectedDate={selectedDate}
           selectedRegion={selectedRegion}
           selectedSubRegion={selectedSubRegion}
-          selectedCategory={selectedCategory}
+          selectedCategory={category}
           selectedSubCategory={selectedSubCategory}
         />
       </div>
@@ -120,7 +120,9 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
       <Tabs
         tabs={tabs}
         defaultTab="달램핏"
-        onTabChange={setSelectedCategory}
+        onTabChange={(category) => {
+          setSelectedCategory(category);
+        }}
         renderContent={renderTabContent}
       />
       <div ref={loaderRef} className="h-12"></div>
