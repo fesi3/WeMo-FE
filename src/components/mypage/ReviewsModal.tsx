@@ -5,7 +5,7 @@ import useCropper from '@/hooks/useCropper';
 import FileInput from '@/components/shared/FileInput';
 import HeartRating from '@/components/shared/HeartRating';
 import Button from '@/components/shared/Button';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 export interface CroppedImageType {
   objectURL: string;
@@ -16,6 +16,7 @@ interface ReviewFormValues {
   score: number;
   comment: string;
   images: File[]; // 첨부된 이미지 파일 배열
+  fileUrls?: string[];
 }
 
 interface ReviewModalProps {
@@ -62,10 +63,20 @@ export default function ReviewModal({
   }, [images, resetField]);
 
   const getPresignedUrls = async (count: number): Promise<string[]> => {
-    const response = await axios.get(
-      `https://we-mo.shop/api/images?count=${count}`,
-    );
-    return response.data.urls;
+    try {
+      const response = await axios.get(
+        `https://we-mo.shop/api/images?count=${count}`,
+      );
+      // 서버 응답에서 presignedUrl 배열 추출
+      return response.data.data.presignedUrl;
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      console.error(
+        'Presigned URL 요청 실패:',
+        axiosError.response?.data || axiosError.message,
+      );
+      throw new Error('Presigned URL 요청 중 오류 발생');
+    }
   };
 
   const uploadImagesToS3 = async (
@@ -73,7 +84,7 @@ export default function ReviewModal({
     urls: string[],
   ) => {
     const uploadPromises = files.map((file, index) =>
-      axios.put(urls[index], file, {
+      axios.put(urls[index], file.blobImg, {
         headers: {
           'Content-Type': 'image/jpeg',
         },
@@ -85,14 +96,27 @@ export default function ReviewModal({
   // 리뷰 제출 핸들러
   const onSubmitHandler: SubmitHandler<ReviewFormValues> = async (data) => {
     if (croppedImages.length === 0) {
-      onSubmit(data);
+      onSubmit({ ...data, fileUrls: [] });
       return;
     }
-
     try {
+      // Presigned URL 요청
       const presignedUrls = await getPresignedUrls(croppedImages.length);
+
+      // 이미지 업로드
       await uploadImagesToS3(croppedImages, presignedUrls);
-      onSubmit(data);
+
+      // Presigned URL에서 실제 S3 파일 경로 추출
+      const fileUrls = presignedUrls.map((url) => url.split('?')[0]);
+
+      // 최종 데이터 작성
+      const finalData = {
+        ...data,
+        fileUrls, // URL 배열 포함
+      };
+
+      // 데이터 제출
+      onSubmit(finalData);
     } catch (error) {
       console.error(error);
     } finally {
