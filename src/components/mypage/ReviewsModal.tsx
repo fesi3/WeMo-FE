@@ -5,32 +5,14 @@ import useCropper from '@/hooks/useCropper';
 import FileInput from '@/components/shared/FileInput';
 import HeartRating from '@/components/shared/HeartRating';
 import Button from '@/components/shared/Button';
-import axios, { AxiosError } from 'axios';
-
-export interface CroppedImageType {
-  objectURL: string;
-  blobImg: Blob;
-}
-
-interface ReviewFormValues {
-  score: number;
-  comment: string;
-  images: File[]; // 첨부된 이미지 파일 배열
-  fileUrls?: string[];
-}
-
-interface ReviewModalProps {
-  mode: 'create' | 'edit'; // 모드 추가
-  initialData?: { score: number; comment: string; images?: File[] }; // 수정 모드에서 초기값
-  onSubmit: (data: ReviewFormValues) => void; // 리뷰 제출 함수
-  onClose: () => void; // 모달 닫기 함수
-}
+import { ReviewFormValues, ReviewModalProps } from '../types/reviewType';
+import { getPresignedUrls, uploadImagesToS3 } from '@/api/createReview';
 
 export default function ReviewModal({
-  mode,
-  initialData,
-  onSubmit,
-  onClose,
+  mode, // 작성(create) 또는 수정(edit) 모드
+  initialData, // 초기 리뷰 데이터 (수정 모드에서 사용)
+  onSubmit, // 리뷰 제출 콜백
+  onClose, // 모달 닫기 콜백
 }: ReviewModalProps) {
   const { croppedImages, onCrop } = useCropper();
   const { toggleValue, handleOpen, handleClose } = useToggle();
@@ -41,7 +23,7 @@ export default function ReviewModal({
       defaultValues: {
         score: initialData?.score || 0,
         comment: initialData?.comment || '',
-        images: initialData?.images || [],
+        images: [],
       },
     });
 
@@ -62,37 +44,6 @@ export default function ReviewModal({
     }
   }, [images, resetField]);
 
-  const getPresignedUrls = async (count: number): Promise<string[]> => {
-    try {
-      const response = await axios.get(
-        `https://we-mo.shop/api/images?count=${count}`,
-      );
-      // 서버 응답에서 presignedUrl 배열 추출
-      return response.data.data.presignedUrl;
-    } catch (error) {
-      const axiosError = error as AxiosError;
-      console.error(
-        'Presigned URL 요청 실패:',
-        axiosError.response?.data || axiosError.message,
-      );
-      throw new Error('Presigned URL 요청 중 오류 발생');
-    }
-  };
-
-  const uploadImagesToS3 = async (
-    files: CroppedImageType[],
-    urls: string[],
-  ) => {
-    const uploadPromises = files.map((file, index) =>
-      axios.put(urls[index], file.blobImg, {
-        headers: {
-          'Content-Type': 'image/jpeg',
-        },
-      }),
-    );
-    await Promise.all(uploadPromises);
-  };
-
   // 리뷰 제출 핸들러
   const onSubmitHandler: SubmitHandler<ReviewFormValues> = async (data) => {
     if (croppedImages.length === 0) {
@@ -107,7 +58,7 @@ export default function ReviewModal({
       await uploadImagesToS3(croppedImages, presignedUrls);
 
       // Presigned URL에서 실제 S3 파일 경로 추출
-      const fileUrls = presignedUrls.map((url) => url.split('?')[0]);
+      const fileUrls = presignedUrls;
 
       // 최종 데이터 작성
       const finalData = {
@@ -175,7 +126,7 @@ export default function ReviewModal({
         />
         <Button
           text={mode === 'create' ? '등록하기' : '수정하기'}
-          type="reviewSubmit" // 취소 버튼 스타일
+          type="reviewSubmit"
           disable={isButtonDisabled} // 비활성화 여부
         />
       </div>
