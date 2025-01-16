@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import type { NextPage, GetServerSideProps } from 'next';
 import axios from 'axios';
 import Greeting from '@/components/findGatherings/Greeting';
@@ -43,6 +43,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
   );
   const [selectedSubRegion, setSelectedSubRegion] =
     useState<SubRegionOption | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>('달램핏');
   const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(
     null,
   );
@@ -56,6 +57,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
     setCursor,
     isFetching,
     setIsFetching,
+    selectedCategory,
     selectedSubCategory,
     selectedRegion,
     selectedSubRegion,
@@ -72,7 +74,8 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
   });
 
   // 탭별 콘텐츠 렌더링
-  const renderTabContent = (selectedCategory: string) => {
+  const renderTabContent = (category: string) => {
+    setSelectedCategory(category);
     return (
       <div className="container mx-auto p-4">
         <Greeting />
@@ -112,18 +115,14 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
     );
   };
 
-  //콘솔테스트용
-  useEffect(() => {
-    console.log(
-      '클라이언트에서 초기 데이터 확인:',
-      initialPlans,
-      initialCursor,
-    );
-  }, []);
-
   return (
     <div className="mx-auto max-w-md px-4 py-6">
-      <Tabs tabs={tabs} defaultTab="달램핏" renderContent={renderTabContent} />
+      <Tabs
+        tabs={tabs}
+        defaultTab="달램핏"
+        onTabChange={setSelectedCategory}
+        renderContent={renderTabContent}
+      />
       <div ref={loaderRef} className="h-12"></div>
     </div>
   );
@@ -132,15 +131,14 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const categoryId = getCategoryId('달램핏', null);
-
     console.log(categoryId);
     const res = await axios.get<PlanListResponse>(
       //`https://677e23a294bde1c1252a8cc0.mockapi.io/plans`,
-      `${baseUrl}/api/plans?size=10&page=0`,
+      `${baseUrl}/api/plans?size=10&page=0&`,
       //탭선택시에 category 1또는 2넘겨주는 로직 추가하기
     );
     const data = res.data;
-    console.log(data);
+    console.log(data.data);
     // API 데이터 전처리
     const initialPlans: PlanDataWithCategory[] = data.data.planList.map(
       (item: PlanDataWithCategory) => ({ ...item }),

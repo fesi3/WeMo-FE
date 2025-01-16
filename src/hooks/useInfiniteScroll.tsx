@@ -2,13 +2,14 @@ import { useEffect, useRef } from 'react';
 import axios from 'axios';
 import { RegionOption, SubRegionOption } from '@/components/types/reviewType';
 import { PlanDataWithCategory } from '@/components/types/plans';
-import { getCategoryId } from '@/utils/categoryUtils';
+//import { getCategoryId } from '@/utils/categoryUtils';
 
 interface UseInfiniteScrollProps {
   cursor: number | null;
   setCursor: (cursor: number | null) => void;
   isFetching: boolean;
   setIsFetching: (fetching: boolean) => void;
+  selectedCategory: string | null;
   selectedSubCategory: string | null;
   selectedRegion: RegionOption | null;
   selectedSubRegion: SubRegionOption | null;
@@ -20,6 +21,7 @@ export const useInfiniteScroll = ({
   setCursor,
   isFetching,
   setIsFetching,
+  selectedCategory,
   selectedSubCategory,
   selectedRegion,
   selectedSubRegion,
@@ -46,10 +48,17 @@ export const useInfiniteScroll = ({
       if (target.isIntersecting && !isFetching && cursor !== null) {
         setIsFetching(true);
         try {
-          const categoryId = getCategoryId('달램핏', selectedSubCategory);
-          const categoryParam = Array.isArray(categoryId)
-            ? categoryId.join(',')
-            : categoryId;
+          // selectedCategory에 따라 categoryId 설정
+          const categoryParam =
+            selectedCategory === '달램핏'
+              ? '1' // 달램핏 데이터 요청
+              : '2'; // 워케이션 데이터 요청
+
+          // // 하위 카테고리가 있을 경우
+          //   const subCategoryParam =
+          //     selectedSubCategory !== null
+          //       ? `&subCategory=${selectedSubCategory}` // 특정 하위 카테고리 요청
+          //       : ''; // 전체 데이터 요청 (하위 카테고리가 없을 경우)
 
           const provinceParam =
             selectedRegion && selectedRegion.id > 0

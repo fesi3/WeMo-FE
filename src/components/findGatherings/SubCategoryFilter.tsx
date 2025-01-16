@@ -12,31 +12,26 @@ const SubCategoryFilter = ({
 }: SubCategoryFilterProps) => {
   return (
     <div className="mb-4 flex gap-2">
+      {/* 전체 버튼 */}
       <Button
         type="main_tab_total"
         text="전체"
-        onClick={() => setSelectedSubCategory(null)}
+        onClick={() => setSelectedSubCategory(null)} // 전체 데이터
         isActive={selectedSubCategory === null}
-        backColor={selectedSubCategory === '전체' ? 'bg-gray' : ''}
-        textColor={selectedSubCategory === '전체' ? 'text-white' : ''}
       />
+      {/* 오피스 스트레칭 버튼 */}
       <Button
         type="main_tab_office"
         text="오피스"
-        onClick={() => setSelectedSubCategory('오피스 스트레칭')}
+        onClick={() => setSelectedSubCategory('오피스 스트레칭')} // 오피스 필터
         isActive={selectedSubCategory === '오피스 스트레칭'}
-        backColor={selectedSubCategory === '오피스 스트레칭' ? 'bg-gray' : ''}
-        textColor={
-          selectedSubCategory === '오피스 스트레칭' ? 'text-white' : ''
-        }
       />
+      {/* 마인드풀니스 버튼 */}
       <Button
         type="main_tab_mind"
         text="마인드풀니스"
-        onClick={() => setSelectedSubCategory('마인드풀니스')}
+        onClick={() => setSelectedSubCategory('마인드풀니스')} // 마인드풀니스 필터
         isActive={selectedSubCategory === '마인드풀니스'}
-        backColor={selectedSubCategory === '마인드풀니스' ? 'bg-gray' : ''}
-        textColor={selectedSubCategory === '마인드풀니스' ? 'text-white' : ''}
       />
     </div>
   );
