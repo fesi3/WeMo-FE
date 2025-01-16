@@ -18,6 +18,11 @@ interface RawProvince {
   subRegions?: SubRegionOption[];
 }
 
+interface rawDistrict {
+  districtId: number;
+  name: string;
+}
+
 const RegionDropdown: React.FC<RegionDropdownProps> = ({
   selectedRegion,
   selectedSubRegion,
@@ -59,9 +64,12 @@ const RegionDropdown: React.FC<RegionDropdownProps> = ({
           const res = await axios.get(
             `${baseUrl}/api/regions/district?provinceId=${selectedRegion.id}`,
           );
-          const { provinceList } = res.data.data;
-          setDistricts(Array.isArray(provinceList) ? provinceList : []);
-          //setDistricts(provinceList);
+          const rawDistrictList = res.data.data.districtList;
+          const districtList = rawDistrictList.map((item: rawDistrict) => ({
+            id: item.districtId, // API 데이터에 맞게 수정
+            name: item.name,
+          }));
+          setDistricts(districtList);
         } catch (error) {
           console.error('구, 도 데이터 가져오지 못함', error);
         }
@@ -74,12 +82,12 @@ const RegionDropdown: React.FC<RegionDropdownProps> = ({
 
   // 드롭다운에서 직접 선택했을 때 처리
   const handleProvinceSelect = (province: RegionOption) => {
-    console.log('handleProvinceSelect 내부 province:', province);
+    console.log('선택된 province:', province);
     // "전체" 옵션 (id===0) 처리
     if (province.id === 0) {
       onRegionChange(province); // 또는 onRegionChange(null) 등 원하는 로직 적용
       onSubRegionChange(null);
-      setDistricts([]);
+      //setDistricts([]);
       return;
     }
     onRegionChange(province);
@@ -113,7 +121,7 @@ const RegionDropdown: React.FC<RegionDropdownProps> = ({
         options={extendedProvinces}
         selectedOption={selectedRegion}
         onSelect={handleProvinceSelect}
-        placeholder="지역 선택"
+        placeholder="상위 지역"
       />
 
       {/* 하위 지역 드롭다운 */}
@@ -121,7 +129,8 @@ const RegionDropdown: React.FC<RegionDropdownProps> = ({
         options={extendedDistricts}
         selectedOption={selectedSubRegion}
         onSelect={handleDistrictSelect}
-        placeholder={selectedRegion ? '하위 선택' : '지역 먼저 선택'}
+        placeholder={selectedRegion ? '하위 지역' : '상위 지역 선택'}
+        //disabled={!selectedRegion}
         className={!selectedRegion ? 'pointer-events-none opacity-50' : ''}
       />
     </div>
