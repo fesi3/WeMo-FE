@@ -7,6 +7,7 @@ import useLoginForm from '@/hooks/useLoginForm';
 import { PATHS } from '@/constants/apiPath';
 // import fetchData from '@/api/fetchData';
 import instance from '@/api/axiosInstance';
+import decodeToken from '@/utils/decodeToken';
 
 function Login() {
   const { loginFormValue, handleChange, errors } = useLoginForm();
@@ -34,9 +35,17 @@ function Login() {
   // 로그인 폼 제출 함수
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const response = await instance.post(SIGNIN, loginFormValue);
-    const accessToken = response.headers['authorization'];
-    console.log(accessToken, '---accessToken---');
+    try {
+      const response = await instance.post(SIGNIN, loginFormValue);
+      const accessToken = response.headers['authorization'];
+      if (accessToken) {
+        const decodedJWT = decodeToken(accessToken);
+        console.log(decodedJWT, '---decodedJWT---');
+        // document.cookie = 'username'
+      }
+    } catch (error) {
+      console.log('로그인 에러 발생', error);
+    }
     // mutation.mutate();
   };
   return (
