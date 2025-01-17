@@ -1,6 +1,9 @@
 import { PATHS } from '@/constants/apiPath';
 import fetchData from './fetchData';
-import { POST_PLAN_REQUEST_BODY } from '@/types/api/plan';
+import {
+  GET_PLAN_DETAIL_RESPONSE,
+  POST_PLAN_REQUEST_BODY,
+} from '@/types/api/plan';
 
 //코드 이동 예정
 
@@ -19,4 +22,12 @@ export const createPlan = async ({
     requestData,
   });
   console.log(response);
+};
+
+export const fetchPlanDetail = async (planId: number) => {
+  if (isNaN(planId)) return;
+  const response = await fetchData<GET_PLAN_DETAIL_RESPONSE>({
+    param: PATHS.PLAN.GET_DETAIL(planId.toString()),
+  });
+  return response;
 };
