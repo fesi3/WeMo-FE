@@ -64,13 +64,14 @@ const LikedPlansPage = () => {
     },
   });
 
-  if (!accessToken) {
-    return (
-      <div>
-        <p> 로그인 후 이용 가능합니다.</p>
-      </div>
-    );
-  }
+  //토큰 없을 때 -> 윤성님이 처리해주시면 됩니다!
+  //   if (!accessToken) {
+  //     return (
+  //       <div>
+  //         <p> 로그인 후 이용 가능합니다.</p>
+  //       </div>
+  //     );
+  //   }
 
   return (
     <div>
@@ -78,12 +79,12 @@ const LikedPlansPage = () => {
         <div className="mt-20 flex flex-col items-center justify-center">
           {/* 하트 이미지 */}
           <img
-            src="/assets/images/heart.png"
+            src="/assets/like-page-heart.svg"
             alt="찜한 모임 없음"
             className="mb-6 h-20 w-20"
           />
           {/* 텍스트 */}
-          <p className="mb-2 text-lg font-bold text-gray-800">
+          <p className="mb-2 text-lg font-extrabold text-gray-800">
             찜한 모임이 없어요
           </p>
           <p className="mb-6 text-sm text-gray-500">
@@ -91,7 +92,7 @@ const LikedPlansPage = () => {
           </p>
           {/* 버튼 */}
           <Button
-            type="no-meeting"
+            type="no_meeting"
             text="모임 보러가기"
             onClick={() => {
               window.location.href = '/meetings'; // 모임 페이지로 이동
