@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { PlanData } from '@/components/types/plans';
+import { PlanData } from '@/types/plans';
 import { usePageInfiniteScroll } from '@/hooks/usePageInfiniteScroll';
 import CardList from '@/components/findGatherings/card/CardList';
 import Button from '@/components/shared/Button';
+import Header from '@/components/shared/layout/Header';
 
 const LikedPlansPage = () => {
   const [plans, setPlans] = useState<PlanData[]>([]);
@@ -73,8 +74,14 @@ const LikedPlansPage = () => {
   //     );
   //   }
 
+  const handleBack = () => {
+    window.history.back();
+  };
+
   return (
     <div>
+      {/* 헤더 */}
+      <Header title="찜한 일정" onClickBack={handleBack} />
       {plans.length === 0 && !isLoading && (
         <div className="mt-20 flex flex-col items-center justify-center">
           {/* 하트 이미지 */}
