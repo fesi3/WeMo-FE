@@ -32,7 +32,7 @@ function Login() {
   //   },
   // });
 
-  // 로그인 폼 제출 함수
+  // 로그인 폼 제출 함수 (나중에 서버측에서 세팅하도록 수정 예정)
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
@@ -41,9 +41,11 @@ function Login() {
       if (accessToken) {
         const decodedJWT = decodeToken(accessToken);
         console.log(decodedJWT, '---decodedJWT---');
+        // 일단 임의로 옵션 넣음...
         document.cookie = `user_email=${decodedJWT.USER_EMAIL}; expires=Mon, 20 Jan 2025 12:00:00 UTC; path=/;`;
       }
     } catch (error) {
+      alert('로그인 실패');
       console.log('로그인 에러 발생', error);
     }
     // mutation.mutate();
