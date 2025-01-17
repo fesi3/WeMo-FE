@@ -10,7 +10,7 @@ export default function EditPlanButton() {
       <Button
         text="일정 만들기"
         type="meeting_create"
-        backColor="relative top-5 bg-primary-10 text-white w-full"
+        backColor=" bg-primary-10 rounded-md text-white w-full"
         onClick={handleOpen}
       />
       <Modal isOpen={toggleValue} handleClose={handleClose} title="일정 만들기">

@@ -55,3 +55,10 @@ export interface GET_MEETING_DETAIL_RESPONSE {
   message: string;
   data: MeetingData;
 }
+
+export interface POST_MEETING_REQUEST_BODY {
+  meetingName: string;
+  description: string;
+  categoryId: number;
+  fileUrls: string[];
+}

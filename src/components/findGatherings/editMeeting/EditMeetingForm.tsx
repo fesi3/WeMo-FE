@@ -3,8 +3,10 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import useToggle from '@/hooks/useToggle';
 import useCropper from '@/hooks/useCropper';
 import FileInput from '../../shared/FileInput';
-import Button from '@/components/shared/Button';
 import CategoryRadioInput from '@/components/findGatherings/editMeeting/CategoryRadioInput';
+import { getImageUrls } from '@/api/image';
+import { POST_MEETING_REQUEST_BODY } from '@/types/api/meeting';
+import { createMeeting } from '@/api/meeting';
 
 interface FormValues {
   meetingName: string;
@@ -29,7 +31,20 @@ export default function EditMeetingForm({
   });
   const imageFieldValue = watch('imageFiles');
   const categoryValue = watch('categoryId');
-  const onSubmit: SubmitHandler<FormValues> = () => {};
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    const imageFiles = croppedImages.map((image) => image.blobImg);
+    const fileUrls = await getImageUrls(imageFiles);
+    if (!fileUrls) return;
+    const requestData: POST_MEETING_REQUEST_BODY = {
+      meetingName: data.meetingName,
+      description: data.description,
+      categoryId: parseInt(data.categoryId),
+      fileUrls,
+    };
+    const response = await createMeeting(requestData);
+    if (!response.success) return;
+    handleCloseThisModal();
+  };
 
   useEffect(() => {
     if (imageFieldValue && imageFieldValue.length > 0) {
@@ -82,17 +97,20 @@ export default function EditMeetingForm({
             />
           </label>
           <div className="flex gap-4">
-            <Button
+            <button
               type="button"
               onClick={handleCloseThisModal}
-              text="취소"
-              border="border-primary-10 border bg-white w-full text-primary-10 font-bold"
-            />
-            <Button
+              className="h-10 w-full rounded-md border border-primary-10 font-semibold text-primary-10"
+            >
+              취소
+            </button>
+
+            <button
               type="submit"
-              text="만들기"
-              backColor="bg-primary-10 w-full text-white font-bold"
-            />
+              className="h-10 w-full rounded-md border bg-primary-10 font-semibold text-white"
+            >
+              만들기
+            </button>
           </div>
         </form>
       </div>
