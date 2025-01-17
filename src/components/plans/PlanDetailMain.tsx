@@ -60,7 +60,6 @@ export default function PlanDetailMain({ planData }: PlanDetailMainProps) {
     <>
       {!!planData && (
         <>
-          <div className="h-12 bg-gray-400">헤더영역</div>
           <div className="flex flex-col gap-10 p-4">
             <div className="flex flex-col justify-center gap-4 overflow-hidden rounded-lg border-[2px] border-[#E5E7EB] pb-5">
               <Carousel images={mockImageArr} />
