@@ -4,22 +4,31 @@ import useToggle from '@/hooks/useToggle';
 import useCropper from '@/hooks/useCropper';
 import FileInput from '../../shared/FileInput';
 import Button from '@/components/shared/Button';
+import CategoryRadioInput from '@/components/findGatherings/editMeeting/CategoryRadioInput';
 
 interface FormValues {
   meetingName: string;
   description: string;
-  categoryId: number;
+  categoryId: string;
   imageFiles: File[];
 }
 
-export default function EditMeetingForm() {
-  const { croppedImages, onCrop } = useCropper();
+interface EditMeetingFormProps {
+  handleCloseThisModal: () => void;
+}
+
+export default function EditMeetingForm({
+  handleCloseThisModal,
+}: EditMeetingFormProps) {
+  const { croppedImages, onCrop, removeCroppedImage } = useCropper();
   const { toggleValue, handleOpen, handleClose } = useToggle();
   const [imageURL, setImageURL] = useState<string>('');
 
-  const { register, handleSubmit, watch, resetField } = useForm<FormValues>();
+  const { register, handleSubmit, watch, resetField } = useForm<FormValues>({
+    defaultValues: { categoryId: '3' },
+  });
   const imageFieldValue = watch('imageFiles');
-
+  const categoryValue = watch('categoryId');
   const onSubmit: SubmitHandler<FormValues> = () => {};
 
   useEffect(() => {
@@ -40,42 +49,47 @@ export default function EditMeetingForm() {
           <label className="form-label">
             모임 이름
             <input
-              className="h-9 items-center rounded-md border border-black border-opacity-10 px-3 opacity-50 outline-none"
+              className="h-9 items-center rounded-md border border-black border-opacity-10 px-3 placeholder-opacity-50 outline-none"
               placeholder="모임 이름을 입력해 주세요."
               {...register('meetingName')}
             />
           </label>
-          <label className="form-label">
-            이미지 등록
-            <FileInput
-              croppedImages={croppedImages}
-              register={register}
-              name="imageFiles"
-              toggleValue={toggleValue}
-              handleClose={handleClose}
-              imageURL={imageURL}
-              onCrop={onCrop}
-            />
-          </label>
+
+          <FileInput
+            handleDelete={removeCroppedImage}
+            croppedImages={croppedImages}
+            register={register}
+            name="imageFiles"
+            toggleValue={toggleValue}
+            handleClose={handleClose}
+            imageURL={imageURL}
+            onCrop={onCrop}
+          />
+
+          <span className="form-label">선택 서비스</span>
+          <CategoryRadioInput
+            register={register}
+            name="categoryId"
+            categoryValue={categoryValue}
+          />
+          <div className="flex gap-5"></div>
           <label className="form-label">
             모임 설명
             <textarea
-              className="border border-black"
+              placeholder="최소 8자 이상, 최대 500자 이하로 작성해주세요"
+              className="h-[100px] resize-none items-center rounded-md border border-black border-opacity-10 px-3 py-2 placeholder-opacity-50 outline-none"
               {...register('description')}
             />
           </label>
-          <label className="form-label">
-            선택 서비스
-            <input value={1} type="radio" {...register('categoryId')} />
-            <input value={2} type="radio" {...register('categoryId')} />
-          </label>
-
           <div className="flex gap-4">
             <Button
+              type="button"
+              onClick={handleCloseThisModal}
               text="취소"
               border="border-primary-10 border bg-white w-full text-primary-10 font-bold"
             />
             <Button
+              type="submit"
               text="만들기"
               backColor="bg-primary-10 w-full text-white font-bold"
             />

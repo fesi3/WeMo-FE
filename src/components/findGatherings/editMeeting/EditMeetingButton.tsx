@@ -15,7 +15,7 @@ export default function EditMeetingButton() {
         onClick={handleOpen}
       />
       <Modal isOpen={toggleValue} handleClose={handleClose} title="모임 만들기">
-        <EditMeetingForm />
+        <EditMeetingForm handleCloseThisModal={handleClose} />
       </Modal>
     </>
   );

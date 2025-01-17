@@ -1,3 +1,9 @@
-export default function Temp() {
-  return <div>Temp</div>;
+import MeetingDetailMain from '@/components/meetings/MeetingDetailMain';
+
+export default function MeetingDetailPage() {
+  return (
+    <>
+      <MeetingDetailMain />
+    </>
+  );
 }
