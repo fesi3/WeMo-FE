@@ -13,21 +13,24 @@ interface LoginFormProps {
 const InputWithMessage = withError(Input);
 
 function LoginForm(props: LoginFormProps) {
-  const { handleSubmit, handleChange } = props;
+  const { handleSubmit, handleChange, errors } = props;
+  const { email: emailError, password: passwordError } = errors;
   return (
     <form className="flex w-[320px] flex-col gap-6 p-[10px]">
-      <div className="flex w-[320px] flex-col gap-2">
+      <div className="flex w-[320px] flex-col gap-5">
         <InputWithMessage
-          id="id"
+          id="email"
           placeholder="이메일을 입력해주세요."
           onChange={handleChange}
           inputClassName="border"
+          error={emailError}
         />
         <InputWithMessage
           id="password"
           placeholder="비밀번호를 입력해주세요."
           onChange={handleChange}
           inputClassName="border"
+          error={passwordError}
         />
       </div>
       <Button text={'로그인'} type="signup" onClick={handleSubmit} />

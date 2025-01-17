@@ -7,6 +7,6 @@ export interface SignupFormTypes {
 }
 
 export interface LoginFormTypes {
-  id: string;
+  email: string;
   password: string;
 }

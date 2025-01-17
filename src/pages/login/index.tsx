@@ -3,7 +3,7 @@ import LoginForm from '@/components/auth/login/loginForm';
 import useLoginForm from '@/hooks/useLoginForm';
 
 function Login() {
-  const { loginFormValue, handleChange } = useLoginForm();
+  const { loginFormValue, handleChange, errors } = useLoginForm();
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -16,7 +16,7 @@ function Login() {
         handleSubmit={handleSubmit}
         handleChange={handleChange}
         loginFormValue={loginFormValue}
-        errors={{}}
+        errors={errors}
       />
     </div>
   );
