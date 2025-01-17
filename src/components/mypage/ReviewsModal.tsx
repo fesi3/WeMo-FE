@@ -127,7 +127,6 @@ export default function ReviewModal({
           handleClose={handleClose}
           imageURL={imageURL}
           onCrop={onCrop}
-          handleDelete={removeCroppedImage}
         />
       </label>
 

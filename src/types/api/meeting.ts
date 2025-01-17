@@ -35,7 +35,7 @@ export interface ReviewInMeeting {
 export interface MeetingDetail {
   meetingId: number;
   meetingName: string;
-  meetingImagePath: string;
+  meetingImagePath: string[];
   memberCount: number;
   description: string;
   category: string;
@@ -47,6 +47,7 @@ export interface MeetingDetail {
   planCounts: number;
   planList: PlanInMeeting[];
   reviewCounts: number;
+  reviewAverage: number;
   reviewList: ReviewInMeeting[];
 }
 
