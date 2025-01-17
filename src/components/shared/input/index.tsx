@@ -7,6 +7,7 @@ export interface InputProps
   type?: InputType;
   id: string;
   className?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 // props 추가 작성 가능
@@ -17,10 +18,11 @@ function Input(props: InputProps) {
     type = 'text',
     placeholder = '입력해 주세요.',
     className,
+    onChange,
     ...rest
   } = props;
   const inputClassName = twMerge(
-    `h-mobileInputHeight drop-shadow shrink-0 flex-grow rounded-[4px] bg-gray-50 p-3 text-base placeholder-gray-500 md:h-tabletInputHeight`,
+    `h-mobileInputHeight drop-shadow shrink-0 flex-grow rounded-[4px] bg-gray-50 p-3 text-base focus:outline-none focus:ring focus:ring-primary-90 placeholder-gray-500 md:h-tabletInputHeight`,
     className,
   );
   return (
@@ -28,6 +30,7 @@ function Input(props: InputProps) {
       className={inputClassName}
       type={type}
       placeholder={placeholder}
+      onChange={onChange}
       {...rest}
     />
   );
