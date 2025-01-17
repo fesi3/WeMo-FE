@@ -26,13 +26,19 @@ export default function MyPage() {
   useEffect(() => {
     async function fetchUserData() {
       try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          // 토큰이 없으면 로그인 페이지로 리다이렉트하거나, 기본 페이지 처리
+          alert('로그인이 필요합니다!');
+          return;
+        }
         const response = await axios.get(
           `${BASE_URL}/my_user`, //api 호출 경로
-          // {
-          //   headers: {
-          //     Authorization: ``, // JWT 토큰
-          //   },
-          // },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // JWT 토큰
+            },
+          },
         );
         const responseData = response.data.data;
 
@@ -70,19 +76,25 @@ export default function MyPage() {
         마이페이지
       </header>
       <main className="flex flex-col gap-7 p-4">
-        <ProfileCard user={userData} />
-        <section className="flex flex-col gap-4">
-          <ul>
-            {listItem.map((item, index) => (
-              <IndexNav
-                key={index}
-                icon={item.icon}
-                title={item.title}
-                link={item.link}
-              />
-            ))}
-          </ul>
-        </section>
+        {userData ? (
+          <>
+            <ProfileCard user={userData} />
+            <section className="flex flex-col gap-4">
+              <ul>
+                {listItem.map((item, index) => (
+                  <IndexNav
+                    key={index}
+                    icon={item.icon}
+                    title={item.title}
+                    link={item.link}
+                  />
+                ))}
+              </ul>
+            </section>
+          </>
+        ) : (
+          <p>로딩 중...</p>
+        )}
       </main>
       <footer className="fixed bottom-0 left-0 z-50 flex h-12 w-full items-center justify-center border-t border-gray-300 bg-gray-100">
         nav 자리

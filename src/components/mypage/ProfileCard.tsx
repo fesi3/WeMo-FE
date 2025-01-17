@@ -2,13 +2,10 @@ import { UserData } from '@/pages/user/[username]';
 import Image from 'next/image';
 
 interface UserProps {
-  user: UserData | null; // planData의 타입을 PlanData로 변경
+  user: UserData; // 부모에서 null 처리로 변경
 }
 
 const ProfileCard = ({ user }: UserProps) => {
-  if (!user) {
-    return <p>로딩 중</p>;
-  }
   const {
     nickname,
     profileImagePath,
