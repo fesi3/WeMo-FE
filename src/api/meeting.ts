@@ -21,6 +21,7 @@ export const createMeeting = async (requestData: POST_MEETING_REQUEST_BODY) => {
 };
 
 export const fetchMeetingDetail = async (meetingId: number) => {
+  if (isNaN(meetingId)) return;
   const response = await fetchData<GET_MEETING_DETAIL_RESPONSE>({
     param: PATHS.MEETING.GET_DETAIL(meetingId.toString()),
     method: 'get',

@@ -24,6 +24,7 @@ export default function MemberList({ members }: MemberListProps) {
                 alt="멤버 프로필"
                 width={40}
                 height={40}
+                priority
                 className="aspect-square rounded-full"
               />
               <span>{member.nickname}</span>

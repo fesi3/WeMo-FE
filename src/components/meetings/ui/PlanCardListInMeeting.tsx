@@ -19,7 +19,13 @@ export default function PlanCardListInMeeting({
           className="flex w-1/2 flex-col gap-2 rounded-md border border-black-sub border-opacity-30 p-2"
         >
           <div className="relative aspect-[5/3] w-full">
-            <Image src={plan.planImagePath[0]} fill alt="일정 대표 사진" />
+            <Image
+              sizes="30vw"
+              src={plan.planImagePath[0]}
+              priority
+              fill
+              alt="일정 대표 사진"
+            />
           </div>
           <div className="flex flex-col gap-2">
             <span className="font-semibold">{plan.planName}</span>

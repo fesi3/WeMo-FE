@@ -73,7 +73,7 @@ export default function MeetingDetailMain({
         <SectionLayout onClickViewMore={() => {}} title="리뷰 목록">
           <div className="flex flex-col gap-5">
             {meetingData.reviewList.map((review) => (
-              <ReviewListInMeeting review={review} />
+              <ReviewListInMeeting key={review.createdAt} review={review} />
             ))}
           </div>
         </SectionLayout>

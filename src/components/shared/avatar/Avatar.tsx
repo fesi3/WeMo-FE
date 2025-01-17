@@ -19,7 +19,7 @@ export default function Avatar({ imageUrl, className }: AvatarProps) {
           className,
         )}
       >
-        <Image sizes="20vw" priority src={imageUrl} alt="유저 프로필" fill />
+        <Image priority sizes="20vw" src={imageUrl} alt="유저 프로필" fill />
       </div>
     </>
   );

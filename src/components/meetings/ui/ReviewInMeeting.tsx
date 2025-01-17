@@ -7,7 +7,6 @@ interface ReviewListInMeetingProps {
   review: ReviewInMeeting;
 }
 export default function ReviewInMeeting({ review }: ReviewListInMeetingProps) {
-  console.log(review);
   const { toggleValue, handleOpen, handleClose } = useToggle();
   return (
     <div
