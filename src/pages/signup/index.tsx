@@ -5,15 +5,19 @@ import { SignupFormTypes } from '@/components/auth/type';
 import { useMutation } from '@tanstack/react-query';
 import fetchData from '@/api/fetchData';
 import { useRouter } from 'next/router';
+import { PATHS } from '@/constants/apiPath';
 
 function Signup() {
   const { signupFormValue, handleChange, errors } = useSignupForm();
   const router = useRouter();
+  const {
+    AUTH: { SIGNUP },
+  } = PATHS;
 
   const mutation = useMutation<SignupFormTypes>({
     mutationFn: () =>
       fetchData({
-        param: '/api/auths/signup',
+        param: SIGNUP,
         method: 'post',
         requestData: signupFormValue,
       }),
@@ -29,7 +33,7 @@ function Signup() {
   // 폼 제출 함수
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log(signupFormValue);
+
     mutation.mutate();
   };
 
