@@ -4,6 +4,7 @@ import { PlanInMeeting } from '@/types/api/meeting';
 import { UserIcon } from '@heroicons/react/20/solid';
 import dayjs from 'dayjs';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 interface PlanCardListInMeetingProps {
   planList: PlanInMeeting[];
@@ -11,10 +12,14 @@ interface PlanCardListInMeetingProps {
 export default function PlanCardListInMeeting({
   planList,
 }: PlanCardListInMeetingProps) {
+  const router = useRouter();
   return (
     <div className="flex gap-3">
       {planList.map((plan) => (
-        <div
+        <button
+          onClick={() => {
+            router.push(`/meetings/plans/${plan.planId}`);
+          }}
           key={plan.planId}
           className="flex w-1/2 flex-col gap-2 rounded-md border border-black-sub border-opacity-30 p-2"
         >
@@ -46,7 +51,7 @@ export default function PlanCardListInMeeting({
               <span className="text-sm text-black-sub">{`${plan.participants}/${plan.capacity}`}</span>
             </div>
           </div>
-        </div>
+        </button>
       ))}
     </div>
   );
