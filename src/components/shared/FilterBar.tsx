@@ -2,7 +2,7 @@ import React from 'react';
 import RegionDropdown from './dropdown/RegionDropdown';
 // import DateDropdown from './dropdown/DateDropdown';
 import SortDropdown from './dropdown/SortDropdown';
-import { RegionOption, SubRegionOption } from '@/components/types/reviewType';
+import { RegionOption, SubRegionOption } from '@/types/reviewType';
 
 interface FilterState {
   region: RegionOption | null;

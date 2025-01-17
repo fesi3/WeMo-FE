@@ -1,6 +1,6 @@
 import React from 'react';
 import HeartRating from '@/components/shared/HeartRating';
-import { Review } from '../types/reviewType';
+import { Review } from '../../types/reviewType';
 
 interface ReviewListProps {
   reviews: Review[];

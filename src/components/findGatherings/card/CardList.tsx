@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from './Card';
-import { PlanData } from '../../types/plans';
+import { PlanData } from '@/types/plans';
 
 interface CardListProps {
   plans: PlanData[];

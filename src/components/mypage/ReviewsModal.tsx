@@ -5,7 +5,7 @@ import useCropper from '@/hooks/useCropper';
 import FileInput from '@/components/shared/FileInput';
 import HeartRating from '@/components/shared/HeartRating';
 import Button from '@/components/shared/Button';
-import { ReviewFormValues, ReviewModalProps } from '../types/reviewType';
+import { ReviewFormValues, ReviewModalProps } from '@/types/reviewType';
 import { getPresignedUrls, uploadImagesToS3 } from '@/api/createReview';
 
 export default function ReviewModal({

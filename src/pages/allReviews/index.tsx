@@ -4,7 +4,7 @@ import FilterBar from '@/components/shared/FilterBar';
 import ReviewList from '@/components/all-reviews/ReviewList';
 import Tabs from '@/components/findGatherings/tab/Tabs';
 import { filterReviews } from '@/utils/filterReviews';
-import { Review, FilterState } from '@/components/types/reviewType';
+import { Review, FilterState } from '@/types/reviewType';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 

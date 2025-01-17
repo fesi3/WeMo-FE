@@ -1,4 +1,4 @@
-import { User } from '@/components/types/api/plan';
+import { User } from '@/types/api/plan';
 import Avatar from './Avatar';
 
 interface AvatarListProps {
