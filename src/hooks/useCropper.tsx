@@ -22,5 +22,5 @@ export default function useCropper() {
     });
   };
 
-  return { croppedImages, onCrop, removeCroppedImage };
+  return { croppedImages, onCrop, removeCroppedImage, setCroppedImages };
 }
