@@ -7,7 +7,7 @@ import EditMeetingButton from '@/components/findGatherings/EditMeeting/EditMeeti
 import SubCategoryFilter from '@/components/findGatherings/SubCategoryFilter';
 import PlanFilter from '@/components/findGatherings/PlanFilter';
 import PlanList from '@/components/findGatherings/PlanList';
-import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
+import { useCursorInfiniteScroll } from '@/hooks/useCursorInfiniteScroll';
 import { getCategoryId } from '@/utils/categoryUtils';
 import { PlanDataWithCategory } from '@/components/types/plans';
 import { RegionOption, SubRegionOption } from '@/components/types/reviewType';
@@ -52,7 +52,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
   const tabs = [{ category: '달램핏' }, { category: '워케이션' }];
 
   // 무한 스크롤 커스텀 훅 사용
-  const { loaderRef } = useInfiniteScroll({
+  const { loaderRef } = useCursorInfiniteScroll({
     cursor,
     setCursor,
     isFetching,

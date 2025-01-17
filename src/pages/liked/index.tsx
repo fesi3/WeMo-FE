@@ -1,19 +1,16 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { PlanData } from '@/components/types/plans';
+import { usePageInfiniteScroll } from '@/hooks/usePageInfiniteScroll';
 import CardList from '@/components/findGatherings/card/CardList';
 
 const LikedPlansPage = () => {
   const [plans, setPlans] = useState<PlanData[]>([]);
-  const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [hasMore, setHasMore] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
-  const loaderRef = useRef(null);
-  //const navigate = useNavigate();
 
-  // 토큰 저장 방식에 따라 변경
+  // 토큰 로드
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const token = localStorage.getItem('accessToken');
@@ -21,73 +18,50 @@ const LikedPlansPage = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (!accessToken) {
-      //     alert('로그인이 필요합니다.');
-      //     navigate('/login');
-      return;
-    }
+  // 데이터 로드
+  const fetchLikedPlans = async (page: number): Promise<boolean> => {
+    if (!accessToken) return false;
 
-    const fetchLikedPlans = async () => {
-      if (!hasMore || isLoading) return;
-      setIsLoading(true);
-      setError(null);
-      try {
-        const response = await axios.get(
-          `/api/plans/like?page=${page}&size=10`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          },
-        );
-        const newPlans: PlanData[] = response.data.content;
-        console.log(newPlans);
-        if (newPlans.length === 0) {
-          setHasMore(false); // 새로운 데이터가 없으면 호출 중지
-        } else {
-          setPlans((prevPlans) => {
-            const uniquePlans = newPlans.filter(
-              (newPlan) =>
-                !prevPlans.some(
-                  (prevPlan) => prevPlan.planId === newPlan.planId,
-                ),
-            );
-            return [...prevPlans, ...uniquePlans];
-          });
-        }
-      } catch (err) {
-        console.error('좋아요한 일정 목록을 불러오지 못함: ', err);
-      } finally {
-        setIsLoading(false);
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await axios.get(`/api/plans/like?page=${page}&size=10`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+
+      const newPlans: PlanData[] = response.data.content;
+
+      if (newPlans.length > 0) {
+        setPlans((prevPlans) => [
+          ...prevPlans,
+          ...newPlans.filter(
+            (newPlan) =>
+              !prevPlans.some((prevPlan) => prevPlan.planId === newPlan.planId),
+          ),
+        ]);
       }
-    };
 
-    fetchLikedPlans();
-  }, [page, accessToken, hasMore, isLoading]);
-
-  useEffect(() => {
-    if (!hasMore || isLoading) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setPage((prevPage) => prevPage + 1);
-        }
-      },
-      { threshold: 1.0 },
-    );
-
-    if (loaderRef.current) {
-      observer.observe(loaderRef.current);
+      return newPlans.length > 0;
+    } catch (err) {
+      console.error('찜한록을 불러오지 못함: ', err);
+      setError('데이터를 불러오는 데 실패했습니다.');
+    } finally {
+      setIsLoading(false);
     }
+    return false; // 데이터가 없으면 false 반환
+  };
 
-    return () => {
-      if (loaderRef.current) {
-        observer.unobserve(loaderRef.current);
+  // 페이지 기반 무한 스크롤
+  const { loaderRef } = usePageInfiniteScroll({
+    fetchMore: fetchLikedPlans, // 데이터를 가져오는 로직 전달
+    initialPage: 1, // 초기 페이지
+    onPageLoadComplete: (dataAvailable) => {
+      if (!dataAvailable) {
+        console.log('더 이상 불러올 데이터가 없습니다.');
       }
-    };
-  }, [loaderRef, hasMore, isLoading]);
+    },
+  });
 
   if (!accessToken) {
     return (
@@ -99,7 +73,6 @@ const LikedPlansPage = () => {
 
   return (
     <div>
-      <h1>찜한 목록</h1>
       {plans.length === 0 && !isLoading && (
         <div>
           <p>찜한 모임이 없어요</p>
@@ -108,9 +81,8 @@ const LikedPlansPage = () => {
       )}
       {error && <p>{error}</p>}
       <CardList plans={plans} />
-      {isLoading && <p>로딩 중...</p>}
-      {/* 로딩 중 디자인도 필요 */}
-      <div ref={loaderRef} />
+      {/* {isLoading && <p>로딩 중...</p>} 로딩 중 디자인 페이지도 필요 */}
+      <div ref={loaderRef} /> {/* 무한 스크롤 관찰 대상 */}
     </div>
   );
 };
