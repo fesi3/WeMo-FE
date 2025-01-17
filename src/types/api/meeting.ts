@@ -5,24 +5,24 @@ export interface CREATE_MEETING_REQUEST_BODY {
   fileUrl: string;
 }
 
-interface User {
+export interface User {
   nickname: string;
   profileImagePath: string;
   createdAt: string;
 }
 
-interface Plan {
+export interface PlanInMeeting {
   planId: number;
   planName: string;
   dateTime: string;
-  currentUsers: number;
+  participants: number;
   capacity: number;
   planImagePath: string;
   isOpened: boolean;
   isFulled: boolean;
 }
 
-interface Review {
+export interface ReviewInMeeting {
   reviewId: number;
   nickname: string;
   profileImagePath: string;
@@ -32,7 +32,7 @@ interface Review {
   updatedAt: string;
 }
 
-interface MeetingData {
+export interface MeetingDetail {
   meetingId: number;
   meetingName: string;
   meetingImagePath: string;
@@ -44,14 +44,21 @@ interface MeetingData {
   createdAt: string;
   updatedAt: string;
   memberList: User[];
-  planCount: number;
-  planList: Plan[];
-  reviewCount: number;
-  reviewList: Review[];
+  planCounts: number;
+  planList: PlanInMeeting[];
+  reviewCounts: number;
+  reviewList: ReviewInMeeting[];
 }
 
 export interface GET_MEETING_DETAIL_RESPONSE {
   success: boolean;
   message: string;
-  data: MeetingData;
+  data: MeetingDetail;
+}
+
+export interface POST_MEETING_REQUEST_BODY {
+  meetingName: string;
+  description: string;
+  categoryId: number;
+  fileUrls: string[];
 }

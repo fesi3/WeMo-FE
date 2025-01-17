@@ -119,6 +119,7 @@ export default function ReviewModal({
       <label className="flex flex-col gap-2">
         <span className="font-semibold">이미지 첨부 (선택):</span>
         <FileInput
+          handleDelete={removeCroppedImage}
           croppedImages={croppedImages}
           register={register}
           name="images"

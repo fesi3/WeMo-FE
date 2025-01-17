@@ -11,7 +11,7 @@ interface MeetingInfo {
   meetingImagePath: string;
 }
 
-export interface PlanData {
+export interface PlanDetail {
   planId: number;
   nickname: string;
   profileImagePath: string;
@@ -20,7 +20,7 @@ export interface PlanData {
   address: string;
   longitude: number;
   latitude: number;
-  planImagePath: string;
+  planImagePath: string[];
   content: string;
   dateTime: string;
   registrationEnd: string;
@@ -30,20 +30,22 @@ export interface PlanData {
   updatedAt: string;
   deletedAt: string | null;
   userList: User[];
-  meetingInfo: MeetingInfo[];
+  meetingInfo: MeetingInfo;
   isCanceled: boolean;
   isLiked: boolean;
   isOpened: boolean;
   isFulled: boolean;
+  likeCount: number;
+  viewCount: number;
 }
 
 export interface GET_PLAN_DETAIL_RESPONSE {
   success: boolean;
   message: string;
-  data: PlanData;
+  data: PlanDetail;
 }
 
-export interface POST_PLAN_DETAIL_REQUEST_BODY {
+export interface POST_PLAN_REQUEST_BODY {
   planName: string;
   dateTime: string;
   address: string;
