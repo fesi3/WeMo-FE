@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 import AddressInput from './AddressInput';
 import { coordinateToAddress } from '@/utils/coordinateToAddress';
 import { INITIAL_POSITION } from '@/constants/address';
-import { Coordinate } from '@/components/types/mapType';
+import { Coordinate } from '@/types/mapType';
 import { createPlan } from '@/api/plan';
 import { useRouter } from 'next/router';
 import { getImageUrls } from '@/api/image';
