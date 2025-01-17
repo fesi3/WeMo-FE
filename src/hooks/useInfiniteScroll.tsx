@@ -1,3 +1,6 @@
+/*
+ * 커서 기반 무한스크롤 로직, 추후 재사용할 수 있도록 추상화 필요.
+ */
 import { useEffect, useRef } from 'react';
 import axios from 'axios';
 import { RegionOption, SubRegionOption } from '@/components/types/reviewType';
