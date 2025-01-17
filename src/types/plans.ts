@@ -1,5 +1,6 @@
 export interface PlanData {
   planId: string;
+  meetingId?: string;
   planName: string;
   registrationEnd: string;
   dateTime: string;

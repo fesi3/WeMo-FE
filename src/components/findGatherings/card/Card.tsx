@@ -1,9 +1,5 @@
-/**
- * 디자인 확정 후 수정 필요, 반응형 추후 수정
- * 임시 카드 컴포넌트
- **/
-
 import React from 'react';
+import { useRouter } from 'next/router';
 import DeadlineBadge from './DeadlinBadge';
 import MeetingDate from '../../shared/badges/MeetingDate';
 import MeetingTime from '../../shared/badges/MeetingTime';
@@ -11,6 +7,7 @@ import DistrictBadge from '@/components/shared/badges/DistrictBadge';
 import { PlanData } from '@/types/plans';
 
 const Card: React.FC<PlanData> = ({
+  planId,
   planName,
   registrationEnd,
   dateTime,
@@ -22,8 +19,17 @@ const Card: React.FC<PlanData> = ({
   isLiked,
   planImagePath,
 }) => {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push(`/meetings/plans/${planId}`);
+  };
+
   return (
-    <div className="relative w-full overflow-hidden rounded-lg border bg-white shadow-md">
+    <div
+      className="relative w-full cursor-pointer overflow-hidden rounded-lg border bg-white shadow-md transition-all hover:border-2 hover:border-primary-50"
+      onClick={handleClick}
+    >
       {/* 이미지 */}
       <div className="relative h-48 w-full">
         <img
