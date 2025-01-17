@@ -18,19 +18,23 @@ export default function ReviewModal({
   const { toggleValue, handleOpen, handleClose } = useToggle();
   const [imageURL, setImageURL] = useState<string>(''); // 선택된 이미지 URL
 
-  const { register, handleSubmit, watch, resetField, setValue } =
-    useForm<ReviewFormValues>({
-      defaultValues: {
-        score: initialData?.score || 0,
-        comment: initialData?.comment || '',
-        images: [],
-      },
-    });
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid },
+    watch,
+    resetField,
+    setValue,
+  } = useForm<ReviewFormValues>({
+    mode: 'onChange', // 입력 값 변경 시마다 유효성 검사 수행
+    defaultValues: {
+      score: initialData?.score || 0,
+      comment: initialData?.comment || '',
+      images: [],
+    },
+  });
 
   const images = watch('images'); // 이미지 필드 상태 감시
-  const score = watch('score'); // 별점 감시
-  const comment = watch('comment'); // 리뷰 텍스트 감시
-  const isButtonDisabled = !score || !comment.trim(); // 별점과 댓글이 모두 있어야 버튼 활성화
 
   // 이미지 선택 후 처리
   useEffect(() => {
@@ -86,7 +90,9 @@ export default function ReviewModal({
         <div className="mt-2 flex items-center gap-2">
           <HeartRating
             rating={watch('score')}
-            onRate={(newScore) => setValue('score', newScore)}
+            onRate={(newScore) =>
+              setValue('score', newScore, { shouldValidate: true })
+            }
           />
         </div>
       </label>
@@ -97,7 +103,13 @@ export default function ReviewModal({
           오늘의 경험에 대해 이야기 해주세요:
         </span>
         <textarea
-          {...register('comment', { required: '리뷰 내용을 입력해주세요.' })}
+          {...register('comment', {
+            required: '리뷰 내용을 입력해주세요.',
+            minLength: {
+              value: 10,
+              message: '리뷰는 최소 10자 이상 작성해주세요.',
+            },
+          })}
           placeholder="남겨주신 리뷰는 프로그램 운영 및 다른 회원 분들께 큰 도움이 됩니다."
           className="h-32 w-full rounded-md border border-gray-300 p-3"
         />
@@ -115,6 +127,7 @@ export default function ReviewModal({
           handleClose={handleClose}
           imageURL={imageURL}
           onCrop={onCrop}
+          handleDelete={removeCroppedImage}
         />
       </label>
 
@@ -128,7 +141,7 @@ export default function ReviewModal({
         <Button
           text={mode === 'create' ? '등록하기' : '수정하기'}
           type="reviewSubmit"
-          disable={isButtonDisabled} // 비활성화 여부
+          disable={!isValid} // 비활성화 여부
         />
       </div>
     </form>
