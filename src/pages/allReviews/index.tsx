@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import FilterBar from '@/components/shared/FilterBar';
 import ReviewList from '@/components/all-reviews/ReviewList';
@@ -15,6 +15,8 @@ const ReviewPage = ({ initialReviews }: { initialReviews: Review[] }) => {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true); // 추가 데이터 여부
   const [cursor, setCursor] = useState(1); // 현재 페이지
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const loaderRef = useRef<HTMLDivElement | null>(null);
 
   const [filters, setFilters] = useState<FilterState>({
     region: null,
@@ -25,17 +27,15 @@ const ReviewPage = ({ initialReviews }: { initialReviews: Review[] }) => {
 
   /**
    * 서버에서 데이터를 가져오는 함수
-   * @param {number} page - 현재 페이지 번호
    * @param {boolean} isAppending - 기존 데이터에 추가 여부
    */
-
-  const fetchReviews = async (page: number, isAppending = false) => {
+  const fetchReviews = async (isAppending = false) => {
+    if (!hasMore || loading) return; // 데이터가 없거나 로딩 중일 때 중단
     try {
       setLoading(true);
 
-      // API 요청 파라미터 생성
       const params = {
-        page,
+        page: cursor,
         size: 5,
         province: filters.region?.name || undefined,
         district: filters.subRegion?.name || undefined,
@@ -51,14 +51,14 @@ const ReviewPage = ({ initialReviews }: { initialReviews: Review[] }) => {
 
       const { data } = await axios.get(`${BASE_URL}/api/reviews`, { params });
 
-      // 응답 데이터 처리
-      if (isAppending) {
-        setReviews((prev) => [...prev, ...(data.data.reviewList || [])]);
-        if (data.data.reviewList.length < 5) setHasMore(false); // 더 이상 데이터 없음
-      } else {
-        setReviews(data.data.reviewList || []);
-        setHasMore(data.data.reviewList.length === 5); // 5개 미만이면 데이터 없음
-      }
+      const newReviews = data.data.reviewList || [];
+      setReviews((prev) =>
+        isAppending ? [...prev, ...newReviews] : newReviews,
+      );
+
+      // 더 이상 데이터가 없으면 `hasMore`를 false로 설정
+      if (newReviews.length < 5) setHasMore(false);
+      else setCursor((prev) => prev + 1);
     } catch (error) {
       console.error('데이터 패칭 오류:', error);
     } finally {
@@ -66,23 +66,45 @@ const ReviewPage = ({ initialReviews }: { initialReviews: Review[] }) => {
     }
   };
 
-  // 필터 변경 시 데이터 다시 가져오기
+  // IntersectionObserver를 설정
   useEffect(() => {
-    fetchReviews(1); // 첫 페이지 데이터
-    setCursor(2); // 다음 페이지 초기화
+    const observerCallback: IntersectionObserverCallback = (entries) => {
+      const target = entries[0];
+      if (target.isIntersecting) {
+        fetchReviews(true); // 추가 데이터 로드
+      }
+    };
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1,
+    };
+
+    const observer = new IntersectionObserver(
+      observerCallback,
+      observerOptions,
+    );
+    if (loaderRef.current) observer.observe(loaderRef.current);
+    observerRef.current = observer;
+
+    return () => {
+      if (observerRef.current) observerRef.current.disconnect();
+    };
+  }, [cursor, hasMore, loading, filters]);
+
+  // 필터 변경 시 데이터 초기화
+  useEffect(() => {
+    setReviews([]); // 기존 데이터 초기화
+    setCursor(1); // 첫 페이지부터 다시 로드
+    setHasMore(true); // 데이터 로드 가능 상태로 초기화
+    fetchReviews(false); // 첫 데이터 로드
   }, [filters]);
 
   // 필터링 적용
   useEffect(() => {
     setFilteredReviews(filterReviews(reviews, filters));
   }, [filters, reviews]);
-
-  // 더 가져오기 (커서 기반)
-  const loadMore = () => {
-    if (!hasMore || loading) return;
-    fetchReviews(cursor, true);
-    setCursor((prev) => prev + 1);
-  };
 
   return (
     <div className="mx-auto max-w-3xl space-y-4 p-4">
@@ -96,15 +118,9 @@ const ReviewPage = ({ initialReviews }: { initialReviews: Review[] }) => {
         ]}
       />
       <ReviewList reviews={filteredReviews || []} />
-      {hasMore && (
-        <button
-          onClick={loadMore}
-          disabled={loading}
-          className="block w-full rounded bg-blue-500 px-4 py-2 text-white"
-        >
-          {loading ? '로딩 중...' : '더 보기'}
-        </button>
-      )}
+      <div ref={loaderRef} className="h-8" /> {/* 무한 스크롤 트리거 */}
+      {loading && <p className="text-center">로딩 중...</p>}
+      {!hasMore && <p className="text-center">더 이상 데이터가 없습니다.</p>}
     </div>
   );
 };
