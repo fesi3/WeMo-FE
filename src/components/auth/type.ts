@@ -5,3 +5,8 @@ export interface SignupFormTypes {
   password: string;
   passwordCheck: string;
 }
+
+export interface LoginFormTypes {
+  email: string;
+  password: string;
+}

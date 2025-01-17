@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import Dropdown from '@/components/shared/dropdown/DropDown';
-import { RegionOption, SubRegionOption } from '@/components/types/reviewType';
+import { RegionOption, SubRegionOption } from '@/types/reviewType';
 
 interface RegionDropdownProps {
   selectedRegion: RegionOption | null;

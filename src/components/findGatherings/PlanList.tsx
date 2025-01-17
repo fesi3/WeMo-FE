@@ -1,7 +1,7 @@
 import React from 'react';
 import CardList from '@/components/findGatherings/card/CardList';
-import { PlanDataWithCategory } from '@/components/types/plans';
-import { RegionOption, SubRegionOption } from '@/components/types/reviewType';
+import { PlanDataWithCategory } from '@/types/plans';
+import { RegionOption, SubRegionOption } from '@/types/reviewType';
 import dayjs from 'dayjs';
 
 interface PlanListProps {

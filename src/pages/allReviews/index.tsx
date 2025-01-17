@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import FilterBar from '@/components/shared/FilterBar';
 import ReviewList from '@/components/all-reviews/ReviewList';
 import { filterReviews } from '@/utils/filterReviews';
-import { Review, FilterState } from '@/components/types/reviewType';
+import { Review, FilterState } from '@/types/reviewType';
 
 const BASE_URL = 'https://677e23a294bde1c1252a8cc0.mockapi.io';
 
