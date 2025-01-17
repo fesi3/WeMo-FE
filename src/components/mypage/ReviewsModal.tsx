@@ -90,7 +90,9 @@ export default function ReviewModal({
         <div className="mt-2 flex items-center gap-2">
           <HeartRating
             rating={watch('score')}
-            onRate={(newScore) => setValue('score', newScore)}
+            onRate={(newScore) =>
+              setValue('score', newScore, { shouldValidate: true })
+            }
           />
         </div>
       </label>

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import FilterBar from '@/components/shared/FilterBar';
 import ReviewList from '@/components/all-reviews/ReviewList';
-import Tabs from '@/components/findGatherings/tab/tab';
+import Tabs from '@/components/findGatherings/tab/Tabs';
 import { filterReviews } from '@/utils/filterReviews';
 import { Review, FilterState } from '@/components/types/reviewType';
 
