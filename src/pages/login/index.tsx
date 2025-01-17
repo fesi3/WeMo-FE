@@ -41,7 +41,7 @@ function Login() {
       if (accessToken) {
         const decodedJWT = decodeToken(accessToken);
         console.log(decodedJWT, '---decodedJWT---');
-        // document.cookie = 'username'
+        document.cookie = `user_email=${decodedJWT.USER_EMAIL}; expires=Mon, 20 Jan 2025 12:00:00 UTC; path=/;`;
       }
     } catch (error) {
       console.log('로그인 에러 발생', error);
