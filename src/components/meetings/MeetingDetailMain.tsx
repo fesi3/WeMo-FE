@@ -1,4 +1,4 @@
-import { MeetingData } from '@/types/api/meeting';
+import { MeetingDetail } from '@/types/api/meeting';
 import Avatar from '../shared/avatar/Avatar';
 import Carousel from '../shared/Carousel';
 import DateBadge from '../shared/DateBadge';
@@ -14,7 +14,7 @@ import PlanCardListInMeeting from './ui/PlanCardListInMeeting';
 import ReviewListInMeeting from './ui/ReviewInMeeting';
 
 interface MeetingDetailMainProps {
-  meetingData: MeetingData;
+  meetingData: MeetingDetail;
 }
 
 export default function MeetingDetailMain({
