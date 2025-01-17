@@ -1,46 +1,55 @@
-import ProfileCard, { User } from '@/components/mypage/ProfileCard';
+import ProfileCard from '@/components/mypage/ProfileCard';
 import React, { useEffect, useState } from 'react';
 // import axios from 'axios';
-import profileImg from '@/assets/images/profile.png'; // 이미지 경로를 import
 import IndexNav from '@/components/mypage/IndexNav';
+import axios from 'axios';
+import { StaticImageData } from 'next/image';
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_KEY;
+
+export interface UserData {
+  email: string;
+  nickname: string;
+  profileImagePath: string | StaticImageData;
+  companyName: string;
+  loginType: string;
+  createdAt: string;
+  joinedPlanCount: number;
+  likedPlanCount: number;
+  writtenReviewCount: number;
+}
 
 export default function MyPage() {
-  const [userData, setUserData] = useState<User | null>(null);
+  const [userData, setUserData] = useState<UserData | null>(null);
   console.log(userData);
-  // //최초 렌더링 시에만 api 호출
-  // useEffect(() => {
-  //   async function fetchUserData() {
-  //     try {
-  //       const response = await axios.get(
-  //         '', //api 호출 경로
-
-  //         {
-  //           headers: {
-  //             Authorization: ``, // JWT 토큰
-  //           },
-  //         },
-  //       );
-  //       setUserData(response.data.planList);
-  //     } catch (error) {
-  //       console.error('api 에러', error);
-  //     }
-  //   }
-
-  //   fetchUserData();
-  // }, []);
 
   useEffect(() => {
-    // 임시 데이터
-    const tempUser: User = {
-      nickname: '지원',
-      companyName: '코드잇',
-      profileImagePath: profileImg,
-      myPlan: 5,
-      myMeeting: 3,
-      myReview: 10,
-    };
+    async function fetchUserData() {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          // 토큰이 없으면 로그인 페이지로 리다이렉트하거나, 기본 페이지 처리
+          alert('로그인이 필요합니다!');
+          return;
+        }
+        const response = await axios.get(
+          `${BASE_URL}/my_user`, //api 호출 경로
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // JWT 토큰
+            },
+          },
+        );
+        const responseData = response.data.data;
 
-    setUserData(tempUser);
+        console.log(responseData);
+        setUserData(responseData);
+      } catch (error) {
+        console.error('api 에러', error);
+      }
+    }
+
+    fetchUserData();
   }, []);
 
   const listItem = [
@@ -67,19 +76,25 @@ export default function MyPage() {
         마이페이지
       </header>
       <main className="flex flex-col gap-7 p-4">
-        <ProfileCard user={userData} />
-        <section className="flex flex-col gap-4">
-          <ul>
-            {listItem.map((item, index) => (
-              <IndexNav
-                key={index}
-                icon={item.icon}
-                title={item.title}
-                link={item.link}
-              />
-            ))}
-          </ul>
-        </section>
+        {userData ? (
+          <>
+            <ProfileCard user={userData} />
+            <section className="flex flex-col gap-4">
+              <ul>
+                {listItem.map((item, index) => (
+                  <IndexNav
+                    key={index}
+                    icon={item.icon}
+                    title={item.title}
+                    link={item.link}
+                  />
+                ))}
+              </ul>
+            </section>
+          </>
+        ) : (
+          <p>로딩 중...</p>
+        )}
       </main>
       <footer className="fixed bottom-0 left-0 z-50 flex h-12 w-full items-center justify-center border-t border-gray-300 bg-gray-100">
         nav 자리
