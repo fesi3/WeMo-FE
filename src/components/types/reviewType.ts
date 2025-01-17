@@ -2,8 +2,8 @@ export interface Review {
   reviewId: number;
   score: number;
   comment: string;
-  gatheringImage: string;
-  groupName: string;
+  planImagePath: string;
+  planName: string;
   location: string;
   createdAt: string;
 }
@@ -24,4 +24,23 @@ export interface FilterState {
   subRegion: SubRegionOption | null;
   date: Date | null;
   sort: { id: number; name: string } | null;
+}
+
+export interface CroppedImageType {
+  objectURL: string;
+  blobImg: Blob | null;
+}
+
+export interface ReviewFormValues {
+  score: number;
+  comment: string;
+  images: File[];
+  fileUrls?: string[];
+}
+
+export interface ReviewModalProps {
+  mode: 'create' | 'edit';
+  initialData?: { score: number; comment: string; images?: string[] };
+  onSubmit: (data: ReviewFormValues) => void;
+  onClose: () => void;
 }
