@@ -7,9 +7,6 @@ import AddressMap from '@/components/shared/map/AddressMap';
 import { splitAddress } from '@/utils/splitAddress';
 import Image from 'next/image';
 import DateBadge from '@/components/shared/DateBadge';
-import eyeIcon from '@/assets/icons/eye.svg';
-import thumbUpIcon from '@/assets/icons/thumb_up.svg';
-import locationMarker from '@/assets/icons/location_marker.svg';
 import AvatarList from '@/components/shared/avatar/AvatarList';
 import { useEffect, useState } from 'react';
 import Button from '../shared/Button';
@@ -81,7 +78,7 @@ export default function PlanDetailMain({ planData }: PlanDetailMainProps) {
                 <div className="flex w-full items-center justify-end gap-4">
                   <div className="flex items-center gap-1">
                     <Image
-                      src={eyeIcon}
+                      src="/assets/icons/eye.svg"
                       width={20}
                       height={20}
                       alt="조회수 아이콘"
@@ -92,7 +89,7 @@ export default function PlanDetailMain({ planData }: PlanDetailMainProps) {
                   </div>
                   <div className="flex items-center gap-1">
                     <Image
-                      src={thumbUpIcon}
+                      src="/assets/icons/thumb_up.svg"
                       width={20}
                       height={20}
                       alt="추천수 아이콘"
@@ -104,10 +101,10 @@ export default function PlanDetailMain({ planData }: PlanDetailMainProps) {
                 </div>
                 <div className="flex items-center gap-1">
                   <Image
-                    src={locationMarker}
+                    src="/assets/icons/location_marker.svg"
                     width={14}
                     height={20}
-                    alt="추천수 아이콘"
+                    alt="위치정보 아이콘"
                   />
                   <span className="text-xs font-bold text-black-sub">{`${splitAddress(planData.address).neighborhood}`}</span>
                 </div>

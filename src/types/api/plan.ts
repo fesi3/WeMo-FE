@@ -42,3 +42,16 @@ export interface GET_PLAN_DETAIL_RESPONSE {
   message: string;
   data: PlanData;
 }
+
+export interface POST_PLAN_DETAIL_REQUEST_BODY {
+  planName: string;
+  dateTime: string;
+  address: string;
+  addressDetail: string;
+  longitude: number;
+  latitude: number;
+  capacity: number;
+  content: string;
+  registrationEnd: string;
+  fileUrls: string[];
+}
