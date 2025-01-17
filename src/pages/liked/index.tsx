@@ -3,6 +3,7 @@ import axios from 'axios';
 import { PlanData } from '@/components/types/plans';
 import { usePageInfiniteScroll } from '@/hooks/usePageInfiniteScroll';
 import CardList from '@/components/findGatherings/card/CardList';
+import Button from '@/components/shared/Button';
 
 const LikedPlansPage = () => {
   const [plans, setPlans] = useState<PlanData[]>([]);
@@ -66,7 +67,7 @@ const LikedPlansPage = () => {
   if (!accessToken) {
     return (
       <div>
-        <p>로그인 후 이용할 수 있는 기능입니다.</p>
+        <p> 로그인 후 이용 가능합니다.</p>
       </div>
     );
   }
@@ -74,9 +75,30 @@ const LikedPlansPage = () => {
   return (
     <div>
       {plans.length === 0 && !isLoading && (
-        <div>
-          <p>찜한 모임이 없어요</p>
-          <p>마음에 드는 모임을 찜해보세요</p>
+        <div className="mt-20 flex flex-col items-center justify-center">
+          {/* 하트 이미지 */}
+          <img
+            src="/assets/images/heart.png"
+            alt="찜한 모임 없음"
+            className="mb-6 h-20 w-20"
+          />
+          {/* 텍스트 */}
+          <p className="mb-2 text-lg font-bold text-gray-800">
+            찜한 모임이 없어요
+          </p>
+          <p className="mb-6 text-sm text-gray-500">
+            마음에 드는 모임을 찜해보세요.
+          </p>
+          {/* 버튼 */}
+          <Button
+            type="no-meeting"
+            text="모임 보러가기"
+            onClick={() => {
+              window.location.href = '/meetings'; // 모임 페이지로 이동
+            }}
+            //   isActive
+            //   disable
+          />
         </div>
       )}
       {error && <p>{error}</p>}
