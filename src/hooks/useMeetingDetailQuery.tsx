@@ -10,5 +10,6 @@ export default function useMeetingDetailQuery() {
   return useQuery({
     queryKey: [queryKey, idNum],
     queryFn: () => fetchMeetingDetail(idNum),
+    enabled: !!idNum,
   });
 }
