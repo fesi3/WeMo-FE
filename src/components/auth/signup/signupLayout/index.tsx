@@ -8,7 +8,7 @@ interface SignupLayoutProps {
 function SignupLayout({ children, layoutTitle }: SignupLayoutProps) {
   return (
     <>
-      <header className="border-b-2 pb-3 pt-3 text-center drop-shadow">
+      <header className="border-b-2 pb-3 pt-3 text-center drop-shadow-sm">
         <span className="text-xl font-semibold">{layoutTitle}</span>
       </header>
       {children}

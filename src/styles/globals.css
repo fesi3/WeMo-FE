@@ -16,7 +16,7 @@
     @apply text-tiny font-bold uppercase;
   }
   .label {
-    @apply text-title font-semibold;
+    @apply text-title font-medium;
   }
 }
 

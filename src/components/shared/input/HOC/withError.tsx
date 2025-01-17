@@ -4,11 +4,12 @@ import { twMerge } from 'tailwind-merge';
 interface WithErrorProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
+  inputClassName?: string;
 }
 
 function withError<T extends object>(WrappedComponent: React.ComponentType<T>) {
   return (props: WithErrorProps & T) => {
-    const { error, ...rest } = props;
+    const { error, inputClassName, ...rest } = props;
 
     return (
       <div className="relative flex flex-col">
@@ -16,7 +17,8 @@ function withError<T extends object>(WrappedComponent: React.ComponentType<T>) {
         <WrappedComponent
           {...(rest as T)}
           className={twMerge(
-            `rounded border p-2`,
+            inputClassName,
+            `rounded`,
             error ? 'border-red-400' : 'border-gray-300',
           )}
         />

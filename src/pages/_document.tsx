@@ -40,8 +40,6 @@ export default function Document() {
           name="twitter:image"
           content="https://wemo.com/images/twitter-image.png"
         />
-
-        <title>WeMo - 직장인 힐링 모임 매칭 서비스</title>
         <link rel="icon" href="assets/icons/wemo.ico" />
       </Head>
       <body>

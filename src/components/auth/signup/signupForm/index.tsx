@@ -7,7 +7,7 @@ import withError from '@/components/shared/input/HOC/withError';
 interface SignupFormProps {
   handleSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  formValues: SignupFormTypes;
+  signupFormValue: SignupFormTypes;
   errors: { [key: string]: string };
 }
 
@@ -15,8 +15,9 @@ const InputWithMessage = withError<InputProps>(Input);
 const InputWithLabel = withLabel(InputWithMessage);
 
 function SignupForm(props: SignupFormProps) {
-  const { handleSubmit, handleChange, formValues, errors } = props;
-  const { nickname, companyName, email, password, passwordCheck } = formValues;
+  const { handleSubmit, handleChange, signupFormValue, errors } = props;
+  const { nickname, companyName, email, password, passwordCheck } =
+    signupFormValue;
   const {
     nickname: nicknameError,
     companyName: companyNameError,
@@ -25,12 +26,12 @@ function SignupForm(props: SignupFormProps) {
     passwordCheck: passwordCheckError,
   } = errors;
   return (
-    <form className="flex w-[324px] flex-col gap-[68px]">
+    <form className="flex w-[324px] flex-col gap-[42.5px]">
       <div className="flex flex-col gap-6">
         <InputWithLabel
           id={'nickname'}
-          labelName={'닉네임'}
-          placeholder={'닉네임을 입력해 주세요.'}
+          labelName={'이름'}
+          placeholder={'이름을 입력해 주세요.'}
           labelClassName="label"
           onChange={handleChange}
           value={nickname}

@@ -34,9 +34,9 @@ function Signup() {
   };
 
   return (
-    <div className="flex w-full justify-center">
+    <div className="flex w-full justify-center pt-[22.5px]">
       <SignupForm
-        formValues={signupFormValue}
+        signupFormValue={signupFormValue}
         handleSubmit={handleSubmit}
         handleChange={handleChange}
         errors={errors}
