@@ -8,7 +8,7 @@ import DeadlineBadge from './DeadlinBadge';
 import MeetingDate from '../../shared/badges/MeetingDate';
 import MeetingTime from '../../shared/badges/MeetingTime';
 import DistrictBadge from '@/components/shared/badges/DistrictBadge';
-import { PlanData } from '@/components/types/plans';
+import { PlanData } from '@/types/plans';
 
 const Card: React.FC<PlanData> = ({
   planName,

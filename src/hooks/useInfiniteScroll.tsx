@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import axios from 'axios';
-import { RegionOption, SubRegionOption } from '@/components/types/reviewType';
-import { PlanDataWithCategory } from '@/components/types/plans';
+import { RegionOption, SubRegionOption } from '@/types/reviewType';
+import { PlanDataWithCategory } from '@/types/plans';
 //import { getCategoryId } from '@/utils/categoryUtils';
 
 interface UseInfiniteScrollProps {

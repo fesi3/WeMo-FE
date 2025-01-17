@@ -8,8 +8,8 @@ import PlanFilter from '@/components/findGatherings/PlanFilter';
 import PlanList from '@/components/findGatherings/PlanList';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { getCategoryId } from '@/utils/categoryUtils';
-import { PlanDataWithCategory } from '@/components/types/plans';
-import { RegionOption, SubRegionOption } from '@/components/types/reviewType';
+import { PlanDataWithCategory } from '@/types/plans';
+import { RegionOption, SubRegionOption } from '@/types/reviewType';
 import Tabs from '@/components/findGatherings/tab/Tabs';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;

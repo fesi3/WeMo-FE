@@ -1,4 +1,4 @@
-import { Review, FilterState } from '../components/types/reviewType';
+import { Review, FilterState } from '../types/reviewType';
 
 export const filterReviews = (reviews: Review[], filters: FilterState) => {
   let filtered = [...reviews];
