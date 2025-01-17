@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import axiosInstance from '@/api/axiosInstance';
-import { CroppedImageType } from '@/components/types/reviewType';
+import { CroppedImageType } from '@/types/cropperType';
 
 export const getPresignedUrls = async (count: number): Promise<string[]> => {
   try {
