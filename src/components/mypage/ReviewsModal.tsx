@@ -14,7 +14,7 @@ export default function ReviewModal({
   onSubmit, // 리뷰 제출 콜백
   onClose, // 모달 닫기 콜백
 }: ReviewModalProps) {
-  const { croppedImages, onCrop } = useCropper();
+  const { croppedImages, onCrop, removeCroppedImage } = useCropper();
   const { toggleValue, handleOpen, handleClose } = useToggle();
   const [imageURL, setImageURL] = useState<string>(''); // 선택된 이미지 URL
 
@@ -90,7 +90,9 @@ export default function ReviewModal({
         <div className="mt-2 flex items-center gap-2">
           <HeartRating
             rating={watch('score')}
-            onRate={(newScore) => setValue('score', newScore)}
+            onRate={(newScore) =>
+              setValue('score', newScore, { shouldValidate: true })
+            }
           />
         </div>
       </label>
@@ -124,6 +126,7 @@ export default function ReviewModal({
           handleClose={handleClose}
           imageURL={imageURL}
           onCrop={onCrop}
+          handleDelete={removeCroppedImage}
         />
       </label>
 

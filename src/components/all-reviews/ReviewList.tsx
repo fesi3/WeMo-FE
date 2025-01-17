@@ -20,7 +20,7 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
       {reviews.map((review) => (
         <li
           key={review.reviewId}
-          className="flex flex-col items-start rounded-lg bg-white p-4 shadow-sm md:flex-row md:items-center"
+          className="flex flex-col items-start rounded-lg bg-white p-4 shadow-md md:flex-row md:items-center"
         >
           <img
             src={review.planImagePath}
