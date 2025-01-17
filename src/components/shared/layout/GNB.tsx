@@ -1,6 +1,8 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { Noto_Sans_KR } from 'next/font/google';
 import { useRouter } from 'next/router';
+import { setEmail } from '@/components/redux/actions/emailAction';
+import { useDispatch } from 'react-redux';
 
 const noto = Noto_Sans_KR({
   subsets: ['latin'],
@@ -8,6 +10,18 @@ const noto = Noto_Sans_KR({
 
 function GNB({ children }: { children: ReactNode }) {
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const storedEmail =
+      document.cookie
+        .split('; ')
+        .find((cookie) => cookie.startsWith('user_email='))
+        ?.split('=')[1] || null;
+    if (storedEmail) {
+      dispatch(setEmail(storedEmail));
+    }
+  }, [dispatch]);
 
   const menuItems = [
     { name: '홈', path: '/meetings' },
