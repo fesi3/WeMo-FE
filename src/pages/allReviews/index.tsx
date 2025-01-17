@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import FilterBar from '@/components/shared/FilterBar';
 import ReviewList from '@/components/all-reviews/ReviewList';
+import Tabs from '@/components/findGatherings/tab/tab';
 import { filterReviews } from '@/utils/filterReviews';
 import { Review, FilterState } from '@/components/types/reviewType';
 
@@ -13,11 +14,12 @@ const ReviewPage = ({ initialReviews }: { initialReviews: Review[] }) => {
     initialReviews || [],
   );
   const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true); // 추가 데이터 여부
-  const [cursor, setCursor] = useState(1); // 현재 페이지
-  const observerRef = useRef<IntersectionObserver | null>(null);
+  const [hasMore, setHasMore] = useState(true);
+  const [cursor, setCursor] = useState(1);
   const loaderRef = useRef<HTMLDivElement | null>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
+  // 필터 상태
   const [filters, setFilters] = useState<FilterState>({
     region: null,
     subRegion: null,
@@ -25,12 +27,14 @@ const ReviewPage = ({ initialReviews }: { initialReviews: Review[] }) => {
     sort: null,
   });
 
+  // 탭 상태
+  const [selectedCategory, setSelectedCategory] = useState<string>('달램핏');
+
   /**
    * 서버에서 데이터를 가져오는 함수
-   * @param {boolean} isAppending - 기존 데이터에 추가 여부
    */
   const fetchReviews = async (isAppending = false) => {
-    if (!hasMore || loading) return; // 데이터가 없거나 로딩 중일 때 중단
+    if (!hasMore || loading) return;
     try {
       setLoading(true);
 
@@ -45,7 +49,7 @@ const ReviewPage = ({ initialReviews }: { initialReviews: Review[] }) => {
         endDate: filters.date
           ? filters.date.toISOString().split('T')[0]
           : undefined,
-        categoryId: null, // 필요에 따라 변경
+        categoryId: selectedCategory === '달램핏' ? 1 : 2,
         sort: filters.sort?.name || undefined,
       };
 
@@ -56,7 +60,6 @@ const ReviewPage = ({ initialReviews }: { initialReviews: Review[] }) => {
         isAppending ? [...prev, ...newReviews] : newReviews,
       );
 
-      // 더 이상 데이터가 없으면 `hasMore`를 false로 설정
       if (newReviews.length < 5) setHasMore(false);
       else setCursor((prev) => prev + 1);
     } catch (error) {
@@ -66,12 +69,12 @@ const ReviewPage = ({ initialReviews }: { initialReviews: Review[] }) => {
     }
   };
 
-  // IntersectionObserver를 설정
+  // IntersectionObserver 설정
   useEffect(() => {
     const observerCallback: IntersectionObserverCallback = (entries) => {
       const target = entries[0];
       if (target.isIntersecting) {
-        fetchReviews(true); // 추가 데이터 로드
+        fetchReviews(true);
       }
     };
 
@@ -91,15 +94,15 @@ const ReviewPage = ({ initialReviews }: { initialReviews: Review[] }) => {
     return () => {
       if (observerRef.current) observerRef.current.disconnect();
     };
-  }, [cursor, hasMore, loading, filters]);
+  }, [cursor, hasMore, loading, filters, selectedCategory]);
 
   // 필터 변경 시 데이터 초기화
   useEffect(() => {
-    setReviews([]); // 기존 데이터 초기화
-    setCursor(1); // 첫 페이지부터 다시 로드
-    setHasMore(true); // 데이터 로드 가능 상태로 초기화
-    fetchReviews(false); // 첫 데이터 로드
-  }, [filters]);
+    setReviews([]);
+    setCursor(1);
+    setHasMore(true);
+    fetchReviews(false);
+  }, [filters, selectedCategory]);
 
   // 필터링 적용
   useEffect(() => {
@@ -107,20 +110,34 @@ const ReviewPage = ({ initialReviews }: { initialReviews: Review[] }) => {
   }, [filters, reviews]);
 
   return (
-    <div className="mx-auto max-w-3xl space-y-4 p-4">
-      <h1 className="text-center text-2xl font-bold">리뷰 페이지</h1>
-      <FilterBar
-        filters={filters}
-        onFilterChange={setFilters}
-        sortOptions={[
-          { id: 1, name: '참여자 많은순' },
-          { id: 2, name: '참여자 적은순' },
-        ]}
+    <div className="mx-auto max-w-md px-4 py-6">
+      <Tabs
+        tabs={[{ category: '달램핏' }, { category: '워케이션' }]}
+        defaultTab="달램핏"
+        onTabChange={(category) => {
+          if (selectedCategory !== category) {
+            setSelectedCategory(category);
+          }
+        }}
+        renderContent={() => (
+          <>
+            <FilterBar
+              filters={filters}
+              onFilterChange={setFilters}
+              sortOptions={[
+                { id: 1, name: '참여자 많은순' },
+                { id: 2, name: '참여자 적은순' },
+              ]}
+            />
+            <ReviewList reviews={filteredReviews || []} />
+            <div ref={loaderRef} className="h-8" />
+            {loading && <p className="text-center">로딩 중...</p>}
+            {!hasMore && (
+              <p className="text-center">더 이상 데이터가 없습니다.</p>
+            )}
+          </>
+        )}
       />
-      <ReviewList reviews={filteredReviews || []} />
-      <div ref={loaderRef} className="h-8" /> {/* 무한 스크롤 트리거 */}
-      {loading && <p className="text-center">로딩 중...</p>}
-      {!hasMore && <p className="text-center">더 이상 데이터가 없습니다.</p>}
     </div>
   );
 };
@@ -129,13 +146,14 @@ const ReviewPage = ({ initialReviews }: { initialReviews: Review[] }) => {
 export const getStaticProps = async () => {
   try {
     const { data } = await axios.get(`${BASE_URL}/api/reviews`, {
-      params: { page: 1, size: 5 },
+      params: { page: 1, size: 5, categoryId: 1 }, // 기본 탭: 달램핏
     });
+
     return {
       props: {
         initialReviews: data.data.reviewList || [],
       },
-      revalidate: 60, // 60초마다 재생성
+      revalidate: 60,
     };
   } catch (error) {
     console.error('초기 데이터 패칭 오류:', error);
