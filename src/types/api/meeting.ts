@@ -32,7 +32,7 @@ export interface ReviewInMeeting {
   updatedAt: string;
 }
 
-export interface MeetingData {
+export interface MeetingDetail {
   meetingId: number;
   meetingName: string;
   meetingImagePath: string;
@@ -53,7 +53,7 @@ export interface MeetingData {
 export interface GET_MEETING_DETAIL_RESPONSE {
   success: boolean;
   message: string;
-  data: MeetingData;
+  data: MeetingDetail;
 }
 
 export interface POST_MEETING_REQUEST_BODY {

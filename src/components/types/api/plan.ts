@@ -11,7 +11,7 @@ interface MeetingInfo {
   meetingImagePath: string;
 }
 
-export interface PlanData {
+export interface PlanDetail {
   planId: number;
   nickname: string;
   profileImagePath: string;
@@ -40,5 +40,5 @@ export interface PlanData {
 export interface GET_PLAN_DETAIL_RESPONSE {
   success: boolean;
   message: string;
-  data: PlanData;
+  data: PlanDetail;
 }
