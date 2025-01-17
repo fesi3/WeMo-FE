@@ -1,10 +1,11 @@
 import { twMerge } from 'tailwind-merge';
 
-export interface WithLabelProps
-  extends React.LabelHTMLAttributes<HTMLLabelElement> {
+export interface WithLabelProps {
   id: string;
-  name: string;
+  labelName: string;
   labelClassName?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  inputValue?: string;
 }
 
 // HOC 패턴을 활용한 withLabel 컴포넌트
@@ -16,13 +17,26 @@ export interface WithLabelProps
 
 function withLabel<T extends object>(WrappedComponent: React.ComponentType<T>) {
   return (props: WithLabelProps & T) => {
-    const { id, name, labelClassName = '', ...rest } = props;
+    const {
+      id,
+      labelName,
+      onChange,
+      inputValue,
+      labelClassName = '',
+      ...rest
+    } = props;
     return (
       <div className="flex flex-col gap-2">
         <label htmlFor={id} className={twMerge('text-sm', labelClassName)}>
-          {name}
+          {labelName}
         </label>
-        <WrappedComponent id={id} {...(rest as T)} />
+        <WrappedComponent
+          onChange={onChange}
+          name={labelName}
+          value={inputValue}
+          id={id}
+          {...(rest as T)}
+        />
       </div>
     );
   };
