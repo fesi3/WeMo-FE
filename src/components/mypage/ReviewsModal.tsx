@@ -14,7 +14,7 @@ export default function ReviewModal({
   onSubmit, // 리뷰 제출 콜백
   onClose, // 모달 닫기 콜백
 }: ReviewModalProps) {
-  const { croppedImages, onCrop } = useCropper();
+  const { croppedImages, onCrop, removeCroppedImage } = useCropper();
   const { toggleValue, handleOpen, handleClose } = useToggle();
   const [imageURL, setImageURL] = useState<string>(''); // 선택된 이미지 URL
 
@@ -107,6 +107,7 @@ export default function ReviewModal({
       <label className="flex flex-col gap-2">
         <span className="font-semibold">이미지 첨부 (선택):</span>
         <FileInput
+          handleDelete={removeCroppedImage}
           croppedImages={croppedImages}
           register={register}
           name="images"
