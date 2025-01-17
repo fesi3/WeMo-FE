@@ -25,7 +25,7 @@ const DeadlineBadge: React.FC<DeadlineBadgeProps> = ({ registrationEnd }) => {
     // 오늘이고 아직 마감 시간이 안 지남-> 마감 뱃지 띄움
     const hours = endDate.getHours();
     return (
-      <div className="rounded-md bg-orange-500 px-2 py-1 text-sm text-white">
+      <div className="rounded-xl bg-primary-40 px-2 py-1 text-sm text-white">
         오늘 {hours}시 마감
       </div>
     );
@@ -34,7 +34,7 @@ const DeadlineBadge: React.FC<DeadlineBadgeProps> = ({ registrationEnd }) => {
   // 이미 지난 날짜라면 "마감되었습니다", 아니라면 표시하지 않음
   else if (endDate.getTime() < now.getTime()) {
     return (
-      <div className="rounded-md bg-gray-400 px-2 py-1 text-sm text-white">
+      <div className="rounded-xl bg-gray-400 px-2 py-1 text-sm text-white">
         마감되었습니다
       </div>
     );
