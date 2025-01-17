@@ -2,10 +2,29 @@ export interface Review {
   reviewId: number;
   score: number;
   comment: string;
-  planImagePath: string;
-  planName: string;
   location: string;
+  planId: number;
+  planName: string;
+  planImagePath: string;
+  category: string;
+  address: string;
+  nickname: string;
+  profileImagePath: string;
+  reviewImagePath: string;
   createdAt: string;
+  updatedAt: string;
+}
+
+export interface ReviewApiResponse {
+  success: boolean;
+  message: string;
+  data: {
+    reviewCount: number;
+    reviewList: Review[];
+    pageSize: number;
+    page: number;
+    totalPage: number;
+  };
 }
 
 export interface SubRegionOption {
