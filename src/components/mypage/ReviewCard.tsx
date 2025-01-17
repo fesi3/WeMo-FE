@@ -1,21 +1,10 @@
-import { StaticImageData } from 'next/image';
 import Image from 'next/image';
 import Button from '../shared/Button';
+import { ReviewData } from '@/pages/user/[username]/review';
+import { formatTime } from '@/utils/dateUtils';
 
-export interface ReviewProps {
-  reviewed: {
-    reviewId: number; // 리뷰 상세로 이동
-
-    planName: string;
-    dateTime: string;
-    category: string;
-    address: string;
-    score: number;
-    comment: string;
-    reivewImagePath: StaticImageData;
-
-    planId: number; // 일정 상세로 이동
-  };
+interface ReviewProps {
+  reviewed: ReviewData;
 }
 
 // 별점 리턴
@@ -38,7 +27,7 @@ const ReviewCard = ({ reviewed }: ReviewProps) => {
   } = reviewed;
 
   const modifyReview = (reviewId: number) => {
-    console.log(reviewId, '번 리뷰 수정');
+    console.log(reviewId, '번 리뷰 삭제');
     // 수정 모달 추가
   };
   const goPlanDetail = (planId: number) => {
@@ -71,7 +60,7 @@ const ReviewCard = ({ reviewed }: ReviewProps) => {
           <div className="my-1 text-base font-semibold">{planName}</div>
 
           <div className="text-sm text-[#A4A4A4]">
-            {address} | {dateTime} 이용
+            {address} | {formatTime(dateTime)} 이용
           </div>
         </div>
       </div>
@@ -86,7 +75,8 @@ const ReviewCard = ({ reviewed }: ReviewProps) => {
 
           <Button
             type="modify_mypage"
-            text="수정"
+            text="삭제"
+            textColor="black"
             onClick={() => {
               modifyReview(reviewId);
             }}

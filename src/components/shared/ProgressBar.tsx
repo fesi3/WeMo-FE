@@ -14,7 +14,7 @@ export default function ProgressBar({
     <div className="relative h-1 w-full rounded-full bg-primary-95">
       <motion.div
         initial={{ width: '0%' }}
-        animate={{ width: `${progress}%` }}
+        animate={{ width: `${progress || 5}%` }}
         transition={{ ease: 'easeOut', duration: 0.7 }}
         className="absolute left-0 top-0 h-1 rounded-full bg-primary-10"
       ></motion.div>

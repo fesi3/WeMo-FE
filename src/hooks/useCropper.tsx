@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CroppedImageType } from '@/components/types/cropperType';
+import { CroppedImageType } from '@/types/cropperType';
 
 /**
  *
@@ -22,5 +22,5 @@ export default function useCropper() {
     });
   };
 
-  return { croppedImages, onCrop, removeCroppedImage };
+  return { croppedImages, onCrop, removeCroppedImage, setCroppedImages };
 }

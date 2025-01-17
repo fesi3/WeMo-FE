@@ -1,18 +1,13 @@
-import { StaticImageData } from 'next/image';
 import Image from 'next/image';
 import Button from '../shared/Button';
+import { ReviewPlanData } from '@/pages/user/[username]/review';
+import { fromNow } from '@/utils/dateUtils';
 
-export interface ReviewableProps {
-  reviewable: {
-    planName: string;
-    category: string;
-    dateTime: string;
-    address: string;
-    planImagePath: StaticImageData;
-    planId: number; // 일정 상세로 이동
-  };
+interface reviewableProps {
+  reviewable: ReviewPlanData;
 }
-const ReviewableCard = ({ reviewable }: ReviewableProps) => {
+
+const ReviewableCard = ({ reviewable }: reviewableProps) => {
   const { planName, category, dateTime, planImagePath, planId } = reviewable;
 
   const goPlanDetail = (planId: number) => {
@@ -26,7 +21,7 @@ const ReviewableCard = ({ reviewable }: ReviewableProps) => {
   };
   return (
     <div className="my-5 flex flex-col gap-3 rounded-md border border-[#A4A4A4] px-4 py-3">
-      <div className="text-[#A4A4A4]">{dateTime} 이용</div>
+      <div className="text-[#A4A4A4]">{fromNow(dateTime)} 이용완료</div>
 
       <div className="mb-3 flex gap-3">
         <div className="relative h-[60px] w-[70px]">

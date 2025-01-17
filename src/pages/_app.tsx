@@ -4,6 +4,7 @@ import type { AppProps } from 'next/app';
 import { Noto_Sans_KR } from 'next/font/google';
 import { ReactElement, ReactNode } from 'react';
 import QueryProvider from '@/components/react-query/queryProvider';
+import Head from 'next/head';
 
 const noto = Noto_Sans_KR({
   subsets: ['latin'],
@@ -21,10 +22,15 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return getLayout(
-    <div className={noto.className}>
-      <QueryProvider>
-        <Component {...pageProps} />
-      </QueryProvider>
-    </div>,
+    <>
+      <Head>
+        <title>WeMo - 직장인 힐링 모임 매칭 서비스</title>
+      </Head>
+      <main className={noto.className}>
+        <QueryProvider>
+          <Component {...pageProps} />
+        </QueryProvider>
+      </main>
+    </>,
   );
 }

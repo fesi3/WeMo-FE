@@ -1,8 +1,13 @@
-import { meetingProps } from '@/pages/user/[username]/meeting';
 import Image from 'next/image';
 import Button from '../shared/Button';
+import { MeetingData } from '@/pages/user/[username]/meeting';
 
-const MeetingCard = ({ meetingData, useremail }: meetingProps) => {
+export interface MeetingProps {
+  meetingData: MeetingData;
+  useremail: string; // 사용자 정보(전역 데이터)로 수정하기@@@@
+}
+
+const MeetingCard = ({ meetingData, useremail }: MeetingProps) => {
   const {
     email,
     meetingId,
@@ -19,7 +24,8 @@ const MeetingCard = ({ meetingData, useremail }: meetingProps) => {
         <Button
           type="exit_meeting"
           text="모임 삭제"
-          border="1px solid transparent"
+          textColor="black"
+          border="#343434"
           onClick={() => handleDeleteMeeting(meetingId)}
         />
       );
@@ -28,6 +34,8 @@ const MeetingCard = ({ meetingData, useremail }: meetingProps) => {
         <Button
           type="exit_meeting"
           text="탈퇴하기"
+          textColor="black"
+          border="#343434"
           onClick={() => handleLeaveMeeting(meetingId)}
         />
       );

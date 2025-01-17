@@ -13,7 +13,7 @@ export default function AddressMap({ latitude, longitude }: AddressMapProps) {
       <Map
         id="map"
         center={{ lat: latitude, lng: longitude }}
-        className="w-full pt-[40%]"
+        className="z-0 w-full pt-[40%]"
         level={3} // 지도의 확대 레벨
         draggable={false}
         zoomable={false}

@@ -1,7 +1,7 @@
 import React from 'react';
 import DateModal from '@/components/shared/calendar/DateModal';
 import RegionDropdown from '@/components/shared/dropdown/RegionDropdown';
-import { RegionOption, SubRegionOption } from '@/components/types/reviewType';
+import { RegionOption, SubRegionOption } from '@/types/reviewType';
 
 interface PlanFilterProps {
   selectedDate: string | null;

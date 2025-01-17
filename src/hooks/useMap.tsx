@@ -1,55 +1,25 @@
+import { addressToCoordinate } from '@/utils/addressToCoordinate';
 import useKakaoLoader from '../hooks/useKakaoLoader';
 import { useEffect, useState } from 'react';
 import { Address, useDaumPostcodePopup } from 'react-daum-postcode';
+import { coordinateToAddress } from '@/utils/coordinateToAddress';
 
 // 서울 시청 좌표
-const INITIAL_POSITION = {
+const INITIAL_COORDINATE = {
   lat: 37.5664056,
   lng: 126.9778222,
 };
 
 //서울 시청 주소
-const INITIAL_LOCATION = '서울 중구 태평로1가 31';
+const INITIAL_ADDRESS = '서울 중구 태평로1가 31';
 
 export default function useKakaoMap() {
   const [coordinate, setCoordinate] = useState<{
     lat: number;
     lng: number;
-  }>(INITIAL_POSITION);
-  const [location, setLocation] = useState(INITIAL_LOCATION);
+  }>(INITIAL_COORDINATE);
+  const [Address, setAddress] = useState(INITIAL_ADDRESS);
   const [isMapLoading] = useKakaoLoader();
-
-  const locationToPosition = (
-    location: string,
-  ): Promise<{ lat: number; lng: number }> => {
-    return new Promise((resolve, reject) => {
-      const geocoder = new window.kakao.maps.services.Geocoder();
-      geocoder.addressSearch(location, (result, status) => {
-        if (status === window.kakao.maps.services.Status.OK) {
-          const coords = result[0];
-          resolve({
-            lat: parseFloat(coords.y), // ✅ 위도와 경도 순서 수정
-            lng: parseFloat(coords.x),
-          });
-        } else {
-          reject(new Error('주소를 좌표로 변환할 수 없습니다.'));
-        }
-      });
-    });
-  };
-
-  const positionToLocation = (lat: number, lng: number): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const geocoder = new window.kakao.maps.services.Geocoder();
-      geocoder.coord2Address(lng, lat, (result, status) => {
-        if (status === window.kakao.maps.services.Status.OK) {
-          resolve(result[0].address.address_name);
-        } else {
-          reject(new Error('주소를 표시할 수 없습니다.'));
-        }
-      });
-    });
-  };
 
   //다음 주소검색 팝업 script 호출
   const open = useDaumPostcodePopup(
@@ -60,9 +30,9 @@ export default function useKakaoMap() {
   const handleComplete = async (data: Address) => {
     const fullAddress = data.address;
 
-    setLocation(fullAddress);
+    setAddress(fullAddress);
 
-    const updatedPosition = await locationToPosition(fullAddress);
+    const updatedPosition = await addressToCoordinate(fullAddress);
 
     setCoordinate({
       lat: updatedPosition.lat, // 위도
@@ -81,8 +51,8 @@ export default function useKakaoMap() {
     const latlng = mouseEvent.latLng;
     const lat = latlng.getLat();
     const lng = latlng.getLng();
-    const updatedLocation = await positionToLocation(lat, lng);
-    setLocation(updatedLocation);
+    const updatedLocation = await coordinateToAddress(lat, lng);
+    setAddress(updatedLocation);
     setCoordinate({
       lat,
       lng,
@@ -99,11 +69,11 @@ export default function useKakaoMap() {
           lat,
           lng,
         });
-        const updatedLocation = await positionToLocation(lat, lng);
-        setLocation(updatedLocation);
+        const updatedLocation = await coordinateToAddress(lat, lng);
+        setAddress(updatedLocation);
       });
     }
   }, [isMapLoading]);
 
-  return { position: coordinate, location, handleClickOpenSearch, onClickMap };
+  return { coordinate, Address, handleClickOpenSearch, onClickMap };
 }

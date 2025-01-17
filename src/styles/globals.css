@@ -16,10 +16,9 @@
     @apply text-tiny font-bold uppercase;
   }
   .label {
-    @apply text-title font-semibold;
+    @apply text-title font-medium;
   }
 }
-
 
 /* =============== react-calendar 글로벌 오버라이딩 =============== */
 
@@ -47,5 +46,37 @@
   .form-label {
     @apply flex flex-col gap-1 text-sm;
   }
-}
 
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .form-input {
+    @apply h-9 min-w-56 items-center rounded-md border border-black border-opacity-10 px-3 placeholder-opacity-50 outline-none;
+  }
+
+  .form-input-range {
+    @apply bg-gradient-to-l from-primary-10 to-primary-70;
+    display: block;
+    -webkit-appearance: none;
+    width: 200px;
+    height: 10px;
+    border-radius: 5px;
+    outline: 0;
+  }
+  .form-input-range::-webkit-slider-thumb {
+    @apply rounded-full bg-primary-10;
+    position: relative;
+    z-index: 1;
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    border: 2px solid white;
+    cursor: pointer;
+  }
+  .form-input-number::-webkit-outer-spin-button,
+  .form-input-number::-webkit-inner-spin-button {
+    -webkit-appearance: inner-spin-button;
+    opacity: 1;
+  }
+}
