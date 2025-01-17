@@ -9,10 +9,10 @@ import AddressInput from './AddressInput';
 import { coordinateToAddress } from '@/utils/coordinateToAddress';
 import { INITIAL_POSITION } from '@/constants/address';
 import { Coordinate } from '@/components/types/mapType';
-import { postPlan } from '@/api/plan';
+import { createPlan } from '@/api/plan';
 import { useRouter } from 'next/router';
 import { getImageUrls } from '@/api/image';
-import { POST_PLAN_DETAIL_REQUEST_BODY } from '@/types/api/plan';
+import { POST_PLAN_REQUEST_BODY } from '@/types/api/plan';
 
 interface FormValues {
   planName: string;
@@ -38,6 +38,7 @@ export default function EditPlanForm({
     useForm<FormValues>({
       defaultValues: {
         coordinate: { lat: INITIAL_POSITION.lat, lng: INITIAL_POSITION.lng },
+        capacity: 20,
       },
     });
 
@@ -67,12 +68,13 @@ export default function EditPlanForm({
   const imageFieldValue = watch('imageFiles');
   const coordinateValue = watch('coordinate');
   const capacityValue = watch('capacity');
+
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     const { id } = router.query;
     const imageFiles = croppedImages.map((image) => image.blobImg);
     const fileUrls = await getImageUrls(imageFiles);
     if (!fileUrls) return;
-    const requestData: POST_PLAN_DETAIL_REQUEST_BODY = {
+    const requestData: POST_PLAN_REQUEST_BODY = {
       planName: data.planName,
       dateTime: dayjs(data.dateTime).format('YYYY-MM-DDTHH:mm:ss'),
       address: data.address,
@@ -86,7 +88,7 @@ export default function EditPlanForm({
       ),
       fileUrls,
     };
-    postPlan({ meetingId: id as string, requestData });
+    createPlan({ meetingId: id as string, requestData });
   };
 
   const handleClickMap = async ({ lat, lng }: Coordinate) => {

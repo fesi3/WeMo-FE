@@ -1,25 +1,24 @@
 import MeetingCard from '@/components/mypage/MeetingCard';
 import Button from '@/components/shared/Button';
-import { useState } from 'react';
-import meetingImg from '@/assets/images/Rectangle 6188.png';
+import { useEffect, useState } from 'react';
 import { StaticImageData } from 'next/image';
+import axios from 'axios';
 
-export interface meetingProps {
-  meetingData: {
-    email: string;
-    meetingId: number;
-    meetingName: string;
-    meetingImagePath: StaticImageData;
-    category: string;
-    memberCount: number;
-  };
-  useremail: string; // meetings에서 전달하는 유저의 이메일 정보
+const BASE_URL = process.env.NEXT_PUBLIC_API_KEY;
+
+export interface MeetingData {
+  email: string;
+  meetingId: number;
+  meetingName: string;
+  meetingImagePath: StaticImageData;
+  category: string;
+  memberCount: number;
 }
 
 export default function MyMeeting() {
-  const [activeButton, setActiveButton] = useState<
-    'tabLeft' | 'tabRight' | null
-  >('tabLeft');
+  const [activeButton, setActiveButton] = useState<'tabLeft' | 'tabRight'>(
+    'tabLeft',
+  );
 
   // 버튼 클릭 시 상태 변경
   const handleButtonClick = (type: 'tabLeft' | 'tabRight') => {
@@ -31,39 +30,42 @@ export default function MyMeeting() {
   };
   console.log('클릭', activeButton);
 
-  // 현재 사용자 이메일(임시 정보)
-  const useremail = 'aaa@naver.com'; // 현재 사용자의 이메일
+  const [meetings, setMeetings] = useState<MeetingData[]>([]);
+  //최초 렌더링 시에만 api 호출
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${BASE_URL}/my_meeting`,
+          // {
+          //   headers: {
+          //     Authorization: ``, // JWT 토큰
+          //   },
+          // },
+        );
+        const userMeetingData = response.data.data.meetingList;
+        const userMeetingCount = response.data.data.meetingCount;
 
-  const meetings = [
-    {
-      email: 'aaa@naver.com',
-      meetingId: 1,
-      meetingName: '노래방팟팟',
-      meetingImagePath: meetingImg,
-      category: '달램핏',
-      memberCount: 6,
-    },
-    {
-      email: 'abc@naver.com',
-      meetingId: 21,
-      meetingName: '운동팟',
-      meetingImagePath: meetingImg,
-      category: '워케이션',
-      memberCount: 7,
-    },
-    {
-      email: 'aaa@naver.com',
-      meetingId: 3,
-      meetingName: '야식팟',
-      meetingImagePath: meetingImg,
-      category: '달램핏',
-      memberCount: 10,
-    },
-  ];
+        console.log('들어온 데이터 수', userMeetingCount);
+
+        setMeetings(userMeetingData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  console.log('업데이트 데이터', meetings);
+
+  //유저 정보 전역 데이터로 수정하기@@@
+  const useremail = 'test@test.com'; // 현재 사용자의 이메일
 
   const createdMeetings = meetings.filter((meet) => meet.email === useremail);
   const joinedMeetings = meetings.filter((meet) => meet.email !== useremail);
-  console.log(createdMeetings);
+  console.log('내가 만든 모임데이터', createdMeetings);
+  console.log('참여한 데이터', joinedMeetings);
 
   const meetingData =
     activeButton === 'tabLeft' ? joinedMeetings : createdMeetings;
@@ -93,13 +95,18 @@ export default function MyMeeting() {
 
         <section className="flex flex-col">
           <ul>
-            {meetingData.map((meet) => (
-              <MeetingCard
-                key={meet.meetingId}
-                meetingData={meet}
-                useremail={useremail}
-              />
-            ))}
+            {meetingData.length > 0 ? (
+              meetingData.map((meet, index) => (
+                <MeetingCard
+                  key={index}
+                  meetingData={meet}
+                  useremail={useremail} //유저 정보 전역 데이터로 수정하기@@@
+                />
+              ))
+            ) : (
+              // meetingData 배열에 데이터가 없는 경우
+              <p className="mt-4 text-center">해당 모임이 없습니다.</p>
+            )}
           </ul>
         </section>
       </main>

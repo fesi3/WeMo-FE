@@ -112,13 +112,13 @@ const Button = ({
       sizeClass = 'w-[169px] h-[42px] rounded-e-none rounded-s-[8px] ';
       activeClass = isActive
         ? 'bg-primary-10 font-semibold'
-        : 'bg-[#EAEAEA] text-primary-0';
+        : 'bg-[#EAEAEA] text-[#000000]';
       break;
     case 'tabRight': // 탭(오른쪽)
       sizeClass = 'w-[169px] h-[42px] rounded-s-none rounded-e-[8px] ';
       activeClass = isActive
         ? 'bg-primary-10 font-semibold'
-        : 'bg-[#EAEAEA] text-primary-0';
+        : 'bg-[#EAEAEA] text-[#000000]';
       break;
 
     case 'profile_modify': // 프로필 수정하기 버튼(프로필 수정 모달) -수정하기/취소

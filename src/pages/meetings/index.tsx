@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import type { NextPage, GetServerSideProps } from 'next';
 import axios from 'axios';
 import Greeting from '@/components/findGatherings/Greeting';
-import Tabs from '@/components/findGatherings/tab/Tabs';
 import EditMeetingButton from '@/components/findGatherings/editMeeting/EditMeetingButton';
 import SubCategoryFilter from '@/components/findGatherings/SubCategoryFilter';
 import PlanFilter from '@/components/findGatherings/PlanFilter';
@@ -11,6 +10,7 @@ import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { getCategoryId } from '@/utils/categoryUtils';
 import { PlanDataWithCategory } from '@/types/plans';
 import { RegionOption, SubRegionOption } from '@/types/reviewType';
+import Tabs from '@/components/findGatherings/tab/Tabs';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
