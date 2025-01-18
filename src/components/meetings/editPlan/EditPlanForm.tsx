@@ -11,8 +11,8 @@ import { INITIAL_POSITION } from '@/constants/address';
 import { Coordinate } from '@/types/mapType';
 import { createPlan } from '@/api/plan';
 import { useRouter } from 'next/router';
-import { getImageUrls } from '@/api/image';
-import { POST_PLAN_REQUEST_BODY } from '@/types/api/plan';
+import { getImageUrls } from '@/api/images';
+import { createPlanRequest } from '@/types/api/plan';
 
 interface FormValues {
   planName: string;
@@ -74,7 +74,7 @@ export default function EditPlanForm({
     const imageFiles = croppedImages.map((image) => image.blobImg);
     const fileUrls = await getImageUrls(imageFiles);
     if (!fileUrls) return;
-    const requestData: POST_PLAN_REQUEST_BODY = {
+    const requestData: createPlanRequest = {
       planName: data.planName,
       dateTime: dayjs(data.dateTime).format('YYYY-MM-DDTHH:mm:ss'),
       address: data.address,

@@ -1,7 +1,7 @@
 import { PATHS } from '@/constants/apiPath';
 import {
-  GET_MEETING_DETAIL_RESPONSE,
-  POST_MEETING_REQUEST_BODY,
+  MeetingDetailResponse,
+  CreateMeetingRequest,
 } from '@/types/api/meeting';
 import fetchData from './fetchData';
 
@@ -11,8 +11,8 @@ interface POST_MEETING_RESPONSE_BODY {
   data: null;
 }
 
-export const createMeeting = async (requestData: POST_MEETING_REQUEST_BODY) => {
-  const response: unknown = await fetchData<POST_MEETING_REQUEST_BODY>({
+export const createMeeting = async (requestData: CreateMeetingRequest) => {
+  const response: unknown = await fetchData<CreateMeetingRequest>({
     param: PATHS.MEETING.CREATE,
     method: 'post',
     requestData,
@@ -22,7 +22,7 @@ export const createMeeting = async (requestData: POST_MEETING_REQUEST_BODY) => {
 
 export const fetchMeetingDetail = async (meetingId: number) => {
   if (isNaN(meetingId)) return;
-  const response = await fetchData<GET_MEETING_DETAIL_RESPONSE>({
+  const response = await fetchData<MeetingDetailResponse>({
     param: PATHS.MEETING.GET_DETAIL(meetingId.toString()),
     method: 'get',
   });
