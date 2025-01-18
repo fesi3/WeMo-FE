@@ -17,7 +17,7 @@ export const getPresignedUrls = async (count: number) => {
     const response: PresignedUrlsResponse = await instance(
       PATHS.IMAGE.UPLOAD(count),
     );
-    return response;
+    return response.data;
   } catch (e) {
     console.error(e);
   }
@@ -44,7 +44,7 @@ export const getImageUrls = async (imageFiles: File[] | Blob[]) => {
   const count = imageFiles.length;
   const response = await getPresignedUrls(count);
   if (!response) return;
-  const presignedUrls = response.data.presignedUrls;
+  const presignedUrls = response.presignedUrls;
   return Promise.all(
     imageFiles.map(
       async (file, index) => await uploadImage(presignedUrls[index], file),

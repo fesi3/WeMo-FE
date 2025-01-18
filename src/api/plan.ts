@@ -22,5 +22,5 @@ export const fetchPlanDetail = async (planId: number) => {
   const response = await instance<PlanDetailResponse>(
     PATHS.PLAN.GET_DETAIL(planId.toString()),
   );
-  return response;
+  return response.data;
 };

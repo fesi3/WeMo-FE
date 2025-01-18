@@ -5,7 +5,7 @@ import AddressMap from '@/components/shared/map/AddressMap';
 import { splitAddress } from '@/utils/splitAddress';
 import Image from 'next/image';
 import DateBadge from '@/components/shared/DateBadge';
-import AvatarList from '@/components/shared/avatar/AvatarList';
+import AvatarList from './AvatarList';
 import Button from '../shared/Button';
 import { PlanDetail } from '@/types/api/plan';
 import IconWithCount from '../meetings/ui/IconWithCount';

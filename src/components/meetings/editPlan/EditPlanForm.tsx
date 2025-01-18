@@ -12,7 +12,7 @@ import { Coordinate } from '@/types/mapType';
 import { createPlan } from '@/api/plan';
 import { useRouter } from 'next/router';
 import { getImageUrls } from '@/api/images';
-import { createPlanRequest } from '@/types/api/plan';
+import { CreatePlanRequestBody } from '@/types/api/plan';
 
 interface FormValues {
   planName: string;
@@ -74,7 +74,7 @@ export default function EditPlanForm({
     const imageFiles = croppedImages.map((image) => image.blobImg);
     const fileUrls = await getImageUrls(imageFiles);
     if (!fileUrls) return;
-    const requestData: createPlanRequest = {
+    const requestBody: CreatePlanRequestBody = {
       planName: data.planName,
       dateTime: dayjs(data.dateTime).format('YYYY-MM-DDTHH:mm:ss'),
       address: data.address,
@@ -88,7 +88,7 @@ export default function EditPlanForm({
       ),
       fileUrls,
     };
-    createPlan({ meetingId: id as string, requestData });
+    createPlan({ meetingId: id as string, requestBody });
   };
 
   const handleClickMap = async ({ lat, lng }: Coordinate) => {

@@ -18,7 +18,7 @@ export const createMeeting = async (requestBody: CreateMeetingRequestBody) => {
       PATHS.MEETING.CREATE,
       requestBody,
     );
-    return response;
+    return response.data;
   } catch (error) {
     if (!isAxiosError(error)) return;
     if (!error.response) return;
@@ -33,5 +33,5 @@ export const fetchMeetingDetail = async (meetingId: number) => {
   const response = await instance<MeetingDetailResponse>(
     PATHS.MEETING.GET_DETAIL(meetingId.toString()),
   );
-  return response;
+  return response.data;
 };
