@@ -6,7 +6,7 @@ interface PresignedUrls {
   presignedUrls: string[];
 }
 
-interface GET_PRESIGNED_URLS_RESPONSE {
+interface PresignedUrlsResponse {
   success: boolean;
   message: string;
   data: PresignedUrls;
@@ -14,7 +14,7 @@ interface GET_PRESIGNED_URLS_RESPONSE {
 
 export const getPresignedUrls = async (count: number) => {
   try {
-    const response: GET_PRESIGNED_URLS_RESPONSE = await fetchData({
+    const response: PresignedUrlsResponse = await fetchData({
       param: PATHS.IMAGE.UPLOAD(count),
     });
     return response;
