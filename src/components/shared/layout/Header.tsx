@@ -1,14 +1,15 @@
 import ArrowLeft from '@/assets/icons/arrow-left.svg';
+import { useRouter } from 'next/router';
 
 interface HeaderProps {
   title: string;
-  onClickBack: () => void;
 }
 
-/**
- * @param title 헤더에 표시될 제목
- * @param onClickBack 뒤로가기 눌렀을 때 동작   */
-export default function Header({ title, onClickBack }: HeaderProps) {
+export default function Header({ title }: HeaderProps) {
+  const router = useRouter();
+  const onClickBack = () => {
+    router.back();
+  };
   return (
     <>
       <div className="h-12 w-full"> </div>
