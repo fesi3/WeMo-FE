@@ -1,7 +1,7 @@
 import { PATHS } from '@/constants/apiPath';
 import {
   MeetingDetailResponse,
-  CreateMeetingRequest,
+  CreateMeetingRequestBody,
 } from '@/types/api/meeting';
 import fetchData from './fetchData';
 
@@ -11,8 +11,8 @@ interface POST_MEETING_RESPONSE_BODY {
   data: null;
 }
 
-export const createMeeting = async (requestData: CreateMeetingRequest) => {
-  const response: unknown = await fetchData<CreateMeetingRequest>({
+export const createMeeting = async (requestData: CreateMeetingRequestBody) => {
+  const response: unknown = await fetchData<CreateMeetingRequestBody>({
     param: PATHS.MEETING.CREATE,
     method: 'post',
     requestData,

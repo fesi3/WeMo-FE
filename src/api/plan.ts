@@ -1,19 +1,19 @@
 import { PATHS } from '@/constants/apiPath';
 import fetchData from './fetchData';
-import { PlanDetailResponse, createPlanRequest } from '@/types/api/plan';
+import { CreatePlanRequestBody, PlanDetailResponse } from '@/types/api/plan';
 
 //코드 이동 예정
 
 interface PostPlanParams {
   meetingId: string;
-  requestData: createPlanRequest;
+  requestData: CreatePlanRequestBody;
 }
 
 export const createPlan = async ({
   meetingId,
   requestData,
 }: PostPlanParams) => {
-  const response = await fetchData<createPlanRequest>({
+  const response = await fetchData<CreatePlanRequestBody>({
     param: PATHS.PLAN.CREATE(meetingId),
     method: 'post',
     requestData,

@@ -45,7 +45,7 @@ export interface PlanDetailResponse {
   data: PlanDetail;
 }
 
-export interface createPlanRequest {
+export interface CreatePlanRequestBody {
   planName: string;
   dateTime: string;
   address: string;

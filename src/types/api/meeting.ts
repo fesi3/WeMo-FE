@@ -49,7 +49,7 @@ export interface MeetingDetailResponse {
   data: MeetingDetail;
 }
 
-export interface CreateMeetingRequest {
+export interface CreateMeetingRequestBody {
   meetingName: string;
   description: string;
   categoryId: number;
