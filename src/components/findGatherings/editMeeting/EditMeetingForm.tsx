@@ -42,7 +42,7 @@ export default function EditMeetingForm({
       fileUrls,
     };
     const response = await createMeeting(requestData);
-    if (!response.success) return;
+    if (!response) return;
     handleCloseThisModal();
   };
 
