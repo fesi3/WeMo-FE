@@ -1,6 +1,6 @@
 import { PATHS } from '@/constants/apiPath';
-import fetchData from './fetchData';
 import axios from 'axios';
+import instance from './axiosInstance';
 
 interface PresignedUrls {
   presignedUrls: string[];
@@ -14,9 +14,9 @@ interface PresignedUrlsResponse {
 
 export const getPresignedUrls = async (count: number) => {
   try {
-    const response: PresignedUrlsResponse = await fetchData({
-      param: PATHS.IMAGE.UPLOAD(count),
-    });
+    const response: PresignedUrlsResponse = await instance(
+      PATHS.IMAGE.UPLOAD(count),
+    );
     return response;
   } catch (e) {
     console.error(e);
