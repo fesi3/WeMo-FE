@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StaticImageData } from 'next/image';
 import axios from 'axios';
 import PlanCard from '@/components/mypage/PlanCard';
@@ -57,19 +57,21 @@ export default function MyMeMyPlaneting() {
   console.log('일정 업데이트 데이터', plans);
 
   return (
-    <section className="mt-4 flex flex-col sm:w-[500px] md:w-[650px] lg:w-[850px]">
-      <ul className="flex flex-col gap-y-10">
-        {plans.length > 0 ? (
-          plans.map((plan, index) => <PlanCard key={index} planData={plan} />)
-        ) : (
-          // 배열에 데이터가 없는 경우
-          <NoData comment="일정이" toPage="일정 둘러보기" />
-        )}
-      </ul>
-    </section>
+    <MypageLayout headerProps="일정 페이지">
+      <section className="mt-4 flex flex-col sm:w-[500px] md:w-[650px] lg:w-[850px]">
+        <ul className="flex flex-col gap-y-10">
+          {plans.length > 0 ? (
+            plans.map((plan, index) => <PlanCard key={index} planData={plan} />)
+          ) : (
+            // 배열에 데이터가 없는 경우
+            <NoData comment="일정이" toPage="일정 둘러보기" />
+          )}
+        </ul>
+      </section>
+    </MypageLayout>
   );
 }
 
-MyMeMyPlaneting.getLayout = (page: ReactNode) => {
-  return <MypageLayout headerProps="일정 페이지">{page}</MypageLayout>;
-};
+// MyMeMyPlaneting.getLayout = (page: ReactNode) => {
+//   return <MypageLayout headerProps="일정 페이지">{page}</MypageLayout>;
+// };

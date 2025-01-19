@@ -1,5 +1,5 @@
 import ProfileCard from '@/components/mypage/ProfileCard';
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import axios from 'axios';
 import IndexNav from '@/components/mypage/IndexNav';
 import axios from 'axios';
@@ -73,7 +73,7 @@ export default function MyPage() {
   ];
 
   return (
-    <>
+    <MypageLayout headerProps="마이페이지">
       <div className="flex flex-col gap-7 sm:gap-10">
         {userData ? (
           <>
@@ -102,10 +102,10 @@ export default function MyPage() {
           <p>로딩 중...</p>
         )}
       </div>
-    </>
+    </MypageLayout>
   );
 }
 
-MyPage.getLayout = (page: ReactNode) => {
-  return <MypageLayout headerProps="마이페이지">{page}</MypageLayout>;
-};
+// MyPage.getLayout = (page: ReactNode) => {
+//   return <MypageLayout headerProps="마이페이지">{page}</MypageLayout>;
+// };

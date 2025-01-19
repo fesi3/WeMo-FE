@@ -46,9 +46,6 @@ export default function MypageLayout({
       <main className="mx-auto flex flex-col p-4 sm:justify-center">
         {children}
       </main>
-      <footer className="fixed bottom-0 left-0 z-50 flex h-12 w-full items-center justify-center border-t border-gray-300 bg-gray-100">
-        <p>nav 자리임당</p>
-      </footer>
     </div>
   );
 }
