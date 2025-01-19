@@ -89,7 +89,7 @@ const RegionDropdown: React.FC<RegionDropdownProps> = ({
   const extendedDistricts: SubRegionOption[] = [ALL_OPTION, ...districts];
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 lg:gap-4">
       {/* 상위 지역 드롭다운 */}
       <Dropdown
         options={extendedProvinces}

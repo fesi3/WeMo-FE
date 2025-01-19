@@ -109,7 +109,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
       <div className="mb-6 flex justify-end">
         <EditMeetingButton />
       </div>
-      {/* 필터링된 일정 카드드 목록 */}
+      {/* 필터링된 일정 카드 목록 */}
       <PlanList
         plans={filteredPlans}
         selectedDate={selectedDate}
@@ -125,7 +125,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
   const renderTabContent = (category: string) => {
     setSelectedCategory(category);
     return (
-      <div className="container mx-auto p-4">
+      <div className="mx-auto items-center sm:w-[400px] sm:justify-center md:w-[600px] lg:w-full">
         <Greeting />
         {/* 달램핏 탭 처리 */}
         {category === '달램핏' ? (
@@ -146,7 +146,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
   };
 
   return (
-    <div className="mx-auto max-w-md px-4 py-6">
+    <div className="mx-auto px-4 py-6">
       <Tabs
         tabs={tabs}
         defaultTab="달램핏"

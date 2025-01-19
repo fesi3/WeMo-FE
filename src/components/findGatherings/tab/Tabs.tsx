@@ -11,6 +11,7 @@ interface TabsProps {
   defaultTab?: string;
   renderContent: (selectedLabel: string) => React.ReactNode;
   onTabChange?: (selectedLabel: string) => void;
+  className?: string;
 }
 
 const UNDERLINE_OFFSET = 120;
@@ -74,7 +75,7 @@ export default function Tabs({
       {/* 탭 헤더 */}
       <div
         role="tablist"
-        className="relative mb-4 flex border-b border-gray-300"
+        className="relative mx-auto mb-4 flex max-w-lg border-b border-gray-300 lg:ml-0 lg:max-w-md lg:px-0"
       >
         {tabs.map((tab, idx) => {
           const isActive = tab.category === selectedTab;

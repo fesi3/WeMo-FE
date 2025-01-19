@@ -21,7 +21,7 @@ const PlanFilter = ({
   onSubRegionChange,
 }: PlanFilterProps) => {
   return (
-    <div className="mb-4 flex flex-wrap gap-2">
+    <div className="mb-4 flex flex-wrap gap-2 lg:gap-4">
       <DateModal onDateSelect={setSelectedDate} />
       <RegionDropdown
         selectedRegion={selectedRegion}

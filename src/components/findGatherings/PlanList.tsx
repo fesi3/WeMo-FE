@@ -11,6 +11,7 @@ interface PlanListProps {
   selectedSubRegion: SubRegionOption | null;
   selectedCategory: string; // "달램핏" or "워케이션"
   selectedSubCategory: string | null; // 하위 필터: "전체", "오피스 스트레칭", "마인드풀니스"
+  className?: string;
 }
 
 const PlanList = ({
