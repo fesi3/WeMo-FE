@@ -11,6 +11,7 @@ export interface PlanData {
   capacity: string;
   isOpened: boolean;
   isLiked: boolean;
+  isFulled: boolean;
   planImagePath: string;
 }
 

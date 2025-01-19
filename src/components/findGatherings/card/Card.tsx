@@ -18,6 +18,7 @@ const Card: React.FC<PlanData> = ({
   capacity,
   isOpened,
   isLiked,
+  isFulled,
   planImagePath,
 }) => {
   const router = useRouter();
@@ -28,15 +29,23 @@ const Card: React.FC<PlanData> = ({
 
   return (
     <div
-      className="relative w-full cursor-pointer overflow-hidden rounded-lg border bg-white shadow-md transition-all hover:border-2 hover:border-primary-50"
+      className={`relative w-full cursor-pointer overflow-hidden rounded-lg border bg-white shadow-md transition-all ${
+        isFulled ? 'cursor-default' : 'hover:border-2 hover:border-primary-50'
+      }`}
       onClick={handleClick}
     >
+      {/* 반투명 오버레이 */}
+      {isFulled && (
+        <div className="absolute inset-0 bg-gray-500 bg-opacity-50"></div>
+      )}
       {/* 이미지 */}
       <div className="relative h-48 w-full">
         <img
           src={planImagePath}
           alt={planName}
-          className="h-full w-full object-cover"
+          className={`h-full w-full object-cover ${
+            isFulled ? 'opacity-50' : ''
+          }`}
         />
         {/* 찜 버튼 */}
         <div className="absolute bottom-2 right-2">
