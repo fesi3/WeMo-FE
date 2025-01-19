@@ -37,6 +37,14 @@ const PlanList = ({
       ) {
         return false; // 특정 하위 카테고리가 선택된 경우
       }
+    } else if (selectedCategory === '워케이션') {
+      // 워케이션 카테고리: "마인드풀니스"와 "오피스 스트레칭"을 제외
+      if (
+        plan.category === '마인드풀니스' ||
+        plan.category === '오피스 스트레칭'
+      ) {
+        return false;
+      }
     }
 
     // 2. 날짜 필터

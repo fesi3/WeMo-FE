@@ -170,7 +170,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       (item: PlanDataWithCategory) => ({ ...item }),
     );
     const nextCursor = data.data.nextCursor;
-
+    console.log(initialPlans);
     return {
       props: {
         initialPlans,
