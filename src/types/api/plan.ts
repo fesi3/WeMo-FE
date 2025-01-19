@@ -9,6 +9,8 @@ interface MeetingInfo {
   meetingName: string;
   description: string;
   meetingImagePath: string;
+  memberCount: number;
+  reviewAverage: number;
 }
 
 export interface PlanDetail {
@@ -39,13 +41,13 @@ export interface PlanDetail {
   viewCount: number;
 }
 
-export interface GET_PLAN_DETAIL_RESPONSE {
+export interface PlanDetailResponse {
   success: boolean;
   message: string;
   data: PlanDetail;
 }
 
-export interface POST_PLAN_REQUEST_BODY {
+export interface CreatePlanRequestBody {
   planName: string;
   dateTime: string;
   address: string;
