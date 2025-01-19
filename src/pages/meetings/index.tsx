@@ -7,7 +7,7 @@ import SubCategoryFilter from '@/components/findGatherings/SubCategoryFilter';
 import PlanFilter from '@/components/findGatherings/PlanFilter';
 import PlanList from '@/components/findGatherings/PlanList';
 import { useCursorInfiniteScroll } from '@/hooks/useCursorInfiniteScroll';
-//import { getCategoryId } from '@/utils/categoryUtils';
+// import { getCategoryId } from '@/utils/categoryUtils';
 import { PlanDataWithCategory } from '@/types/plans';
 import { RegionOption, SubRegionOption } from '@/types/reviewType';
 import Tabs from '@/components/findGatherings/tab/Tabs';
@@ -48,10 +48,10 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
     null,
   );
 
-  // 탭 정보 (필요에 따라 API 호출 후 변경 가능)
+  // 탭 정보
   const tabs = [{ category: '달램핏' }, { category: '워케이션' }];
 
-  // 무한 스크롤 커스텀 훅 사용
+  // 무한 스크롤 커스텀 훅
   const { loaderRef } = useCursorInfiniteScroll({
     cursor,
     setCursor,
@@ -73,44 +73,74 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
     },
   });
 
+  //필터링 로직을 탭 공통으로 사용
+  const filteredPlans = plans.filter((plan) => {
+    const matchesDate = selectedDate === null || plan.dateTime === selectedDate;
+    const matchesRegion =
+      selectedRegion === null || plan.province === selectedRegion.name;
+    const matchesSubRegion =
+      selectedSubRegion === null || plan.district === selectedSubRegion.name;
+    const matchesSubCategory =
+      selectedCategory === '달램핏'
+        ? selectedSubCategory === null || plan.category === selectedSubCategory
+        : true; // 워케이션 탭에서는 서브 카테고리 조건 무시
+
+    return (
+      matchesDate && matchesRegion && matchesSubRegion && matchesSubCategory
+    );
+  });
+
+  //탭(달램핏/워케이션션) 공통 컴포넌트
+  const renderCommonContent = () => (
+    <div>
+      {/* PlanFilter 렌더링 */}
+      <PlanFilter
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+        selectedRegion={selectedRegion}
+        selectedSubRegion={selectedSubRegion}
+        onRegionChange={(region) => {
+          setSelectedRegion(region);
+          setSelectedSubRegion(null);
+        }}
+        onSubRegionChange={(sub) => setSelectedSubRegion(sub)}
+      />
+      {/* 모임 만들기 버튼 */}
+      <div className="mb-6 flex justify-end">
+        <EditMeetingButton />
+      </div>
+      {/* 필터링된 일정 카드드 목록 */}
+      <PlanList
+        plans={filteredPlans}
+        selectedDate={selectedDate}
+        selectedRegion={selectedRegion}
+        selectedSubRegion={selectedSubRegion}
+        selectedCategory={selectedCategory}
+        selectedSubCategory={selectedSubCategory}
+      />
+    </div>
+  );
+
   // 탭별 콘텐츠 렌더링
   const renderTabContent = (category: string) => {
     setSelectedCategory(category);
     return (
       <div className="container mx-auto p-4">
         <Greeting />
-        {/* 달램핏 탭인 경우 서브 필터 버튼 렌더링 */}
-        {selectedCategory === '달램핏' && (
+        {/* 달램핏 탭 처리 */}
+        {category === '달램핏' ? (
           <SubCategoryFilter
             selectedSubCategory={selectedSubCategory}
             setSelectedSubCategory={setSelectedSubCategory}
+            renderContent={(subCategory) => {
+              setSelectedSubCategory(subCategory); // 선택된 서브 카테고리 업데이트
+              return renderCommonContent(); // 공통 컴포넌트 렌더링
+            }}
           />
+        ) : (
+          // 워케이션 탭 처리(SubCategoryFilter제외)
+          renderCommonContent()
         )}
-        {/* 필터 컴포넌트 */}
-        <PlanFilter
-          selectedDate={selectedDate}
-          setSelectedDate={setSelectedDate}
-          selectedRegion={selectedRegion}
-          selectedSubRegion={selectedSubRegion}
-          onRegionChange={(region) => {
-            setSelectedRegion(region);
-            setSelectedSubRegion(null);
-          }}
-          onSubRegionChange={(sub) => setSelectedSubRegion(sub)}
-        />
-        {/* 편집 버튼 */}
-        <div className="mb-6 flex justify-end">
-          <EditMeetingButton />
-        </div>
-        {/* 필터된 플랜 목록 */}
-        <PlanList
-          plans={plans}
-          selectedDate={selectedDate}
-          selectedRegion={selectedRegion}
-          selectedSubRegion={selectedSubRegion}
-          selectedCategory={category}
-          selectedSubCategory={selectedSubCategory}
-        />
       </div>
     );
   };
@@ -133,13 +163,9 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const res = await axios.get<PlanListResponse>(
-      //`https://677e23a294bde1c1252a8cc0.mockapi.io/plans`,
       `${baseUrl}/api/plans?size=10&page=0&`,
-      //탭선택시에 category 1또는 2넘겨주는 로직 추가하기
     );
     const data = res.data;
-    //console.log(data.data);
-    // API 데이터 전처리
     const initialPlans: PlanDataWithCategory[] = data.data.planList.map(
       (item: PlanDataWithCategory) => ({ ...item }),
     );
