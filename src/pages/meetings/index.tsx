@@ -74,21 +74,21 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
   });
 
   //필터링 로직을 탭 공통으로 사용
-  const filteredPlans = plans.filter((plan) => {
-    const matchesDate = selectedDate === null || plan.dateTime === selectedDate;
-    const matchesRegion =
-      selectedRegion === null || plan.province === selectedRegion.name;
-    const matchesSubRegion =
-      selectedSubRegion === null || plan.district === selectedSubRegion.name;
-    const matchesSubCategory =
-      selectedCategory === '달램핏'
-        ? selectedSubCategory === null || plan.category === selectedSubCategory
-        : true; // 워케이션 탭에서는 서브 카테고리 조건 무시
-
-    return (
-      matchesDate && matchesRegion && matchesSubRegion && matchesSubCategory
-    );
-  });
+  //  const filteredPlans = plans.filter((plan) => {
+  //    const matchesDate = selectedDate === null || plan.dateTime === selectedDate;
+  //    const matchesRegion =
+  //      selectedRegion === null || plan.province === selectedRegion.name;
+  //    const matchesSubRegion =
+  //      selectedSubRegion === null || plan.district === selectedSubRegion.name;
+  //    const matchesSubCategory =
+  //      selectedCategory === '달램핏'
+  //        ? selectedSubCategory === null || plan.category === selectedSubCategory
+  //        : true; // 워케이션 탭에서는 서브 카테고리 조건 무시
+  //
+  //    return (
+  //      matchesDate && matchesRegion && matchesSubRegion && matchesSubCategory
+  //    );
+  //  });
 
   //탭(달램핏/워케이션션) 공통 컴포넌트
   const renderCommonContent = () => (
@@ -111,7 +111,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
       </div>
       {/* 필터링된 일정 카드 목록 */}
       <PlanList
-        plans={filteredPlans}
+        plans={plans}
         selectedDate={selectedDate}
         selectedRegion={selectedRegion}
         selectedSubRegion={selectedSubRegion}
