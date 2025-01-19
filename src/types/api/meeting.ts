@@ -1,10 +1,3 @@
-export interface CREATE_MEETING_REQUEST_BODY {
-  meetingName: string;
-  description: string;
-  categoryId: number;
-  fileUrl: string;
-}
-
 export interface User {
   nickname: string;
   profileImagePath: string;
@@ -35,7 +28,7 @@ export interface ReviewInMeeting {
 export interface MeetingDetail {
   meetingId: number;
   meetingName: string;
-  meetingImagePath: string;
+  meetingImagePath: string[];
   memberCount: number;
   description: string;
   category: string;
@@ -47,16 +40,17 @@ export interface MeetingDetail {
   planCounts: number;
   planList: PlanInMeeting[];
   reviewCounts: number;
+  reviewAverage: number;
   reviewList: ReviewInMeeting[];
 }
 
-export interface GET_MEETING_DETAIL_RESPONSE {
+export interface MeetingDetailResponse {
   success: boolean;
   message: string;
   data: MeetingDetail;
 }
 
-export interface POST_MEETING_REQUEST_BODY {
+export interface CreateMeetingRequestBody {
   meetingName: string;
   description: string;
   categoryId: number;

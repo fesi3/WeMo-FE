@@ -1,30 +1,37 @@
 import { PATHS } from '@/constants/apiPath';
 import {
-  GET_MEETING_DETAIL_RESPONSE,
-  POST_MEETING_REQUEST_BODY,
+  MeetingDetailResponse,
+  CreateMeetingRequestBody,
 } from '@/types/api/meeting';
-import fetchData from './fetchData';
+import instance from './axiosInstance';
+import { isAxiosError } from 'axios';
 
-interface POST_MEETING_RESPONSE_BODY {
+interface CreateMeetingResponseBody {
   success: boolean;
   message: string;
   data: null;
 }
 
-export const createMeeting = async (requestData: POST_MEETING_REQUEST_BODY) => {
-  const response: unknown = await fetchData<POST_MEETING_REQUEST_BODY>({
-    param: PATHS.MEETING.CREATE,
-    method: 'post',
-    requestData,
-  });
-  return response as POST_MEETING_RESPONSE_BODY;
+export const createMeeting = async (requestBody: CreateMeetingRequestBody) => {
+  try {
+    const response = await instance.post<CreateMeetingResponseBody>(
+      PATHS.MEETING.CREATE,
+      requestBody,
+    );
+    return response.data;
+  } catch (error) {
+    if (!isAxiosError(error)) return;
+    if (!error.response) return;
+    const response = error.response.data as CreateMeetingResponseBody;
+    console.error(`${error.status}: ${response.message}`);
+  }
+  //에러핸들링 어떻게 할지 고민중
 };
 
 export const fetchMeetingDetail = async (meetingId: number) => {
   if (isNaN(meetingId)) return;
-  const response = await fetchData<GET_MEETING_DETAIL_RESPONSE>({
-    param: PATHS.MEETING.GET_DETAIL(meetingId.toString()),
-    method: 'get',
-  });
-  return response;
+  const response = await instance<MeetingDetailResponse>(
+    PATHS.MEETING.GET_DETAIL(meetingId.toString()),
+  );
+  return response.data;
 };

@@ -4,8 +4,8 @@ import useToggle from '@/hooks/useToggle';
 import useCropper from '@/hooks/useCropper';
 import FileInput from '../../shared/FileInput';
 import CategoryRadioInput from '@/components/findGatherings/editMeeting/CategoryRadioInput';
-import { getImageUrls } from '@/api/image';
-import { POST_MEETING_REQUEST_BODY } from '@/types/api/meeting';
+import { getImageUrls } from '@/api/images';
+import { CreateMeetingRequestBody } from '@/types/api/meeting';
 import { createMeeting } from '@/api/meeting';
 
 interface FormValues {
@@ -35,14 +35,14 @@ export default function EditMeetingForm({
     const imageFiles = croppedImages.map((image) => image.blobImg);
     const fileUrls = await getImageUrls(imageFiles);
     if (!fileUrls) return;
-    const requestData: POST_MEETING_REQUEST_BODY = {
+    const requestData: CreateMeetingRequestBody = {
       meetingName: data.meetingName,
       description: data.description,
       categoryId: parseInt(data.categoryId),
       fileUrls,
     };
     const response = await createMeeting(requestData);
-    if (!response.success) return;
+    if (!response) return;
     handleCloseThisModal();
   };
 

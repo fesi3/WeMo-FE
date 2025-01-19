@@ -5,7 +5,7 @@ import AddressMap from '@/components/shared/map/AddressMap';
 import { splitAddress } from '@/utils/splitAddress';
 import Image from 'next/image';
 import DateBadge from '@/components/shared/DateBadge';
-import AvatarList from '@/components/shared/avatar/AvatarList';
+import AvatarList from './AvatarList';
 import Button from '../shared/Button';
 import { PlanDetail } from '@/types/api/plan';
 import IconWithCount from '../meetings/ui/IconWithCount';
@@ -13,6 +13,8 @@ import {
   EyeIcon,
   HandThumbUpIcon,
   MapPinIcon,
+  StarIcon,
+  UserIcon,
 } from '@heroicons/react/20/solid';
 import ArrowLeft from '@/assets/icons/arrow-left.svg';
 import { useRouter } from 'next/router';
@@ -107,6 +109,16 @@ export default function PlanDetailMain({ planData }: PlanDetailMainProps) {
               <p className="line-clamp-2 overflow-hidden text-ellipsis break-words text-sm">
                 {planData.meetingInfo.description}
               </p>
+              <div className="flex gap-3 text-black-sub">
+                <IconWithCount
+                  icon={<UserIcon />}
+                  count={planData.meetingInfo.memberCount}
+                />
+                <IconWithCount
+                  icon={<StarIcon />}
+                  count={planData.meetingInfo.reviewAverage}
+                />
+              </div>
             </div>
           </div>
         </div>
