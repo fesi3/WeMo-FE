@@ -1,9 +1,11 @@
 import ProfileCard from '@/components/mypage/ProfileCard';
-import React, { useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 // import axios from 'axios';
 import IndexNav from '@/components/mypage/IndexNav';
 import axios from 'axios';
 import { StaticImageData } from 'next/image';
+import MypageLayout from '@/components/mypage/MypageLayout';
+import StatisticsCard from '@/components/mypage/StatisticsCard';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_KEY;
 
@@ -72,15 +74,19 @@ export default function MyPage() {
 
   return (
     <>
-      <header className="bg-antiquewhite flex h-12 items-center justify-center bg-gray-100">
-        마이페이지
-      </header>
-      <main className="flex flex-col gap-7 p-4">
+      <div className="flex flex-col gap-7 sm:gap-10">
         {userData ? (
           <>
-            <ProfileCard user={userData} />
-            <section className="flex flex-col gap-4">
-              <ul>
+            <section>
+              <ProfileCard user={userData} />
+            </section>
+
+            <section>
+              <StatisticsCard user={userData} />
+            </section>
+
+            <section>
+              <ul className="mt-4 flex flex-col gap-4 sm:gap-10">
                 {listItem.map((item, index) => (
                   <IndexNav
                     key={index}
@@ -95,14 +101,11 @@ export default function MyPage() {
         ) : (
           <p>로딩 중...</p>
         )}
-      </main>
-      <footer className="fixed bottom-0 left-0 z-50 flex h-12 w-full items-center justify-center border-t border-gray-300 bg-gray-100">
-        nav 자리
-      </footer>
+      </div>
     </>
   );
 }
 
-// MyPage.getLayout = (page: ReactNode) => {
-//   return <MypageLayout headerProps="마이페이지">{page}</MypageLayout>;
-// };
+MyPage.getLayout = (page: ReactNode) => {
+  return <MypageLayout headerProps="마이페이지">{page}</MypageLayout>;
+};
