@@ -13,6 +13,8 @@ import {
   EyeIcon,
   HandThumbUpIcon,
   MapPinIcon,
+  StarIcon,
+  UserIcon,
 } from '@heroicons/react/20/solid';
 import ArrowLeft from '@/assets/icons/arrow-left.svg';
 import { useRouter } from 'next/router';
@@ -107,6 +109,16 @@ export default function PlanDetailMain({ planData }: PlanDetailMainProps) {
               <p className="line-clamp-2 overflow-hidden text-ellipsis break-words text-sm">
                 {planData.meetingInfo.description}
               </p>
+              <div className="flex gap-3 text-black-sub">
+                <IconWithCount
+                  icon={<UserIcon />}
+                  count={planData.meetingInfo.memberCount}
+                />
+                <IconWithCount
+                  icon={<StarIcon />}
+                  count={planData.meetingInfo.reviewAverage}
+                />
+              </div>
             </div>
           </div>
         </div>

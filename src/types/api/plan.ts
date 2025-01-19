@@ -9,6 +9,8 @@ interface MeetingInfo {
   meetingName: string;
   description: string;
   meetingImagePath: string;
+  memberCount: number;
+  reviewAverage: number;
 }
 
 export interface PlanDetail {
