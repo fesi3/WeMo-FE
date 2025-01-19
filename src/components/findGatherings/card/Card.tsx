@@ -4,6 +4,7 @@ import DeadlineBadge from './DeadlinBadge';
 import MeetingDate from '../../shared/badges/MeetingDate';
 import MeetingTime from '../../shared/badges/MeetingTime';
 import DistrictBadge from '@/components/shared/badges/DistrictBadge';
+import LikeButton from '../LikeButton';
 import { PlanData } from '@/types/plans';
 
 const Card: React.FC<PlanData> = ({
@@ -38,16 +39,8 @@ const Card: React.FC<PlanData> = ({
           className="h-full w-full object-cover"
         />
         {/* 찜 버튼 */}
-        <div className="absolute right-2 top-2">
-          <img
-            src={
-              isLiked
-                ? '/assets/icons/heart.svg'
-                : '/assets/icons/emptyHeart.svg'
-            }
-            alt="찜 버튼"
-            className="h-8 w-8"
-          />
+        <div className="absolute bottom-2 right-2">
+          <LikeButton planId={planId} initialIsLiked={isLiked} />
         </div>
 
         {/* 마감 뱃지 */}
