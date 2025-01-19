@@ -7,7 +7,7 @@ import SubCategoryFilter from '@/components/findGatherings/SubCategoryFilter';
 import PlanFilter from '@/components/findGatherings/PlanFilter';
 import PlanList from '@/components/findGatherings/PlanList';
 import { useCursorInfiniteScroll } from '@/hooks/useCursorInfiniteScroll';
-import { getCategoryId } from '@/utils/categoryUtils';
+//import { getCategoryId } from '@/utils/categoryUtils';
 import { PlanDataWithCategory } from '@/types/plans';
 import { RegionOption, SubRegionOption } from '@/types/reviewType';
 import Tabs from '@/components/findGatherings/tab/Tabs';
@@ -132,15 +132,13 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    const categoryId = getCategoryId('달램핏', null);
-    console.log(categoryId);
     const res = await axios.get<PlanListResponse>(
       //`https://677e23a294bde1c1252a8cc0.mockapi.io/plans`,
       `${baseUrl}/api/plans?size=10&page=0&`,
       //탭선택시에 category 1또는 2넘겨주는 로직 추가하기
     );
     const data = res.data;
-    console.log(data.data);
+    //console.log(data.data);
     // API 데이터 전처리
     const initialPlans: PlanDataWithCategory[] = data.data.planList.map(
       (item: PlanDataWithCategory) => ({ ...item }),

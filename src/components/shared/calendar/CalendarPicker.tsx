@@ -33,8 +33,8 @@ const CalendarPicker: React.FC<CalendarPickerProps> = ({
           view === 'month'
             ? `p-2 text-center ${
                 date.toDateString() === selectedDate.toDateString()
-                  ? 'bg-orange-500 text-white rounded-full font semibold'
-                  : 'hover:bg-orange-100'
+                  ? 'bg-primary-40 text-white rounded-full font semibold'
+                  : 'hover:bg-primary-10'
               }`
             : 'text-gray-700 text-sm p-2 text-center rounded-lg transition-colors'
         }

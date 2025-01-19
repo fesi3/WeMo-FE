@@ -37,7 +37,7 @@ export default function DateModal({ onDateSelect }: DateModalProps) {
     <div className="flex items-center gap-4">
       <button
         onClick={handleOpen}
-        className="rounded-lg border border-gray-300 px-4 py-2 text-sm shadow-md focus:ring-2 focus:ring-blue-500"
+        className="inline-flex items-center justify-between whitespace-nowrap rounded-lg border border-gray-300 px-4 py-2 text-sm shadow-md focus:ring-2 focus:ring-blue-500"
       >
         {buttonText}
       </button>

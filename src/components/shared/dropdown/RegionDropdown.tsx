@@ -115,13 +115,13 @@ const RegionDropdown: React.FC<RegionDropdownProps> = ({
   ];
 
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-2">
       {/* 상위 지역 드롭다운 */}
       <Dropdown
         options={extendedProvinces}
         selectedOption={selectedRegion}
         onSelect={handleProvinceSelect}
-        placeholder="상위 지역"
+        placeholder="전체"
       />
 
       {/* 하위 지역 드롭다운 */}
@@ -129,7 +129,7 @@ const RegionDropdown: React.FC<RegionDropdownProps> = ({
         options={extendedDistricts}
         selectedOption={selectedSubRegion}
         onSelect={handleDistrictSelect}
-        placeholder={selectedRegion ? '하위 지역' : '상위 지역 선택'}
+        placeholder="전체"
         //disabled={!selectedRegion}
         className={!selectedRegion ? 'pointer-events-none opacity-50' : ''}
       />
