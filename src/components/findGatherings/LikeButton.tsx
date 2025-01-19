@@ -4,19 +4,25 @@ import axios from 'axios';
 type LikeButtonProps = {
   planId: string;
   initialIsLiked: boolean;
-  accessToken: string;
+};
+
+const getAccessTokenFromCookies = (): string | null => {
+  const cookieString = document.cookie;
+  const cookies = cookieString.split('; ');
+  const accessTokenCookie = cookies.find((cookie) =>
+    cookie.startsWith('accessToken='),
+  );
+  return accessTokenCookie ? accessTokenCookie.split('=')[1] : null;
 };
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-const LikeButton = ({
-  planId,
-  initialIsLiked,
-  accessToken,
-}: LikeButtonProps) => {
+const LikeButton = ({ planId, initialIsLiked }: LikeButtonProps) => {
   const [isLiked, setIsLiked] = useState(initialIsLiked);
 
   const handleLikeToggle = async () => {
+    const accessToken = getAccessTokenFromCookies();
+
     if (!accessToken) {
       alert('로그인이 필요합니다');
       return;
