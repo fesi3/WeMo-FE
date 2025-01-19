@@ -13,16 +13,17 @@ import { createPlan } from '@/api/plan';
 import { useRouter } from 'next/router';
 import { getImageUrls } from '@/api/images';
 import { CreatePlanRequestBody } from '@/types/api/plan';
+import ErrorWrapper from '@/components/shared/ErrorWrapper';
 
 interface FormValues {
   planName: string;
-  dateTime: Date;
+  dateTime: string;
   address: string;
   addressDetail: string;
   coordinate: Coordinate;
   capacity: number;
   content: string;
-  registrationEnd: Date;
+  registrationEnd: string;
   imageFiles: File[];
 }
 
@@ -34,13 +35,23 @@ export default function EditPlanForm({
   handleCloseThisModal,
 }: EditPlanFormProps) {
   const { croppedImages, onCrop, removeCroppedImage } = useCropper();
-  const { setValue, register, handleSubmit, watch, resetField } =
-    useForm<FormValues>({
-      defaultValues: {
-        coordinate: { lat: INITIAL_POSITION.lat, lng: INITIAL_POSITION.lng },
-        capacity: 20,
-      },
-    });
+  const {
+    setValue,
+    formState: { errors },
+    setError,
+    register,
+    handleSubmit,
+    watch,
+    resetField,
+  } = useForm<FormValues>({
+    mode: 'onBlur',
+    defaultValues: {
+      coordinate: { lat: INITIAL_POSITION.lat, lng: INITIAL_POSITION.lng },
+      capacity: 20,
+      dateTime: dayjs(new Date()).format('YYYY-MM-DD A hh:mm'),
+      registrationEnd: dayjs(new Date()).format('YYYY-MM-DD A hh:mm'),
+    },
+  });
 
   const [imageURL, setImageURL] = useState<string>('');
   const [addressValue, setAddressValue] = useState('');
@@ -68,8 +79,15 @@ export default function EditPlanForm({
   const imageFieldValue = watch('imageFiles');
   const coordinateValue = watch('coordinate');
   const capacityValue = watch('capacity');
+  const dateTimeValue = watch('dateTime');
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    if (!croppedImages.length) {
+      setError('imageFiles', {
+        type: 'required',
+        message: '이미지를 등록해 주세요.',
+      });
+    }
     const { id } = router.query;
     const imageFiles = croppedImages.map((image) => image.blobImg);
     const fileUrls = await getImageUrls(imageFiles);
@@ -98,7 +116,7 @@ export default function EditPlanForm({
   };
 
   const handleClickDate = (date: Date, field: keyof FormValues) => {
-    setValue(field, date);
+    setValue(field, dayjs(date).format());
     if (field === 'dateTime') {
       closeDateTimeCalendar();
     } else if (field === 'registrationEnd') {
@@ -127,60 +145,109 @@ export default function EditPlanForm({
   return (
     <div>
       <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
-        <label className="form-label">
-          일정 제목
-          <input
-            className="form-input"
-            placeholder="일정 제목을 입력해 주세요."
-            {...register('planName')}
-          />
-        </label>
-        <label className="form-label">
-          모임 설명
-          <textarea
-            placeholder="최소 8자 이상, 최대 500자 이하로 작성해주세요"
-            className="h-[100px] resize-none items-center rounded-md border border-black border-opacity-10 px-3 py-2 placeholder-opacity-50 outline-none"
-            {...register('content')}
-          />
-        </label>
-
-        <DatePickInput
-          label="일정 일자"
-          register={register}
-          name="dateTime"
-          value={dayjs(watch('dateTime')).format('YYYY-MM-DD A hh:mm')}
-          isOpenCalendar={isOpenDateTimeCalendar}
-          openCalendar={() => handleOpenModal('dateTime')}
-          closeCalendar={closeDateTimeCalendar}
-          onClickDate={(date) => handleClickDate(date, 'dateTime')}
-        />
-        <DatePickInput
-          label="마감 일자"
-          register={register}
-          name="registrationEnd"
-          value={dayjs(watch('registrationEnd')).format('YYYY-MM-DD A hh:mm')}
-          isOpenCalendar={isOpenRegistrationEndCalendar}
-          openCalendar={() => handleOpenModal('registrationEnd')}
-          closeCalendar={closeRegistrationEndCalendar}
-          onClickDate={(date) => handleClickDate(date, 'registrationEnd')}
-        />
-        <div className="flex flex-col gap-1">
-          <AddressInput
+        <ErrorWrapper errorMessage={errors.planName?.message}>
+          <label className="form-label">
+            일정 제목
+            <input
+              className="form-input"
+              placeholder="일정 제목을 입력해 주세요."
+              {...register('planName', {
+                required: '일정 제목을 입력해 주세요',
+              })}
+            />
+          </label>
+        </ErrorWrapper>
+        <ErrorWrapper errorMessage={errors.content?.message}>
+          <label className="form-label">
+            일정 설명
+            <textarea
+              placeholder="최소 8자 이상, 최대 500자 이하로 작성해주세요"
+              className="h-[100px] resize-none items-center rounded-md border border-black border-opacity-10 px-3 py-2 placeholder-opacity-50 outline-none"
+              {...register('content', {
+                required: {
+                  value: true,
+                  message: '일정 설명을 입력해주세요.',
+                },
+                minLength: {
+                  value: 8,
+                  message: '최소 8자 이상으로 입력해주세요.',
+                },
+                maxLength: {
+                  value: 500,
+                  message: '최대 500자 이하로 입력해주세요',
+                },
+              })}
+            />
+          </label>
+        </ErrorWrapper>
+        <ErrorWrapper errorMessage={errors.dateTime?.message}>
+          <DatePickInput
+            label="일정 일자"
             register={register}
-            value={addressValue}
-            coordinate={coordinateValue}
-            label="일정 장소"
-            name="address"
-            isOpenMap={isOpenMap}
-            closeMap={closeMap}
-            openMap={openMap}
-            handleClickMap={handleClickMap}
+            name="dateTime"
+            value={dayjs(watch('dateTime')).format('YYYY-MM-DD A hh:mm')}
+            isOpenCalendar={isOpenDateTimeCalendar}
+            openCalendar={() => handleOpenModal('dateTime')}
+            closeCalendar={closeDateTimeCalendar}
+            onClickDate={(date) => handleClickDate(date, 'dateTime')}
+            validate={{
+              required: true,
+              validate: (value) => {
+                const selectedDate = dayjs(value as string);
+                const tomorrow = dayjs().add(1, 'day').startOf('day');
+                return (
+                  selectedDate.isAfter(tomorrow) ||
+                  '선택한 일정은 최소 내일이어야 합니다.'
+                );
+              },
+            }}
           />
-          <input
-            className="form-input w-1/2 placeholder:text-sm"
-            {...register('addressDetail')}
-            placeholder="상세주소를 입력해 주세요."
+        </ErrorWrapper>
+        <ErrorWrapper errorMessage={errors.registrationEnd?.message}>
+          <DatePickInput
+            label="마감 일자"
+            register={register}
+            name="registrationEnd"
+            value={dayjs(watch('registrationEnd')).format('YYYY-MM-DD A hh:mm')}
+            isOpenCalendar={isOpenRegistrationEndCalendar}
+            openCalendar={() => handleOpenModal('registrationEnd')}
+            closeCalendar={closeRegistrationEndCalendar}
+            onClickDate={(date) => handleClickDate(date, 'registrationEnd')}
+            validate={{
+              required: true,
+              validate: (value) => {
+                const selectedDate = dayjs(value as string);
+                return (
+                  selectedDate.isBefore(dateTimeValue) ||
+                  '마감 일자는 일정 일자 이전이어야 합니다.'
+                );
+              },
+            }}
           />
+        </ErrorWrapper>
+        <div className="flex flex-col gap-1">
+          <ErrorWrapper errorMessage={errors.address?.message}>
+            <AddressInput
+              register={register}
+              value={addressValue}
+              coordinate={coordinateValue}
+              label="일정 장소"
+              name="address"
+              isOpenMap={isOpenMap}
+              closeMap={closeMap}
+              openMap={openMap}
+              handleClickMap={handleClickMap}
+            />
+          </ErrorWrapper>
+          <ErrorWrapper errorMessage={errors.addressDetail?.message}>
+            <input
+              className="form-input w-1/2 placeholder:text-sm"
+              {...register('addressDetail', {
+                required: '상세주소를 입력해 주세요.',
+              })}
+              placeholder="상세주소를 입력해 주세요."
+            />
+          </ErrorWrapper>
         </div>
 
         <div className="form-label">
@@ -209,16 +276,18 @@ export default function EditPlanForm({
               }}
             />
           </div>
-          <FileInput
-            handleDelete={removeCroppedImage}
-            croppedImages={croppedImages}
-            register={register}
-            name="imageFiles"
-            toggleValue={isOpenCropper}
-            handleClose={closeCropper}
-            imageURL={imageURL}
-            onCrop={onCrop}
-          />
+          <ErrorWrapper errorMessage={errors.imageFiles?.message}>
+            <FileInput
+              handleDelete={removeCroppedImage}
+              croppedImages={croppedImages}
+              register={register}
+              name="imageFiles"
+              toggleValue={isOpenCropper}
+              handleClose={closeCropper}
+              imageURL={imageURL}
+              onCrop={onCrop}
+            />
+          </ErrorWrapper>
         </div>
         <div className="flex gap-4">
           <button
