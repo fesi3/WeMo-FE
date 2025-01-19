@@ -41,7 +41,7 @@ export default function DateModal({ onDateSelect }: DateModalProps) {
       >
         {buttonText}
       </button>
-      <Modal isOpen={isOpen} handleClose={handleClose} title="날짜 선택 모달">
+      <Modal isOpen={isOpen} handleClose={handleClose} title="날짜 선택">
         <div>
           <CalendarPicker onChange={handleDateChange} />
           <button onClick={handleReset}> 전체보기 </button>
