@@ -86,7 +86,7 @@ const RenderCommonContent: React.FC<{
       )}
       {/* 필터링된 일정 카드 목록 */}
       <PlanList
-        plans={plans}
+        plans={plans || []}
         selectedDate={selectedDate}
         selectedRegion={selectedRegion}
         selectedSubRegion={selectedSubRegion}
