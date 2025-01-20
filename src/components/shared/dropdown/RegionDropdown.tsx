@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
 import Dropdown from '@/components/shared/dropdown/DropDown';
 import { RegionOption, SubRegionOption } from '@/types/reviewType';
 //추후 데이터 형식 응답데이터와 동일하게 리펙토링 필요
@@ -9,6 +8,11 @@ interface RawProvince {
   id: number;
   name: string;
   districtList: { id: number; name: string }[];
+}
+
+interface rawDistrict {
+  districtId: number;
+  name: string;
 }
 
 interface RegionDropdownProps {
@@ -62,9 +66,24 @@ const RegionDropdown: React.FC<RegionDropdownProps> = ({
 
   // selectedRegion 변경 시 districts 업데이트
   useEffect(() => {
-    if (selectedRegion?.id === 0) {
-      onSubRegionChange(ALL_OPTION);
-      setDistricts([]);
+    if (selectedRegion && selectedRegion.id !== 0) {
+      console.log('Fetching districts for province:', selectedRegion);
+      const fetchDistrictList = async () => {
+        try {
+          const res = await axios.get(
+            `${baseUrl}/api/regions/district?provinceId=${selectedRegion.id}`,
+          );
+          const rawDistrictList = res.data.data.districtList;
+          const districtList = rawDistrictList.map((item: rawDistrict) => ({
+            id: item.districtId, // API 데이터에 맞게 수정
+            name: item.name,
+          }));
+          setDistricts(districtList);
+        } catch (error) {
+          console.error('구, 도 데이터 가져오지 못함', error);
+        }
+      };
+      fetchDistrictList();
     } else {
       const province = provinces.find((p) => p.id === selectedRegion?.id);
       setDistricts(province?.subRegions || []);
@@ -74,8 +93,7 @@ const RegionDropdown: React.FC<RegionDropdownProps> = ({
   const handleProvinceSelect = (province: RegionOption) => {
     onRegionChange(province);
     if (province.id === 0) {
-      onSubRegionChange(ALL_OPTION);
-    } else {
+      onRegionChange(null); // 또는 onRegionChange(null) 등 원하는 로직 적용
       onSubRegionChange(null);
     }
   };
@@ -94,7 +112,10 @@ const RegionDropdown: React.FC<RegionDropdownProps> = ({
       <Dropdown
         options={extendedProvinces}
         selectedOption={selectedRegion}
-        onSelect={handleProvinceSelect}
+        onSelect={(province) => {
+          console.log('Province selected in Dropdown:', province);
+          handleProvinceSelect(province);
+        }}
         placeholder="상위 지역"
       />
 
@@ -103,12 +124,9 @@ const RegionDropdown: React.FC<RegionDropdownProps> = ({
         options={extendedDistricts}
         selectedOption={selectedSubRegion}
         onSelect={handleDistrictSelect}
-        placeholder={selectedRegion ? '하위 지역' : '전체'}
-        className={
-          !selectedRegion || selectedRegion.id === 0
-            ? 'pointer-events-none opacity-50'
-            : ''
-        }
+        placeholder={selectedRegion ? '하위 지역' : '상위 지역 선택'}
+        // disabled={!selectedRegion}
+        className={!selectedRegion ? 'pointer-events-none opacity-50' : ''}
       />
     </div>
   );

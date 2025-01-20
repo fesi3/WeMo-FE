@@ -1,59 +1,68 @@
 import React from 'react';
-import DateModal from '@/components/shared/calendar/DateModal';
 import RegionDropdown from '@/components/shared/dropdown/RegionDropdown';
-import SortDropdown from './dropdown/SortDropdown';
+// import SortDropdown from './dropdown/SortDropdown';
 import { RegionOption, SubRegionOption } from '@/types/reviewType';
 
 interface FilterState {
   region: RegionOption | null;
   subRegion: SubRegionOption | null;
-  date: string | null;
+  date: Date | null;
   sort: { id: number; name: string } | null;
 }
 
 interface FilterBarProps {
   filters: FilterState;
   onFilterChange: (filters: FilterState) => void;
-  sortOptions: { id: number; name: string }[];
+  // sortOptions: { id: number; name: string }[];
 }
 
 const FilterBar: React.FC<FilterBarProps> = ({
   filters,
   onFilterChange,
-  sortOptions,
+  // sortOptions,
 }) => {
-  const handleRegionChange = (region: RegionOption | null) => {
-    onFilterChange({ ...filters, region, subRegion: null });
-  };
+  // const handleRegionChange = (region: RegionOption | null) => {
+  //   // 지역 변경 시 하위 지역 초기화
+  //   onFilterChange({
+  //     region,
+  //     subRegion: null,
+  //     date: filters.date,
+  //     sort: filters.sort,
+  //   });
+  // };
 
-  const handleSubRegionChange = (subRegion: SubRegionOption | null) => {
-    onFilterChange({ ...filters, subRegion });
-  };
+  // const handleSubRegionChange = (subRegion: SubRegionOption | null) => {
+  //   onFilterChange({ ...filters, subRegion });
+  // };
 
-  const handleDateChange = (date: string | null) => {
-    onFilterChange({ ...filters, date });
-  };
-
-  const handleSortChange = (sort: { id: number; name: string } | null) => {
-    onFilterChange({ ...filters, sort });
-  };
+  // const handleSortChange = (sort: { id: number; name: string } | null) => {
+  //   onFilterChange({ ...filters, sort });
+  // };
 
   return (
     <div className="flex gap-4">
-      <DateModal onDateSelect={handleDateChange} />
-
+      {/* 지역 드롭다운 */}
       <RegionDropdown
         selectedRegion={filters.region}
         selectedSubRegion={filters.subRegion}
-        onRegionChange={handleRegionChange}
-        onSubRegionChange={handleSubRegionChange}
+        onRegionChange={(region) => {
+          console.log('onRegionChange 호출됨:', region);
+          onFilterChange({ ...filters, region, subRegion: null });
+        }}
+        onSubRegionChange={(subRegion) => {
+          if (subRegion) {
+            console.log('onSubRegionChange 호출됨:', subRegion);
+            onFilterChange({ ...filters, subRegion });
+          }
+        }}
       />
 
-      <SortDropdown
-        sortOptions={sortOptions}
+      {/* 정렬 드롭다운 */}
+      {/* <SortDropdown
+        // sortOptions={sortOptions}
         selectedSort={filters.sort}
         onChange={handleSortChange}
-      />
+      /> */}
     </div>
   );
 };

@@ -7,6 +7,7 @@ interface ReviewListProps {
 }
 
 const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
+  console.log(reviews.map((review) => review.reviewId));
   if (!Array.isArray(reviews) || reviews.length === 0) {
     return (
       <p className="text-center text-gray-600">
@@ -17,9 +18,9 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
 
   return (
     <ul className="space-y-4">
-      {reviews.map((review) => (
+      {reviews.map((review, index) => (
         <li
-          key={review.reviewId}
+          key={`${review.reviewId}-${index}`} // index와 조합하여 고유성 확보
           className="flex flex-col items-start rounded-lg bg-white p-4 shadow-md md:flex-row md:items-center"
         >
           <img
@@ -32,11 +33,15 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
               <h2 className="text-base font-semibold text-gray-800">
                 {review.planName}
               </h2>
-              <div className="mt-2 flex items-center md:mt-0">
-                <HeartRating rating={review.score} maxRating={5} />
-                <span className="ml-2 text-sm text-gray-600">
-                  {review.score.toFixed(1)}
-                </span>
+
+              <div className="mt-2 flex items-center justify-between md:mt-0">
+                <div>{review.nickname}</div>
+                <div className="flex items-center">
+                  <HeartRating rating={review.score} maxRating={5} />
+                  <span className="ml-2 text-sm text-gray-600">
+                    {review.score.toFixed(1)}
+                  </span>
+                </div>
               </div>
             </div>
             <p className="text-sm text-gray-500">
