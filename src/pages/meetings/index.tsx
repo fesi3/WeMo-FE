@@ -124,23 +124,23 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
   // 탭별 콘텐츠 렌더링
   const renderTabContent = (category: string) => {
     setSelectedCategory(category);
+
+    const handleSubCategoryChange = (subCategory: string | null) => {
+      setSelectedSubCategory(subCategory);
+    };
+
     return (
       <div className="mx-auto items-center sm:w-[400px] sm:justify-center md:w-[600px] lg:w-full">
         <Greeting />
         {/* 달램핏 탭 처리 */}
-        {category === '달램핏' ? (
+        {category === '달램핏' && (
           <SubCategoryFilter
             selectedSubCategory={selectedSubCategory}
-            setSelectedSubCategory={setSelectedSubCategory}
-            renderContent={(subCategory) => {
-              setSelectedSubCategory(subCategory); // 선택된 서브 카테고리 업데이트
-              return renderCommonContent(); // 공통 컴포넌트 렌더링
-            }}
+            setSelectedSubCategory={handleSubCategoryChange}
           />
-        ) : (
-          // 워케이션 탭 처리(SubCategoryFilter제외)
-          renderCommonContent()
         )}
+        {/* renderCommonContent 항상 렌더링 */}
+        {renderCommonContent()}
       </div>
     );
   };
