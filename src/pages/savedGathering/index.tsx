@@ -66,15 +66,15 @@ const SavedGatheringPage = () => {
   });
 
   //토큰 없을 때 -> 윤성님이 처리해주시면 됩니다!
-  if (!accessToken) {
-    alert('로그인이 필요합니다');
-    return;
-    //(
-    //  <div>
-    //    <p> 로그인 후 이용 가능합니다.</p>
-    //  </div>
-    // );
-  }
+  // if (!accessToken) {
+  //   alert('로그인이 필요합니다');
+  //   return;
+  //(
+  //  <div>
+  //    <p> 로그인 후 이용 가능합니다.</p>
+  //  </div>
+  // );
+  // }
 
   return (
     <div>
