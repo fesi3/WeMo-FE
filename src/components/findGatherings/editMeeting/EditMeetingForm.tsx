@@ -48,7 +48,9 @@ export default function EditMeetingForm({
       });
       return;
     }
+
     const imageFiles = croppedImages.map((image) => image.blobImg);
+
     const fileUrls = await getImageUrls(imageFiles);
     if (!fileUrls) return;
     const requestData: CreateMeetingRequestBody = {

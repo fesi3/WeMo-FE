@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 import { Noto_Sans_KR } from 'next/font/google';
 import { useRouter } from 'next/router';
 import { setEmail } from '@/components/redux/actions/emailAction';
@@ -8,7 +8,7 @@ const noto = Noto_Sans_KR({
   subsets: ['latin'],
 });
 
-function GNB({ children }: { children: ReactNode }) {
+function GNB({ children }: PropsWithChildren) {
   const router = useRouter();
   const dispatch = useDispatch();
 
