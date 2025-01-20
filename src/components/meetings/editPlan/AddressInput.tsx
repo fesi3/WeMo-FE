@@ -32,6 +32,7 @@ export default function AddressInput<T extends FieldValues>({
       <div className="form-label relative">
         {label}
         <button
+          type="button"
           onClick={openMap}
           className="form-input flex w-1/2 items-center gap-2"
         >

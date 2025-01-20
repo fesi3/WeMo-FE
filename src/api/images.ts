@@ -1,12 +1,12 @@
 import { PATHS } from '@/constants/apiPath';
-import fetchData from './fetchData';
 import axios from 'axios';
+import instance from './axiosInstance';
 
 interface PresignedUrls {
   presignedUrls: string[];
 }
 
-interface GET_PRESIGNED_URLS_RESPONSE {
+interface PresignedUrlsResponse {
   success: boolean;
   message: string;
   data: PresignedUrls;
@@ -14,10 +14,10 @@ interface GET_PRESIGNED_URLS_RESPONSE {
 
 export const getPresignedUrls = async (count: number) => {
   try {
-    const response: GET_PRESIGNED_URLS_RESPONSE = await fetchData({
-      param: PATHS.IMAGE.UPLOAD(count),
-    });
-    return response;
+    const response: PresignedUrlsResponse = await instance(
+      PATHS.IMAGE.UPLOAD(count),
+    );
+    return response.data;
   } catch (e) {
     console.error(e);
   }
@@ -44,7 +44,7 @@ export const getImageUrls = async (imageFiles: File[] | Blob[]) => {
   const count = imageFiles.length;
   const response = await getPresignedUrls(count);
   if (!response) return;
-  const presignedUrls = response.data.presignedUrls;
+  const presignedUrls = response.presignedUrls;
   return Promise.all(
     imageFiles.map(
       async (file, index) => await uploadImage(presignedUrls[index], file),

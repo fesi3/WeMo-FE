@@ -23,7 +23,7 @@ export default function MeetingDetailMain({
   return (
     <>
       <div className="mt-[70px] flex w-full flex-col gap-10 p-3">
-        <Carousel images={[meetingData.meetingImagePath]} />
+        <Carousel images={meetingData.meetingImagePath} />
         <div className="flex flex-col gap-1 font-bold">
           <span>모임 정보</span>
           <div className="flex flex-col gap-4 rounded-md bg-[#f6f6f6] p-3">
@@ -54,7 +54,7 @@ export default function MeetingDetailMain({
                   />
                   <IconWithCount
                     icon={<StarIcon />}
-                    count={meetingData.reviewCounts}
+                    count={meetingData.reviewAverage}
                   />
                 </div>
               </div>
