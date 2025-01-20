@@ -44,7 +44,7 @@ export default function AddressInput<T extends FieldValues>({
           />
           <input
             value={value}
-            {...register(name)}
+            {...register(name, { required: '장소롤 선택해 주세요' })}
             readOnly
             className="w-full cursor-pointer outline-none"
             placeholder="장소를 선택해 주세요"
