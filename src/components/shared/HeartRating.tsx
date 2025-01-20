@@ -24,8 +24,8 @@ const HeartRating: React.FC<HeartRatingProps> = ({
           key={index}
           src={
             index < rating
-              ? '/assets/icons/heart.svg'
-              : '/assets/icons/emptyHeart.svg'
+              ? '/assets/icons/yellowStar.svg'
+              : '/assets/icons/emptyStar.svg'
           }
           alt={`Heart ${index + 1}`}
           className="// 태블릿 // PC h-6 w-6 cursor-pointer md:h-8 md:w-8 xl:h-9 xl:w-9"

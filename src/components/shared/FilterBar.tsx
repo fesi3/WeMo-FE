@@ -1,13 +1,13 @@
 import React from 'react';
-import RegionDropdown from './dropdown/RegionDropdown';
-// import DateDropdown from './dropdown/DateDropdown';
+import DateModal from '@/components/shared/calendar/DateModal';
+import RegionDropdown from '@/components/shared/dropdown/RegionDropdown';
 import SortDropdown from './dropdown/SortDropdown';
 import { RegionOption, SubRegionOption } from '@/types/reviewType';
 
 interface FilterState {
   region: RegionOption | null;
   subRegion: SubRegionOption | null;
-  date: Date | null;
+  date: string | null;
   sort: { id: number; name: string } | null;
 }
 
@@ -22,28 +22,37 @@ const FilterBar: React.FC<FilterBarProps> = ({
   onFilterChange,
   sortOptions,
 }) => {
+  const handleRegionChange = (region: RegionOption | null) => {
+    onFilterChange({ ...filters, region, subRegion: null });
+  };
+
+  const handleSubRegionChange = (subRegion: SubRegionOption | null) => {
+    onFilterChange({ ...filters, subRegion });
+  };
+
+  const handleDateChange = (date: string | null) => {
+    onFilterChange({ ...filters, date });
+  };
+
+  const handleSortChange = (sort: { id: number; name: string } | null) => {
+    onFilterChange({ ...filters, sort });
+  };
+
   return (
     <div className="flex gap-4">
+      <DateModal onDateSelect={handleDateChange} />
+
       <RegionDropdown
         selectedRegion={filters.region}
         selectedSubRegion={filters.subRegion}
-        onRegionChange={(region) =>
-          onFilterChange({ ...filters, region, subRegion: null })
-        }
-        onSubRegionChange={(subRegion) =>
-          onFilterChange({ ...filters, subRegion })
-        }
+        onRegionChange={handleRegionChange}
+        onSubRegionChange={handleSubRegionChange}
       />
-
-      {/* <DateDropdown
-        selectedDate={filters.date}
-        onDateChange={(date) => onFilterChange({ ...filters, date })}
-      /> */}
 
       <SortDropdown
         sortOptions={sortOptions}
         selectedSort={filters.sort}
-        onChange={(sort) => onFilterChange({ ...filters, sort })}
+        onChange={handleSortChange}
       />
     </div>
   );

@@ -6,7 +6,7 @@ import Tabs from '@/components/findGatherings/tab/Tabs';
 import { filterReviews } from '@/utils/filterReviews';
 import { Review, FilterState } from '@/types/reviewType';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const ReviewPage = ({ initialReviews }: { initialReviews: Review[] }) => {
   const [reviews, setReviews] = useState<Review[]>(initialReviews || []);
