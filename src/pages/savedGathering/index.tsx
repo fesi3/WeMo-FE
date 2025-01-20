@@ -13,6 +13,7 @@ const SavedGatheringPage = () => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
   // 토큰 로드
+  // 토큰 저장장소에 따라 변경 필요
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const token = localStorage.getItem('accessToken');
@@ -66,15 +67,15 @@ const SavedGatheringPage = () => {
   });
 
   //토큰 없을 때 -> 윤성님이 처리해주시면 됩니다!
-  if (!accessToken) {
-    alert('로그인이 필요합니다');
-    return;
-    //(
-    //  <div>
-    //    <p> 로그인 후 이용 가능합니다.</p>
-    //  </div>
-    // );
-  }
+  // if (!accessToken) {
+  //   alert('로그인이 필요합니다');
+  //   return;
+  //(
+  //  <div>
+  //    <p> 로그인 후 이용 가능합니다.</p>
+  //  </div>
+  // );
+  // }
 
   return (
     <div>

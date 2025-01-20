@@ -5,7 +5,6 @@ import Button from '@/components/shared/Button';
 interface SubCategoryFilterProps {
   selectedSubCategory: string | null;
   setSelectedSubCategory: (category: string | null) => void;
-  renderContent: (subCategory: string | null) => React.ReactNode;
 }
 
 const fadeVariants = {
@@ -17,7 +16,6 @@ const fadeVariants = {
 const SubCategoryFilter = ({
   selectedSubCategory,
   setSelectedSubCategory,
-  renderContent,
 }: SubCategoryFilterProps) => {
   return (
     <div>
@@ -47,33 +45,18 @@ const SubCategoryFilter = ({
       </div>
 
       {/* 콘텐츠 애니메이션 */}
-      <div className="min-h-[150px]">
-        <AnimatePresence mode="wait">
-          {selectedSubCategory !== null ? (
-            <motion.div
-              key={selectedSubCategory}
-              variants={fadeVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              transition={{ duration: 0.3 }}
-            >
-              {renderContent(selectedSubCategory)}
-            </motion.div>
-          ) : (
-            <motion.div
-              key="전체"
-              variants={fadeVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              transition={{ duration: 0.3 }}
-            >
-              {renderContent(null)}
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+      <AnimatePresence mode="wait">
+        {selectedSubCategory && ( // 선택된 서브카테고리가 있을 때만 렌더링
+          <motion.div
+            key={selectedSubCategory}
+            variants={fadeVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            transition={{ duration: 0.3 }}
+          ></motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

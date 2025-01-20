@@ -13,7 +13,7 @@ interface PlanFilterProps {
 }
 
 const PlanFilter = ({
-  //selectedDate,
+  selectedDate,
   setSelectedDate,
   selectedRegion,
   selectedSubRegion,
@@ -22,7 +22,7 @@ const PlanFilter = ({
 }: PlanFilterProps) => {
   return (
     <div className="mb-4 flex flex-wrap gap-2 lg:gap-4">
-      <DateModal onDateSelect={setSelectedDate} />
+      <DateModal selectedDate={selectedDate} onDateSelect={setSelectedDate} />
       <RegionDropdown
         selectedRegion={selectedRegion}
         selectedSubRegion={selectedSubRegion}
