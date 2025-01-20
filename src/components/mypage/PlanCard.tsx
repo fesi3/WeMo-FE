@@ -27,11 +27,10 @@ const PlanCard = ({ planData }: PlanCardProps) => {
   } = planData;
 
   const currentStatus = participants < 5 ? 'pending' : 'available';
-
   return (
-    <div className="mb-4 flex flex-col rounded-md border border-gray-200">
+    <div className="mb-4 flex flex-col rounded-md border border-gray-200 sm:flex-row sm:items-center sm:gap-3 md:gap-5">
       {/* 이미지 */}
-      <div className="relative h-[164px] w-full">
+      <div className="relative h-[164px] w-full sm:w-[200px] md:w-[300px] lg:w-[400px]">
         <Image
           src={planImagePath}
           alt="모임 이미지"
@@ -43,8 +42,7 @@ const PlanCard = ({ planData }: PlanCardProps) => {
       </div>
 
       {/* 카드 내용 */}
-
-      <div className="p-3">
+      <div className="flex-1 p-3">
         {/* 진행 상태 인디케이터 */}
         <div>
           {' '}

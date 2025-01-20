@@ -18,7 +18,6 @@ const ReviewCard = ({ reviewed }: ReviewProps) => {
     reviewId,
     planName,
     dateTime,
-    category,
     address,
     score,
     comment,
@@ -36,34 +35,32 @@ const ReviewCard = ({ reviewed }: ReviewProps) => {
   };
 
   return (
-    <div className="my-5 flex flex-col gap-4 rounded-lg border border-gray-200 bg-gray-100 p-3">
+    <div className="my-5 flex flex-col gap-4 p-3">
       {/* 일정 정보 */}
       <div
-        className="flex items-center gap-4 bg-white p-2"
+        className="flex gap-4 p-2"
         onClick={() => {
           goPlanDetail(planId);
         }}
       >
-        <div className="relative h-[70px] w-[70px]">
+        <div className="relative h-[60px] w-[60px]">
           <Image
             src={reivewImagePath}
             alt="리뷰 이미지"
-            layout="fill" // div를 채우도록 설정
-            objectFit="cover" // 비율을 유지하면서 div 크기에 맞게 이미지 조정
+            fill
+            className="rounded-lg object-cover"
           />
         </div>
-        <div>
-          <span className="rounded-md bg-[#00000080] p-1 text-center text-sm text-white">
-            {category}
-          </span>
+        {/* 일정 이름 + 정보 */}
+        <div className="flex flex-1 flex-col justify-around">
+          <p className="text-base font-semibold">{planName}</p>
 
-          <div className="my-1 text-base font-semibold">{planName}</div>
-
-          <div className="text-sm text-[#A4A4A4]">
+          <p className="text-sm text-[#A4A4A4]">
             {address} | {formatTime(dateTime)} 이용
-          </div>
+          </p>
         </div>
       </div>
+      <div className="border"></div>
 
       {/* 리뷰 정보 */}
       <div className="flex flex-col gap-4">
@@ -84,7 +81,7 @@ const ReviewCard = ({ reviewed }: ReviewProps) => {
         </div>
         {/* 코멘트 */}
         <div>{comment}</div>
-        <div className="relative flex h-[140px] w-full">
+        <div className="relative flex h-[140px] max-w-[320px]">
           <Image
             src={reivewImagePath}
             alt="리뷰 이미지"

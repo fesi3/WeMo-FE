@@ -15,7 +15,7 @@ export default function PlanCardListInMeeting({
   const router = useRouter();
   return (
     <div className="flex gap-3">
-      {planList.map((plan) => (
+      {planList.slice(0, 2).map((plan) => (
         <button
           onClick={() => {
             router.push(`/meetings/plans/${plan.planId}`);

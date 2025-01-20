@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Button from '../shared/Button';
 import { ReviewPlanData } from '@/pages/user/[username]/review';
 import { fromNow } from '@/utils/dateUtils';
 
@@ -20,30 +19,40 @@ const ReviewableCard = ({ reviewable }: reviewableProps) => {
     // 일정에 대한 리뷰 작성 모달 열리기
   };
   return (
-    <div className="my-5 flex flex-col gap-3 rounded-md border border-[#A4A4A4] px-4 py-3">
-      <div className="text-[#A4A4A4]">{fromNow(dateTime)} 이용완료</div>
+    <div className="my-5 flex flex-col gap-3 rounded-md border px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:p-6 md:gap-5">
+      <div className="flex flex-col gap-2">
+        <div className="text-[#A4A4A4]">{fromNow(dateTime)} 이용완료</div>
 
-      <div className="mb-3 flex gap-3">
-        <div className="relative h-[60px] w-[70px]">
-          <Image
-            src={planImagePath}
-            alt="모임 사진"
-            layout="fill"
-            objectFit="cover"
-            className="rounded-xl"
-            onClick={() => {
-              goPlanDetail(planId);
-            }}
-          />
-        </div>
-        <div className="flex flex-1 flex-col gap-1">
-          <div className="text-lg font-semibold">{planName}</div>
+        <div className="mb-3 flex gap-3">
+          <div className="relative h-[60px] w-[70px]">
+            <Image
+              src={planImagePath}
+              alt="모임 사진"
+              layout="fill"
+              objectFit="cover"
+              className="rounded-xl"
+              onClick={() => {
+                goPlanDetail(planId);
+              }}
+            />
+          </div>
+          <div className="flex flex-1 flex-col gap-1">
+            <div className="text-lg font-semibold">{planName}</div>
 
-          <div className="text-sm">{category} </div>
+            <div className="text-sm">{category} </div>
+          </div>
+          <div className="flex items-center"> </div>
         </div>
-        <div className="flex items-center"> </div>
       </div>
-      <Button
+      <button
+        className="h-[42px] w-[132px] self-end rounded-lg border border-[#00B6AD] text-[#00B6AD]"
+        onClick={() => {
+          createReview(planId);
+        }}
+      >
+        리뷰쓰기
+      </button>
+      {/* <Button
         type="start"
         backColor="black"
         textColor="white"
@@ -52,7 +61,7 @@ const ReviewableCard = ({ reviewable }: reviewableProps) => {
         onClick={() => {
           createReview(planId);
         }}
-      />
+      /> */}
     </div>
   );
 };
