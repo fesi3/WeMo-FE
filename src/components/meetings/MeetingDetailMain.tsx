@@ -12,6 +12,7 @@ import {
 } from '@heroicons/react/20/solid';
 import PlanCardListInMeeting from './ui/PlanCardListInMeeting';
 import ReviewListInMeeting from './ui/ReviewInMeeting';
+import { formatAverage } from '@/utils/formatRating';
 
 interface MeetingDetailMainProps {
   meetingData: MeetingDetail;
@@ -54,7 +55,7 @@ export default function MeetingDetailMain({
                   />
                   <IconWithCount
                     icon={<StarIcon />}
-                    count={meetingData.reviewAverage}
+                    count={formatAverage(meetingData.reviewAverage)}
                   />
                 </div>
               </div>

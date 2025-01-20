@@ -52,6 +52,7 @@ function GNB({ children }: { children: ReactNode }) {
         </div>
         {children}
       </div>
+      <div className="h-[50px] w-full"></div>
     </>
   );
 }
