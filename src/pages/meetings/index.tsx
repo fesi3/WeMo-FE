@@ -153,7 +153,9 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
         const data = res.data;
         setPlans(data.data.planList);
         setCursor(
-          data.data.nextCursor !== undefined ? data.data.nextCursor : null,
+          data.data.nextCursor ?? null,
+          //data.data.nextCursor !== undefined ? data.data.nextCursor : null,
+          //ssr로 바꾸면 수정 필요.
         );
       } catch (error) {
         console.error('데이터 로딩 실패:', error);
@@ -170,8 +172,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
 
   // 탭별 콘텐츠 렌더링
   const renderTabContent = (category: string) => {
-    setSelectedCategory(category);
-
+    //setSelectedCategory(category);
     return (
       <div className="mx-auto items-center sm:w-[400px] sm:justify-center md:w-[600px] lg:w-full">
         <Greeting />

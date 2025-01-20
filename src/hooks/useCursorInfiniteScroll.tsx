@@ -73,7 +73,8 @@ export const useCursorInfiniteScroll = ({
               : '';
           const res = await axios.get(
             //`https://677e23a294bde1c1252a8cc0.mockapi.io/plans`
-            `${baseUrl}/api/plans?cursor=${cursor}&&size=10&page=0&categoryId=${categoryParam}${provinceParam}${districtParam}`,
+            //ssr로 바꾸면 cursor=${cursor} 파라미터 추가하기
+            `${baseUrl}/api/plans?size=10&page=0&categoryId=${categoryParam}${provinceParam}${districtParam}`,
           );
           const newData = res.data;
           // API 리스폰스: newData.data.planList 과 newData.data.nextCursor를 사용
