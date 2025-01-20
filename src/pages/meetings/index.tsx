@@ -30,7 +30,74 @@ interface HomeProps {
   initialCursor: number | null;
 }
 
+// 탭별(달램핏/워케이션) 공통 렌더링 컴포넌트
+// 서브카테고리, 모임 만들기 버튼 (인증필요), 일정카드 목록
+const RenderCommonContent: React.FC<{
+  plans: PlanDataWithCategory[];
+  selectedDate: string | null;
+  setSelectedDate: React.Dispatch<React.SetStateAction<string | null>>;
+  selectedRegion: RegionOption | null;
+  setSelectedRegion: React.Dispatch<React.SetStateAction<RegionOption | null>>;
+  selectedSubRegion: SubRegionOption | null;
+  setSelectedSubRegion: React.Dispatch<
+    React.SetStateAction<SubRegionOption | null>
+  >;
+  selectedCategory: string;
+  selectedSubCategory: string | null;
+}> = ({
+  plans,
+  selectedDate,
+  setSelectedDate,
+  selectedRegion,
+  setSelectedRegion,
+  selectedSubRegion,
+  setSelectedSubRegion,
+  selectedCategory,
+  selectedSubCategory,
+}) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    // 토큰 저장소에 따라 변경 필요
+    const token = localStorage.getItem('auth_token');
+    setIsAuthenticated(!!token);
+  }, []);
+
+  return (
+    <div>
+      {/* PlanFilter: 지역/날짜 선택 필터 */}
+      <PlanFilter
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+        selectedRegion={selectedRegion}
+        selectedSubRegion={selectedSubRegion}
+        onRegionChange={(region) => {
+          setSelectedRegion(region);
+          setSelectedSubRegion(null);
+        }}
+        onSubRegionChange={(sub) => setSelectedSubRegion(sub)}
+      />
+      {/* 모임 만들기 버튼 (인증된 사용자만 노출) */}
+      {isAuthenticated && (
+        <div className="mb-6 flex justify-end">
+          <EditMeetingButton />
+        </div>
+      )}
+      {/* 필터링된 일정 카드 목록 */}
+      <PlanList
+        plans={plans}
+        selectedDate={selectedDate}
+        selectedRegion={selectedRegion}
+        selectedSubRegion={selectedSubRegion}
+        selectedCategory={selectedCategory}
+        selectedSubCategory={selectedSubCategory}
+      />
+    </div>
+  );
+};
+
 const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
+  //상태관리
   const [plans, setPlans] = useState<PlanDataWithCategory[]>(initialPlans);
   const [cursor, setCursor] = useState<number | null>(initialCursor);
   const [isFetching, setIsFetching] = useState<boolean>(false);
@@ -47,13 +114,11 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
     null,
   );
 
-  // 탭 정보
+  //탭 상태 관리
   const tabs = [{ category: '달램핏' }, { category: '워케이션' }];
-
-  // 탭 상태 변경 후 selectedCategory 업데이트
   const [activeTab, setActiveTab] = useState<string>('달램핏');
 
-  // 무한 스크롤 커스텀 훅
+  //무한 스크롤 커스텀 훅
   const { loaderRef } = useCursorInfiniteScroll({
     cursor,
     setCursor,
@@ -65,7 +130,6 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
     selectedSubRegion,
     onDataFetched: (newData) => {
       setPlans((prev) => {
-        // 중복 데이터 제거
         const filtered = newData.filter(
           (newItem) =>
             !prev.some((oldItem) => oldItem.planId === newItem.planId),
@@ -75,71 +139,48 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
     },
   });
 
-  // activeTab이 변경될 때만 setSelectedCategory 호출
+  // 탭 변경 시 카테고리 업데이트
   useEffect(() => {
     setSelectedCategory(activeTab);
   }, [activeTab]);
-
-  //탭(달램핏/워케이션) 공통 컴포넌트
-  const renderCommonContent = () => (
-    <div>
-      {/* PlanFilter 렌더링 */}
-      <PlanFilter
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
-        selectedRegion={selectedRegion}
-        selectedSubRegion={selectedSubRegion}
-        onRegionChange={(region) => {
-          setSelectedRegion(region);
-          setSelectedSubRegion(null);
-        }}
-        onSubRegionChange={(sub) => setSelectedSubRegion(sub)}
-      />
-      {/* 모임 만들기 버튼 */}
-      <div className="mb-6 flex justify-end">
-        <EditMeetingButton />
-      </div>
-      {/* 필터링된 일정 카드 목록 */}
-      <PlanList
-        plans={plans}
-        selectedDate={selectedDate}
-        selectedRegion={selectedRegion}
-        selectedSubRegion={selectedSubRegion}
-        selectedCategory={selectedCategory}
-        selectedSubCategory={selectedSubCategory}
-      />
-    </div>
-  );
 
   // 탭별 콘텐츠 렌더링
   const renderTabContent = (category: string) => {
     setSelectedCategory(category);
 
-    const handleSubCategoryChange = (subCategory: string | null) => {
-      setSelectedSubCategory(subCategory);
-    };
-
     return (
       <div className="mx-auto items-center sm:w-[400px] sm:justify-center md:w-[600px] lg:w-full">
         <Greeting />
-        {/* 달램핏 탭 처리 */}
+        {/* 달램핏 탭일 경우 하위 카테고리 필터 추가 */}
         {category === '달램핏' && (
           <SubCategoryFilter
             selectedSubCategory={selectedSubCategory}
-            setSelectedSubCategory={handleSubCategoryChange}
+            setSelectedSubCategory={setSelectedSubCategory}
           />
         )}
-        {/* renderCommonContent 항상 렌더링 */}
-        {renderCommonContent()}
+        {/* 공통 콘텐츠 렌더링 */}
+        <RenderCommonContent
+          plans={plans}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+          selectedRegion={selectedRegion}
+          setSelectedRegion={setSelectedRegion}
+          selectedSubRegion={selectedSubRegion}
+          setSelectedSubRegion={setSelectedSubRegion}
+          selectedCategory={selectedCategory}
+          selectedSubCategory={selectedSubCategory}
+        />
       </div>
     );
   };
+
   return (
     <div className="mx-auto px-4 py-6">
+      {/* 탭 컴포넌트 */}
       <Tabs
         tabs={tabs}
         defaultTab="달램핏"
-        onTabChange={(category) => setActiveTab(category)} // 상태를 변경만 하고 렌더링 외부에서 처리
+        onTabChange={(category) => setActiveTab(category)}
         renderContent={renderTabContent}
       />
       <div ref={loaderRef} className="h-12"></div>
@@ -147,7 +188,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
   );
 };
 
-//ssr 초기데이터
+// 서버사이드 데이터 가져오기
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const res = await axios.get<PlanListResponse>(
@@ -155,10 +196,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
     );
     const data = res.data;
     const initialPlans: PlanDataWithCategory[] = data.data.planList.map(
-      (item: PlanDataWithCategory) => ({ ...item }),
+      (item) => ({ ...item }),
     );
     const nextCursor = data.data.nextCursor;
-    //console.log(initialPlans);
     return {
       props: {
         initialPlans,

@@ -13,6 +13,7 @@ const SavedGatheringPage = () => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
   // 토큰 로드
+  // 토큰 저장장소에 따라 변경 필요
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const token = localStorage.getItem('accessToken');
