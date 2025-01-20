@@ -33,6 +33,7 @@ export interface PlanDetail {
   deletedAt: string | null;
   userList: User[];
   meetingInfo: MeetingInfo;
+  isJoined: boolean;
   isCanceled: boolean;
   isLiked: boolean;
   isOpened: boolean;

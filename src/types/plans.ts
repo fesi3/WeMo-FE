@@ -1,5 +1,6 @@
 export interface PlanData {
   planId: string;
+  meetingId?: string;
   planName: string;
   registrationEnd: string;
   dateTime: string;
@@ -10,6 +11,7 @@ export interface PlanData {
   capacity: string;
   isOpened: boolean;
   isLiked: boolean;
+  isFulled: boolean;
   planImagePath: string;
 }
 

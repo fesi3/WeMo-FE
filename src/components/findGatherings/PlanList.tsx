@@ -11,10 +11,11 @@ interface PlanListProps {
   selectedSubRegion: SubRegionOption | null;
   selectedCategory: string; // "달램핏" or "워케이션"
   selectedSubCategory: string | null; // 하위 필터: "전체", "오피스 스트레칭", "마인드풀니스"
+  className?: string;
 }
 
 const PlanList = ({
-  plans,
+  plans = [],
   selectedDate,
   selectedRegion,
   selectedSubRegion,
@@ -24,45 +25,44 @@ const PlanList = ({
   const filteredPlans = plans.filter((plan) => {
     // 1. 상위 카테고리 필터: "달램핏" 또는 "워케이션"
     if (selectedCategory === '달램핏') {
-      if (selectedSubCategory === null) {
-        // 하위 카테고리가 "전체"일 경우, "오피스 스트레칭"과 "마인드풀니스" 포함
-        if (
-          plan.category !== '오피스 스트레칭' &&
-          plan.category !== '마인드풀니스'
-        ) {
-          return false;
-        }
-      } else {
-        // 특정 하위 카테고리가 선택된 경우
-        if (plan.category !== selectedSubCategory) {
-          return false;
-        }
+      if (
+        selectedSubCategory === null &&
+        plan.category !== '오피스 스트레칭' &&
+        plan.category !== '마인드풀니스'
+      ) {
+        return false; // 하위 카테고리가 없을 때, 두 가지 카테고리만 포함
+      } else if (
+        selectedSubCategory !== null &&
+        plan.category !== selectedSubCategory
+      ) {
+        return false; // 특정 하위 카테고리가 선택된 경우
       }
     } else if (selectedCategory === '워케이션') {
-      // 워케이션만 포함
-      if (plan.category !== '워케이션') {
+      // 워케이션 카테고리: "마인드풀니스"와 "오피스 스트레칭"을 제외
+      if (
+        plan.category === '마인드풀니스' ||
+        plan.category === '오피스 스트레칭'
+      ) {
         return false;
       }
     }
 
     // 2. 날짜 필터
-    if (selectedDate) {
-      // 날짜가 선택되었을 때만 필터 적용
-      const planDate = dayjs(plan.dateTime).format('YYYY-MM-DD');
-      if (planDate !== selectedDate) {
-        return false;
+    if (selectedDate && selectedDate !== '전체') {
+      const formattedPlanDate = dayjs(plan.dateTime).format('YYYY-MM-DD');
+      if (formattedPlanDate !== selectedDate) {
+        return false; // 선택된 날짜와 일치하지 않는 데이터는 제외
       }
     }
 
     // 3. 지역 필터
-    if (selectedRegion && selectedRegion.id > 0) {
-      // 상위 지역 필터
+    if (selectedRegion && selectedRegion.name !== '전체') {
       if (plan.province !== selectedRegion.name) {
         return false;
       }
     }
-    if (selectedSubRegion && selectedSubRegion.id > 0) {
-      // 하위 지역 필터
+
+    if (selectedSubRegion && selectedSubRegion.name !== '전체') {
       if (plan.district !== selectedSubRegion.name) {
         return false;
       }

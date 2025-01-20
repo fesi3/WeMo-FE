@@ -1,23 +1,23 @@
 import { PATHS } from '@/constants/apiPath';
 import axios from 'axios';
 import instance from './axiosInstance';
+import { extractPathFromPresignedUrl } from '@/utils/extractPathFromPresignedUrl';
 
-interface PresignedUrls {
-  presignedUrls: string[];
+interface PresignedUrl {
+  presignedUrl: string[];
 }
 
 interface PresignedUrlsResponse {
   success: boolean;
   message: string;
-  data: PresignedUrls;
+  data: PresignedUrl;
 }
 
 export const getPresignedUrls = async (count: number) => {
   try {
-    const response: PresignedUrlsResponse = await instance(
-      PATHS.IMAGE.UPLOAD(count),
-    );
-    return response.data;
+    const response = await instance.get(PATHS.IMAGE.UPLOAD(count));
+    const data: PresignedUrlsResponse = response.data;
+    return data;
   } catch (e) {
     console.error(e);
   }
@@ -26,8 +26,7 @@ export const getPresignedUrls = async (count: number) => {
 const uploadImage = async (presignedUrl: string, imageFile: File | Blob) => {
   const formData = new FormData();
   formData.append('file', imageFile);
-
-  const response: string = await axios.post(presignedUrl, imageFile, {
+  const response: string = await axios.put(presignedUrl, imageFile, {
     headers: {
       'Content-Type': imageFile.type,
     },
@@ -43,11 +42,21 @@ const uploadImage = async (presignedUrl: string, imageFile: File | Blob) => {
 export const getImageUrls = async (imageFiles: File[] | Blob[]) => {
   const count = imageFiles.length;
   const response = await getPresignedUrls(count);
-  if (!response) return;
-  const presignedUrls = response.presignedUrls;
-  return Promise.all(
-    imageFiles.map(
-      async (file, index) => await uploadImage(presignedUrls[index], file),
-    ),
+  const presignedUrl = response?.data.presignedUrl;
+  console.log(presignedUrl);
+  if (!presignedUrl) return;
+  const result = await Promise.all(
+    imageFiles.map(async (file, index) => {
+      try {
+        return await uploadImage(presignedUrl[index], file);
+      } catch (e) {
+        console.error(e, '이미지 업로드 실패');
+      }
+    }),
   );
+
+  if (result.includes(undefined)) {
+    return undefined;
+  }
+  return extractPathFromPresignedUrl(presignedUrl);
 };

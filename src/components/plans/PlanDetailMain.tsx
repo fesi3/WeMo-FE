@@ -18,6 +18,7 @@ import {
 } from '@heroicons/react/20/solid';
 import ArrowLeft from '@/assets/icons/arrow-left.svg';
 import { useRouter } from 'next/router';
+import { formatAverage } from '@/utils/formatRating';
 
 interface PlanDetailMainProps {
   planData: PlanDetail;
@@ -116,7 +117,7 @@ export default function PlanDetailMain({ planData }: PlanDetailMainProps) {
                 />
                 <IconWithCount
                   icon={<StarIcon />}
-                  count={planData.meetingInfo.reviewAverage}
+                  count={formatAverage(planData.meetingInfo.reviewAverage)}
                 />
               </div>
             </div>

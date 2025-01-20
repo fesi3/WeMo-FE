@@ -12,6 +12,7 @@ import {
 } from '@heroicons/react/20/solid';
 import PlanCardListInMeeting from './ui/PlanCardListInMeeting';
 import ReviewListInMeeting from './ui/ReviewInMeeting';
+import { formatAverage } from '@/utils/formatRating';
 
 interface MeetingDetailMainProps {
   meetingData: MeetingDetail;
@@ -22,7 +23,7 @@ export default function MeetingDetailMain({
 }: MeetingDetailMainProps) {
   return (
     <>
-      <div className="mt-[70px] flex w-full flex-col gap-10 p-3">
+      <div className="flex w-full flex-col gap-10 p-3">
         <Carousel images={meetingData.meetingImagePath} />
         <div className="flex flex-col gap-1 font-bold">
           <span>모임 정보</span>
@@ -54,7 +55,7 @@ export default function MeetingDetailMain({
                   />
                   <IconWithCount
                     icon={<StarIcon />}
-                    count={meetingData.reviewAverage}
+                    count={formatAverage(meetingData.reviewAverage)}
                   />
                 </div>
               </div>

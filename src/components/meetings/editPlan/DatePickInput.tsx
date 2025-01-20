@@ -3,7 +3,12 @@ import CalendarPicker from '@/components/shared/calendar/CalendarPicker';
 import Modal from '@/components/shared/modals/Modal';
 
 import Image from 'next/image';
-import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
+import {
+  FieldValues,
+  Path,
+  RegisterOptions,
+  UseFormRegister,
+} from 'react-hook-form';
 
 interface DatePickInputProps<T extends FieldValues> {
   register: UseFormRegister<T>;
@@ -14,6 +19,7 @@ interface DatePickInputProps<T extends FieldValues> {
   openCalendar: () => void;
   closeCalendar: () => void;
   onClickDate: (date: Date) => void;
+  validate: RegisterOptions<T, Path<T>>;
 }
 export default function DatePickInput<T extends FieldValues>({
   register,
@@ -23,6 +29,7 @@ export default function DatePickInput<T extends FieldValues>({
   openCalendar,
   closeCalendar,
   isOpenCalendar,
+  validate,
   onClickDate,
 }: DatePickInputProps<T>) {
   return (
@@ -42,7 +49,7 @@ export default function DatePickInput<T extends FieldValues>({
           />
           <input
             value={value}
-            {...register(name)}
+            {...register(name, validate)}
             readOnly
             className="w-full cursor-pointer outline-none"
             placeholder="날짜를 선택해 주세요"

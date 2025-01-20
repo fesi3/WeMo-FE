@@ -138,16 +138,16 @@ const Button = ({
     case 'main_tab_total': // 메인 전체 탭
     case 'main_tab_office': // 메인 오피스 탭
       sizeClass =
-        'w-[80px] h-[30px] text-sm font-bold bg-primary-40 rounded-[8px]  ';
+        'w-[80px] h-[30px] text-sm font-bold bg-primary-40 rounded-full shadow-lg';
       break;
 
     case 'main_tab_mind': // 메인 마인드 풀 탭
       sizeClass =
-        'w-[121px] h-[30px] text-sm font-bold bg-primary-40 rounded-[8px]  ';
+        'w-[121px] h-[30px] text-sm font-bold bg-primary-40 rounded-full shadow-lg';
       break;
 
     case 'plan_detail': // 일정 상세정보-일정 변경하기
-      sizeClass = 'w-[318px] h-[42px] bg-primary-10 rounded-[8px] ';
+      sizeClass = 'w-[318px] h-[42px] bg-primary-10 rounded-full shadow-lg';
       break;
 
     case 'plan_modal': // 일정 모달 버튼
@@ -158,6 +158,17 @@ const Button = ({
     default: // 아무 타입 지정하지 않았을 때
       sizeClass = 'text-[14px] w-[120px] h-[40px] bg-orange-200 ';
       break;
+  }
+
+  // 활성화 여부에 따라 배경색 변경 (메인 페이지 버튼에만 적용)
+  if (
+    type === 'main_tab_total' ||
+    type === 'main_tab_office' ||
+    type === 'main_tab_mind'
+  ) {
+    activeClass = isActive
+      ? 'bg-primary-40 text-white' // 활성화 상태
+      : 'bg-primary-70 text-primary-100'; // 비활성화 상태
   }
 
   const className = `${baseClass} ${sizeClass} ${activeClass} ${backColor || ''} ${textColor || ''}

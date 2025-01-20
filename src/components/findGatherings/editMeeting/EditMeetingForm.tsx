@@ -7,6 +7,7 @@ import CategoryRadioInput from '@/components/findGatherings/editMeeting/Category
 import { getImageUrls } from '@/api/images';
 import { CreateMeetingRequestBody } from '@/types/api/meeting';
 import { createMeeting } from '@/api/meeting';
+import ErrorWrapper from '@/components/shared/ErrorWrapper';
 
 interface FormValues {
   meetingName: string;
@@ -26,13 +27,30 @@ export default function EditMeetingForm({
   const { toggleValue, handleOpen, handleClose } = useToggle();
   const [imageURL, setImageURL] = useState<string>('');
 
-  const { register, handleSubmit, watch, resetField } = useForm<FormValues>({
+  const {
+    register,
+    handleSubmit,
+    watch,
+    resetField,
+    setError,
+    formState: { errors },
+  } = useForm<FormValues>({
     defaultValues: { categoryId: '3' },
   });
   const imageFieldValue = watch('imageFiles');
   const categoryValue = watch('categoryId');
+
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    if (!croppedImages.length) {
+      setError('imageFiles', {
+        type: 'required',
+        message: '이미지를 등록해 주세요.',
+      });
+      return;
+    }
+
     const imageFiles = croppedImages.map((image) => image.blobImg);
+
     const fileUrls = await getImageUrls(imageFiles);
     if (!fileUrls) return;
     const requestData: CreateMeetingRequestBody = {
@@ -61,26 +79,30 @@ export default function EditMeetingForm({
     <>
       <div>
         <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
-          <label className="form-label">
-            모임 이름
-            <input
-              className="h-9 items-center rounded-md border border-black border-opacity-10 px-3 placeholder-opacity-50 outline-none"
-              placeholder="모임 이름을 입력해 주세요."
-              {...register('meetingName')}
+          <ErrorWrapper errorMessage={errors.meetingName?.message}>
+            <label className="form-label">
+              모임 이름
+              <input
+                className="h-9 items-center rounded-md border border-black border-opacity-10 px-3 placeholder-opacity-50 outline-none"
+                placeholder="모임 이름을 입력해 주세요."
+                {...register('meetingName', {
+                  required: '모임 이름을 입력해 주세요',
+                })}
+              />
+            </label>
+          </ErrorWrapper>
+          <ErrorWrapper errorMessage={errors.imageFiles?.message}>
+            <FileInput
+              handleDelete={removeCroppedImage}
+              croppedImages={croppedImages}
+              register={register}
+              name="imageFiles"
+              toggleValue={toggleValue}
+              handleClose={handleClose}
+              imageURL={imageURL}
+              onCrop={onCrop}
             />
-          </label>
-
-          <FileInput
-            handleDelete={removeCroppedImage}
-            croppedImages={croppedImages}
-            register={register}
-            name="imageFiles"
-            toggleValue={toggleValue}
-            handleClose={handleClose}
-            imageURL={imageURL}
-            onCrop={onCrop}
-          />
-
+          </ErrorWrapper>
           <span className="form-label">선택 서비스</span>
           <CategoryRadioInput
             register={register}
@@ -88,14 +110,29 @@ export default function EditMeetingForm({
             categoryValue={categoryValue}
           />
           <div className="flex gap-5"></div>
-          <label className="form-label">
-            모임 설명
-            <textarea
-              placeholder="최소 8자 이상, 최대 500자 이하로 작성해주세요"
-              className="h-[100px] resize-none items-center rounded-md border border-black border-opacity-10 px-3 py-2 placeholder-opacity-50 outline-none"
-              {...register('description')}
-            />
-          </label>
+          <ErrorWrapper errorMessage={errors.description?.message}>
+            <label className="form-label">
+              모임 설명
+              <textarea
+                placeholder="최소 8자 이상, 최대 500자 이하로 작성해주세요."
+                className="h-[100px] resize-none items-center rounded-md border border-black border-opacity-10 px-3 py-2 placeholder-opacity-50 outline-none"
+                {...register('description', {
+                  required: {
+                    value: true,
+                    message: '모임 설명을 입력해주세요.',
+                  },
+                  minLength: {
+                    value: 8,
+                    message: '최소 8자 이상으로 입력해주세요.',
+                  },
+                  maxLength: {
+                    value: 500,
+                    message: '최대 500자 이하로 입력해주세요',
+                  },
+                })}
+              />
+            </label>
+          </ErrorWrapper>
           <div className="flex gap-4">
             <button
               type="button"
