@@ -22,9 +22,13 @@ import { formatAverage } from '@/utils/formatRating';
 
 interface PlanDetailMainProps {
   planData: PlanDetail;
+  onClickJoinPlan: () => void;
 }
 
-export default function PlanDetailMain({ planData }: PlanDetailMainProps) {
+export default function PlanDetailMain({
+  planData,
+  onClickJoinPlan,
+}: PlanDetailMainProps) {
   const router = useRouter();
   return (
     <>
@@ -76,8 +80,9 @@ export default function PlanDetailMain({ planData }: PlanDetailMainProps) {
                 {`모집 마감일 ${dayjs(planData.registrationEnd).format('YYYY.MM.DD')}`}
               </div>
               <Button
-                text="일정 참석하기"
+                text={planData.isJoined ? '참석 취소하기' : '일정 참석하기'}
                 type="attend"
+                onClick={onClickJoinPlan}
                 backColor="relative top-5 bg-primary-10 text-white w-full"
               />
             </div>
