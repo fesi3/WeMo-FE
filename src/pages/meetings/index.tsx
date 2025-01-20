@@ -75,11 +75,12 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
     },
   });
 
+  // activeTab이 변경될 때만 setSelectedCategory 호출
   useEffect(() => {
-    setSelectedCategory(activeTab); // activeTab이 변경될 때만 setSelectedCategory 호출
+    setSelectedCategory(activeTab);
   }, [activeTab]);
 
-  //탭(달램핏/워케이션션) 공통 컴포넌트
+  //탭(달램핏/워케이션) 공통 컴포넌트
   const renderCommonContent = () => (
     <div>
       {/* PlanFilter 렌더링 */}
@@ -133,7 +134,6 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
       </div>
     );
   };
-
   return (
     <div className="mx-auto px-4 py-6">
       <Tabs
@@ -147,6 +147,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
   );
 };
 
+//ssr 초기데이터
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const res = await axios.get<PlanListResponse>(
@@ -157,7 +158,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       (item: PlanDataWithCategory) => ({ ...item }),
     );
     const nextCursor = data.data.nextCursor;
-    console.log(initialPlans);
+    //console.log(initialPlans);
     return {
       props: {
         initialPlans,

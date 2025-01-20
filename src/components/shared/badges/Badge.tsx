@@ -8,7 +8,7 @@ interface BadgeProps {
 function Badge({ content, className }: BadgeProps) {
   return (
     <span
-      className={`whitespace-nowrap rounded-md bg-gray-500 p-1 text-xs text-white ${className || ''}`}
+      className={`whitespace-nowrap rounded-md bg-gray-500 p-1 px-2 text-xs text-white ${className || ''}`}
     >
       {content}
     </span>
