@@ -1,8 +1,13 @@
 import React from 'react';
 
-const Greeting: React.FC = () => {
+interface GreetingProps {
+  className?: string;
+}
+
+const Greeting = ({ className }: GreetingProps) => {
   return (
-    <div className="mb-4 space-y-2">
+    <div className={`mb-4 space-y-2 ${className || ''}`.trim()}>
+      {/* 전달된 className을 병합 */}
       <p className="text-base font-bold">사용자 이름</p>
       {/* 추후 사용자 이름 전역상태로 받아오기 */}
       <p className="text-sm text-gray-500">
