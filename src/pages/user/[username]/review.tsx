@@ -1,9 +1,11 @@
-import Button from '@/components/shared/Button';
+// import Button from '@/components/shared/Button';
 import ReviewCard from '@/components/mypage/ReviewCard';
 import { useEffect, useState } from 'react';
 import ReviewableCard from '@/components/mypage/ReviewableCard';
 import axios from 'axios';
 import { StaticImageData } from 'next/image';
+import NoData from '@/components/mypage/NoData';
+import MypageLayout from '@/components/mypage/MypageLayout';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_KEY;
 
@@ -17,7 +19,7 @@ export interface ReviewData {
   score: number;
   comment: string;
   reivewImagePath: string | StaticImageData;
-
+  planImagePath: string | StaticImageData;
   planId: number; // 일정 상세로 이동
 }
 
@@ -28,29 +30,14 @@ export interface ReviewPlanData {
   category: string;
   address: string;
   planImagePath: string | StaticImageData;
-  capacity: number;
-  participants: number;
-  createdAt: string;
-  updatedAt: string;
 }
 
 export default function MyReview() {
-  const [activeTab, setActiveTab] = useState<'tabLeft' | 'tabRight' | null>(
-    'tabLeft',
-  );
+  const [activeTab, setActiveTab] = useState<'tabLeft' | 'tabRight'>('tabLeft');
 
   // 데이터 상태
   const [reviewData, setReviewData] = useState<ReviewData[]>([]);
   const [reviewableData, setReviewableData] = useState<ReviewPlanData[]>([]);
-
-  // 탭 클릭 시 상태 변경
-  const handleButtonClick = (newTab: 'tabLeft' | 'tabRight') => {
-    if (activeTab === newTab) {
-      return; // 이미 활성화된 탭을 다시 클릭하면 아무 일도 일어나지 않음
-    }
-    setActiveTab(newTab);
-  };
-  console.log('클릭', activeTab);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -99,59 +86,49 @@ export default function MyReview() {
   console.log('업데이트 된 리뷰가능 목록 ', reviewableData);
 
   return (
-    <>
-      <header className="bg-antiquewhite flex h-12 items-center justify-center bg-gray-100">
-        나의 리뷰
-      </header>
-
-      <main className="flex flex-col px-4">
-        <section className="flex h-[64px] w-full items-center justify-center">
-          {' '}
-          <Button
-            type="tabLeft"
-            text="작성한 리뷰"
-            isActive={activeTab === 'tabLeft'}
-            onClick={() => handleButtonClick('tabLeft')}
-          />
-          <Button
-            type="tabRight"
-            text="작성할 리뷰"
-            isActive={activeTab === 'tabRight'}
-            onClick={() => handleButtonClick('tabRight')}
-          />{' '}
-        </section>
-
-        {/* activeTab에 따라 다른 컴포넌트 렌더링 */}
-        {activeTab === 'tabLeft' ? (
-          <section className="flex flex-col">
-            <ul>
+    <MypageLayout
+      headerProps="리뷰 페이지"
+      activeTab={activeTab}
+      onTabChange={setActiveTab}
+      tabsTitle={[
+        // 동적으로 tabs 설정
+        { key: 'tabLeft', label: '작성한 리뷰' },
+        { key: 'tabRight', label: '작성 가능한 리뷰' },
+      ]}
+    >
+      {/* activeTab에 따라 다른 컴포넌트 렌더링 */}
+      {activeTab === 'tabLeft' ? (
+        <section className="flex flex-col sm:w-[500px] md:w-[650px] lg:w-[850px]">
+          {reviewData.length > 0 ? (
+            <ul className="flex flex-col gap-8">
               {reviewData.map((review) => (
-                <li key={review.reviewId}>
-                  <ReviewCard reviewed={review} />
-                </li>
+                <>
+                  <li key={review.reviewId}>
+                    <ReviewCard reviewed={review} />
+                  </li>
+                  <div className="border"></div>
+                </>
               ))}
             </ul>
-          </section>
-        ) : (
-          <section className="flex flex-col">
-            <ul>
+          ) : (
+            <NoData comment="작성한 리뷰가" />
+          )}
+        </section>
+      ) : (
+        <section className="flex flex-col sm:w-[500px] md:w-[650px] lg:w-[850px]">
+          {reviewableData.length > 0 ? (
+            <ul className="flex flex-col gap-3">
               {reviewableData.map((plan) => (
                 <li key={plan.planId}>
                   <ReviewableCard reviewable={plan} />
                 </li>
               ))}
             </ul>
-          </section>
-        )}
-      </main>
-
-      <footer className="fixed bottom-0 left-0 z-50 flex h-12 w-full items-center justify-center border-t border-gray-300 bg-gray-100">
-        nav 자리
-      </footer>
-    </>
+          ) : (
+            <NoData comment="작성할 리뷰가" />
+          )}
+        </section>
+      )}
+    </MypageLayout>
   );
 }
-
-// MyReview.getLayout = (page: ReactNode) => {
-//   return <MypageLayout headerProps="나의 리뷰">{page}</MypageLayout>;
-// };

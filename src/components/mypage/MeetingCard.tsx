@@ -55,15 +55,13 @@ const MeetingCard = ({ meetingData, useremail }: MeetingProps) => {
   };
 
   return (
-    <div className="my-5 flex w-full flex-col rounded-md bg-gray-100">
-      <div className="relative mb-1 h-[170px] w-full overflow-hidden rounded-t-md">
-        {' '}
-        {/* w-[336px] */}
+    <div className="flex w-[320px] flex-col items-center rounded-md bg-gray-100">
+      <div className="relative mb-1 h-[170px] w-full overflow-hidden">
         <Image
           src={meetingImagePath}
           alt="meetingImg"
-          layout="fill" // div를 채우도록 설정
-          objectFit="cover" // 비율을 유지하면서 div 크기에 맞게 이미지 조정
+          fill
+          className="object-cover"
         />
       </div>
 
@@ -82,8 +80,6 @@ const MeetingCard = ({ meetingData, useremail }: MeetingProps) => {
           <div className="my-1 text-lg font-semibold">{meetingName}</div>
           <div>{renderButton()}</div>
         </div>
-
-        {/* <div className="text-sm font-medium text-[#A4A4A4]">{description}</div> */}
       </div>
     </div>
   );

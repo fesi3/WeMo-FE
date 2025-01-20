@@ -1,10 +1,13 @@
+/*
+ * 커서 기반 무한스크롤 로직, 추후 재사용할 수 있도록 추상화 필요.
+ */
 import { useEffect, useRef } from 'react';
 import axios from 'axios';
 import { RegionOption, SubRegionOption } from '@/types/reviewType';
 import { PlanDataWithCategory } from '@/types/plans';
 //import { getCategoryId } from '@/utils/categoryUtils';
 
-interface UseInfiniteScrollProps {
+interface UseCursorInfiniteScrollProps {
   cursor: number | null;
   setCursor: (cursor: number | null) => void;
   isFetching: boolean;
@@ -16,7 +19,7 @@ interface UseInfiniteScrollProps {
   onDataFetched: (newData: PlanDataWithCategory[]) => void;
 }
 
-export const useInfiniteScroll = ({
+export const useCursorInfiniteScroll = ({
   cursor,
   setCursor,
   isFetching,
@@ -26,7 +29,7 @@ export const useInfiniteScroll = ({
   selectedRegion,
   selectedSubRegion,
   onDataFetched,
-}: UseInfiniteScrollProps) => {
+}: UseCursorInfiniteScrollProps) => {
   const loaderRef = useRef<HTMLDivElement | null>(null);
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   // ref를 통해 observer 인스턴스를 저장하여 필요시 disconnect 가능

@@ -1,24 +1,20 @@
 import React from 'react';
+import Badge from './Badge';
 
-type MeetingDateProps = {
+interface MeetingDateProps {
   dateTime: string;
-};
+}
 
-function formatDate(dateString: string) {
-  // "2025-01-15T17:00:00" → "1월 15일"
+function formatDate(dateString: string): string {
   const dateObj = new Date(dateString);
   const month = dateObj.getMonth() + 1;
   const day = dateObj.getDate();
   return `${month}월 ${day}일`;
 }
 
-const MeetingDate: React.FC<MeetingDateProps> = ({ dateTime }) => {
-  const formatted = formatDate(dateTime);
-  return (
-    <span className="rounded-md bg-gray-500 p-1 text-sm text-white">
-      {formatted}
-    </span>
-  );
-};
+function MeetingDate({ dateTime }: MeetingDateProps) {
+  const formattedDate = formatDate(dateTime);
+  return <Badge content={formattedDate} />;
+}
 
 export default MeetingDate;

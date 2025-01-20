@@ -1,15 +1,12 @@
 import React from 'react';
+import Badge from './Badge';
 
 interface DistrictBadgeProps {
   district: string;
 }
 
-const DistrictBadge: React.FC<DistrictBadgeProps> = ({ district }) => {
-  return (
-    <div className="rounded-md bg-gray-500 p-1 text-sm text-white">
-      {district}
-    </div>
-  );
-};
+function DistrictBadge({ district }: DistrictBadgeProps) {
+  return <Badge content={district} />;
+}
 
 export default DistrictBadge;
