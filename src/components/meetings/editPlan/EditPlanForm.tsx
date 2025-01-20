@@ -107,6 +107,7 @@ export default function EditPlanForm({
       fileUrls,
     };
     createPlan({ meetingId: id as string, requestBody });
+    handleCloseThisModal();
   };
 
   const handleClickMap = async ({ lat, lng }: Coordinate) => {
