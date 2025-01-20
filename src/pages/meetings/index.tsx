@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { NextPage, GetServerSideProps } from 'next';
 import axios from 'axios';
 import Greeting from '@/components/findGatherings/Greeting';
@@ -7,7 +7,6 @@ import SubCategoryFilter from '@/components/findGatherings/SubCategoryFilter';
 import PlanFilter from '@/components/findGatherings/PlanFilter';
 import PlanList from '@/components/findGatherings/PlanList';
 import { useCursorInfiniteScroll } from '@/hooks/useCursorInfiniteScroll';
-// import { getCategoryId } from '@/utils/categoryUtils';
 import { PlanDataWithCategory } from '@/types/plans';
 import { RegionOption, SubRegionOption } from '@/types/reviewType';
 import Tabs from '@/components/findGatherings/tab/Tabs';
@@ -51,6 +50,9 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
   // 탭 정보
   const tabs = [{ category: '달램핏' }, { category: '워케이션' }];
 
+  // 탭 상태 변경 후 selectedCategory 업데이트
+  const [activeTab, setActiveTab] = useState<string>('달램핏');
+
   // 무한 스크롤 커스텀 훅
   const { loaderRef } = useCursorInfiniteScroll({
     cursor,
@@ -73,22 +75,9 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
     },
   });
 
-  //필터링 로직을 탭 공통으로 사용
-  //  const filteredPlans = plans.filter((plan) => {
-  //    const matchesDate = selectedDate === null || plan.dateTime === selectedDate;
-  //    const matchesRegion =
-  //      selectedRegion === null || plan.province === selectedRegion.name;
-  //    const matchesSubRegion =
-  //      selectedSubRegion === null || plan.district === selectedSubRegion.name;
-  //    const matchesSubCategory =
-  //      selectedCategory === '달램핏'
-  //        ? selectedSubCategory === null || plan.category === selectedSubCategory
-  //        : true; // 워케이션 탭에서는 서브 카테고리 조건 무시
-  //
-  //    return (
-  //      matchesDate && matchesRegion && matchesSubRegion && matchesSubCategory
-  //    );
-  //  });
+  useEffect(() => {
+    setSelectedCategory(activeTab); // activeTab이 변경될 때만 setSelectedCategory 호출
+  }, [activeTab]);
 
   //탭(달램핏/워케이션션) 공통 컴포넌트
   const renderCommonContent = () => (
@@ -150,9 +139,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
       <Tabs
         tabs={tabs}
         defaultTab="달램핏"
-        onTabChange={(category) => {
-          setSelectedCategory(category);
-        }}
+        onTabChange={(category) => setActiveTab(category)} // 상태를 변경만 하고 렌더링 외부에서 처리
         renderContent={renderTabContent}
       />
       <div ref={loaderRef} className="h-12"></div>
