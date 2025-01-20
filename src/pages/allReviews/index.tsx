@@ -3,7 +3,7 @@ import axios from 'axios';
 import FilterBar from '@/components/shared/FilterBar';
 import ReviewList from '@/components/all-reviews/ReviewList';
 import Tabs from '@/components/findGatherings/tab/Tabs';
-import { Review, FilterState } from '@/types/reviewType';
+import { Review, FilterState, SortOption } from '@/types/reviewType';
 // import { useQuery } from '@tanstack/react-query';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -31,6 +31,10 @@ const ReviewPage = ({
     sort: null,
   });
   const [selectedCategory, setSelectedCategory] = useState<string>('달램핏');
+  const sortOptions: SortOption[] = [
+    { id: 1, name: '평점 높은 순', value: 'ratingOrder' },
+    // { id: 2, name: '평점 낮은 순', value: 'lowRatingOrder' },
+  ];
 
   // 서버에서 데이터를 가져오는 함수
   const fetchReviews = useCallback(
@@ -53,7 +57,7 @@ const ReviewPage = ({
             ? filters.date.toISOString().split('T')[0]
             : undefined,
           categoryId: selectedCategory === '달램핏' ? 1 : 2,
-          sort: filters.sort?.name || undefined,
+          sort: filters.sort?.value || undefined,
         };
 
         // console.log('요청 데이터:', params);
@@ -120,7 +124,7 @@ const ReviewPage = ({
   useEffect(() => {
     console.log('현재 필터 상태:', filters);
     fetchReviews(false); // 새로운 데이터 요청
-  }, [filters.region, filters.subRegion]);
+  }, [filters.region, filters.subRegion, filters.sort]);
 
   return (
     <div className="mx-auto max-w-md px-4 py-6">
@@ -141,6 +145,7 @@ const ReviewPage = ({
                   return updatedFilters;
                 });
               }}
+              sortOptions={sortOptions}
             />
             <ReviewList reviews={reviews} />
             <div ref={loaderRef} className="h-8" />
