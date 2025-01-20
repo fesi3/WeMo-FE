@@ -15,7 +15,7 @@ interface PlanListProps {
 }
 
 const PlanList = ({
-  plans,
+  plans = [],
   selectedDate,
   selectedRegion,
   selectedSubRegion,

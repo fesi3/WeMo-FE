@@ -65,24 +65,28 @@ const Card: React.FC<PlanData> = ({
         <MeetingTime dateTime={dateTime} />
         <DistrictBadge district={district} />
       </div>
-      <div className="p-2 pt-0">
-        {/* 일정 제목 */}
-        <h2 className="mb-1 text-xl font-bold text-black">{planName}</h2>
 
-        {/* 모임 상세 정보 */}
-        <div className="mb-2">
+      <div className="p-2 pt-0">
+        <div className="mb-2 flex items-center gap-4">
+          {/* 일정 제목 */}
+          <h2 className="mb-1 text-xl font-bold text-black">{planName}</h2>
+          {/* 개설 확정 여부 */}
+          <div className="text-xs">
+            {isOpened ? (
+              <span className="rounded-xl bg-primary-10 px-2 py-1 text-xs text-white">
+                개설 확정
+              </span>
+            ) : null}
+          </div>
+        </div>
+
+        <div className="mb-2 flex items-center gap-2">
           {/* 모임 이름 */}
           <p className="text-sm text-gray-600">{meetingName}</p>
-        </div>
-
-        {/* 참여자 수 / 정원 */}
-        <div className="mb-2 text-sm text-gray-600">
-          {` ${participants} / ${capacity}`}
-        </div>
-
-        {/* 개설 확정 여부 */}
-        <div className="mb-2 text-sm text-gray-600">
-          {isOpened ? '개설 확정' : '개설 미확정'}
+          {/* 참여자 수 / 정원 */}
+          <div className="text-sm text-gray-600">
+            {`(${participants} / ${capacity})`}
+          </div>
         </div>
       </div>
     </div>
