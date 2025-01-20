@@ -1,6 +1,7 @@
 import { PATHS } from '@/constants/apiPath';
 import axios from 'axios';
 import instance from './axiosInstance';
+import { extractPathFromPresignedUrl } from '@/utils/extractPathFromPresignedUrl';
 
 interface PresignedUrl {
   presignedUrl: string[];
@@ -42,6 +43,7 @@ export const getImageUrls = async (imageFiles: File[] | Blob[]) => {
   const count = imageFiles.length;
   const response = await getPresignedUrls(count);
   const presignedUrl = response?.data.presignedUrl;
+  console.log(presignedUrl);
   if (!presignedUrl) return;
   const result = await Promise.all(
     imageFiles.map(async (file, index) => {
@@ -56,5 +58,5 @@ export const getImageUrls = async (imageFiles: File[] | Blob[]) => {
   if (result.includes(undefined)) {
     return undefined;
   }
-  return presignedUrl;
+  return extractPathFromPresignedUrl(presignedUrl);
 };
