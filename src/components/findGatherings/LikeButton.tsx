@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import HeartIcon from '@/assets/icons/heart.svg';
+import EmptyHeartIcon from '@/assets/icons/emptyHeart.svg';
 
 type LikeButtonProps = {
   planId: string;
@@ -49,15 +51,19 @@ const LikeButton = ({ planId, initialIsLiked }: LikeButtonProps) => {
   };
 
   return (
-    <img
-      src={isLiked ? '/assets/icons/heart.svg' : '/assets/icons/emptyHeart.svg'}
-      alt="찜 버튼"
+    <div
       className="h-8 w-8 cursor-pointer"
       onClick={(e) => {
-        e.stopPropagation(); // 부모 클릭 이벤트 전파 방지
+        e.stopPropagation();
         handleLikeToggle();
       }}
-    />
+    >
+      {isLiked ? (
+        <HeartIcon className="fill-red-500" />
+      ) : (
+        <EmptyHeartIcon className="fill-gray-500" />
+      )}
+    </div>
   );
 };
 

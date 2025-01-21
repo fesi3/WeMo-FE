@@ -1,21 +1,12 @@
 import ArrowLeft from '@/assets/icons/arrow-left.svg';
 import { useRouter } from 'next/router';
 
-export default function Header() {
+export default function Header({ title }: { title: string }) {
   const router = useRouter();
 
   const onClickBack = () => {
     router.back();
   };
-
-  // pathName에 따라 title을
-  const getTitle = () => {
-    if (router.pathname === '/signup') {
-      return '회원가입';
-    }
-  };
-
-  const title = getTitle();
 
   return (
     <>
