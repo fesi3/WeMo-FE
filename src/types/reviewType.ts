@@ -38,11 +38,17 @@ export interface RegionOption {
   subRegions: SubRegionOption[];
 }
 
+export interface SortOption {
+  id: number;
+  name: string; // 사용자에게 표시할 이름
+  value: string; // 서버로 보낼 값
+}
+
 export interface FilterState {
   region: RegionOption | null;
   subRegion: SubRegionOption | null;
   date: Date | null;
-  sort: { id: number; name: string } | null;
+  sort: SortOption | null;
 }
 
 export interface CroppedImageType {

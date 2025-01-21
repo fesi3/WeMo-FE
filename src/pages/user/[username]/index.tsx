@@ -6,8 +6,10 @@ import axios from 'axios';
 import { StaticImageData } from 'next/image';
 import MypageLayout from '@/components/mypage/MypageLayout';
 import StatisticsCard from '@/components/mypage/StatisticsCard';
+import { useRouter } from 'next/navigation';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_KEY;
+// const BASE_URL = process.env.NEXT_PUBLIC_API_KEY;
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export interface UserData {
   email: string;
@@ -24,21 +26,22 @@ export interface UserData {
 export default function MyPage() {
   const [userData, setUserData] = useState<UserData | null>(null);
   console.log(userData);
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchUserData() {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('accessToken');
         if (!token) {
-          // 토큰이 없으면 로그인 페이지로 리다이렉트하거나, 기본 페이지 처리
           alert('로그인이 필요합니다!');
+          router.push('/login');
           return;
         }
         const response = await axios.get(
-          `${BASE_URL}/my_user`, //api 호출 경로
+          `${BASE_URL}/api/auths/users`, //api 호출 경로
           {
             headers: {
-              Authorization: `Bearer ${token}`, // JWT 토큰
+              Authorization: `${token}`, // JWT 토큰
             },
           },
         );

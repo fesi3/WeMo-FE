@@ -34,7 +34,8 @@ const PlanCard = ({ planData }: PlanCardProps) => {
         <Image
           src={planImagePath}
           alt="모임 이미지"
-          className="h-full w-full rounded-t-md object-cover"
+          fill
+          className="rounded-t-md object-cover"
         />
 
         {/* 하트 아이콘 추가 */}

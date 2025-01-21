@@ -23,13 +23,13 @@ export const filterReviews = (reviews: Review[], filters: FilterState) => {
     );
   }
 
-  if (filters.sort) {
-    if (filters.sort.name === '참여자 많은순') {
-      filtered.sort((a, b) => b.score - a.score);
-    } else if (filters.sort.name === '참여자 적은순') {
-      filtered.sort((a, b) => a.score - b.score);
-    }
-  }
+  // if (filters.sort) {
+  //   if (filters.sort.name === '참여자 많은순') {
+  //     filtered.sort((a, b) => b.score - a.score);
+  //   } else if (filters.sort.name === '참여자 적은순') {
+  //     filtered.sort((a, b) => a.score - b.score);
+  //   }
+  // }
 
   return filtered;
 };
