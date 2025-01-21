@@ -13,7 +13,7 @@ export default function MeetingDetailPage() {
       <Header title="모임 상세" />
       <div className="mx-auto max-w-screen-md">
         <MeetingDetailMain meetingData={data.data} />
-        <MeetingDetailFooter />
+        <MeetingDetailFooter email={data.data.email} />
       </div>
     </>
   );
