@@ -93,7 +93,7 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
                   {displayedComment}
                   {shouldTruncate && (
                     <button
-                      onClick={() => toggleComment(review.reviewId)}
+                      onClick={() => toggleComment(review.reviewId.toString())}
                       className="ml-2 text-blue-500 hover:underline"
                     >
                       {isExpanded ? '접기' : '더보기'}
