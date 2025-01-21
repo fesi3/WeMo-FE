@@ -10,7 +10,7 @@ export interface Review {
   address: string;
   nickname: string;
   profileImagePath: string;
-  reviewImagePath: string;
+  reviewImages: string[];
   createdAt: string;
   updatedAt: string;
 }
