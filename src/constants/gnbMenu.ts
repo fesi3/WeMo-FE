@@ -1,5 +1,5 @@
 export const menuItems = [
   { name: '홈', path: '/meetings' },
-  { name: '찜한 모임', path: '/savedGathering' },
-  { name: '모든 리뷰', path: '/allReviews' },
+  { name: '모임 찾기', path: '/search-meetings' },
+  { name: '모든 리뷰', path: '/all-reviews' },
 ];

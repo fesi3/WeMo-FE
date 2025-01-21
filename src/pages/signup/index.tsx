@@ -1,4 +1,3 @@
-import SignupLayout from '@/components/auth/signup/signupLayout';
 import SignupForm from '@/components/auth/signup/signupForm';
 import useSignupForm from '@/hooks/useSignupForm';
 import { SignupFormTypes } from '@/components/auth/type';
@@ -48,9 +47,5 @@ function Signup() {
     </div>
   );
 }
-
-Signup.getLayout = function getLayout(page: React.ReactElement) {
-  return <SignupLayout layoutTitle={'회원가입'}>{page}</SignupLayout>;
-};
 
 export default Signup;
