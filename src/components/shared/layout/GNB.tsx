@@ -2,7 +2,10 @@ import { PropsWithChildren, useEffect } from 'react';
 import { Noto_Sans_KR } from 'next/font/google';
 import { useRouter } from 'next/router';
 import { setEmail } from '@/components/redux/actions/emailAction';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { menuItems } from '@/constants/gnbMenu';
+import { RootState } from '@/components/redux/store';
+import { getCookieValue } from '@/utils/getCookieValue';
 
 const noto = Noto_Sans_KR({
   subsets: ['latin'],
@@ -11,24 +14,15 @@ const noto = Noto_Sans_KR({
 function GNB({ children }: PropsWithChildren) {
   const router = useRouter();
   const dispatch = useDispatch();
+  const storedData = useSelector((state: RootState) => state.email);
 
   useEffect(() => {
-    const storedEmail =
-      document.cookie
-        .split('; ')
-        .find((cookie) => cookie.startsWith('user_email='))
-        ?.split('=')[1] || null;
+    const storedEmail = getCookieValue('user_email');
+    const storedNickname = getCookieValue('user_nickname') || '';
     if (storedEmail) {
-      dispatch(setEmail(storedEmail));
+      dispatch(setEmail(storedEmail, storedNickname));
     }
-  }, [dispatch]);
-
-  const menuItems = [
-    { name: '홈', path: '/meetings' },
-    { name: '찜한 모임', path: '/savedGathering' },
-    { name: '모든 리뷰', path: '/allReviews' },
-    { name: '마이 페이지', path: '/user/1' },
-  ];
+  }, []);
 
   return (
     <>
@@ -48,11 +42,33 @@ function GNB({ children }: PropsWithChildren) {
                 {item.name}
               </li>
             ))}
+            {storedData?.email ? (
+              <li
+                className={`${
+                  router.pathname === 'user'
+                    ? 'font-bold text-black'
+                    : 'text-gray-400'
+                } cursor-pointer transition-colors hover:text-black`}
+                onClick={() => router.push(`/user/${storedData.nickname}`)}
+              >
+                {'마이페이지'}
+              </li>
+            ) : (
+              <li
+                className={`${
+                  router.pathname === 'start'
+                    ? 'font-bold text-black'
+                    : 'text-gray-400'
+                } cursor-pointer transition-colors hover:text-black`}
+                onClick={() => router.push('/start')}
+              >
+                {'로그인'}
+              </li>
+            )}
           </ul>
         </div>
         {children}
       </div>
-      <div className="h-[50px] w-full"></div>
     </>
   );
 }

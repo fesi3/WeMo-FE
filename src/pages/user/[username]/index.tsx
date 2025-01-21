@@ -29,11 +29,11 @@ export default function MyPage() {
     async function fetchUserData() {
       try {
         const token = localStorage.getItem('token');
-        if (!token) {
-          // 토큰이 없으면 로그인 페이지로 리다이렉트하거나, 기본 페이지 처리
-          alert('로그인이 필요합니다!');
-          return;
-        }
+        // if (!token) {
+        //   // 토큰이 없으면 로그인 페이지로 리다이렉트하거나, 기본 페이지 처리
+        //   alert('로그인이 필요합니다!');
+        //   return;
+        // }
         const response = await axios.get(
           `${BASE_URL}/my_user`, //api 호출 경로
           {
