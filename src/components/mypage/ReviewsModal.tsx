@@ -116,7 +116,7 @@ export default function ReviewModal({
       </label>
 
       {/* 이미지 첨부 */}
-      <label className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2">
         <span className="font-semibold">이미지 첨부 (선택):</span>
         <FileInput
           handleDelete={removeCroppedImage}
@@ -128,7 +128,7 @@ export default function ReviewModal({
           imageURL={imageURL}
           onCrop={onCrop}
         />
-      </label>
+      </div>
 
       {/* 버튼 */}
       <div className="flex justify-between">
