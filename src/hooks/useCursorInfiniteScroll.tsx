@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 import axios from 'axios';
 import { RegionOption, SubRegionOption } from '@/types/reviewType';
 import { PlanDataWithCategory } from '@/types/plans';
-//import { getCategoryId } from '@/utils/categoryUtils';
+import { getCategoryId } from '@/utils/categoryUtils';
 
 interface UseCursorInfiniteScrollProps {
   cursor: number | null;
@@ -36,12 +36,15 @@ export const useCursorInfiniteScroll = ({
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
-    //console.log("Cursor:", cursor);
-    //console.log("Is fetching:", isFetching);
+    //console.log('Cursor:', cursor);
+    //console.log('Is fetching:', isFetching);
+    if (!selectedCategory) return;
 
-    // 이미 데이터 로딩이 끝났으면 observer 해제
+    setIsFetching(false);
+
+    //데이터 로딩이 끝났으면 observer 해제
     if (cursor === null) {
-      //console.log("Cursor === null observer 해제");
+      //console.log('Cursor === null observer 해제');
       if (observerRef.current) {
         observerRef.current.disconnect();
         observerRef.current = null;
@@ -56,11 +59,8 @@ export const useCursorInfiniteScroll = ({
       if (target.isIntersecting && !isFetching && cursor !== null) {
         setIsFetching(true);
         try {
-          // selectedCategory에 따라 categoryId 설정
-          const categoryParam =
-            selectedCategory === '달램핏'
-              ? '1' // 달램핏 데이터 요청
-              : '2'; // 워케이션 데이터 요청
+          // params 설정
+          const categoryParam = getCategoryId(selectedCategory || '');
           const provinceParam =
             selectedRegion && selectedRegion.id > 0
               ? `&province=${selectedRegion.name}`
@@ -71,8 +71,7 @@ export const useCursorInfiniteScroll = ({
               : '';
           const res = await axios.get(
             //`https://677e23a294bde1c1252a8cc0.mockapi.io/plans`
-            //ssr로 바꾸면 cursor=${cursor} 파라미터 추가하기
-            `${baseUrl}/api/plans?size=10&page=0&categoryId=${categoryParam}${provinceParam}${districtParam}`,
+            `${baseUrl}/api/plans?cursor=${cursor}&size=10&page=0&categoryId=${categoryParam}${provinceParam}${districtParam}`,
           );
           const newData = res.data;
           // API 리스폰스: newData.data.planList 과 newData.data.nextCursor를 사용
@@ -82,10 +81,11 @@ export const useCursorInfiniteScroll = ({
           if (
             newData.data.nextCursor === undefined ||
             newData.data.nextCursor === null ||
-            newData.data.nextCursor <= 1 ||
             formatted.length === 0
           ) {
-            //console.log("잘못된 nextCursor 값. 더 이상 데이터를 불러오지 않음음.");
+            // console.log(
+            //   '잘못된 nextCursor 값. 더 이상 데이터를 불러오지 않음.',
+            // );
             setCursor(null); // 무한 호출 방지
             if (observerRef.current) {
               observerRef.current.disconnect();
