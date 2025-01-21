@@ -1,11 +1,13 @@
 import { SET_EMAIL, EmailActionTypes } from '../actions/emailActionTypes';
 
-interface EmailState {
+export interface EmailState {
   email: string | null;
+  nickname: string | null;
 }
 
 const initialState: EmailState = {
   email: null,
+  nickname: null,
 };
 
 const emailReducer = (
@@ -16,7 +18,8 @@ const emailReducer = (
     case SET_EMAIL:
       return {
         ...state,
-        email: action.payload,
+        email: action.payload.email,
+        nickname: action.payload.nickname,
       };
     default:
       return state;

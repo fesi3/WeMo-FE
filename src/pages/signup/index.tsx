@@ -1,4 +1,3 @@
-import SignupLayout from '@/components/auth/signup/signupLayout';
 import SignupForm from '@/components/auth/signup/signupForm';
 import useSignupForm from '@/hooks/useSignupForm';
 import { SignupFormTypes } from '@/components/auth/type';
@@ -38,7 +37,7 @@ function Signup() {
   };
 
   return (
-    <div className="flex w-full justify-center pt-[22.5px]">
+    <div className="flex w-full justify-center pt-[22.5px] md:pt-[80px]">
       <SignupForm
         signupFormValue={signupFormValue}
         handleSubmit={handleSubmit}
@@ -48,9 +47,5 @@ function Signup() {
     </div>
   );
 }
-
-Signup.getLayout = function getLayout(page: React.ReactElement) {
-  return <SignupLayout layoutTitle={'회원가입'}>{page}</SignupLayout>;
-};
 
 export default Signup;
