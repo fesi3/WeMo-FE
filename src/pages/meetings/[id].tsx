@@ -11,8 +11,10 @@ export default function MeetingDetailPage() {
   return (
     <>
       <Header title="모임 상세" />
-      <MeetingDetailMain meetingData={data.data} />
-      <MeetingDetailFooter />
+      <div className="mx-auto max-w-screen-md">
+        <MeetingDetailMain meetingData={data.data} />
+        <MeetingDetailFooter email={data.data.email} />
+      </div>
     </>
   );
 }

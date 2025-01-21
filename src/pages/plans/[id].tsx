@@ -26,7 +26,7 @@ export default function PlanDetailPage() {
   return (
     <>
       <Header title="일정 상세" />
-      <div className="min-h-screen">
+      <div className="min-h-screen max-w-screen-md">
         <PlanDetailMain
           onClickJoinPlan={onClickJoinPlan}
           planData={data.data}

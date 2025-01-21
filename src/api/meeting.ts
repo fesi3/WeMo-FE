@@ -2,15 +2,10 @@ import { PATHS } from '@/constants/apiPath';
 import {
   MeetingDetailResponse,
   CreateMeetingRequestBody,
+  CreateMeetingResponseBody,
 } from '@/types/api/meeting';
 import instance from './axiosInstance';
 import { isAxiosError } from 'axios';
-
-interface CreateMeetingResponseBody {
-  success: boolean;
-  message: string;
-  data: null;
-}
 
 export const createMeeting = async (requestBody: CreateMeetingRequestBody) => {
   try {
