@@ -5,6 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 import fetchData from '@/api/fetchData';
 import { useRouter } from 'next/router';
 import { PATHS } from '@/constants/apiPath';
+import Header from '@/components/shared/layout/Header';
 
 function Signup() {
   const { signupFormValue, handleChange, errors } = useSignupForm();
@@ -37,14 +38,17 @@ function Signup() {
   };
 
   return (
-    <div className="flex w-full justify-center pt-[22.5px] md:pt-[80px]">
-      <SignupForm
-        signupFormValue={signupFormValue}
-        handleSubmit={handleSubmit}
-        handleChange={handleChange}
-        errors={errors}
-      />
-    </div>
+    <>
+      <Header title="회원목록" />
+      <div className="flex w-full justify-center pt-[22.5px] md:pt-[80px]">
+        <SignupForm
+          signupFormValue={signupFormValue}
+          handleSubmit={handleSubmit}
+          handleChange={handleChange}
+          errors={errors}
+        />
+      </div>
+    </>
   );
 }
 

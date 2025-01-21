@@ -2,7 +2,7 @@ import Modal from '@/components/shared/modals/Modal';
 import useToggle from '@/hooks/useToggle';
 import EditPlanForm from './EditPlanForm';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/components/redux/reducers';
+import { RootState } from '@/components/redux/authReducers';
 
 interface EditPlanButtonProps {
   email: string;

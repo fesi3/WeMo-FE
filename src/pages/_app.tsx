@@ -13,11 +13,11 @@ export default function App({ Component, pageProps }: AppProps) {
         <title>WeMo - 직장인 힐링 모임 매칭 서비스</title>
       </Head>
       <Provider store={store}>
-        <GNB>
-          <QueryProvider>
+        <QueryProvider>
+          <GNB>
             <Component {...pageProps} />
-          </QueryProvider>
-        </GNB>
+          </GNB>
+        </QueryProvider>
       </Provider>
     </>
   );
