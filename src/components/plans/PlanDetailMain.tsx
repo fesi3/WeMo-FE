@@ -87,43 +87,45 @@ export default function PlanDetailMain({
               />
             </div>
           </div>
-
-          <div className="flex h-[150px] items-center gap-4 overflow-hidden rounded-lg border-[2px] border-[#E5E7EB] p-4">
-            <div className="relative h-[100px] w-[100px] shrink-0 overflow-hidden rounded-xl">
-              <Image
-                sizes="20vw"
-                src={planData.meetingInfo.meetingImagePath}
-                alt="모임 이미지"
-                fill
-                priority
-              />
-            </div>
-            <div className="flex h-full w-full flex-col gap-5 overflow-hidden">
-              <div className="flex w-full items-center justify-between">
-                <span className="font-bold">
-                  {planData.meetingInfo.meetingName}
-                </span>
-                <button
-                  className="p-2"
-                  onClick={() =>
-                    router.push(`/meetings/${planData.meetingInfo.meetingId}`)
-                  }
-                >
-                  <ArrowLeft className="rotate-180" />
-                </button>
+          <div className="flex flex-col gap-2">
+            <span className="font-bold">모임 정보</span>
+            <div className="flex h-[150px] items-center gap-4 overflow-hidden rounded-lg border-[2px] border-[#E5E7EB] p-4">
+              <div className="relative h-[100px] w-[100px] shrink-0 overflow-hidden rounded-xl">
+                <Image
+                  sizes="20vw"
+                  src={planData.meetingInfo.meetingImagePath}
+                  alt="모임 이미지"
+                  fill
+                  priority
+                />
               </div>
-              <p className="line-clamp-2 overflow-hidden text-ellipsis break-words text-sm">
-                {planData.meetingInfo.description}
-              </p>
-              <div className="flex gap-3 text-black-sub">
-                <IconWithCount
-                  icon={<UserIcon />}
-                  count={planData.meetingInfo.memberCount}
-                />
-                <IconWithCount
-                  icon={<StarIcon />}
-                  count={formatAverage(planData.meetingInfo.reviewAverage)}
-                />
+              <div className="flex h-full w-full flex-col gap-5 overflow-hidden">
+                <div className="flex w-full items-center justify-between">
+                  <span className="font-bold">
+                    {planData.meetingInfo.meetingName}
+                  </span>
+                  <button
+                    className="p-2"
+                    onClick={() =>
+                      router.push(`/meetings/${planData.meetingInfo.meetingId}`)
+                    }
+                  >
+                    <ArrowLeft className="rotate-180" />
+                  </button>
+                </div>
+                <p className="line-clamp-2 overflow-hidden text-ellipsis break-words text-sm">
+                  {planData.meetingInfo.description}
+                </p>
+                <div className="flex gap-3 text-black-sub">
+                  <IconWithCount
+                    icon={<UserIcon />}
+                    count={planData.meetingInfo.memberCount}
+                  />
+                  <IconWithCount
+                    icon={<StarIcon />}
+                    count={formatAverage(planData.meetingInfo.reviewAverage)}
+                  />
+                </div>
               </div>
             </div>
           </div>
