@@ -36,10 +36,15 @@ export const useCursorInfiniteScroll = ({
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
+    //console.log("Cursor:", cursor);
+    //console.log("Is fetching:", isFetching);
+
     // 이미 데이터 로딩이 끝났으면 observer 해제
     if (cursor === null) {
+      //console.log("Cursor === null observer 해제");
       if (observerRef.current) {
         observerRef.current.disconnect();
+        observerRef.current = null;
       }
       return;
     }
@@ -56,13 +61,6 @@ export const useCursorInfiniteScroll = ({
             selectedCategory === '달램핏'
               ? '1' // 달램핏 데이터 요청
               : '2'; // 워케이션 데이터 요청
-
-          // // 하위 카테고리가 있을 경우
-          //   const subCategoryParam =
-          //     selectedSubCategory !== null
-          //       ? `&subCategory=${selectedSubCategory}` // 특정 하위 카테고리 요청
-          //       : ''; // 전체 데이터 요청 (하위 카테고리가 없을 경우)
-
           const provinceParam =
             selectedRegion && selectedRegion.id > 0
               ? `&province=${selectedRegion.name}`
@@ -81,9 +79,14 @@ export const useCursorInfiniteScroll = ({
           const formatted = newData.data.planList as PlanDataWithCategory[];
           onDataFetched(formatted);
           // 만약 nextCursor가 null이면 더 이상 로딩하지 않음
-          if (newData.data.nextCursor === null || formatted.length === 0) {
-            setCursor(null);
-            // observer를 해제하여 더 이상 호출되지 않도록 함
+          if (
+            newData.data.nextCursor === undefined ||
+            newData.data.nextCursor === null ||
+            newData.data.nextCursor <= 1 ||
+            formatted.length === 0
+          ) {
+            //console.log("잘못된 nextCursor 값. 더 이상 데이터를 불러오지 않음음.");
+            setCursor(null); // 무한 호출 방지
             if (observerRef.current) {
               observerRef.current.disconnect();
             }
