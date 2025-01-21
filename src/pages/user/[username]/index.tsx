@@ -6,7 +6,7 @@ import axios from 'axios';
 import { StaticImageData } from 'next/image';
 import MypageLayout from '@/components/mypage/MypageLayout';
 import StatisticsCard from '@/components/mypage/StatisticsCard';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 // const BASE_URL = process.env.NEXT_PUBLIC_API_KEY;
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;

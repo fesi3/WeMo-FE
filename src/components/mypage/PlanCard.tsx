@@ -5,7 +5,7 @@ import { planCardDay, planCardTime } from '@/utils/dateUtils';
 import moreBtn from '@/assets/icons/more-vertical.png';
 import Button from '../shared/Button';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 interface PlanCardProps {
   planData: PlanData; // planData의 타입을 PlanData로 변경
   useremail: string; // 이메일(전역 정보)로 수정하기

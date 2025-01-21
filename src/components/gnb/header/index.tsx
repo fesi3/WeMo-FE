@@ -1,9 +1,8 @@
 import { EmailState } from '@/components/redux/reducers/emailReducer';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import GNBItem from '../item';
 
 function GNBHeader({ storedData }: { storedData: EmailState }) {
-  const router = useRouter();
   return (
     <header>
       <div className="w-full md:h-[80px]"></div>
@@ -15,52 +14,17 @@ function GNBHeader({ storedData }: { storedData: EmailState }) {
           </Link>
           <div className="flex items-center">
             <ul className="flex space-x-6">
-              <li
-                className={`${
-                  router.pathname === 'user'
-                    ? 'font-bold text-black'
-                    : 'text-gray-400'
-                } invisible cursor-pointer transition-colors hover:text-black md:visible`}
-              >
-                {'검색'}
-              </li>
+              <GNBItem text={'검색'} path={''} />
               {storedData?.email ? (
-                <>
-                  <Link href={`/user/${storedData.nickname}`}>
-                    <li
-                      className={`${
-                        router.pathname === 'user'
-                          ? 'font-bold text-black'
-                          : 'text-gray-400'
-                      } cursor-pointer transition-colors hover:text-black`}
-                    >
-                      {'마이페이지'}
-                    </li>
-                  </Link>
-                  <Link href={'allReviews'}>
-                    <li
-                      className={`${
-                        router.pathname === 'user'
-                          ? 'font-bold text-black'
-                          : 'text-gray-400'
-                      } invisible cursor-pointer transition-colors hover:text-black md:visible`}
-                    >
-                      {'찜한 모임'}
-                    </li>
-                  </Link>
-                </>
+                <div>
+                  <GNBItem
+                    text={'마이페이지'}
+                    path={`/user/${storedData.nickname}`}
+                  />
+                  <GNBItem text={'모든 리뷰'} path={'/all-reviews'} />
+                </div>
               ) : (
-                <Link href={'/start'}>
-                  <li
-                    className={`${
-                      router.pathname === 'start'
-                        ? 'font-bold text-black'
-                        : 'text-gray-400'
-                    } cursor-pointer transition-colors hover:text-black`}
-                  >
-                    {'로그인'}
-                  </li>
-                </Link>
+                <GNBItem text={'로그인'} path={'/login'} />
               )}
             </ul>
           </div>
