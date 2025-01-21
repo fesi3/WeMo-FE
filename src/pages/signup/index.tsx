@@ -38,7 +38,7 @@ function Signup() {
   };
 
   return (
-    <div className="flex w-full justify-center pt-[22.5px]">
+    <div className="flex w-full justify-center pt-[22.5px] md:pt-[80px]">
       <SignupForm
         signupFormValue={signupFormValue}
         handleSubmit={handleSubmit}
