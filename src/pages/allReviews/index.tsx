@@ -127,7 +127,7 @@ const ReviewPage = ({
   }, [filters.region, filters.subRegion, filters.sort]);
 
   return (
-    <div className="mx-auto max-w-md px-4 py-6">
+    <div className="mx-auto max-w-7xl px-4 py-6">
       <Tabs
         tabs={[{ category: '달램핏' }, { category: '워케이션' }]}
         defaultTab="달램핏"
@@ -155,7 +155,7 @@ const ReviewPage = ({
               }}
               sortOptions={sortOptions}
             />
-            <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-4">
               <ReviewList reviews={reviews} />
             </div>
 

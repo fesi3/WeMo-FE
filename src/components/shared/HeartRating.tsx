@@ -28,7 +28,7 @@ const HeartRating: React.FC<HeartRatingProps> = ({
               : '/assets/icons/emptyStar.svg'
           }
           alt={`Heart ${index + 1}`}
-          className="// 태블릿 // PC h-6 w-6 cursor-pointer md:h-8 md:w-8 xl:h-9 xl:w-9"
+          className="// 태블릿 // PC h-5 w-5 cursor-pointer md:h-4 md:w-4 xl:h-5 xl:w-5"
           onClick={() => handleClick(index)}
         />
       ))}
