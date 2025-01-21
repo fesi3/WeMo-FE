@@ -23,7 +23,7 @@ export default function MyMeeting() {
   const [activeTab, setActiveTab] = useState<'tabLeft' | 'tabRight'>('tabLeft');
   const [meetings, setMeetings] = useState<MeetingData[]>([]);
   //유저 정보 전역 데이터로 수정하기@@@
-  const useremail = 'test@test.com'; // 현재 사용자의 이메일
+  const useremail = 'test123@test.com'; // 현재 사용자의 이메일
   const router = useRouter();
 
   //최초 렌더링 시에만 api 호출
