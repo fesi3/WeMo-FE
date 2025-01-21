@@ -5,8 +5,10 @@ import { StaticImageData } from 'next/image';
 import axios from 'axios';
 import NoData from '@/components/mypage/NoData';
 import MypageLayout from '@/components/mypage/MypageLayout';
+import { useRouter } from 'next/navigation';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_KEY;
+// const BASE_URL = process.env.NEXT_PUBLIC_API_KEY;
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export interface MeetingData {
   email: string;
@@ -22,18 +24,25 @@ export default function MyMeeting() {
   const [meetings, setMeetings] = useState<MeetingData[]>([]);
   //유저 정보 전역 데이터로 수정하기@@@
   const useremail = 'test@test.com'; // 현재 사용자의 이메일
+  const router = useRouter();
 
   //최초 렌더링 시에만 api 호출
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+          alert('로그인이 필요합니다!');
+          router.push('/login');
+          return;
+        }
         const response = await axios.get(
-          `${BASE_URL}/my_meeting`,
-          // {
-          //   headers: {
-          //     Authorization: ``, // JWT 토큰
-          //   },
-          // },
+          `${BASE_URL}/api/users/meetings?page=1`,
+          {
+            headers: {
+              Authorization: `${token}`, // JWT 토큰
+            },
+          },
         );
         const userMeetingData = response.data.data.meetingList;
         const userMeetingCount = response.data.data.meetingCount;

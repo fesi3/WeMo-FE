@@ -6,8 +6,10 @@ import axios from 'axios';
 import { StaticImageData } from 'next/image';
 import NoData from '@/components/mypage/NoData';
 import MypageLayout from '@/components/mypage/MypageLayout';
+import { useRouter } from 'next/navigation';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_KEY;
+// const BASE_URL = process.env.NEXT_PUBLIC_API_KEY;
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export interface ReviewData {
   reviewId: number; // 리뷰 상세로 이동
@@ -38,6 +40,7 @@ export default function MyReview() {
   // 데이터 상태
   const [reviewData, setReviewData] = useState<ReviewData[]>([]);
   const [reviewableData, setReviewableData] = useState<ReviewPlanData[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,11 +48,21 @@ export default function MyReview() {
 
       const apiUrl =
         activeTab === 'tabLeft'
-          ? `${BASE_URL}/my_review`
-          : `${BASE_URL}/my_reviewable`;
+          ? `${BASE_URL}/api/users/reviews?page=1`
+          : `${BASE_URL}/api/users/reviews/available?page=1`;
 
       try {
-        const response = await axios.get(apiUrl);
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+          alert('로그인이 필요합니다!');
+          router.push('/login');
+          return;
+        }
+        const response = await axios.get(apiUrl, {
+          headers: {
+            Authorization: `${token}`, // JWT 토큰
+          },
+        });
 
         const userReviewableData = response.data.data.planList;
         const userReviewableCount = response.data.data.planCount;

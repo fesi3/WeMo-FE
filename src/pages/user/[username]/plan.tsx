@@ -4,8 +4,10 @@ import axios from 'axios';
 import PlanCard from '@/components/mypage/PlanCard';
 import NoData from '@/components/mypage/NoData';
 import MypageLayout from '@/components/mypage/MypageLayout';
+import { useRouter } from 'next/navigation';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_KEY;
+// const BASE_URL = process.env.NEXT_PUBLIC_API_KEY;
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export interface PlanData {
   planId: number;
@@ -28,18 +30,23 @@ export interface PlanData {
 
 export default function MyMeMyPlaneting() {
   const [plans, setPlans] = useState<PlanData[]>([]);
+  const router = useRouter();
+
   //최초 렌더링 시에만 api 호출
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `${BASE_URL}/my_plan`,
-          // {
-          //   headers: {
-          //     Authorization: ``, // JWT 토큰
-          //   },
-          // },
-        );
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+          alert('로그인이 필요합니다!');
+          router.push('/login');
+          return;
+        }
+        const response = await axios.get(`${BASE_URL}/api/users/plans?page=1`, {
+          headers: {
+            Authorization: `${token}`, // JWT 토큰
+          },
+        });
         const userPlanData = response.data.data.planList;
         const userPlanCount = response.data.data.planCount;
 
