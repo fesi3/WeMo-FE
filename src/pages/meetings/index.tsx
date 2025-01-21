@@ -179,7 +179,11 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
       <Tabs
         tabs={tabs}
         defaultTab="달램핏"
-        onTabChange={(category) => setActiveTab(category)}
+        onTabChange={(category) => {
+          setActiveTab(category);
+          setCursor(initialCursor);
+          setIsFetching(false);
+        }}
         renderContent={renderTabContent}
       />
       <div ref={loaderRef} className="h-12"></div>
