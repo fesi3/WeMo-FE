@@ -73,7 +73,7 @@ function Login() {
   };
   return (
     <div className="mt-36 flex h-screen flex-col items-center gap-[62.5px]">
-      <LoginBanner />
+      <LoginBanner description={'당신의 관심이 만나는 순간'} />
       <LoginForm
         handleSubmit={handleSubmit}
         handleChange={handleChange}

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-function LoginBanner() {
+function LoginBanner({ description }: { description?: string }) {
   return (
     <div className="flex flex-col items-center gap-6">
       <Image
@@ -9,9 +9,7 @@ function LoginBanner() {
         src={'/assets/images/logo-with-color.png'}
         alt="logo-image"
       />
-      <p className="text-[15px] font-bold text-primary-10">
-        {'당신의 관심이 만나는 순간'}
-      </p>
+      <p className="text-[15px] font-bold text-primary-10">{description}</p>
     </div>
   );
 }
