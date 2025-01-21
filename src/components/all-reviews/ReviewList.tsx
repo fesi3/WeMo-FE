@@ -7,6 +7,7 @@ interface ReviewListProps {
 }
 
 const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
+  console.log(reviews.map((review) => review.reviewId));
   if (!Array.isArray(reviews) || reviews.length === 0) {
     return (
       <p className="text-center text-gray-600">
@@ -16,27 +17,31 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
   }
 
   return (
-    <ul className="space-y-4">
-      {reviews.map((review) => (
+    <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {reviews.map((review, index) => (
         <li
-          key={review.reviewId}
-          className="flex flex-col items-start rounded-lg bg-white p-4 shadow-md md:flex-row md:items-center"
+          key={`${review.reviewId}-${index}`} // index와 조합하여 고유성 확보
+          className="flex flex-col items-start rounded-lg bg-white p-4 shadow-md"
         >
           <img
-            src={review.planImagePath}
+            src={review.reviewImagePath}
             alt={review.planName}
-            className="mb-4 h-32 w-full rounded-md object-cover md:mb-0 md:mr-4 md:h-24 md:w-24"
+            className="mb-4 aspect-[5/3] w-full rounded-md object-contain"
           />
-          <div className="flex-1">
+          <div className="w-full flex-1">
             <div className="flex flex-col md:flex-row md:justify-between">
               <h2 className="text-base font-semibold text-gray-800">
                 {review.planName}
               </h2>
-              <div className="mt-2 flex items-center md:mt-0">
-                <HeartRating rating={review.score} maxRating={5} />
-                <span className="ml-2 text-sm text-gray-600">
-                  {review.score.toFixed(1)}
-                </span>
+
+              <div className="mt-2 flex items-center justify-between md:mt-0">
+                <div>{review.nickname}</div>
+                <div className="flex items-center">
+                  <HeartRating rating={review.score} maxRating={5} />
+                  <span className="ml-2 text-sm text-gray-600">
+                    {review.score.toFixed(1)}
+                  </span>
+                </div>
               </div>
             </div>
             <p className="text-sm text-gray-500">

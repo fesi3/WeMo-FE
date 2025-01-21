@@ -4,13 +4,14 @@ import { AdjustmentsVerticalIcon } from '@heroicons/react/20/solid';
 
 interface SortOption {
   id: number;
-  name: string;
+  name: string; // 사용자가 볼 이름
+  value: string; // 서버에 보낼 값
 }
 
 interface SortDropdownProps {
   sortOptions: SortOption[]; // 동적으로 전달받는 정렬 옵션
   selectedSort: SortOption | null;
-  onChange: (option: SortOption) => void;
+  onChange: (option: SortOption | null) => void;
 }
 
 const SortDropdown: React.FC<SortDropdownProps> = ({
