@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import type { NextPage } from 'next';
-//import type { GetServerSideProps } from 'next';
+import type { NextPage, GetServerSideProps } from 'next';
 import axios from 'axios';
 import Greeting from '@/components/findGatherings/Greeting';
 import EditMeetingButton from '@/components/findGatherings/editMeeting/EditMeetingButton';
@@ -119,34 +118,6 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
   const tabs = [{ category: '달램핏' }, { category: '워케이션' }];
   const [activeTab, setActiveTab] = useState<string>('달램핏');
 
-  /**
-   * 임시 코드
-   * csr로 초기 데이터 로딩
-   */
-  useEffect(() => {
-    const fetchInitialPlans = async () => {
-      try {
-        const res = await axios.get<PlanListResponse>(
-          `${baseUrl}/api/plans?size=10&page=0&`,
-        );
-        const data = res.data;
-        setPlans(data.data.planList);
-        const nextCursor = data.data.nextCursor ?? null;
-        console.log('초기 nextCursor 값:', nextCursor);
-        setCursor(nextCursor);
-        // setCursor(
-        //   data.data.nextCursor ?? null,
-        //   //data.data.nextCursor !== undefined ? data.data.nextCursor : null,
-        //   //ssr로 바꾸면 수정 필요.
-        // );
-      } catch (error) {
-        console.error('데이터 로딩 실패:', error);
-      }
-    };
-
-    fetchInitialPlans();
-  }, []);
-
   //무한 스크롤 커스텀 훅
   const { loaderRef } = useCursorInfiniteScroll({
     cursor,
@@ -216,32 +187,31 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
   );
 };
 
-// 서버사이드 데이터 가져오기
-// export const getServerSideProps: GetServerSideProps = async () => {
-//   try {
-//     const res = await axios.get<PlanListResponse>(
-//       `${baseUrl}/api/plans?size=10&page=0&`,
-//     );
-//     const data = res.data;
-//     const initialPlans: PlanDataWithCategory[] = data.data.planList.map(
-//       (item) => ({ ...item }),
-//     );
-//     const nextCursor = data.data.nextCursor;
-//     return {
-//       props: {
-//         initialPlans,
-//         initialCursor: nextCursor !== undefined ? nextCursor : null,
-//       },
-//     };
-//   } catch (error) {
-//     console.error('초기 데이터 로딩 실패:', error);
-//     return {
-//       props: {
-//         initialPlans: [],
-//         initialCursor: null,
-//       },
-//     };
-//   }
-// };
+export const getServerSideProps: GetServerSideProps = async () => {
+  try {
+    const res = await axios.get<PlanListResponse>(
+      `${baseUrl}/api/plans?size=10&page=0&`,
+    );
+    const data = res.data;
+    const initialPlans: PlanDataWithCategory[] = data.data.planList.map(
+      (item) => ({ ...item }),
+    );
+    const nextCursor = data.data.nextCursor;
+    return {
+      props: {
+        initialPlans,
+        initialCursor: nextCursor !== undefined ? nextCursor : null,
+      },
+    };
+  } catch (error) {
+    console.error('초기 데이터 로딩 실패:', error);
+    return {
+      props: {
+        initialPlans: [],
+        initialCursor: null,
+      },
+    };
+  }
+};
 
 export default Home;
