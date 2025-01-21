@@ -60,10 +60,10 @@ const ReviewPage = ({
           sort: filters.sort?.value || undefined,
         };
 
-        // console.log('요청 데이터:', params);
+        console.log('요청 데이터:', params);
 
         const { data } = await axios.get(`${BASE_URL}/api/reviews`, { params });
-        // console.log('이 데이터 임요', data);
+        console.log('이 데이터 임요', data);
         const newReviews = data.data.reviewList || [];
         // console.log('서버 응답 데이터:', newReviews);
 
