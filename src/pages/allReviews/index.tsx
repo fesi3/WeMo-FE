@@ -131,7 +131,15 @@ const ReviewPage = ({
       <Tabs
         tabs={[{ category: '달램핏' }, { category: '워케이션' }]}
         defaultTab="달램핏"
-        onTabChange={(category) => setSelectedCategory(category)}
+        onTabChange={(category) => {
+          setSelectedCategory(category); // 탭 변경
+          setFilters({
+            region: null,
+            subRegion: null,
+            date: null,
+            sort: null,
+          }); // 필터 초기화
+        }}
         renderContent={() => (
           <>
             <FilterBar
@@ -147,7 +155,10 @@ const ReviewPage = ({
               }}
               sortOptions={sortOptions}
             />
-            <ReviewList reviews={reviews} />
+            <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <ReviewList reviews={reviews} />
+            </div>
+
             <div ref={loaderRef} className="h-8" />
             {loading && <p className="text-center">로딩 중...</p>}
             {!hasMore && (
