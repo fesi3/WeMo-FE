@@ -39,7 +39,7 @@ const ReviewPage = ({
   // 서버에서 데이터를 가져오는 함수
   const fetchReviews = useCallback(
     async (isAppending = false) => {
-      console.log(!hasMore, loading);
+      // console.log(!hasMore, loading);
       if (!hasMore || loading) return;
 
       try {
@@ -60,10 +60,10 @@ const ReviewPage = ({
           sort: filters.sort?.value || undefined,
         };
 
-        console.log('요청 데이터:', params);
+        // console.log('요청 데이터:', params);
 
         const { data } = await axios.get(`${BASE_URL}/api/reviews`, { params });
-        console.log('이 데이터 임요', data);
+        // console.log('이 데이터 임요', data);
         const newReviews = data.data.reviewList || [];
         // console.log('서버 응답 데이터:', newReviews);
 
@@ -84,6 +84,8 @@ const ReviewPage = ({
 
   // IntersectionObserver 설정
   useEffect(() => {
+    // console.log('loaderRef.current:', loaderRef.current);
+    if (!loaderRef.current) return; // loaderRef가 렌더링되지 않았다면 중단
     const observerCallback: IntersectionObserverCallback = (entries) => {
       const target = entries[0];
       if (target.isIntersecting) {
@@ -104,25 +106,26 @@ const ReviewPage = ({
     if (loaderRef.current) observer.observe(loaderRef.current);
 
     return () => {
-      observer.disconnect();
+      if (observer) observer.disconnect(); // 기존 옵저버를 철저히 해제
     };
-  }, [cursor, hasMore, filters, selectedCategory]);
+  }, [cursor, hasMore, filters, selectedCategory, loaderRef]);
 
   // 탭 전환 시 초기화
   useEffect(() => {
-    setCursor(1);
-    setHasMore(true);
+    setCursor(1); // 페이지 번호 초기화
+    setHasMore(true); // 더 많은 데이터가 있는 상태로 초기화
 
     if (selectedCategory === '달램핏') {
       setReviews(initialDalRampitReviews);
     } else {
       setReviews(initialWorkationReviews);
     }
+    fetchReviews(false); // 명시적으로 첫 데이터 요청
   }, [selectedCategory]);
 
   // 필터 변경 시 요청
   useEffect(() => {
-    console.log('현재 필터 상태:', filters);
+    // console.log('현재 필터 상태:', filters);
     fetchReviews(false); // 새로운 데이터 요청
   }, [filters.region, filters.subRegion, filters.sort]);
 
