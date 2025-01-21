@@ -60,7 +60,7 @@ const RenderCommonContent: React.FC<{
 
   useEffect(() => {
     // 토큰 저장소에 따라 변경 필요
-    const token = localStorage.getItem('auth_token');
+    const token = localStorage.getItem('accessToken');
     setIsAuthenticated(!!token);
   }, []);
 
@@ -119,6 +119,34 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
   const tabs = [{ category: '달램핏' }, { category: '워케이션' }];
   const [activeTab, setActiveTab] = useState<string>('달램핏');
 
+  /**
+   * 임시 코드
+   * csr로 초기 데이터 로딩
+   */
+  useEffect(() => {
+    const fetchInitialPlans = async () => {
+      try {
+        const res = await axios.get<PlanListResponse>(
+          `${baseUrl}/api/plans?size=10&page=0&`,
+        );
+        const data = res.data;
+        setPlans(data.data.planList);
+        const nextCursor = data.data.nextCursor ?? null;
+        console.log('초기 nextCursor 값:', nextCursor);
+        setCursor(nextCursor);
+        // setCursor(
+        //   data.data.nextCursor ?? null,
+        //   //data.data.nextCursor !== undefined ? data.data.nextCursor : null,
+        //   //ssr로 바꾸면 수정 필요.
+        // );
+      } catch (error) {
+        console.error('데이터 로딩 실패:', error);
+      }
+    };
+
+    fetchInitialPlans();
+  }, []);
+
   //무한 스크롤 커스텀 훅
   const { loaderRef } = useCursorInfiniteScroll({
     cursor,
@@ -139,31 +167,6 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
       });
     },
   });
-
-  /**
-   * 임시 코드
-   * csr로 초기 데이터 로딩
-   */
-  useEffect(() => {
-    const fetchInitialPlans = async () => {
-      try {
-        const res = await axios.get<PlanListResponse>(
-          `${baseUrl}/api/plans?size=10&page=0&`,
-        );
-        const data = res.data;
-        setPlans(data.data.planList);
-        setCursor(
-          data.data.nextCursor ?? null,
-          //data.data.nextCursor !== undefined ? data.data.nextCursor : null,
-          //ssr로 바꾸면 수정 필요.
-        );
-      } catch (error) {
-        console.error('데이터 로딩 실패:', error);
-      }
-    };
-
-    fetchInitialPlans();
-  }, []);
 
   // 탭 변경 시 카테고리 업데이트
   useEffect(() => {
