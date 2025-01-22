@@ -7,13 +7,12 @@ import {
 
 import CalendarPicker from '@/components/shared/calendar/CalendarPicker';
 import Modal from '@/components/shared/modals/Modal';
-import CalendarIcon from '@/assets/icons/calendar.svg';
+import { CalendarDaysIcon } from '@heroicons/react/20/solid';
 
 interface DatePickInputProps<T extends FieldValues> {
   register: UseFormRegister<T>;
   name: Path<T>;
   label: string;
-  value: string;
   isOpenCalendar: boolean;
   openCalendar: () => void;
   closeCalendar: () => void;
@@ -24,7 +23,6 @@ export default function DatePickInput<T extends FieldValues>({
   register,
   name,
   label,
-  value,
   openCalendar,
   closeCalendar,
   isOpenCalendar,
@@ -40,11 +38,9 @@ export default function DatePickInput<T extends FieldValues>({
           onClick={openCalendar}
           className="form-input flex w-1/2 items-center gap-2"
         >
-          <CalendarIcon />
+          <CalendarDaysIcon className="w-6 opacity-30" />
           <input
-            value={value}
             {...register(name, validate)}
-            readOnly
             className="w-full cursor-pointer outline-none"
             placeholder="날짜를 선택해 주세요"
           />
@@ -54,6 +50,7 @@ export default function DatePickInput<T extends FieldValues>({
           title={label}
           handleClose={closeCalendar}
           isOpen={isOpenCalendar}
+          className="w-auto"
         >
           <CalendarPicker onChange={onClickDate} />
         </Modal>
