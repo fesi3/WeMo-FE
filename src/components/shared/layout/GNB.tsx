@@ -16,7 +16,6 @@ function GNB({ children }: PropsWithChildren) {
   const dispatch = useDispatch();
   // 렌더링 될 때 마다 로그인 상태 서버에 요청
   const { response } = useAuth();
-
   useEffect(() => {
     // 로그인 상태 변경 시 로그인 상태 전역 객체에 업데이트
     if (response?.success) {
