@@ -2,14 +2,14 @@ import { PATHS } from '@/constants/apiPath';
 import {
   MeetingDetailResponse,
   CreateMeetingRequestBody,
-  CreateMeetingResponseBody,
+  CreateMeetingResponse,
 } from '@/types/api/meeting';
 import instance from './axiosInstance';
 import { isAxiosError } from 'axios';
 
 export const createMeeting = async (requestBody: CreateMeetingRequestBody) => {
   try {
-    const response = await instance.post<CreateMeetingResponseBody>(
+    const response = await instance.post<CreateMeetingResponse>(
       PATHS.MEETING.CREATE,
       requestBody,
     );
@@ -17,7 +17,7 @@ export const createMeeting = async (requestBody: CreateMeetingRequestBody) => {
   } catch (error) {
     if (!isAxiosError(error)) return;
     if (!error.response) return;
-    const response = error.response.data as CreateMeetingResponseBody;
+    const response = error.response.data as CreateMeetingResponse;
     console.error(`${error.status}: ${response.message}`);
   }
   //에러핸들링 어떻게 할지 고민중
