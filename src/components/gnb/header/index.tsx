@@ -2,28 +2,19 @@ import Image from 'next/image';
 import Link from 'next/link';
 import logo from '@/assets/images/title.png';
 import GNBItem from '../item';
-import { UserData } from '@/pages/user/[username]';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { useRouter } from 'next/router';
 
-interface GNBHeaderProps {
-  response?: {
-    data: UserData;
-    message: string;
-    success: boolean;
-  };
-}
 // GNB 레이아웃 컴포넌트에서 렌더링 되는 header 컴포넌트입니다.
 // 페이지마다 출력이 달라 path를 조회해 조건부 렌더링 합니다.
 // 로그인 여부를 전역객체에서 조회해 조건부 렌더링 합니다.
 // 상위 컴포넌트로 부터 유저 정보 응답을 내려받아 라우팅 합니다.
-function GNBHeader({ response }: GNBHeaderProps) {
+function GNBHeader() {
   const router = useRouter();
-  const nickname = response?.data?.nickname || '';
-  const isLogin = useSelector((state: RootState) => state.auth.isLoggedIn);
   const hideGnbHeaderRoutes = ['/login', '/start'];
   const showGnbHeader = hideGnbHeaderRoutes.includes(router.pathname);
+  const { isLoggedIn, user } = useSelector((state: RootState) => state.auth);
 
   return (
     <>
@@ -42,11 +33,14 @@ function GNBHeader({ response }: GNBHeaderProps) {
               <div className="flex items-center">
                 <ul className="flex space-x-6">
                   <GNBItem text={'홈'} path={'/plans'} />
-                  {isLogin ? (
+                  {isLoggedIn ? (
                     <>
                       <GNBItem text={'모든 리뷰'} path={'/all-reviews'} />
                       <GNBItem text={'모임 찾기'} path={'/all-meetings'} />
-                      <GNBItem text={'마이페이지'} path={`/user/${nickname}`} />
+                      <GNBItem
+                        text={'마이페이지'}
+                        path={`/user/${user?.nickname}`}
+                      />
                     </>
                   ) : (
                     <GNBItem text={'로그인'} path={'/start'} />
