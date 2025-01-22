@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import GNBItem from '../item';
 import { UserData } from '@/pages/user/[username]';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 
 interface GNBHeaderProps {
   response?: {
@@ -11,8 +13,8 @@ interface GNBHeaderProps {
 }
 
 function GNBHeader({ response }: GNBHeaderProps) {
-  const nickname = response?.data?.nickname || ''; // Fallback to empty string
-  const success = response?.success || false; // Default to `false` if `response` is undefined
+  const nickname = response?.data?.nickname || '';
+  const isLogin = useSelector((state: RootState) => state.auth.isLoggedIn);
 
   return (
     <header className="invisible md:visible">
@@ -24,7 +26,7 @@ function GNBHeader({ response }: GNBHeaderProps) {
           <div className="flex items-center">
             <ul className="flex space-x-6">
               <GNBItem text={'홈'} path={'/plans'} />
-              {success ? (
+              {isLogin ? (
                 <>
                   <GNBItem text={'모든 리뷰'} path={'/all-reviews'} />
                   <GNBItem text={'모임 찾기'} path={'/all-meetings'} />

@@ -5,7 +5,7 @@ import GNBHeader from '@/components/gnb/header';
 import GNBFooter from '@/components/gnb/footer';
 import useAuth from '@/hooks/useAuth';
 import { useDispatch } from 'react-redux';
-import { login } from '@/redux/authReducers';
+import { login, logout } from '@/redux/authReducers';
 
 const noto = Noto_Sans_KR({
   subsets: ['latin'],
@@ -19,8 +19,12 @@ function GNB({ children }: PropsWithChildren) {
 
   useEffect(() => {
     // 로그인 상태 변경 시 로그인 상태 전역 객체에 업데이트
-    dispatch(login());
-  }, []);
+    if (response?.success) {
+      dispatch(login());
+    } else {
+      dispatch(logout());
+    }
+  }, [response]);
 
   // 하나의 레이아웃 컴포넌트에서 pathName에 접근해 조건부로 렌더링 합니다.
   const hideGnbHeaderRoutes = ['/login', '/start'];

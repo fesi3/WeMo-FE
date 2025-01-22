@@ -9,6 +9,9 @@ interface LogoutAction {
   type: typeof LOGOUT;
 }
 
+export const login = () => ({ type: LOGIN });
+export const logout = () => ({ type: LOGOUT });
+
 export type AuthActionTypes = LoginAction | LogoutAction;
 
 export interface AuthState {
@@ -32,6 +35,3 @@ export default function authReducer(
       return state;
   }
 }
-
-export const login = (): LoginAction => ({ type: LOGIN });
-export const logout = (): LogoutAction => ({ type: LOGOUT });

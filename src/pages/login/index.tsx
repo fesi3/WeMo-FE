@@ -6,10 +6,13 @@ import { useMutation } from '@tanstack/react-query';
 import { PATHS } from '@/constants/apiPath';
 import fetchData from '@/api/fetchData';
 import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import { login } from '@/redux/authReducers';
 
 function Login() {
   const { loginFormValue, handleChange, errors } = useLoginForm();
   const router = useRouter();
+  const dispatch = useDispatch();
   const {
     AUTH: { SIGNIN },
   } = PATHS;
@@ -23,6 +26,7 @@ function Login() {
       }),
     onSuccess: () => {
       alert('로그인 성공');
+      dispatch(login());
       router.replace('/plans');
     },
     onError: () => {
