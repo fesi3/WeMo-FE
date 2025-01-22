@@ -3,9 +3,7 @@ import { Noto_Sans_KR } from 'next/font/google';
 import { useRouter } from 'next/router';
 import GNBHeader from '@/components/gnb/header';
 import GNBFooter from '@/components/gnb/footer';
-import { useQuery } from '@tanstack/react-query';
-import { PATHS } from '@/constants/apiPath';
-import instance from '@/api/axiosInstance';
+import useAuth from '@/hooks/useAuth';
 // import { useSelector } from 'react-redux';
 // import { RootState } from '@/components/redux/store';
 
@@ -15,27 +13,8 @@ const noto = Noto_Sans_KR({
 
 function GNB({ children }: PropsWithChildren) {
   const router = useRouter();
-  const {
-    AUTH: { USER_INFO },
-  } = PATHS;
+  const { response } = useAuth();
   // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-  const fetchUserInfo = async () => {
-    const response = await instance.get(USER_INFO);
-    return response.data;
-  };
-
-  const {
-    isError,
-    error,
-    data: response,
-  } = useQuery({
-    queryKey: [],
-    queryFn: fetchUserInfo,
-  });
-
-  if (isError) {
-    console.error(error);
-  }
 
   // 하나의 레이아웃 컴포넌트에서 pathName에 접근해 조건부로 렌더링 합니다.
   const hideGnbHeaderRoutes = ['/login', '/start'];
