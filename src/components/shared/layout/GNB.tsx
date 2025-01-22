@@ -5,7 +5,7 @@ import GNBFooter from '@/components/gnb/footer';
 import useAuth from '@/hooks/useAuth';
 import { useDispatch } from 'react-redux';
 import { login, logout } from '@/redux/authReducers';
-import { clearUser, setUser } from '@/redux/userReducers';
+import { clearUser, setUser } from '@/redux/authReducers';
 
 const noto = Noto_Sans_KR({
   subsets: ['latin'],

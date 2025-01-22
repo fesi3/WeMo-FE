@@ -14,7 +14,10 @@ interface GNBHeaderProps {
     success: boolean;
   };
 }
-
+// GNB 레이아웃 컴포넌트에서 렌더링 되는 header 컴포넌트입니다.
+// 페이지마다 출력이 달라 path를 조회해 조건부 렌더링 합니다.
+// 로그인 여부를 전역객체에서 조회해 조건부 렌더링 합니다.
+// 상위 컴포넌트로 부터 유저 정보 응답을 내려받아 라우팅 합니다.
 function GNBHeader({ response }: GNBHeaderProps) {
   const router = useRouter();
   const nickname = response?.data?.nickname || '';

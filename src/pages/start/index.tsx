@@ -4,7 +4,7 @@ import Link from 'next/link';
 import LoginBanner from '@/components/auth/login/loginBanner';
 import { useDispatch } from 'react-redux';
 import { logout } from '@/redux/authReducers';
-import { clearUser } from '@/redux/userReducers';
+import { clearUser } from '@/redux/authReducers';
 
 const StartPage = () => {
   const dispatch = useDispatch();
