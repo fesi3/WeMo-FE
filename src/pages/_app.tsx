@@ -4,7 +4,7 @@ import QueryProvider from '@/components/react-query/queryProvider';
 import Head from 'next/head';
 import GNB from '@/components/shared/layout/GNB';
 import { Provider } from 'react-redux';
-import store from '@/components/redux/store';
+import store from '@/redux/store';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

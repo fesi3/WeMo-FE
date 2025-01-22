@@ -6,11 +6,9 @@ import LoginBanner from '@/components/auth/login/loginBanner';
 const StartPage = () => {
   return (
     <div className="flex h-screen flex-col items-center justify-center bg-white">
-      <Link href={'/plans'}>
-        <div className="mb-16">
-          <LoginBanner />
-        </div>
-      </Link>
+      <div className="mb-16">
+        <LoginBanner />
+      </div>
       <div className="mb-4">
         <Link href={'/plans'}>
           <Button

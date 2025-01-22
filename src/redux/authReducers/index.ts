@@ -9,6 +9,8 @@ interface LogoutAction {
   type: typeof LOGOUT;
 }
 
+export type AuthActionTypes = LoginAction | LogoutAction;
+
 export interface AuthState {
   isLoggedIn: boolean;
 }
@@ -16,8 +18,6 @@ export interface AuthState {
 const initialState: AuthState = {
   isLoggedIn: false,
 };
-
-export type AuthActionTypes = LoginAction | LogoutAction;
 
 export default function authReducer(
   state = initialState,
