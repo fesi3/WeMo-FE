@@ -1,7 +1,7 @@
 import React from 'react';
-import Greeting from '@/components/findGatherings/Greeting';
-import SubCategoryFilter from '@/components/findGatherings/SubCategoryFilter';
-import RenderCommonContent from '@/components/findGatherings/RenderCommonContent';
+import Greeting from '@/components/plans/Greeting';
+import SubCategoryFilter from '@/components/plans/SubCategoryFilter';
+import RenderCommonContent from '@/components/plans/RenderCommonContent';
 import { PlanDataWithCategory } from '@/types/plans';
 import { RegionOption, SubRegionOption } from '@/types/reviewType';
 

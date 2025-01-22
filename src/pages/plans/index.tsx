@@ -4,8 +4,8 @@ import axios from 'axios';
 import { useCursorInfiniteScroll } from '@/hooks/useCursorInfiniteScroll';
 import { PlanDataWithCategory } from '@/types/plans';
 import { RegionOption, SubRegionOption } from '@/types/reviewType';
-import Tabs from '@/components/findGatherings/tab/Tabs';
-import RenderTabContent from '@/components/findGatherings/RenderTabContent';
+import Tabs from '@/components/plans/tab/Tabs';
+import RenderTabContent from '@/components/plans/RenderTabContent';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
