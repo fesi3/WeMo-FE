@@ -39,11 +39,11 @@ const Card: React.FC<PlanData> = ({
         <div className="absolute inset-0 bg-gray-500 bg-opacity-50"></div>
       )}
       {/* 이미지 */}
-      <div className="relative h-48 w-full">
+      <div className="relative aspect-[5/3] w-full">
         <img
           src={planImagePath}
           alt={planName}
-          className={`h-full w-full object-cover ${
+          className={`h-full w-full object-contain ${
             isFulled ? 'opacity-50' : ''
           }`}
         />

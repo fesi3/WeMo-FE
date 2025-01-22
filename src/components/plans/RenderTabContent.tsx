@@ -37,7 +37,7 @@ const RenderTabContent: React.FC<RenderTabContentProps> = ({
   setSelectedSubCategory,
 }) => {
   return (
-    <div className="mx-auto items-center sm:w-[400px] sm:justify-center md:w-[600px] lg:w-full">
+    <div className="mx-auto items-center sm:w-[400px] sm:justify-center md:w-[600px] md:justify-center lg:w-full">
       {/* 인삿말 컴포넌트트 */}
       <Greeting />
       {/* 달램핏 탭일 경우 하위 카테고리 필터 추가 */}
