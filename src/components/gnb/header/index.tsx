@@ -1,4 +1,6 @@
+import Image from 'next/image';
 import Link from 'next/link';
+import logo from '@/assets/images/title.png';
 import GNBItem from '../item';
 import { UserData } from '@/pages/user/[username]';
 import { useSelector } from 'react-redux';
@@ -21,7 +23,12 @@ function GNBHeader({ response }: GNBHeaderProps) {
       <div className="fixed top-0 z-10 flex h-16 w-full items-center bg-white shadow-md md:flex md:h-[80px]">
         <div className="flex w-full justify-between px-5">
           <Link href={'/plans'}>
-            <span className="text-xl font-bold">WeMo</span>
+            <Image
+              width={88.33}
+              height={24.33}
+              src={logo}
+              alt="wemo-gnb-logo"
+            />
           </Link>
           <div className="flex items-center">
             <ul className="flex space-x-6">
