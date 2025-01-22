@@ -19,6 +19,7 @@ function useAuth() {
   } = useQuery({
     queryKey: ['auth'],
     queryFn: fetchUserInfo,
+    staleTime: 1000 * 60 * 5,
   });
 
   return { response, error, isError };
