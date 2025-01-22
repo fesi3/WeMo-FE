@@ -1,14 +1,13 @@
-import CalendarPicker from '@/components/shared/calendar/CalendarPicker';
-
-import Modal from '@/components/shared/modals/Modal';
-
-import Image from 'next/image';
 import {
   FieldValues,
   Path,
   RegisterOptions,
   UseFormRegister,
 } from 'react-hook-form';
+
+import CalendarPicker from '@/components/shared/calendar/CalendarPicker';
+import Modal from '@/components/shared/modals/Modal';
+import CalendarIcon from '@/assets/icons/calendar.svg';
 
 interface DatePickInputProps<T extends FieldValues> {
   register: UseFormRegister<T>;
@@ -41,12 +40,7 @@ export default function DatePickInput<T extends FieldValues>({
           onClick={openCalendar}
           className="form-input flex w-1/2 items-center gap-2"
         >
-          <Image
-            src="/assets/icons/calendar.svg"
-            alt={label}
-            width={24}
-            height={24}
-          />
+          <CalendarIcon />
           <input
             value={value}
             {...register(name, validate)}

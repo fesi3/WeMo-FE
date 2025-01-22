@@ -1,9 +1,8 @@
 import useKakaoLoader from '@/hooks/useKakaoLoader';
-import Image from 'next/image';
 import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 import AddressSearchModal from './AddressSearchModal';
 import { Coordinate } from '@/types/mapType';
-
+import MarkerIcon from '@/assets/icons/location_marker.svg';
 interface AddressInputProps<T extends FieldValues> {
   register: UseFormRegister<T>;
   name: Path<T>;
@@ -36,12 +35,7 @@ export default function AddressInput<T extends FieldValues>({
           onClick={openMap}
           className="form-input flex w-1/2 items-center gap-2"
         >
-          <Image
-            src="/assets/icons/location_marker.svg"
-            alt={label}
-            width={24}
-            height={24}
-          />
+          <MarkerIcon />
           <input
             value={value}
             {...register(name, { required: '장소롤 선택해 주세요' })}
