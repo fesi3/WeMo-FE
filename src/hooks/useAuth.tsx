@@ -6,6 +6,7 @@ function useAuth() {
   const {
     AUTH: { USER_INFO },
   } = PATHS;
+
   const fetchUserInfo = async () => {
     const response = await instance.get(USER_INFO);
     return response.data;
@@ -16,7 +17,7 @@ function useAuth() {
     error,
     data: response,
   } = useQuery({
-    queryKey: [],
+    queryKey: ['auth'],
     queryFn: fetchUserInfo,
   });
 

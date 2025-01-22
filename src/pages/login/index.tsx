@@ -7,12 +7,14 @@ import { PATHS } from '@/constants/apiPath';
 import fetchData from '@/api/fetchData';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
+import { useQueryClient } from '@tanstack/react-query';
 import { login } from '@/redux/authReducers';
 
 function Login() {
   const { loginFormValue, handleChange, errors } = useLoginForm();
   const router = useRouter();
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const {
     AUTH: { SIGNIN },
   } = PATHS;
@@ -25,8 +27,11 @@ function Login() {
         requestData: loginFormValue,
       }),
     onSuccess: () => {
-      alert('로그인 성공');
+      // 로그인이 성공하면 로그인 여부를 상태 업데이트 및 쿼리 invalidate
+      // (invalidate 안해주면 요청 GNB 렌더링 되도 요청 안보냄)
       dispatch(login());
+      queryClient.invalidateQueries({ queryKey: ['auth'] });
+      alert('로그인 성공');
       router.replace('/plans');
     },
     onError: () => {
