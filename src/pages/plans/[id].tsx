@@ -5,12 +5,19 @@ import usePlanDetailQuery from '@/hooks/usePlanDetailQuery';
 import { useRouter } from 'next/router';
 
 export default function PlanDetailPage() {
-  const { data, isLoading, refetch } = usePlanDetailQuery();
   const router = useRouter();
   const { id } = router.query;
+  const { data, isLoading, refetch } = usePlanDetailQuery(
+    typeof id === 'string' ? parseInt(id) : null,
+  );
+  // const auth = useSelector((state: RootState) => state.auth);
+  // console.log(auth);
   const onClickJoinPlan = async () => {
-    const token = localStorage.getItem('accessToken');
-    if (!token) router.push('login');
+    //유저정보가 없을 경우
+    // if (auth.isLoggedIn) {
+    //   router.push('/login');
+    // }
+    console.log('리랜더링');
     try {
       if (!data?.data.isJoined) {
         await attendPlan(parseInt(id as string));
@@ -21,6 +28,7 @@ export default function PlanDetailPage() {
       refetch();
     }
   };
+
   if (isLoading) return <div>로딩중</div>;
   if (!data) return <div>데이터 없음</div>;
   return (
