@@ -60,4 +60,11 @@ export interface CreateMeetingRequestBody {
   fileUrls: string[];
 }
 
-export type CreateMeetingResponseBody = AxiosResponse<CreateMeetingRequestBody>;
+export interface CreatedMeetingInfo {
+  meetingId: number;
+  meetingName: string;
+  description: string;
+  meetingImagePath: string[];
+}
+
+export type CreateMeetingResponse = AxiosResponse<CreatedMeetingInfo>;

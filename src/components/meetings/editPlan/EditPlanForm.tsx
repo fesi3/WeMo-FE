@@ -14,7 +14,8 @@ import { useRouter } from 'next/router';
 import { getImageUrls } from '@/api/images';
 import { CreatePlanRequestBody } from '@/types/api/plan';
 import ErrorWrapper from '@/components/shared/ErrorWrapper';
-
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
 interface FormValues {
   planName: string;
   dateTime: string;
@@ -43,8 +44,9 @@ export default function EditPlanForm({
     handleSubmit,
     watch,
     resetField,
+    trigger,
   } = useForm<FormValues>({
-    mode: 'onBlur',
+    mode: 'onTouched',
     defaultValues: {
       coordinate: { lat: INITIAL_POSITION.lat, lng: INITIAL_POSITION.lng },
       capacity: 20,
@@ -114,15 +116,14 @@ export default function EditPlanForm({
     setValue('coordinate', { lat: lat, lng: lng });
     const address = await coordinateToAddress(lat, lng);
     setAddressValue(address);
+    trigger('address');
   };
 
   const handleClickDate = (date: Date, field: keyof FormValues) => {
-    setValue(field, dayjs(date).format());
-    if (field === 'dateTime') {
-      closeDateTimeCalendar();
-    } else if (field === 'registrationEnd') {
-      closeRegistrationEndCalendar();
-    }
+    console.log('실행');
+    const formattedDate = dayjs(date).format('YYYY-MM-DD A hh:mm');
+    setValue(field, formattedDate);
+    trigger(field);
   };
 
   const handleOpenModal = (field: keyof FormValues) => {
@@ -186,7 +187,6 @@ export default function EditPlanForm({
             label="일정 일자"
             register={register}
             name="dateTime"
-            value={dayjs(watch('dateTime')).format('YYYY-MM-DD A hh:mm')}
             isOpenCalendar={isOpenDateTimeCalendar}
             openCalendar={() => handleOpenModal('dateTime')}
             closeCalendar={closeDateTimeCalendar}
@@ -194,10 +194,14 @@ export default function EditPlanForm({
             validate={{
               required: true,
               validate: (value) => {
-                const selectedDate = dayjs(value as string);
+                const selectedDate = dayjs(
+                  value as string,
+                  'YYYY-MM-DD A hh:mm',
+                ).startOf('day');
                 const tomorrow = dayjs().add(1, 'day').startOf('day');
                 return (
                   selectedDate.isAfter(tomorrow) ||
+                  selectedDate.isSame(tomorrow) ||
                   '선택한 일정은 최소 내일이어야 합니다.'
                 );
               },
@@ -209,7 +213,6 @@ export default function EditPlanForm({
             label="마감 일자"
             register={register}
             name="registrationEnd"
-            value={dayjs(watch('registrationEnd')).format('YYYY-MM-DD A hh:mm')}
             isOpenCalendar={isOpenRegistrationEndCalendar}
             openCalendar={() => handleOpenModal('registrationEnd')}
             closeCalendar={closeRegistrationEndCalendar}
@@ -217,9 +220,18 @@ export default function EditPlanForm({
             validate={{
               required: true,
               validate: (value) => {
-                const selectedDate = dayjs(value as string);
+                const selectedDate = dayjs(
+                  value as string,
+                  'YYYY-MM-DD A hh:mm',
+                );
+
+                const planDate = dayjs(
+                  dateTimeValue as string,
+                  'YYYY-MM-DD A hh:mm',
+                );
                 return (
-                  selectedDate.isBefore(dateTimeValue) ||
+                  selectedDate.isSame(planDate) ||
+                  selectedDate.isBefore(planDate) ||
                   '마감 일자는 일정 일자 이전이어야 합니다.'
                 );
               },
