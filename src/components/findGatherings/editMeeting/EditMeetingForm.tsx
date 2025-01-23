@@ -8,6 +8,7 @@ import { getImageUrls } from '@/api/images';
 import { CreateMeetingRequestBody } from '@/types/api/meeting';
 import { createMeeting } from '@/api/meeting';
 import ErrorWrapper from '@/components/shared/ErrorWrapper';
+import { useRouter } from 'next/router';
 
 interface FormValues {
   meetingName: string;
@@ -26,7 +27,7 @@ export default function EditMeetingForm({
   const { croppedImages, onCrop, removeCroppedImage } = useCropper();
   const { toggleValue, handleOpen, handleClose } = useToggle();
   const [imageURL, setImageURL] = useState<string>('');
-
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -62,6 +63,8 @@ export default function EditMeetingForm({
     const response = await createMeeting(requestData);
     if (!response) return;
     handleCloseThisModal();
+    const newMeetingId = response.data.meetingId;
+    router.push(`/plans/${newMeetingId}`);
   };
 
   useEffect(() => {
