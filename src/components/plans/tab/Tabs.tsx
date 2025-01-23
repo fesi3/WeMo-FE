@@ -71,7 +71,7 @@ export default function Tabs({
   }, [selectedTab]);
 
   return (
-    <div className="relative w-full overflow-hidden">
+    <div className="overflow-x-hidden">
       {/* 탭 헤더 */}
       <div
         role="tablist"
@@ -93,7 +93,7 @@ export default function Tabs({
           );
         })}
 
-        <div className="absolute bottom-0 left-0 w-screen border-b border-gray-300" />
+        <div className="absolute bottom-0 left-0 w-screen border-b border-gray-300 py-4" />
 
         {/* 언더바 이동 */}
         <motion.div
