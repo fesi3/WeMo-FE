@@ -41,24 +41,30 @@ const RenderCommonContent: React.FC<RenderCommonContentProps> = ({
 
   return (
     <div>
-      {/* 필터 컴포넌트 */}
-      <PlanFilter
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
-        selectedRegion={selectedRegion}
-        selectedSubRegion={selectedSubRegion}
-        onRegionChange={(region) => {
-          setSelectedRegion(region);
-          setSelectedSubRegion(null);
-        }}
-        onSubRegionChange={(sub) => setSelectedSubRegion(sub)}
-      />
+      {/* PlanFilter 컴포넌트 */}
+      <div
+        className={`sticky ${
+          selectedCategory === '워케이션' ? 'top-0' : 'top-[50px]'
+        } z-10 bg-white`}
+      >
+        <PlanFilter
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+          selectedRegion={selectedRegion}
+          selectedSubRegion={selectedSubRegion}
+          onRegionChange={(region) => {
+            setSelectedRegion(region);
+            setSelectedSubRegion(null);
+          }}
+          onSubRegionChange={(sub) => setSelectedSubRegion(sub)}
+        />
+      </div>
       {isAuthenticated && (
         <div className="mb-6 flex justify-end">
           <EditMeetingButton />
         </div>
       )}
-      {/* 필터링 된 일정 카드 목록 리스트 */}
+      {/* 일정 카드 목록 */}
       <PlanList
         plans={plans || []}
         selectedDate={selectedDate}
