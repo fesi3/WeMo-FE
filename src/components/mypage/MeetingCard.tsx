@@ -3,7 +3,7 @@ import Button from '../shared/Button';
 import { MeetingData } from '@/pages/user/[username]/meeting';
 import meetingImg from '@/assets/images/Rectangle 6188.png';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 // const BASE_URL = process.env.NEXT_PUBLIC_API_KEY;

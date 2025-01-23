@@ -4,7 +4,6 @@ import EditPlanForm from './EditPlanForm';
 
 export default function EditPlanButton() {
   const { toggleValue, handleOpen, handleClose } = useToggle();
-
   return (
     <>
       <button
@@ -13,7 +12,6 @@ export default function EditPlanButton() {
       >
         일정 만들기
       </button>
-
       <Modal isOpen={toggleValue} handleClose={handleClose} title="일정 만들기">
         <EditPlanForm handleCloseThisModal={handleClose} />
       </Modal>

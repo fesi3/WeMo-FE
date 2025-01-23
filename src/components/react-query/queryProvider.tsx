@@ -7,7 +7,18 @@ type Props = {
 };
 
 function QueryProvider({ children }: Props) {
-  const queryClient = useMemo(() => new QueryClient(), []);
+  const queryClient = useMemo(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 1000 * 60 * 5,
+            retry: 1,
+          },
+        },
+      }),
+    [],
+  );
 
   return (
     <QueryClientProvider client={queryClient}>
