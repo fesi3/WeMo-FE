@@ -10,7 +10,6 @@ export default function Header({ title }: { title: string }) {
 
   return (
     <>
-      <div className="h-12 w-full md:h-[80px]"></div>
       <div className="fixed top-0 z-[9] flex h-12 w-full items-center bg-white px-3 text-xl font-bold shadow-sm md:hidden">
         <button
           onClick={onClickBack}
@@ -20,6 +19,7 @@ export default function Header({ title }: { title: string }) {
         </button>
         <span className="mx-auto">{title}</span>
       </div>
+      <div className="h-12 md:h-0" />
     </>
   );
 }

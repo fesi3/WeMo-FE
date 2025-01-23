@@ -23,12 +23,11 @@ function useAuth() {
   } = useQuery({
     queryKey: ['auth'],
     queryFn: fetchUserInfo,
-    staleTime: 1000 * 60 * 5,
   });
 
   if (isSuccess) {
     dispatch(login());
-    dispatch(setUser(response.data.user));
+    dispatch(setUser(response.data));
   } else {
     dispatch(logout());
     dispatch(clearUser());
