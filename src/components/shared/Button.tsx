@@ -52,7 +52,7 @@ const Button = ({
     // 비회원으로 시작하기
     case 'start':
       sizeClass =
-        'w-[300px] h-[42px] border border-black bg-primary-100 text-primary-0 rounded-[8px]';
+        'w-[300px] h-[42px] border border-primary-10 bg-primary-100 text-primary-10 rounded-[8px]';
       break;
     // 회원가입/로그인으로 시작하기
     case 'start_signup':
@@ -64,7 +64,7 @@ const Button = ({
     case 'signup':
     case 'companyName':
       sizeClass =
-        'w-[324px] h-[42px] font-semibold bg-primary-10 rounded-[8px]';
+        'w-[324px] h-[42px] font-semibold bg-primary-10 rounded-[8px] hover:bg-primary-30';
       break;
     case 'meeting_create': // 모임 만들기(메인페이지)
       sizeClass = 'w-[336px] h-[42px] bg-primary-10 rounded-[8px]';

@@ -20,7 +20,7 @@ function NotFound() {
         <span className="opacity-40">이랍니다.</span>
       </p>
 
-      <Link href={'/'}>
+      <Link href={'/plans'}>
         <button className="rounded-lg bg-[#00B6AD] px-6 py-2 font-medium text-white hover:bg-[#009c96]">
           홈으로 돌아기기
         </button>

@@ -1,3 +1,5 @@
+import { AxiosResponse } from './axiosResponse';
+
 export interface User {
   nickname: string;
   profileImagePath: string;
@@ -32,6 +34,7 @@ export interface MeetingDetail {
   memberCount: number;
   description: string;
   category: string;
+  email: string;
   nickname: string;
   profileImagePath: string;
   createdAt: string;
@@ -56,3 +59,12 @@ export interface CreateMeetingRequestBody {
   categoryId: number;
   fileUrls: string[];
 }
+
+export interface CreatedMeetingInfo {
+  meetingId: number;
+  meetingName: string;
+  description: string;
+  meetingImagePath: string[];
+}
+
+export type CreateMeetingResponse = AxiosResponse<CreatedMeetingInfo>;
