@@ -75,7 +75,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
   }, [activeTab]);
 
   return (
-    <div className="mx-auto px-4 py-6">
+    <div className="mx-auto px-4 py-6 md:pt-[80px] lg:pt-[80px]">
       {/* 탭 컴포넌트 */}
       <Tabs
         tabs={tabs}

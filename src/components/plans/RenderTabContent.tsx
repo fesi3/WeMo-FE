@@ -37,7 +37,7 @@ const RenderTabContent: React.FC<RenderTabContentProps> = ({
   setSelectedSubCategory,
 }) => {
   return (
-    <div className="mx-auto items-center sm:w-[400px] sm:justify-center md:w-[600px] md:justify-center lg:w-full">
+    <div className="mx-auto sm:w-[400px] sm:justify-center md:w-full lg:w-full">
       {/* Greeting */}
       <Greeting />
       {/* SubCategoryFilter */}

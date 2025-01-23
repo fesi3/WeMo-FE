@@ -71,11 +71,11 @@ export default function Tabs({
   }, [selectedTab]);
 
   return (
-    <div className="w-full">
+    <div className="relative w-full overflow-hidden">
       {/* 탭 헤더 */}
       <div
         role="tablist"
-        className="relative mx-auto mb-4 flex max-w-lg border-b border-gray-300 lg:ml-0 lg:max-w-md lg:px-0"
+        className="relative mx-auto mb-4 flex max-w-lg md:ml-0 md:max-w-sm md:px-0 lg:ml-0 lg:max-w-md lg:px-0"
       >
         {tabs.map((tab, idx) => {
           const isActive = tab.category === selectedTab;
@@ -92,6 +92,8 @@ export default function Tabs({
             </button>
           );
         })}
+
+        <div className="absolute bottom-0 left-0 w-screen border-b border-gray-300" />
 
         {/* 언더바 이동 */}
         <motion.div
