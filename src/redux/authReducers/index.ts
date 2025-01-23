@@ -25,7 +25,7 @@ export default function authReducer(
     case LOGOUT:
       return { ...state, isLoggedIn: false, user: null };
     case SET_USER:
-      return { ...state, ...action.payload };
+      return { ...state, user: action.payload ?? null };
     case CLEAR_USER:
       return { ...state, user: null };
     default:

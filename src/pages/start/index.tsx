@@ -2,6 +2,9 @@ import React from 'react';
 import Button from '@/components/shared/Button';
 import Link from 'next/link';
 import LoginBanner from '@/components/auth/login/loginBanner';
+import ButtonGoogle from '@/components/auth/login/oAuthButton/buttonGoogle';
+import ButtonKakao from '@/components/auth/login/oAuthButton/buttonKakao';
+import ButtonNaver from '@/components/auth/login/oAuthButton/buttonNaver';
 
 const StartPage = () => {
   return (
@@ -27,10 +30,10 @@ const StartPage = () => {
           <span className="text-gray-600 underline">로그인하기</span>
         </Link>
       </div>
-      <div className="flex gap-4">
-        <div className="h-10 w-10 rounded-full bg-gray-300"></div>
-        <div className="h-10 w-10 rounded-full bg-yellow-400"></div>
-        <div className="h-10 w-10 rounded-full bg-green-500"></div>
+      <div className="flex gap-[23px]">
+        <ButtonGoogle />
+        <ButtonKakao />
+        <ButtonNaver />
       </div>
     </div>
   );

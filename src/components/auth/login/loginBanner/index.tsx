@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import logoWithColor from '@/assets/images/logo-with-color.png';
 
 function LoginBanner({ description }: { description?: string }) {
   return (
@@ -9,7 +10,7 @@ function LoginBanner({ description }: { description?: string }) {
           <Image
             width={'235'}
             height={'178'}
-            src={'/assets/images/logo-with-color.png'}
+            src={logoWithColor}
             alt="logo-image"
           />
           <p className="mt-6 text-[15px] font-bold text-primary-10">
