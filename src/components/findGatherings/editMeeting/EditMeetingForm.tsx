@@ -64,7 +64,7 @@ export default function EditMeetingForm({
     if (!response) return;
     handleCloseThisModal();
     const newMeetingId = response.data.meetingId;
-    router.push(`/plans/${newMeetingId}`);
+    router.push(`/meetings/${newMeetingId}`);
   };
 
   useEffect(() => {
