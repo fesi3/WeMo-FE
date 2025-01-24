@@ -2,22 +2,27 @@ import { attendPlan, leavePlan } from '@/api/plan';
 import PlanDetailMain from '@/components/plans/PlanDetailMain';
 import Header from '@/components/shared/layout/Header';
 import usePlanDetailQuery from '@/hooks/usePlanDetailQuery';
+import { RootState } from '@/redux/store';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 
 export default function PlanDetailPage() {
   const router = useRouter();
   const { id } = router.query;
-  const { data, isLoading, refetch } = usePlanDetailQuery(
+  const { data, isFetching, isLoading, refetch } = usePlanDetailQuery(
     typeof id === 'string' ? parseInt(id) : null,
   );
-  // const auth = useSelector((state: RootState) => state.auth);
-  // console.log(auth);
+  const auth = useSelector((state: RootState) => state.auth);
+
   const onClickJoinPlan = async () => {
-    //유저정보가 없을 경우
-    // if (auth.isLoggedIn) {
-    //   router.push('/login');
-    // }
-    console.log('리랜더링');
+    if (isFetching) {
+      //+주최자일 경우에
+      return;
+    }
+    if (!auth.isLoggedIn) {
+      router.push('/login');
+      return;
+    }
     try {
       if (!data?.data.isJoined) {
         await attendPlan(parseInt(id as string));

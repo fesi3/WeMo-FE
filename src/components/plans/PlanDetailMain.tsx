@@ -81,6 +81,7 @@ export default function PlanDetailMain({
               </div>
               <Button
                 text={planData.isJoined ? '참석 취소하기' : '일정 참석하기'}
+                disable={planData === undefined}
                 type="attend"
                 onClick={onClickJoinPlan}
                 backColor="relative top-5 bg-primary-10 text-white w-full"
