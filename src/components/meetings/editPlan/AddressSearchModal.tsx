@@ -2,11 +2,9 @@ import Button from '@/components/shared/Button';
 import Modal from '@/components/shared/modals/Modal';
 import { Coordinate } from '@/types/mapType';
 import { addressToCoordinate } from '@/utils/addressToCoordinate';
-import Image from 'next/image';
 import { Address, useDaumPostcodePopup } from 'react-daum-postcode';
-
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-
+import MarkerIcon from '@/assets/icons/location_marker.svg';
 interface AddressSearchModalProps {
   closeMap: () => void;
   isOpenMap: boolean;
@@ -53,12 +51,7 @@ export default function AddressSearchModal({
         <span>입력 주소</span>
         <div className="flex items-center justify-between pb-3">
           <div className="flex h-8 items-end justify-center gap-1 rounded-md text-gray-700">
-            <Image
-              src="/assets/icons/location_marker.svg"
-              alt="주소"
-              width={15}
-              height={15}
-            />
+            <MarkerIcon />
             <span>{address}</span>
           </div>
           <button

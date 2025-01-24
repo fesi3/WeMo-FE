@@ -4,7 +4,7 @@ export default function MeetingDetailFooter() {
   const admin = true;
   return (
     <>
-      <div className="flex-center h-[60px] w-full border-t bg-white px-3 shadow-inner">
+      <div className="flex-center h-[60px] w-full border-t bg-white px-3 md:border-t-0">
         {admin ? (
           <EditPlanButton />
         ) : (

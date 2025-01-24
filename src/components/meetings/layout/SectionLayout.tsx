@@ -5,6 +5,7 @@ interface SectionLayoutProps {
   onClickViewMore: () => void;
 }
 
+//더보기 기능 붙이기
 export default function SectionLayout({
   children,
   title,
@@ -15,7 +16,7 @@ export default function SectionLayout({
       <div className="flex w-full items-end justify-between">
         <span className="font-bold">{title}</span>
         <button onClick={onClickViewMore} className="text-sm text-black-sub">
-          더보기
+          {/* 더보기 */}
         </button>
       </div>
       <div>{children}</div>

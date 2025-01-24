@@ -1,17 +1,23 @@
 import Image from 'next/image';
+import Link from 'next/link';
+import logoWithColor from '@/assets/images/logo-with-color.png';
 
-function LoginBanner() {
+function LoginBanner({ description }: { description?: string }) {
   return (
     <div className="flex flex-col items-center gap-6">
-      <Image
-        width={'235'}
-        height={'178'}
-        src={'/assets/images/logo-with-color.png'}
-        alt="logo-image"
-      />
-      <p className="text-[15px] font-bold text-primary-10">
-        {'당신의 관심이 만나는 순간'}
-      </p>
+      <Link href={'/plans'}>
+        <div className="flex flex-col items-center">
+          <Image
+            width={'235'}
+            height={'178'}
+            src={logoWithColor}
+            alt="logo-image"
+          />
+          <p className="mt-6 text-[15px] font-bold text-primary-10">
+            {description}
+          </p>
+        </div>
+      </Link>
     </div>
   );
 }

@@ -1,8 +1,9 @@
+import Image from 'next/image';
 import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 import CropperModal from '../plans/CropperModal';
 import Modal from './modals/Modal';
 import { CroppedImageType } from '@/types/cropperType';
-import Image from 'next/image';
+import CameraIcon from '@/assets/icons/camera.svg';
 
 /**
  * @param croppedImages : 이미지를 자른 후 저장하는 배열 (useCropper)
@@ -67,14 +68,7 @@ export default function FileInput<T extends FieldValues>({
           ))}
         {croppedImages.length < 5 && (
           <label className="flex aspect-[5/3] w-[30%] shrink-0 cursor-pointer items-center justify-center rounded-md bg-gray-200 opacity-40">
-            <Image
-              className="cursor-pointer"
-              src="/assets/icons/camera.svg"
-              alt="사진 업로드"
-              width={30}
-              height={30}
-              priority
-            />
+            <CameraIcon />
             <input className="hidden" type="file" {...register(name)} />
           </label>
         )}

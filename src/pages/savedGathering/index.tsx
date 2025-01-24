@@ -85,9 +85,9 @@ const SavedGatheringPage = () => {
         <div className="mt-20 flex flex-col items-center justify-center">
           {/* 하트 이미지 */}
           <img
-            src="/assets/like-page-heart.svg"
+            src="/assets/like-page-heart.png"
             alt="찜한 모임 없음"
-            className="mb-6 h-20 w-20"
+            className="mb-6"
           />
           {/* 텍스트 */}
           <p className="mb-2 text-lg font-extrabold text-gray-800">

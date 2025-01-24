@@ -13,7 +13,7 @@ function InternalServerError() {
         문제가 발생했습니다. 잠시 후에 다시 시도해주세요. <br />
       </p>
 
-      <Link href={'/'}>
+      <Link href={'/plans'}>
         <button className="rounded-lg bg-[#00B6AD] px-6 py-2 font-medium text-white hover:bg-[#009c96]">
           Back to Homepage
         </button>

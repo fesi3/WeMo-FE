@@ -4,8 +4,8 @@ export const PATHS = {
     CHECK_EMAIL: '/api/auths/check-email',
     SIGNIN: '/api/auths/signin',
     SIGNOUT: '/api/auths/signout',
-    GET_USER_INFO: '/api/auths/users',
-    UPDATE_PROFILE_IMAGE: '/api/auths/profile',
+    USER_INFO: '/api/auths/users',
+    PROFILE_IMAGE: '/api/auths/profile',
     REISSUE_TOKEN: '/api/auths/reissue',
   },
   MEETING: {
