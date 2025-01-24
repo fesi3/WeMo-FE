@@ -61,7 +61,7 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
                       : [],
                   )
                 } // 이미지 클릭 시 모달 열기
-                className="relative mb-4 aspect-[5/3] w-full cursor-pointer rounded-md md:mb-0 md:mr-4 md:h-24 md:w-24"
+                className="relative mb-4 aspect-[5/3] w-full cursor-pointer rounded-md"
               >
                 <img
                   src={review.reviewImages?.[0]}
