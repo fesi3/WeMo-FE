@@ -1,19 +1,17 @@
 import Image from 'next/image';
-import { PlanData } from '@/pages/user/[username]/plan';
 import ProgressIndicator from './Indicator';
 import { planCardDay, planCardTime } from '@/utils/dateUtils';
 import moreBtn from '@/assets/icons/more-vertical.png';
-import Button from '../shared/Button';
-import axios from 'axios';
 import { useRouter } from 'next/router';
-interface PlanCardProps {
-  planData: PlanData; // planData의 타입을 PlanData로 변경
-  useremail: string; // 이메일(전역 정보)로 수정하기
-}
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-// const BASE_URL = process.env.NEXT_PUBLIC_API_KEY;
+import OwnerButton from './OwnerButton';
+import { PlanData } from '@/types/mypageType';
+import { cancleBtnApi } from '@/api/mypage/cancleApi';
 
-const PlanCard = ({ planData, useremail }: PlanCardProps) => {
+interface PlanCardProps {
+  planData: PlanData;
+}
+
+const PlanCard = ({ planData }: PlanCardProps) => {
   const {
     planId,
     email,
@@ -30,86 +28,59 @@ const PlanCard = ({ planData, useremail }: PlanCardProps) => {
     // registrationEnd,
     // isOpened,
     // isCancled,
-    // isFulled,
+    isFulled,
     // isLiked,
   } = planData;
 
   const router = useRouter();
 
-  const handleLeaveMeeting = async (planId: number) => {
+  const handleLeavePlan = (planId: number) => {
     // 탈퇴 로직 추가/api/plans/{planId}/attendance
-    console.log(`${planId}번 모임을 탈퇴합니다.`);
-    try {
-      console.log(`${planId}번 모임을 삭제합니다.`);
-
-      // 삭제 API 요청
-      const response = await axios.delete(
-        `${BASE_URL}/api/plans/${planId}/attendance`,
-        {
-          withCredentials: true,
-        },
-      );
-
-      if (response.status === 200) {
-        alert(`${planName} 일정을 취소했습니다.`);
-        // 삭제 후 모임 리스트에서 해당 모임을 제거
-        window.location.reload(); // 페이지 새로 고침
-      }
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error) && error.response) {
-        console.log('서버로부터 받은 에러 데이터', error.response.data);
-        if (error.response.status === 400) {
-          alert('로그인이 필요합니다!.');
-          router.push('/login');
-          return;
-        } else {
-          alert('[error] 서버와 통신 오류 발생.');
-        }
-      } else {
-        //axios 에러가 아닌 다른 예외가 발생한 경우
-        alert('[error] 오류가 발생했습니다. 다시 시도해주세요.');
-      }
-    }
+    console.log(`${planId}번 일정을 탈퇴합니다.`);
+    cancleBtnApi({
+      url: `/api/plans/${planId}/attendance`,
+      successMessage: '일정을 취소했습니다.',
+      router,
+    });
   };
 
-  const handleDeleteMeeting = async (planId: number) => {
+  const handleDeletePlan = (planId: number) => {
     // 삭제 로직 추가 /api/plans/{planId}/cancel
     console.log(`${planId}번 일정을 삭제합니다.`);
+    cancleBtnApi({
+      url: `/api/plans/${planId}/cancel`,
+      successMessage: '일정을 삭제했습니다.',
+      router,
+    });
   };
 
-  // 동일한 이메일이면 "삭제" 버튼, 다르면 "탈퇴" 버튼
-  const renderButton = () => {
-    if (useremail === email) {
-      return (
-        <Button
-          type="exit_meeting"
-          text="일정 삭제"
-          textColor="black"
-          border="#343434"
-          onClick={() => handleDeleteMeeting(planId)}
-        />
-      );
-    } else {
-      return (
-        <Button
-          type="exit_meeting"
-          text="일정 취소하기"
-          textColor="black"
-          border="#343434"
-          onClick={() => handleLeaveMeeting(planId)}
-        />
-      );
-    }
+  // 페이지 이동
+  const handleDetailPage = () => {
+    router.push(`/plans/${planId}`);
   };
 
   const currentStatus = participants < 5 ? 'pending' : 'available';
   return (
-    <div className="mb-4 flex flex-col rounded-md border border-gray-200 sm:flex-row sm:items-center sm:gap-3 md:gap-5">
+    <div className="relative mb-4 flex flex-col rounded-md border border-gray-200 sm:flex-row sm:items-center sm:gap-3 md:gap-5">
+      {/* 반투명 오버레이 */}
+      {isFulled && ( // isCancled로 바꾸기
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-gray-500 bg-opacity-50">
+          <div className="flex flex-col">
+            <p className="bg-primary-95 bg-opacity-70 p-3 font-semibold text-primary-10">
+              주최자에 의해 취소된 일정입니다.
+            </p>
+            <button
+              onClick={() => handleLeavePlan(planId)}
+              className="m-5 rounded-md bg-primary-10 px-4 py-2 text-white"
+            >
+              삭제하기
+            </button>
+          </div>
+        </div>
+      )}
       {/* 이미지 */}
       <div
-        onClick={() => {
-          router.push(`/meetings/1`);
-        }}
+        onClick={handleDetailPage}
         className="relative h-[164px] w-full cursor-pointer sm:w-[200px] md:w-[300px] lg:w-[400px]"
       >
         <Image
@@ -153,9 +124,7 @@ const PlanCard = ({ planData, useremail }: PlanCardProps) => {
           <div className="flex flex-1 flex-col gap-1 p-2">
             {/* 제목 */}
             <div
-              onClick={() => {
-                router.push(`/meetings/1`);
-              }}
+              onClick={handleDetailPage}
               className="cursor-pointer text-lg font-semibold"
             >
               {planName}
@@ -164,7 +133,16 @@ const PlanCard = ({ planData, useremail }: PlanCardProps) => {
             {/* 카테고리 */}
             <div className="text-sm">{category}</div>
           </div>
-          <div className="self-end">{renderButton()}</div>
+          <div className="self-end">
+            {' '}
+            <OwnerButton
+              email={email}
+              id={planId}
+              onDelete={handleDeletePlan}
+              onLeave={handleLeavePlan}
+              type="plan"
+            />
+          </div>
         </div>
       </div>
     </div>
