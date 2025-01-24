@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import axios from 'axios';
 import FilterBar from '@/components/shared/FilterBar';
 import ReviewList from '@/components/all-reviews/ReviewList';
 import Tabs from '@/components/findGatherings/tab/Tabs';
 import { Review, FilterState, SortOption } from '@/types/reviewType';
+import axiosInstance from '@/api/axiosInstance';
 // import { useQuery } from '@tanstack/react-query';
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const ReviewPage = ({
   initialDalRampitReviews,
@@ -62,7 +60,7 @@ const ReviewPage = ({
 
         // console.log('요청 데이터:', params);
 
-        const { data } = await axios.get(`${BASE_URL}/api/reviews`, { params });
+        const { data } = await axiosInstance.get(`/api/reviews`, { params });
         // console.log('이 데이터 임요', data);
         const newReviews = data.data.reviewList || [];
         // console.log('서버 응답 데이터:', newReviews);
@@ -178,10 +176,10 @@ const ReviewPage = ({
 export const getStaticProps = async () => {
   try {
     const [dalRampitRes, workationRes] = await Promise.all([
-      axios.get(`${BASE_URL}/api/reviews`, {
+      axiosInstance.get(`/api/reviews`, {
         params: { page: 1, size: 5, categoryId: 1 },
       }),
-      axios.get(`${BASE_URL}/api/reviews`, {
+      axiosInstance.get(`/api/reviews`, {
         params: { page: 1, size: 5, categoryId: 2 },
       }),
     ]);
