@@ -18,6 +18,13 @@ const useFetchData = <T>(url: string, key?: string) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    //로그인 상태가 아니면 API 호출 막음.
+    if (!isLoggedIn) {
+      alert('로그인이 필요합니다!');
+      router.push('/login');
+      return;
+    }
+
     const fetchData = async () => {
       setLoading(true);
       setError(null);

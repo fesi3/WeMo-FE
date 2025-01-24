@@ -1,6 +1,8 @@
 import React, { ReactNode } from 'react';
 import Header from '../shared/layout/Header';
 import MyPageTab from './MyPageTab';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 
 interface BaseMypageLayoutProps {
   children: ReactNode;
@@ -30,6 +32,11 @@ export default function MypageLayout({
   onTabChange,
   tabsTitle,
 }: MypageLayoutProps) {
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+
+  //로그인 상태가 아니면 렌더링 하지 않음.
+  if (!isLoggedIn) return;
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header title={headerProps} />
