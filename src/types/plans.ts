@@ -13,6 +13,7 @@ export interface PlanData {
   isLiked: boolean;
   isFulled: boolean;
   planImagePath: string;
+  sort?: string;
 }
 
 // category를 포함한 확장 타입

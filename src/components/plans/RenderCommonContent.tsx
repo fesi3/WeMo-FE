@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PlanFilter from './PlanFilter';
 import EditMeetingButton from './editMeeting/EditMeetingButton';
 import PlanList from './PlanList';
+import SortDropdown from '../shared/dropdown/SortDropdown';
+import { SortOption } from '@/types/reviewType';
 import { PlanDataWithCategory } from '@/types/plans';
 import { RegionOption, SubRegionOption } from '@/types/reviewType';
 
@@ -34,6 +36,12 @@ const RenderCommonContent: React.FC<RenderCommonContentProps> = ({
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  const [selectedSort, setSelectedSort] = useState<SortOption | null>(null); // SortDropdown 상태 관리
+  const sortOptions: SortOption[] = [
+    { id: 1, name: '최신순', value: 'default' },
+    { id: 2, name: '마감임박순', value: 'closeDate' },
+  ];
+
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
     setIsAuthenticated(!!token);
@@ -47,17 +55,26 @@ const RenderCommonContent: React.FC<RenderCommonContentProps> = ({
           selectedCategory === '워케이션' ? 'top-0' : 'top-[50px]'
         } z-10 bg-white`}
       >
-        <PlanFilter
-          selectedDate={selectedDate}
-          setSelectedDate={setSelectedDate}
-          selectedRegion={selectedRegion}
-          selectedSubRegion={selectedSubRegion}
-          onRegionChange={(region) => {
-            setSelectedRegion(region);
-            setSelectedSubRegion(null);
-          }}
-          onSubRegionChange={(sub) => setSelectedSubRegion(sub)}
-        />
+        <div className="flex items-center gap-2 pt-2 lg:gap-4">
+          <PlanFilter
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
+            selectedRegion={selectedRegion}
+            selectedSubRegion={selectedSubRegion}
+            onRegionChange={(region) => {
+              setSelectedRegion(region);
+              setSelectedSubRegion(null);
+            }}
+            onSubRegionChange={(sub) => setSelectedSubRegion(sub)}
+          />
+          <div className="mb-4">
+            <SortDropdown
+              sortOptions={sortOptions}
+              selectedSort={selectedSort || null}
+              onChange={setSelectedSort}
+            />
+          </div>
+        </div>
       </div>
       {isAuthenticated && (
         <div className="mb-6 flex justify-end">

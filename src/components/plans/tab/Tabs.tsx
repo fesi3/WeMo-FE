@@ -71,7 +71,7 @@ export default function Tabs({
   }, [selectedTab]);
 
   return (
-    <div className="overflow-x-hidden">
+    <div className="w-full">
       {/* 탭 헤더 */}
       <div
         role="tablist"
@@ -92,8 +92,6 @@ export default function Tabs({
             </button>
           );
         })}
-
-        <div className="absolute bottom-0 left-0 w-screen border-b border-gray-300 py-4" />
 
         {/* 언더바 이동 */}
         <motion.div

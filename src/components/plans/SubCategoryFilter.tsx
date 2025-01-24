@@ -20,7 +20,7 @@ const SubCategoryFilter = ({
   return (
     <div>
       {/* 버튼 필터 */}
-      <div className="mb-4 flex gap-2">
+      <div className="flex gap-2">
         {/* 전체 버튼 */}
         <Button
           type="main_tab_total"

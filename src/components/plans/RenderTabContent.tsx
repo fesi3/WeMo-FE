@@ -42,7 +42,7 @@ const RenderTabContent: React.FC<RenderTabContentProps> = ({
       <Greeting />
       {/* SubCategoryFilter */}
       {category === '달램핏' && (
-        <div className="sticky top-0 z-20 my-2 bg-white">
+        <div className="sticky top-0 z-20 bg-white pb-2 pt-4">
           <SubCategoryFilter
             selectedSubCategory={selectedSubCategory}
             setSelectedSubCategory={setSelectedSubCategory}
