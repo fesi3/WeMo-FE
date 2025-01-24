@@ -33,19 +33,22 @@ function GNBHeader() {
                 </Link>
                 <div className="flex items-center">
                   <ul className="flex space-x-6">
-                    <GNBItem text={'홈'} path={'/plans'} />
-                    <GNBItem text={'모든 리뷰'} path={'/all-reviews'} />
-                    <GNBItem text={'모임 찾기'} path={'/all-meetings'} />
-                    {isLoggedIn ? (
-                      <>
-                        <GNBItem
-                          text={'마이페이지'}
-                          path={`/user/${user?.nickname}`}
-                        />
-                      </>
-                    ) : (
-                      <GNBItem text={'로그인'} path={'/start'} />
-                    )}
+                    <GNBItem name={'홈'} path={'/plans'} isHeader />
+                    <GNBItem
+                      name={'모든 리뷰'}
+                      path={'/all-reviews'}
+                      isHeader
+                    />
+                    <GNBItem
+                      name={'모임 찾기'}
+                      path={'/all-meetings'}
+                      isHeader
+                    />
+                    <GNBItem
+                      name={isLoggedIn ? '마이페이지' : '로그인'}
+                      path={isLoggedIn ? `/user/${user?.nickname}` : '/start'}
+                      isHeader
+                    />
                   </ul>
                 </div>
               </div>
