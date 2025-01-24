@@ -25,7 +25,7 @@ function GNBFooter() {
               <GNBItem text={'마이페이지'} path={`/user/${user?.nickname}`} />
             ) : (
               <div>
-                <GNBItem text={'로그인'} path={'/login'} />
+                <GNBItem text={'로그인'} path={'/start'} />
               </div>
             )}
           </ul>
