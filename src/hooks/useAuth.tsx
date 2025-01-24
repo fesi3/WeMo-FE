@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { PATHS } from '@/constants/apiPath';
 import { useDispatch } from 'react-redux';
 import { clearUser, login, logout, setUser } from '@/redux/authReducers';
+import { useEffect } from 'react';
 
 function useAuth() {
   const dispatch = useDispatch();
@@ -25,13 +26,15 @@ function useAuth() {
     queryFn: fetchUserInfo,
   });
 
-  if (isSuccess) {
-    dispatch(login());
-    dispatch(setUser(response.data));
-  } else {
-    dispatch(logout());
-    dispatch(clearUser());
-  }
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(login());
+      dispatch(setUser(response.data));
+    } else {
+      dispatch(logout());
+      dispatch(clearUser());
+    }
+  }, [response]);
 
   // if (isError) {
   //   console.error('useAuth 훅에서 에러가 발생했습니다.', error);
