@@ -5,6 +5,7 @@ import AllReviewsIcon from '@/assets/icons/GNB_review.svg';
 import Eye from '@/assets/icons/eye.svg';
 import Profile from '@/assets/icons/GNB_profile.svg';
 import { twMerge } from 'tailwind-merge';
+import { useMemo } from 'react';
 
 interface GNBItemProps {
   name: string;
@@ -14,20 +15,22 @@ interface GNBItemProps {
 
 function GNBItem({ name, path, isHeader = false }: GNBItemProps) {
   const router = useRouter();
-  const icon = () => {
-    if (name === '홈') {
-      return <HomeIcon />;
+  const icon = useMemo(() => {
+    switch (name) {
+      case '홈':
+        return <HomeIcon />;
+      case '모든 리뷰':
+        return <AllReviewsIcon />;
+      case '모임 찾기':
+        return <Eye />;
+      case '로그인':
+      case '마이페이지':
+        return <Profile />;
+      default:
+        return null;
     }
-    if (name === '모든 리뷰') {
-      return <AllReviewsIcon />;
-    }
-    if (name === '모임 찾기') {
-      return <Eye />;
-    }
-    if (name === '로그인' || name === '마이페이지') {
-      return <Profile />;
-    }
-  };
+  }, [name]);
+
   return (
     <Link href={path}>
       <li
@@ -37,7 +40,7 @@ function GNBItem({ name, path, isHeader = false }: GNBItemProps) {
           'flex cursor-pointer flex-col items-center transition-colors hover:text-black',
         )}
       >
-        {isHeader ? '' : icon()}
+        {isHeader ? '' : icon}
         <span>{name}</span>
       </li>
     </Link>
