@@ -84,11 +84,14 @@ export default function EditPlanForm({
   const dateTimeValue = watch('dateTime');
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    if (!croppedImages.length) {
+    //아래 validate는 다른 필드와 별개로 submit이 실행될 때 실행됨 그래서 이미지 인풋은 state로 관리하고 직접 crop된 이미지를 form field에 주입하도록 리팩토링 예정
+
+    if (croppedImages.length <= 0) {
       setError('imageFiles', {
         type: 'required',
         message: '이미지를 등록해 주세요.',
       });
+      return;
     }
     const { id } = router.query;
     const imageFiles = croppedImages.map((image) => image.blobImg);
@@ -96,14 +99,16 @@ export default function EditPlanForm({
     if (!fileUrls) return;
     const requestBody: CreatePlanRequestBody = {
       planName: data.planName,
-      dateTime: dayjs(data.dateTime).format('YYYY-MM-DDTHH:mm:ss'),
+      dateTime: dayjs(data.dateTime, 'YYYY-MM-HH A hh:mm').format(
+        'YYYY-MM-DDTHH:mm:ss',
+      ),
       address: data.address,
       addressDetail: data.addressDetail,
       longitude: data.coordinate.lng,
       latitude: data.coordinate.lat,
       capacity: data.capacity,
       content: data.content,
-      registrationEnd: dayjs(data.registrationEnd).format(
+      registrationEnd: dayjs(data.registrationEnd, 'YYYY-MM-HH A hh:mm').format(
         'YYYY-MM-DDTHH:mm:ss',
       ),
       fileUrls,
