@@ -15,3 +15,16 @@ export const menuItems = [
     icon: GNBProfileIcon,
   },
 ];
+
+export const hideGnbFooterRoutes = [
+  '/signup',
+  '/login',
+  '/start',
+  '/login/oauth2/callback/kakao',
+];
+
+export const hideGnbHeaderRoutes = [
+  '/login',
+  '/start',
+  '/login/oauth2/callback/kakao',
+];

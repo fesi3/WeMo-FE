@@ -16,16 +16,20 @@ interface GNBItemProps {
 function GNBItem({ name, path, isHeader = false }: GNBItemProps) {
   const router = useRouter();
   const icon = useMemo(() => {
+    const iconClass = twMerge(
+      router.pathname === path ? 'stroke-black' : 'stroke-[#BEBEBE]',
+      'group-hover:stroke-black',
+    );
     switch (name) {
       case '홈':
-        return <HomeIcon />;
+        return <HomeIcon className={iconClass} />;
       case '모든 리뷰':
-        return <AllReviewsIcon />;
+        return <AllReviewsIcon className={iconClass} />;
       case '모임 찾기':
-        return <Eye />;
+        return <Eye className={iconClass} />;
       case '로그인':
       case '마이페이지':
-        return <Profile />;
+        return <Profile className={iconClass} />;
       default:
         return null;
     }
@@ -35,9 +39,9 @@ function GNBItem({ name, path, isHeader = false }: GNBItemProps) {
     <Link href={path}>
       <li
         className={twMerge(
-          router.pathname === path ? 'font-bold text-black' : 'text-gray-400',
+          router.pathname === path ? 'font-bold text-black' : 'text-[#BEBEBE]',
           isHeader ? 'text-base' : 'text-xs',
-          'flex cursor-pointer flex-col items-center transition-colors hover:text-black',
+          'group flex cursor-pointer flex-col items-center hover:text-black',
         )}
       >
         {isHeader ? '' : icon}

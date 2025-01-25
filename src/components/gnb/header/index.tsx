@@ -5,6 +5,7 @@ import GNBItem from '../item';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { useRouter } from 'next/router';
+import { hideGnbHeaderRoutes } from '@/constants/gnb';
 
 // GNB 레이아웃 컴포넌트에서 렌더링 되는 header 컴포넌트입니다.
 // 페이지마다 출력이 달라 path를 조회해 조건부 렌더링 합니다.
@@ -12,7 +13,6 @@ import { useRouter } from 'next/router';
 // 상위 컴포넌트로 부터 유저 정보 응답을 내려받아 라우팅 합니다.
 function GNBHeader() {
   const router = useRouter();
-  const hideGnbHeaderRoutes = ['/login', '/start'];
   const showGnbHeader = hideGnbHeaderRoutes.includes(router.pathname);
   const { isLoggedIn, user } = useSelector((state: RootState) => state.auth);
 

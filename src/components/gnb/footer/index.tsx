@@ -1,4 +1,4 @@
-import { menuItems } from '@/constants/gnbMenu';
+import { hideGnbFooterRoutes, menuItems } from '@/constants/gnb';
 import GNBItem from '../item';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 function GNBFooter() {
   const router = useRouter();
   const { isLoggedIn, user } = useSelector((state: RootState) => state.auth);
-  const hideGnbFooterRoutes = ['/signup', '/login', '/start'];
+
   const showGnbFooter = hideGnbFooterRoutes.includes(router.pathname);
   return (
     <>
