@@ -16,6 +16,7 @@ interface MeetingInfo {
 export interface PlanDetail {
   planId: number;
   nickname: string;
+  email: string;
   profileImagePath: string;
   planName: string;
   category: string;

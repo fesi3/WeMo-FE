@@ -9,16 +9,12 @@ import { useSelector } from 'react-redux';
 export default function PlanDetailPage() {
   const router = useRouter();
   const { id } = router.query;
-  const { data, isFetching, isLoading, refetch } = usePlanDetailQuery(
+  const { data, isLoading, refetch } = usePlanDetailQuery(
     typeof id === 'string' ? parseInt(id) : null,
   );
   const auth = useSelector((state: RootState) => state.auth);
 
   const onClickJoinPlan = async () => {
-    if (isFetching) {
-      //+주최자일 경우에
-      return;
-    }
     if (!auth.isLoggedIn) {
       router.push('/login');
       return;
@@ -41,6 +37,7 @@ export default function PlanDetailPage() {
       <Header title="일정 상세" />
       <div className="mx-auto min-h-screen max-w-screen-md">
         <PlanDetailMain
+          userEmail={auth.user?.email}
           onClickJoinPlan={onClickJoinPlan}
           planData={data.data}
         />
