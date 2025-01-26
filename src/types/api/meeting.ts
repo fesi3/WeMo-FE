@@ -1,4 +1,4 @@
-import { AxiosResponse } from './axiosResponse';
+import { ApiResponse } from './apiResponse';
 
 export interface User {
   nickname: string;
@@ -67,4 +67,4 @@ export interface CreatedMeetingInfo {
   meetingImagePath: string[];
 }
 
-export type CreateMeetingResponse = AxiosResponse<CreatedMeetingInfo>;
+export type CreateMeetingResponse = ApiResponse<CreatedMeetingInfo>;

@@ -113,8 +113,16 @@ export default function EditPlanForm({
       ),
       fileUrls,
     };
-    createPlan({ meetingId: id as string, requestBody });
-    handleCloseThisModal();
+    try {
+      const result = await createPlan({ meetingId: id as string, requestBody });
+      if (!result || result.success) {
+        throw new Error('일정 생성 실패');
+      }
+      alert('일정이 생성됐습니다.'); //토스트
+      handleCloseThisModal();
+    } catch {
+      alert('일정 생성에 실패했습니다.'); //토스트
+    }
   };
 
   const handleClickMap = async ({ lat, lng }: Coordinate) => {
@@ -125,7 +133,6 @@ export default function EditPlanForm({
   };
 
   const handleClickDate = (date: Date, field: keyof FormValues) => {
-    console.log('실행');
     const formattedDate = dayjs(date).format('YYYY-MM-DD A hh:mm');
     setValue(field, formattedDate);
     trigger(field);

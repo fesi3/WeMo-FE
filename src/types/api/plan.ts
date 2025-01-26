@@ -1,3 +1,5 @@
+import { ApiResponse } from './apiResponse';
+
 export interface User {
   nickname: string;
   profileImagePath: string;
@@ -61,3 +63,5 @@ export interface CreatePlanRequestBody {
   registrationEnd: string;
   fileUrls: string[];
 }
+
+export type CreatePlanResponse = ApiResponse<CreatePlanRequestBody>;

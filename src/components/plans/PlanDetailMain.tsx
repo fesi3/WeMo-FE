@@ -21,11 +21,13 @@ import { useRouter } from 'next/router';
 import { formatAverage } from '@/utils/formatRating';
 
 interface PlanDetailMainProps {
+  userEmail?: string;
   planData: PlanDetail;
   onClickJoinPlan: () => void;
 }
 
 export default function PlanDetailMain({
+  userEmail,
   planData,
   onClickJoinPlan,
 }: PlanDetailMainProps) {
@@ -79,19 +81,21 @@ export default function PlanDetailMain({
               <div className="text-sm">
                 {`모집 마감일 ${dayjs(planData.registrationEnd).format('YYYY.MM.DD')}`}
               </div>
-              <Button
-                text={planData.isJoined ? '참석 취소하기' : '일정 참석하기'}
-                disable={planData === undefined}
-                type="attend"
-                onClick={onClickJoinPlan}
-                backColor="relative top-5 bg-primary-10 text-white w-full"
-              />
+              {userEmail === planData.email && (
+                <Button
+                  text={planData.isJoined ? '참석 취소하기' : '일정 참석하기'}
+                  disable={planData === undefined}
+                  type="attend"
+                  onClick={onClickJoinPlan}
+                  backColor="relative top-5 bg-primary-10 text-white w-full"
+                />
+              )}
             </div>
           </div>
           <div className="flex flex-col gap-2">
             <span className="font-bold">모임 정보</span>
-            <div className="flex h-[150px] items-center gap-4 overflow-hidden rounded-lg border-[2px] border-[#E5E7EB] p-4">
-              <div className="relative h-[100px] w-[100px] shrink-0 overflow-hidden rounded-xl">
+            <div className="flex items-center gap-4 overflow-hidden rounded-lg border-[2px] border-[#E5E7EB] p-4">
+              <div className="relative aspect-[5/3] w-[30%] shrink-0 overflow-hidden rounded-xl">
                 <Image
                   sizes="20vw"
                   src={planData.meetingInfo.meetingImagePath}
@@ -114,7 +118,7 @@ export default function PlanDetailMain({
                     <ArrowLeft className="rotate-180" />
                   </button>
                 </div>
-                <p className="line-clamp-2 overflow-hidden text-ellipsis break-words text-sm">
+                <p className="line-clamp-3 text-sm/4">
                   {planData.meetingInfo.description}
                 </p>
                 <div className="flex gap-3 text-black-sub">
