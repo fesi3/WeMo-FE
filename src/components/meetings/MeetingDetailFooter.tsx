@@ -16,6 +16,7 @@ export default function MeetingDetailFooter({
           </button>
         )}
       </div>
+      <div className="h-[50px] md:hidden"></div>
     </>
   );
 }
