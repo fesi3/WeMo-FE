@@ -3,9 +3,9 @@ import useCropper from '@/hooks/useCropper';
 import useToggle from '@/hooks/useToggle';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import DatePickInput from './DatePickInput';
+import DatePickInput from './ui/DatePickInput';
 import dayjs from 'dayjs';
-import AddressInput from './AddressInput';
+import AddressInput from './ui/AddressInput';
 import { coordinateToAddress } from '@/utils/coordinateToAddress';
 import { INITIAL_POSITION } from '@/constants/address';
 import { Coordinate } from '@/types/mapType';
@@ -156,6 +156,14 @@ export default function EditPlanForm({
       resetField('imageFiles');
     }
   }, [imageFieldValue]);
+
+  useEffect(() => {
+    if (capacityValue > 30) {
+      setValue('capacity', 30);
+    } else if (capacityValue < 5) {
+      setValue('capacity', 5);
+    }
+  }, [capacityValue]);
   return (
     <div>
       <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
@@ -266,7 +274,7 @@ export default function EditPlanForm({
           </ErrorWrapper>
           <ErrorWrapper errorMessage={errors.addressDetail?.message}>
             <input
-              className="form-input w-1/2 placeholder:text-sm"
+              className="form-input w-full placeholder:text-sm"
               {...register('addressDetail', {
                 required: '상세주소를 입력해 주세요.',
               })}
@@ -282,24 +290,26 @@ export default function EditPlanForm({
               개설 확정을 위해 최소 5명이 필요합니다.
             </span>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-5">
             <input
               {...register('capacity')}
               type="range"
               min="5"
               max="30"
-              className="form-input-range"
+              className="form-input-range w-full"
             />
-            <input
-              type="number"
-              className="form-input-number flex-center h-6 w-10 rounded-md border border-primary-10 pl-1 outline-none"
-              min={5}
-              max={30}
-              value={capacityValue}
-              onChange={(e) => {
-                setValue('capacity', parseInt(e.target.value));
-              }}
-            />
+            <div className="flex w-8 overflow-hidden rounded-md border border-primary-10">
+              <input
+                type="number"
+                className="flex-center outline-none"
+                min={5}
+                max={30}
+                value={capacityValue}
+                onChange={(e) => {
+                  setValue('capacity', parseInt(e.target.value));
+                }}
+              />
+            </div>
           </div>
           <ErrorWrapper errorMessage={errors.imageFiles?.message}>
             <FileInput

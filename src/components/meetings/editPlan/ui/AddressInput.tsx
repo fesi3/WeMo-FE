@@ -1,6 +1,6 @@
 import useKakaoLoader from '@/hooks/useKakaoLoader';
 import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
-import AddressSearchModal from './AddressSearchModal';
+import AddressSearchModal from '../AddressSearchModal';
 import { Coordinate } from '@/types/mapType';
 import MarkerIcon from '@/assets/icons/location_marker.svg';
 interface AddressInputProps<T extends FieldValues> {
@@ -33,7 +33,7 @@ export default function AddressInput<T extends FieldValues>({
         <button
           type="button"
           onClick={openMap}
-          className="form-input flex w-1/2 items-center gap-2"
+          className="form-input flex items-center gap-2"
         >
           <MarkerIcon />
           <input
