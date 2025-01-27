@@ -37,7 +37,7 @@ export default function handler(
       meetingCount: 14,
       meetingList: [
         {
-          email: 'aa@naver.com',
+          email: 'test@naver.com',
           meetingId: 1,
           meetingName: '이너피스 1',
           category: '운동',
@@ -47,7 +47,7 @@ export default function handler(
           updatedAt: '2025-01-05 14:36:31',
         },
         {
-          email: 'aa@naver.com',
+          email: 'test@naver.com',
           meetingId: 2,
           meetingName: '힐링타임',
           category: '취미',
@@ -57,7 +57,7 @@ export default function handler(
           updatedAt: '2025-01-05 14:36:31',
         },
         {
-          email: 'aa@naver.com',
+          email: 'test@naver.com',
           meetingId: 3,
           meetingName: '명상모임',
           category: '자기계발',
@@ -97,7 +97,7 @@ export default function handler(
           updatedAt: '2025-01-05 14:36:31',
         },
         {
-          email: 'aa@naver.com',
+          email: 'test@naver.com',
           meetingId: 7,
           meetingName: '사진동호회',
           category: '사진',
@@ -107,7 +107,7 @@ export default function handler(
           updatedAt: '2025-01-05 14:36:31',
         },
         {
-          email: 'aa@naver.com',
+          email: 'test@naver.com',
           meetingId: 8,
           meetingName: '게임모임',
           category: '게임',
@@ -117,7 +117,7 @@ export default function handler(
           updatedAt: '2025-01-05 14:36:31',
         },
         {
-          email: 'aa@naver.com',
+          email: 'test@naver.com',
           meetingId: 9,
           meetingName: '댄스클럽',
           category: '문화',
@@ -127,7 +127,7 @@ export default function handler(
           updatedAt: '2025-01-05 14:36:31',
         },
         {
-          email: 'aa@naver.com',
+          email: 'test@naver.com',
           meetingId: 10,
           meetingName: '요가모임',
           category: '운동',
@@ -137,7 +137,7 @@ export default function handler(
           updatedAt: '2025-01-05 14:36:31',
         },
         {
-          email: 'aa@naver.com',
+          email: 'test@naver.com',
           meetingId: 11,
           meetingName: '영화감상회',
           category: '여가',
@@ -147,7 +147,7 @@ export default function handler(
           updatedAt: '2025-01-05 14:36:31',
         },
         {
-          email: 'aa@naver.com',
+          email: 'test123@test.com',
           meetingId: 12,
           meetingName: '수학스터디',
           category: '학습',
@@ -157,7 +157,7 @@ export default function handler(
           updatedAt: '2025-01-05 14:36:31',
         },
         {
-          email: 'aa@naver.com',
+          email: 'test123@test.com',
           meetingId: 13,
           meetingName: '여행모임',
           category: '여가',
@@ -167,7 +167,7 @@ export default function handler(
           updatedAt: '2025-01-05 14:36:31',
         },
         {
-          email: 'aa@naver.com',
+          email: 'test123@test.com',
           meetingId: 14,
           meetingName: '전시회',
           category: '문화',
