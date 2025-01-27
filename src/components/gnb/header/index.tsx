@@ -5,6 +5,7 @@ import GNBItem from '../item';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { useRouter } from 'next/router';
+import { hideGnbHeaderRoutes } from '@/constants/gnb';
 
 // GNB 레이아웃 컴포넌트에서 렌더링 되는 header 컴포넌트입니다.
 // 페이지마다 출력이 달라 path를 조회해 조건부 렌더링 합니다.
@@ -12,7 +13,6 @@ import { useRouter } from 'next/router';
 // 상위 컴포넌트로 부터 유저 정보 응답을 내려받아 라우팅 합니다.
 function GNBHeader() {
   const router = useRouter();
-  const hideGnbHeaderRoutes = ['/login', '/start'];
   const showGnbHeader = hideGnbHeaderRoutes.includes(router.pathname);
   const { isLoggedIn, user } = useSelector((state: RootState) => state.auth);
 
@@ -33,19 +33,22 @@ function GNBHeader() {
                 </Link>
                 <div className="flex items-center">
                   <ul className="flex space-x-6">
-                    <GNBItem text={'홈'} path={'/plans'} />
-                    <GNBItem text={'모든 리뷰'} path={'/all-reviews'} />
-                    <GNBItem text={'모임 찾기'} path={'/all-meetings'} />
-                    {isLoggedIn ? (
-                      <>
-                        <GNBItem
-                          text={'마이페이지'}
-                          path={`/user/${user?.nickname}`}
-                        />
-                      </>
-                    ) : (
-                      <GNBItem text={'로그인'} path={'/start'} />
-                    )}
+                    <GNBItem name={'홈'} path={'/plans'} isHeader />
+                    <GNBItem
+                      name={'모든 리뷰'}
+                      path={'/all-reviews'}
+                      isHeader
+                    />
+                    <GNBItem
+                      name={'모임 찾기'}
+                      path={'/all-meetings'}
+                      isHeader
+                    />
+                    <GNBItem
+                      name={isLoggedIn ? '마이페이지' : '로그인'}
+                      path={isLoggedIn ? `/user/${user?.nickname}` : '/start'}
+                      isHeader
+                    />
                   </ul>
                 </div>
               </div>

@@ -31,7 +31,6 @@ function Login() {
       // (invalidate 안해주면 요청 GNB 렌더링 되도 요청 안보냄)
       dispatch(login());
       queryClient.invalidateQueries({ queryKey: ['auth'] });
-      alert('로그인 성공');
       router.replace('/plans');
     },
     onError: () => {
