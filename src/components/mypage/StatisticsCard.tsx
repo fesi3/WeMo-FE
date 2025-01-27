@@ -1,4 +1,4 @@
-import { UserData } from '@/pages/user/[username]';
+import { UserData } from '@/types/mypageType';
 
 interface UserProps {
   user: UserData; // 부모에서 null 처리로 변경
