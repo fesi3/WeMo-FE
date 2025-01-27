@@ -5,7 +5,7 @@ import moreBtn from '@/assets/icons/more-vertical.png';
 import { useRouter } from 'next/router';
 import OwnerButton from './OwnerButton';
 import { PlanData } from '@/types/mypageType';
-import { cancleBtnApi } from '@/api/mypage/cancleApi';
+import { useCancle } from '@/hooks/useCancle';
 
 interface PlanCardProps {
   planData: PlanData;
@@ -37,7 +37,7 @@ const PlanCard = ({ planData }: PlanCardProps) => {
   const handleLeavePlan = (planId: number) => {
     // 탈퇴 로직 추가/api/plans/{planId}/attendance
     console.log(`${planId}번 일정을 탈퇴합니다.`);
-    cancleBtnApi({
+    useCancle({
       url: `/api/plans/${planId}/attendance`,
       successMessage: '일정을 취소했습니다.',
       router,
@@ -47,7 +47,7 @@ const PlanCard = ({ planData }: PlanCardProps) => {
   const handleDeletePlan = (planId: number) => {
     // 삭제 로직 추가 /api/plans/{planId}/cancel
     console.log(`${planId}번 일정을 삭제합니다.`);
-    cancleBtnApi({
+    useCancle({
       url: `/api/plans/${planId}/cancel`,
       successMessage: '일정을 삭제했습니다.',
       router,

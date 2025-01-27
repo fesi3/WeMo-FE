@@ -5,7 +5,7 @@ import ReviewableCard from '@/components/mypage/ReviewableCard';
 import NoData from '@/components/mypage/NoData';
 import MypageLayout from '@/components/mypage/MypageLayout';
 import { ReviewData, ReviewPlanData } from '@/types/mypageType';
-import useFetchData from '@/api/mypage/useFetchData';
+import useFetchDataFromKey from '@/hooks/useFetchDataFromKey';
 
 export default function MyReview() {
   const [activeTab, setActiveTab] = useState<'tabLeft' | 'tabRight'>('tabLeft');
@@ -19,12 +19,12 @@ export default function MyReview() {
     data: reviewData,
     loading: reviewDataLoading,
     error: reviewDataError,
-  } = useFetchData<ReviewData[]>(apiUrl, 'reviewList');
+  } = useFetchDataFromKey<ReviewData[]>(apiUrl, 'reviewList');
   const {
     data: reviewableData,
     loading: reviewableDataLoading,
     error: reviewableDataError,
-  } = useFetchData<ReviewPlanData[]>(apiUrl, 'planList');
+  } = useFetchDataFromKey<ReviewPlanData[]>(apiUrl, 'planList');
 
   console.log('리뷰', reviewData);
   console.log('리뷰가능', reviewableData);

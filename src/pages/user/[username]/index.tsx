@@ -4,14 +4,14 @@ import IndexNav from '@/components/mypage/IndexNav';
 import MypageLayout from '@/components/mypage/MypageLayout';
 import StatisticsCard from '@/components/mypage/StatisticsCard';
 import { UserData } from '@/types/mypageType';
-import useFetchData from '@/api/mypage/useFetchData';
+import useFetchDataFromKey from '@/hooks/useFetchDataFromKey';
 
 export default function MyPage() {
   const {
     data: userData,
     loading,
     error,
-  } = useFetchData<UserData>(`/api/auths/users`);
+  } = useFetchDataFromKey<UserData>(`/api/auths/users`);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;

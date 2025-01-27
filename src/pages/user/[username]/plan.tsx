@@ -3,9 +3,9 @@ import PlanCard from '@/components/mypage/PlanCard';
 import NoData from '@/components/mypage/NoData';
 import MypageLayout from '@/components/mypage/MypageLayout';
 import { PlanData } from '@/types/mypageType';
-import useFetchData from '@/api/mypage/useFetchData';
+import useFetchDataFromKey from '@/hooks/useFetchDataFromKey';
 
-export default function MyMeMyPlaneting() {
+export default function MyPlan() {
   const [activeTab, setActiveTab] = useState<'tabLeft' | 'tabRight'>('tabLeft');
   //유저 정보 전역 데이터로 수정하기@@@
   const useremail = 'test123@test.com'; // 현재 사용자의 이메일
@@ -14,7 +14,7 @@ export default function MyMeMyPlaneting() {
     data: plans,
     loading,
     error,
-  } = useFetchData<PlanData[]>('/api/users/plans?page=1', 'planList');
+  } = useFetchDataFromKey<PlanData[]>('/api/users/plans?page=1', 'planList');
 
   // 나중에 이메일로 바꾸기 ==-======================
   const createdPlans = plans?.filter((plan) => plan.email === useremail);

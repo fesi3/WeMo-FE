@@ -3,7 +3,7 @@ import { useState } from 'react';
 import NoData from '@/components/mypage/NoData';
 import MypageLayout from '@/components/mypage/MypageLayout';
 import { MeetingData } from '@/types/mypageType';
-import useFetchData from '@/api/mypage/useFetchData';
+import useFetchDataFromKey from '@/hooks/useFetchDataFromKey';
 
 export default function MyMeeting() {
   const [activeTab, setActiveTab] = useState<'tabLeft' | 'tabRight'>('tabLeft');
@@ -13,7 +13,10 @@ export default function MyMeeting() {
     data: meetings,
     loading,
     error,
-  } = useFetchData<MeetingData[]>('/api/users/meetings?page=1', 'meetingList');
+  } = useFetchDataFromKey<MeetingData[]>(
+    '/api/users/meetings?page=1',
+    'meetingList',
+  );
 
   // console.log('업데이트 데이터', meetings);
 

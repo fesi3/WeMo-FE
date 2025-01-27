@@ -3,7 +3,7 @@ import meetingImg from '@/assets/images/Rectangle 6188.png';
 import { useRouter } from 'next/router';
 import OwnerButton from './OwnerButton';
 import { MeetingData } from '@/types/mypageType';
-import { cancleBtnApi } from '@/api/mypage/cancleApi';
+import { useCancle } from '@/hooks/useCancle';
 
 export interface MeetingProps {
   meetingData: MeetingData;
@@ -25,7 +25,7 @@ const MeetingCard = ({ meetingData }: MeetingProps) => {
   // "삭제" 버튼 클릭 시 처리 함수
   const handleDeleteMeeting = (meetingId: number) => {
     console.log(`${meetingId}번 모임을 삭제합니다.`);
-    cancleBtnApi({
+    useCancle({
       url: `/api/meetings/${meetingId}`,
       successMessage: '모임이 삭제되었습니다.',
       router,
