@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { ReviewPlanData } from '@/pages/user/[username]/review';
 import { fromNow } from '@/utils/dateUtils';
+import { ReviewPlanData } from '@/types/mypageType';
 
 interface reviewableProps {
   reviewable: ReviewPlanData;
