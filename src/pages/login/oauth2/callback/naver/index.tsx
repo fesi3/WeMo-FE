@@ -1,30 +1,29 @@
 import instance from '@/api/axiosInstance';
-import { useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import Image from 'next/image';
 import logoWithColor from '@/assets/images/logo-with-color.png';
-import { login } from '@/redux/authReducers';
 import { useQueryClient } from '@tanstack/react-query';
+import { login } from '@/redux/authReducers';
 import { useDispatch } from 'react-redux';
 
 // oAuth 로그인 버튼을 누르면 리다이렉트되는 페이지
 // url에서 autherization code를 받아 서버에 전달한다.
-function KakaoSocialLoginRedirect() {
+function NaverSocialLoginRedirect() {
   const searchParams = useSearchParams();
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
   useEffect(() => {
-    // 리다이렉트 페이지 쿼리 스트링에는 카카오서버에서 보내주는 authcode가 담겨져있습니다.
+    // 리다이렉트 페이지 쿼리 스트링에는 네이버서버에서 보내주는 authcode가 담겨져있습니다.
     const authCode = searchParams.get('code');
     const fetchAuthCode = async () => {
+      // authcode를 쿼리스트링으로 담아서 리소스 서버에 요청을 보냅니다.
+      // 서버에서는 전달받은 authcode를 갖고 naverAutherizationSever에서 accessToken을 발급 받아 내려줍니다.
+      // 또한 서버에서는 accessToken을 활용해 사용자 정보를 네이버서버에서 받아와 유저 정보를 저장합니다.
       try {
-        //authcode를 쿼리스트링으로 담아서 리소스 서버에 요청을 보냅니다.
-        // 서버에서는 전달받은 authcode를 갖고 kakaoAutherizationSever에서 accessToken을 발급 받아 내려줍니다.
-        // 또한 서버에서는 accessToken을 활용해 사용자 정보를 카카오서버에서 받아와 유저 정보를 저장합니다.
         const response = await instance.get(
-          `/login/oauth2/callback/kakao?code=${authCode}`,
+          `/login/oauth2/callback/naver?code=${authCode}`,
         );
         const { success } = response.data;
         // 요청이 성공해 accessToken이 클라이언트에 잘 전달됐다면 invalidateQueries를 통해 GNB 컴포넌트에서 useAuth 함수 안에 쿼리를 실행합니다.
@@ -56,4 +55,4 @@ function KakaoSocialLoginRedirect() {
   );
 }
 
-export default KakaoSocialLoginRedirect;
+export default NaverSocialLoginRedirect;
