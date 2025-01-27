@@ -66,7 +66,7 @@ export default function PlanDetailMain({
               />
               <div className="flex flex-col items-center gap-2 pt-5">
                 <div className="flex items-center gap-3">
-                  <span className="text-sm font-bold">{`현재 인원 ${planData.capacity}명`}</span>
+                  <span className="text-sm font-bold">{`현재 인원 ${planData.participants}명`}</span>
                   <AvatarList users={planData.userList} />
                 </div>
                 <ProgressBar
