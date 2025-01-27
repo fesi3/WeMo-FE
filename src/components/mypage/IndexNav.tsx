@@ -27,10 +27,10 @@ const IndexNav = ({ nickname }: IndexNavProps) => {
 
   return (
     <ul className="mt-4 flex flex-col gap-4 sm:gap-10">
-      {listItem.map((item, index) => (
+      {listItem.map((item) => (
         <Link href={item.link}>
           <li
-            key={index}
+            key={item.link}
             className="flex items-center gap-2 border-b border-gray-200 py-3"
           >
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 text-xl">
