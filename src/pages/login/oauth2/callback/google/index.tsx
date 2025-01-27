@@ -34,7 +34,7 @@ function KakaoSocialLoginRedirect() {
           router.push('/plans');
         }
       } catch (error) {
-        console.error('kakao oAuth Error fetching data:', error);
+        console.error('google oAuth Error fetching data:', error);
         throw error;
       }
     };
