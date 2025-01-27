@@ -6,7 +6,7 @@ interface StatusIndicatorProps {
   currentStatus: ReviewStatus;
 }
 
-const StatusIndicator: React.FC<StatusIndicatorProps> = ({ currentStatus }) => {
+const StatusIndicator = ({ currentStatus }: StatusIndicatorProps) => {
   const statuses: { label: string; key: ReviewStatus }[] = [
     { label: '개설 대기', key: 'pending' },
     { label: '개설 확정', key: 'confirmed' },
