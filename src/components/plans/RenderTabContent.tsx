@@ -6,6 +6,13 @@ import RenderCommonContent from '@/components/plans/RenderCommonContent';
 import { PlanDataWithCategory } from '@/types/plans';
 import { RegionOption, SubRegionOption } from '@/types/reviewType';
 import { SortOption } from '@/types/reviewType';
+import { motion, AnimatePresence } from 'motion/react';
+
+const fadeVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 },
+  exit: { opacity: 0 },
+};
 
 interface RenderTabContentProps {
   category: string;
@@ -54,19 +61,30 @@ const RenderTabContent: React.FC<RenderTabContentProps> = ({
           />
         </div>
       )}
-      <RenderCommonContent
-        plans={plans}
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
-        selectedRegion={selectedRegion}
-        setSelectedRegion={setSelectedRegion}
-        selectedSubRegion={selectedSubRegion}
-        setSelectedSubRegion={setSelectedSubRegion}
-        selectedCategory={selectedCategory}
-        selectedSubCategory={selectedSubCategory}
-        selectedSort={selectedSort}
-        setSelectedSort={setSelectedSort}
-      />
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={selectedSubCategory || 'all'}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          variants={fadeVariants}
+          transition={{ duration: 0.3 }}
+        >
+          <RenderCommonContent
+            plans={plans}
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
+            selectedRegion={selectedRegion}
+            setSelectedRegion={setSelectedRegion}
+            selectedSubRegion={selectedSubRegion}
+            setSelectedSubRegion={setSelectedSubRegion}
+            selectedCategory={selectedCategory}
+            selectedSubCategory={selectedSubCategory}
+            selectedSort={selectedSort}
+            setSelectedSort={setSelectedSort}
+          />
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 };
