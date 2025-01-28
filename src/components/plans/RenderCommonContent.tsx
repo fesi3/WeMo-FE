@@ -83,7 +83,7 @@ const RenderCommonContent: React.FC<RenderCommonContentProps> = ({
         </div>
       </div>
       {isAuthenticated && (
-        <div className="mb-6 flex justify-end">
+        <div className="fixed bottom-20 right-5 z-50">
           <EditMeetingButton />
         </div>
       )}
