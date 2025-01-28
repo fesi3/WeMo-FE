@@ -5,6 +5,7 @@ import meetingImage2 from '@/assets/images/profile.png';
 
 interface PlanData {
   nickname: string;
+  email: string;
   profileImagePath: string;
   planId: number;
   planName: string;
@@ -52,6 +53,7 @@ export default function handler(
       planList: [
         {
           nickname: '유저1',
+          email: 'test123@test.com',
           profileImagePath: '',
           planId: 1,
           planName: '가나다',
@@ -76,6 +78,7 @@ export default function handler(
         },
         {
           nickname: '유저2',
+          email: 'test123@test.com',
           profileImagePath: '',
           planId: 2,
           planName: '디지털 노마드',
@@ -101,6 +104,7 @@ export default function handler(
         },
         {
           nickname: '유저3',
+          email: 'test123@test.com',
           profileImagePath: '',
           planId: 3,
           planName: '여행 세미나',
@@ -126,6 +130,7 @@ export default function handler(
         },
         {
           nickname: '유저4',
+          email: 'test123@test.com',
           profileImagePath: '',
           planId: 4,
           planName: '디지털 마케팅',
@@ -151,6 +156,7 @@ export default function handler(
         },
         {
           nickname: '유저5',
+          email: 'test123@test.com',
           profileImagePath: '',
           planId: 5,
           planName: '인공지능 세미나',
@@ -176,6 +182,7 @@ export default function handler(
         },
         {
           nickname: '유저6',
+          email: 'test123@test.com',
           profileImagePath: '',
           planId: 6,
           planName: '요가와 명상',
@@ -201,6 +208,7 @@ export default function handler(
         },
         {
           nickname: '유저7',
+          email: 'test123@test.com',
           profileImagePath: '',
           planId: 7,
           planName: '사진 동호회',
@@ -226,6 +234,7 @@ export default function handler(
         },
         {
           nickname: '유저8',
+          email: 'test123@test.com',
           profileImagePath: '',
           planId: 8,
           planName: '미술 전시회',
@@ -251,6 +260,7 @@ export default function handler(
         },
         {
           nickname: '유저9',
+          email: 'test123@test.com',
           profileImagePath: '',
           planId: 9,
           planName: '독서 모임',
@@ -276,6 +286,7 @@ export default function handler(
         },
         {
           nickname: '유저10',
+          email: 'test123@test.com',
           profileImagePath: '',
           planId: 10,
           planName: '요리 클래스',
@@ -301,9 +312,36 @@ export default function handler(
         },
         {
           nickname: '유저11',
+          email: 'test123@test.com',
           profileImagePath: '',
           planId: 11,
           planName: '게임 대회',
+          category: '게임',
+          meetingId: 11,
+          meetingName: '게임 챌린지',
+          province: '서울',
+          district: '동대문',
+          planImagePath: meetingImage,
+
+          dateTime: '2025-10-05T20:00:00',
+          registrationEnd: '2025-10-03T12:00:00',
+          capacity: 25,
+          participants: 12,
+          likeCount: 10,
+          viewCount: 35,
+          createdAt: '2025-01-14T19:00:55.000000',
+          updatedAt: '2025-01-14T19:00:55.000000',
+          isOpened: true,
+          isCanceled: false,
+          isFulled: false,
+          isLiked: true,
+        },
+        {
+          nickname: '유저12',
+          email: 'test@test.com',
+          profileImagePath: '',
+          planId: 11,
+          planName: '깍두기',
           category: '게임',
           meetingId: 11,
           meetingName: '게임 챌린지',
