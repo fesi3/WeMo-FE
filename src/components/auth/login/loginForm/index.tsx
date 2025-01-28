@@ -16,7 +16,7 @@ function LoginForm(props: LoginFormProps) {
   const { handleSubmit, handleChange, errors } = props;
   const { email: emailError, password: passwordError } = errors;
   return (
-    <form className="flex w-[320px] flex-col gap-6 p-[10px]">
+    <form className="flex flex-col gap-6 p-[10px]">
       <div className="flex w-[320px] flex-col gap-5">
         <InputWithMessage
           id="email"

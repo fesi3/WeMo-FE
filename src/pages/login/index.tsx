@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { useQueryClient } from '@tanstack/react-query';
 import { login } from '@/redux/authReducers';
+import Link from 'next/link';
 
 function Login() {
   const { loginFormValue, handleChange, errors } = useLoginForm();
@@ -43,7 +44,7 @@ function Login() {
     mutation.mutate();
   };
   return (
-    <div className="flex h-screen flex-col items-center justify-center gap-[62.5px]">
+    <div className="flex h-screen flex-col items-center justify-center">
       <LoginBanner description={'당신의 관심이 만나는 순간'} />
       <LoginForm
         handleSubmit={handleSubmit}
@@ -51,6 +52,25 @@ function Login() {
         loginFormValue={loginFormValue}
         errors={errors}
       />
+      <div className="mt-5 flex items-center gap-3">
+        <span
+          onClick={() => alert('기능 구현 예정 입니다.')}
+          className="text-sm text-gray-400"
+        >
+          아이디 찾기
+        </span>
+        <div className="h-3 border-l-2" />
+        <span
+          onClick={() => alert('기능 구현 예정 입니다.')}
+          className="text-sm text-gray-400"
+        >
+          비밀번호 찾기
+        </span>
+        <div className="h-3 border-l-2" />
+        <Link href={'/signup'} rel="noopener noreferrer" target="_blank">
+          <span className="text-sm text-gray-400">회원가입</span>
+        </Link>
+      </div>
     </div>
   );
 }
