@@ -9,9 +9,8 @@ import { useSelector } from 'react-redux';
 export default function PlanDetailPage() {
   const router = useRouter();
   const { id } = router.query;
-  const { data, isLoading, refetch } = usePlanDetailQuery(
-    typeof id === 'string' ? parseInt(id) : null,
-  );
+  const idNum = parseInt(id as string);
+  const { data, isLoading, refetch } = usePlanDetailQuery(idNum);
   const auth = useSelector((state: RootState) => state.auth);
 
   const onClickJoinPlan = async () => {
@@ -21,9 +20,9 @@ export default function PlanDetailPage() {
     }
     try {
       if (!data?.data.isJoined) {
-        await attendPlan(parseInt(id as string));
+        await attendPlan(idNum);
       } else {
-        await leavePlan(parseInt(id as string));
+        await leavePlan(idNum);
       }
     } finally {
       refetch();

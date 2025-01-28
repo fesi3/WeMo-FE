@@ -41,9 +41,8 @@ export default function MeetingDetailPage({
   const [isHost, setIsHost] = useState(false);
   const router = useRouter();
   const { id } = router.query;
-  const { isLoading, data, isError } = useMeetingDetailQuery(
-    typeof id === 'string' ? parseInt(id) : null,
-  );
+  const idNum = parseInt(id as string);
+  const { isLoading, data, isError } = useMeetingDetailQuery(idNum);
   const user = useSelector((state: RootState) => state.auth.user);
 
   useEffect(() => {
