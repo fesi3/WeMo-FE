@@ -90,7 +90,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
   }, [selectedSort]);
 
   return (
-    <div className="mx-auto px-4 py-6 md:pt-[80px] lg:pt-[80px]">
+    <div className="mx-auto p-2">
       {/* 탭 컴포넌트 */}
       <Tabs
         tabs={tabs}
