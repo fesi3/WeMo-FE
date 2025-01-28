@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 
 export default function useMeetingDetailQuery(id: number | null) {
   return useQuery({
-    queryKey: [queryKey.meetingDetail, id],
+    queryKey: queryKey.meetingDetail(id as number),
     queryFn: () => {
       return fetchMeetingDetail(id as number);
     },

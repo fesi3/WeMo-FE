@@ -20,7 +20,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient();
   const idNum = parseInt(id as string);
   await queryClient.prefetchQuery({
-    queryKey: [queryKey.meetingDetail, idNum],
+    queryKey: queryKey.meetingDetail(idNum),
     queryFn: () => fetchMeetingDetail(idNum),
   });
 

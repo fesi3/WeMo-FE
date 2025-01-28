@@ -1,3 +1,4 @@
 export const queryKey = {
-  meetingDetail: 'meetingDetail',
+  meetingDetail: (id: number) => ['meetingDetail', id],
+  planDetail: (id: number) => ['planDetail', id],
 };
