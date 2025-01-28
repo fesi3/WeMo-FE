@@ -24,6 +24,7 @@ function LoginForm(props: LoginFormProps) {
           onChange={handleChange}
           inputClassName="border"
           error={emailError}
+          autoFocus
         />
         <InputWithMessage
           id="password"
