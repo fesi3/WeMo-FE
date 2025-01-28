@@ -44,6 +44,8 @@ const Card: React.FC<PlanData> = ({
         <Image
           src={planImagePath}
           alt={planName}
+          layout="fill"
+          //objectFit="contain"
           className={`h-full w-full object-contain ${
             isFulled ? 'opacity-50' : ''
           }`}
