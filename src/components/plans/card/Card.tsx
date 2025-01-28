@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import DeadlineBadge from './DeadlinBadge';
 import MeetingDate from '../../shared/badges/MeetingDate';
 import MeetingTime from '../../shared/badges/MeetingTime';
@@ -40,7 +41,7 @@ const Card: React.FC<PlanData> = ({
       )}
       {/* 이미지 */}
       <div className="relative aspect-[5/3] w-full">
-        <img
+        <Image
           src={planImagePath}
           alt={planName}
           className={`h-full w-full object-contain ${
