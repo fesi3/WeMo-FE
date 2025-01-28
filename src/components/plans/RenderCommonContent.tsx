@@ -19,6 +19,8 @@ interface RenderCommonContentProps {
   >;
   selectedCategory: string;
   selectedSubCategory: string | null;
+  selectedSort: SortOption | null;
+  setSelectedSort: React.Dispatch<React.SetStateAction<SortOption | null>>;
 }
 
 // Main 페이지 컴포넌트에서 달램핏/워케이션 탭에 공통으로 들어가는 컴포넌트
@@ -33,14 +35,16 @@ const RenderCommonContent: React.FC<RenderCommonContentProps> = ({
   setSelectedSubRegion,
   selectedCategory,
   selectedSubCategory,
+  selectedSort,
+  setSelectedSort,
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const [selectedSort, setSelectedSort] = useState<SortOption | null>(null); // SortDropdown 상태 관리
   const sortOptions: SortOption[] = [
     { id: 1, name: '최신순', value: 'default' },
     { id: 2, name: '마감임박순', value: 'closeDate' },
   ];
+  //console.log('selectedSort:', selectedSort);
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
@@ -71,7 +75,9 @@ const RenderCommonContent: React.FC<RenderCommonContentProps> = ({
             <SortDropdown
               sortOptions={sortOptions}
               selectedSort={selectedSort || null}
-              onChange={setSelectedSort}
+              onChange={(newSort) => {
+                setSelectedSort(newSort);
+              }}
             />
           </div>
         </div>

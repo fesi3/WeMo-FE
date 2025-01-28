@@ -3,7 +3,7 @@
  */
 import { useEffect, useRef } from 'react';
 import axios from 'axios';
-import { RegionOption, SubRegionOption } from '@/types/reviewType';
+import { RegionOption, SortOption, SubRegionOption } from '@/types/reviewType';
 import { PlanDataWithCategory } from '@/types/plans';
 import { getCategoryId } from '@/utils/categoryUtils';
 
@@ -16,6 +16,7 @@ interface UseCursorInfiniteScrollProps {
   selectedSubCategory: string | null;
   selectedRegion: RegionOption | null;
   selectedSubRegion: SubRegionOption | null;
+  selectedSort: SortOption | null;
   onDataFetched: (newData: PlanDataWithCategory[]) => void;
 }
 
@@ -28,6 +29,7 @@ export const useCursorInfiniteScroll = ({
   selectedSubCategory,
   selectedRegion,
   selectedSubRegion,
+  selectedSort,
   onDataFetched,
 }: UseCursorInfiniteScrollProps) => {
   const loaderRef = useRef<HTMLDivElement | null>(null);
@@ -61,23 +63,24 @@ export const useCursorInfiniteScroll = ({
         try {
           // params 설정
           const categoryParam = getCategoryId(selectedCategory || '');
-          const provinceParam =
-            selectedRegion && selectedRegion.id > 0
-              ? `&province=${selectedRegion.name}`
-              : '';
-          const districtParam =
-            selectedSubRegion && selectedSubRegion.id > 0
-              ? `&district=${selectedSubRegion.name}`
-              : '';
+          // const provinceParam =
+          //   selectedRegion && selectedRegion.id > 0
+          //     ? `&province=${selectedRegion.name}`
+          //     : '';
+          // const districtParam =
+          //   selectedSubRegion && selectedSubRegion.id > 0
+          //     ? `&district=${selectedSubRegion.name}`
+          //     : '';
+          const sortParam = selectedSort ? `&sort=${selectedSort.value}` : '';
           const res = await axios.get(
             //`https://677e23a294bde1c1252a8cc0.mockapi.io/plans`
-            `${baseUrl}/api/plans?cursor=${cursor}&size=10&page=0&categoryId=${categoryParam}${provinceParam}${districtParam}`,
+            `${baseUrl}/api/plans?cursor=${cursor}&size=10&categoryId=${categoryParam}${sortParam}`,
           );
           const newData = res.data;
           // API 리스폰스: newData.data.planList 과 newData.data.nextCursor를 사용
           const formatted = newData.data.planList as PlanDataWithCategory[];
           onDataFetched(formatted);
-          // 만약 nextCursor가 null이면 더 이상 로딩하지 않음
+          // nextCursor가 null이면 더 이상 로딩하지 않음
           if (
             newData.data.nextCursor === undefined ||
             newData.data.nextCursor === null ||
@@ -123,6 +126,7 @@ export const useCursorInfiniteScroll = ({
     selectedRegion,
     selectedSubRegion,
     onDataFetched,
+    selectedSort,
   ]);
 
   return { loaderRef };

@@ -5,6 +5,7 @@ import SubCategoryFilter from '@/components/plans/SubCategoryFilter';
 import RenderCommonContent from '@/components/plans/RenderCommonContent';
 import { PlanDataWithCategory } from '@/types/plans';
 import { RegionOption, SubRegionOption } from '@/types/reviewType';
+import { SortOption } from '@/types/reviewType';
 
 interface RenderTabContentProps {
   category: string;
@@ -21,6 +22,8 @@ interface RenderTabContentProps {
   setSelectedCategory: (category: string) => void; //
   selectedSubCategory: string | null;
   setSelectedSubCategory: React.Dispatch<React.SetStateAction<string | null>>;
+  selectedSort: SortOption | null;
+  setSelectedSort: React.Dispatch<React.SetStateAction<SortOption | null>>;
 }
 
 const RenderTabContent: React.FC<RenderTabContentProps> = ({
@@ -35,6 +38,8 @@ const RenderTabContent: React.FC<RenderTabContentProps> = ({
   selectedCategory,
   selectedSubCategory,
   setSelectedSubCategory,
+  selectedSort,
+  setSelectedSort,
 }) => {
   return (
     <div className="mx-auto sm:w-[400px] sm:justify-center md:w-full lg:w-full">
@@ -49,7 +54,6 @@ const RenderTabContent: React.FC<RenderTabContentProps> = ({
           />
         </div>
       )}
-      {/* RenderCommonContent */}
       <RenderCommonContent
         plans={plans}
         selectedDate={selectedDate}
@@ -60,6 +64,8 @@ const RenderTabContent: React.FC<RenderTabContentProps> = ({
         setSelectedSubRegion={setSelectedSubRegion}
         selectedCategory={selectedCategory}
         selectedSubCategory={selectedSubCategory}
+        selectedSort={selectedSort}
+        setSelectedSort={setSelectedSort}
       />
     </div>
   );
