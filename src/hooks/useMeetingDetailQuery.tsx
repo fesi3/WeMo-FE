@@ -1,15 +1,12 @@
 import { fetchMeetingDetail } from '@/api/meeting';
 import { useQuery } from '@tanstack/react-query';
-import { useRouter } from 'next/router';
 
-export default function useMeetingDetailQuery() {
-  const router = useRouter();
+export default function useMeetingDetailQuery(id: number | null) {
   const queryKey = 'meetingDetail';
-  const { id } = router.query;
-  const idNum = parseInt(id as string);
+
   return useQuery({
-    queryKey: [queryKey, idNum],
-    queryFn: () => fetchMeetingDetail(idNum),
-    enabled: !!idNum,
+    queryKey: [queryKey, id],
+    queryFn: () => fetchMeetingDetail(id as number),
+    enabled: id !== null,
   });
 }

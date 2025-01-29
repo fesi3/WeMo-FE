@@ -3,9 +3,9 @@ import useCropper from '@/hooks/useCropper';
 import useToggle from '@/hooks/useToggle';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import DatePickInput from './DatePickInput';
+import DatePickInput from './ui/DatePickInput';
 import dayjs from 'dayjs';
-import AddressInput from './AddressInput';
+import AddressInput from './ui/AddressInput';
 import { coordinateToAddress } from '@/utils/coordinateToAddress';
 import { INITIAL_POSITION } from '@/constants/address';
 import { Coordinate } from '@/types/mapType';
@@ -84,11 +84,14 @@ export default function EditPlanForm({
   const dateTimeValue = watch('dateTime');
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    if (!croppedImages.length) {
+    //아래 validate는 다른 필드와 별개로 submit이 실행될 때 실행됨 그래서 이미지 인풋은 state로 관리하고 직접 crop된 이미지를 form field에 주입하도록 리팩토링 예정
+
+    if (croppedImages.length <= 0) {
       setError('imageFiles', {
         type: 'required',
         message: '이미지를 등록해 주세요.',
       });
+      return;
     }
     const { id } = router.query;
     const imageFiles = croppedImages.map((image) => image.blobImg);
@@ -96,20 +99,30 @@ export default function EditPlanForm({
     if (!fileUrls) return;
     const requestBody: CreatePlanRequestBody = {
       planName: data.planName,
-      dateTime: dayjs(data.dateTime).format('YYYY-MM-DDTHH:mm:ss'),
+      dateTime: dayjs(data.dateTime, 'YYYY-MM-HH A hh:mm').format(
+        'YYYY-MM-DDTHH:mm:ss',
+      ),
       address: data.address,
       addressDetail: data.addressDetail,
       longitude: data.coordinate.lng,
       latitude: data.coordinate.lat,
       capacity: data.capacity,
       content: data.content,
-      registrationEnd: dayjs(data.registrationEnd).format(
+      registrationEnd: dayjs(data.registrationEnd, 'YYYY-MM-HH A hh:mm').format(
         'YYYY-MM-DDTHH:mm:ss',
       ),
       fileUrls,
     };
-    createPlan({ meetingId: id as string, requestBody });
-    handleCloseThisModal();
+    try {
+      const result = await createPlan({ meetingId: id as string, requestBody });
+      if (!result || result.success) {
+        throw new Error('일정 생성 실패');
+      }
+      alert('일정이 생성됐습니다.'); //토스트
+      handleCloseThisModal();
+    } catch {
+      alert('일정 생성에 실패했습니다.'); //토스트
+    }
   };
 
   const handleClickMap = async ({ lat, lng }: Coordinate) => {
@@ -120,7 +133,6 @@ export default function EditPlanForm({
   };
 
   const handleClickDate = (date: Date, field: keyof FormValues) => {
-    console.log('실행');
     const formattedDate = dayjs(date).format('YYYY-MM-DD A hh:mm');
     setValue(field, formattedDate);
     trigger(field);
@@ -144,6 +156,14 @@ export default function EditPlanForm({
       resetField('imageFiles');
     }
   }, [imageFieldValue]);
+
+  useEffect(() => {
+    if (capacityValue > 30) {
+      setValue('capacity', 30);
+    } else if (capacityValue < 5) {
+      setValue('capacity', 5);
+    }
+  }, [capacityValue]);
   return (
     <div>
       <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
@@ -254,7 +274,7 @@ export default function EditPlanForm({
           </ErrorWrapper>
           <ErrorWrapper errorMessage={errors.addressDetail?.message}>
             <input
-              className="form-input w-1/2 placeholder:text-sm"
+              className="form-input w-full placeholder:text-sm"
               {...register('addressDetail', {
                 required: '상세주소를 입력해 주세요.',
               })}
@@ -270,24 +290,26 @@ export default function EditPlanForm({
               개설 확정을 위해 최소 5명이 필요합니다.
             </span>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-5">
             <input
               {...register('capacity')}
               type="range"
               min="5"
               max="30"
-              className="form-input-range"
+              className="form-input-range w-full"
             />
-            <input
-              type="number"
-              className="form-input-number flex-center h-6 w-10 rounded-md border border-primary-10 pl-1 outline-none"
-              min={5}
-              max={30}
-              value={capacityValue}
-              onChange={(e) => {
-                setValue('capacity', parseInt(e.target.value));
-              }}
-            />
+            <div className="flex w-8 overflow-hidden rounded-md border border-primary-10">
+              <input
+                type="number"
+                className="flex-center outline-none"
+                min={5}
+                max={30}
+                value={capacityValue}
+                onChange={(e) => {
+                  setValue('capacity', parseInt(e.target.value));
+                }}
+              />
+            </div>
           </div>
           <ErrorWrapper errorMessage={errors.imageFiles?.message}>
             <FileInput

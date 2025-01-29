@@ -1,3 +1,5 @@
+import { ApiResponse } from './apiResponse';
+
 export interface User {
   nickname: string;
   profileImagePath: string;
@@ -16,6 +18,7 @@ interface MeetingInfo {
 export interface PlanDetail {
   planId: number;
   nickname: string;
+  email: string;
   profileImagePath: string;
   planName: string;
   category: string;
@@ -60,3 +63,5 @@ export interface CreatePlanRequestBody {
   registrationEnd: string;
   fileUrls: string[];
 }
+
+export type CreatePlanResponse = ApiResponse<CreatePlanRequestBody>;
