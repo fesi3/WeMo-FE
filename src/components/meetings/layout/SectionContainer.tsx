@@ -1,16 +1,16 @@
 import { PropsWithChildren } from 'react';
 
-interface SectionLayoutProps {
+interface SectionContainerProps {
   title: string;
   onClickViewMore: () => void;
 }
 
 //더보기 기능 붙이기
-export default function SectionLayout({
+export default function SectionContainer({
   children,
   title,
   onClickViewMore,
-}: PropsWithChildren<SectionLayoutProps>) {
+}: PropsWithChildren<SectionContainerProps>) {
   return (
     <div className="flex flex-col gap-1">
       <div className="flex w-full items-end justify-between">

@@ -2,7 +2,7 @@ import { MeetingDetail } from '@/types/api/meeting';
 import Avatar from '../shared/avatar/Avatar';
 import Carousel from '../shared/Carousel';
 import DateBadge from '../shared/DateBadge';
-import SectionLayout from './layout/SectionLayout';
+import SectionContainer from './layout/SectionContainer';
 import IconWithCount from './ui/IconWithCount';
 import MemberList from './ui/MemberList';
 import {
@@ -62,22 +62,22 @@ export default function MeetingDetailMain({
             </div>
           </div>
         </div>
-        <SectionLayout
+        <SectionContainer
           onClickViewMore={() => {}}
           title={`멤버 ${meetingData.memberCount}명`}
         >
           <MemberList members={meetingData.memberList} />
-        </SectionLayout>
-        <SectionLayout onClickViewMore={() => {}} title="다가오는 일정">
+        </SectionContainer>
+        <SectionContainer onClickViewMore={() => {}} title="다가오는 일정">
           <PlanCardListInMeeting planList={meetingData.planList} />
-        </SectionLayout>
-        <SectionLayout onClickViewMore={() => {}} title="리뷰 목록">
+        </SectionContainer>
+        <SectionContainer onClickViewMore={() => {}} title="리뷰 목록">
           <div className="flex flex-col gap-5">
             {meetingData.reviewList.map((review) => (
               <ReviewListInMeeting key={review.createdAt} review={review} />
             ))}
           </div>
-        </SectionLayout>
+        </SectionContainer>
       </div>
     </>
   );

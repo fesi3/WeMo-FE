@@ -1,4 +1,4 @@
-export interface AxiosResponse<T> {
+export interface ApiResponse<T> {
   success: boolean;
   message: string;
   data: T;
