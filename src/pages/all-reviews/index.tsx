@@ -1,10 +1,40 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import FilterBar from '@/components/shared/FilterBar';
 import ReviewList from '@/components/all-reviews/ReviewList';
 import Tabs from '@/components/findGatherings/tab/Tabs';
-import { Review, FilterState, SortOption } from '@/types/reviewType';
+import { Review, FilterState } from '@/types/reviewType';
 import axiosInstance from '@/api/axiosInstance';
-// import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
+
+const CATEGORIES = [{ category: '달램핏' }, { category: '워케이션' }];
+const DEFAULT_CATEGORY = CATEGORIES[0].category;
+
+const fetchReviews = async (
+  category: string,
+  filters: FilterState,
+  pageParam: number = 1,
+): Promise<{ reviews: Review[]; nextPage?: number }> => {
+  const params = {
+    page: pageParam,
+    size: 5,
+    province: filters.region?.name || undefined,
+    district: filters.subRegion?.name || undefined,
+    startDate: filters.date
+      ? filters.date.toISOString().split('T')[0]
+      : undefined,
+    endDate: filters.date
+      ? filters.date.toISOString().split('T')[0]
+      : undefined,
+    categoryId: category === '달램핏' ? 1 : 2,
+    sort: filters.sort?.value || undefined,
+  };
+
+  const { data } = await axiosInstance.get('/api/reviews', { params });
+  return {
+    reviews: data.data.reviewList || [],
+    nextPage: pageParam < data.data.totalPage ? pageParam + 1 : undefined,
+  };
+};
 
 const ReviewPage = ({
   initialDalRampitReviews,
@@ -13,82 +43,88 @@ const ReviewPage = ({
   initialDalRampitReviews: Review[];
   initialWorkationReviews: Review[];
 }) => {
-  const [reviews, setReviews] = useState<Review[]>(
-    initialDalRampitReviews || [],
+  return (
+    <div className="mx-auto max-w-7xl px-4 py-6">
+      <Tabs
+        tabs={CATEGORIES}
+        defaultTab={DEFAULT_CATEGORY}
+        renderContent={(category) => (
+          <ReviewContainer
+            category={category}
+            initialReviews={
+              category === '달램핏'
+                ? initialDalRampitReviews
+                : initialWorkationReviews
+            }
+          />
+        )}
+      />
+    </div>
   );
-  const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
-  const [cursor, setCursor] = useState(1);
-  const loaderRef = useRef<HTMLDivElement | null>(null);
+};
 
-  // 필터 및 탭 상태
+const ReviewContainer = ({
+  category,
+}: {
+  category: string;
+  initialReviews: Review[];
+}) => {
   const [filters, setFilters] = useState<FilterState>({
     region: null,
     subRegion: null,
     date: null,
     sort: null,
   });
-  const [selectedCategory, setSelectedCategory] = useState<string>('달램핏');
-  const sortOptions: SortOption[] = [
-    { id: 1, name: '평점 높은 순', value: 'ratingOrder' },
-    // { id: 2, name: '평점 낮은 순', value: 'lowRatingOrder' },
-  ];
 
-  // 서버에서 데이터를 가져오는 함수
-  const fetchReviews = useCallback(
-    async (isAppending = false) => {
-      // console.log(!hasMore, loading);
-      if (!hasMore || loading) return;
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ['reviews', category, filters],
+      queryFn: ({ pageParam = 1 }) =>
+        fetchReviews(category, filters, pageParam),
+      initialPageParam: 1, // 초기 페이지는 1으로 설정
+      getNextPageParam: (lastPage) => lastPage.nextPage || undefined, // nextPage 계산
+    });
 
-      try {
-        setLoading(true);
+  const reviews = data?.pages.flatMap((page) => page.reviews) || [];
 
-        const params = {
-          page: isAppending ? cursor : 1,
-          size: 5,
-          province: filters.region?.name || undefined,
-          district: filters.subRegion?.name || undefined,
-          startDate: filters.date
-            ? filters.date.toISOString().split('T')[0]
-            : undefined,
-          endDate: filters.date
-            ? filters.date.toISOString().split('T')[0]
-            : undefined,
-          categoryId: selectedCategory === '달램핏' ? 1 : 2,
-          sort: filters.sort?.value || undefined,
-        };
-
-        // console.log('요청 데이터:', params);
-
-        const { data } = await axiosInstance.get(`/api/reviews`, { params });
-        // console.log('이 데이터 임요', data);
-        const newReviews = data.data.reviewList || [];
-        // console.log('서버 응답 데이터:', newReviews);
-
-        setReviews((prevReviews) =>
-          isAppending ? [...prevReviews, ...newReviews] : newReviews,
-        );
-
-        if (newReviews.length < 5) setHasMore(false);
-        if (isAppending) setCursor((prev) => prev + 1);
-      } catch (error) {
-        console.error('데이터 요청 오류:', error);
-      } finally {
-        setLoading(false);
-      }
-    },
-    [filters, cursor, hasMore, loading, selectedCategory],
+  return (
+    <>
+      <FilterBar
+        filters={filters}
+        onFilterChange={(newFilters) =>
+          setFilters((prevFilters) => ({ ...prevFilters, ...newFilters }))
+        }
+        sortOptions={[{ id: 1, name: '평점 높은 순', value: 'ratingOrder' }]}
+      />
+      <div className="mt-4">
+        <ReviewList reviews={reviews} />
+      </div>
+      <Loader
+        isLoading={isFetchingNextPage}
+        hasNextPage={hasNextPage}
+        fetchNextPage={fetchNextPage}
+      />
+    </>
   );
+};
 
-  // IntersectionObserver 설정
+const Loader = ({
+  isLoading,
+  hasNextPage,
+  fetchNextPage,
+}: {
+  isLoading: boolean;
+  hasNextPage: boolean | undefined;
+  fetchNextPage: () => void;
+}) => {
+  const loaderRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
-    // console.log('loaderRef.current:', loaderRef.current);
-    if (!loaderRef.current) return; // loaderRef가 렌더링되지 않았다면 중단
+    if (!loaderRef.current) return;
+
     const observerCallback: IntersectionObserverCallback = (entries) => {
       const target = entries[0];
-      if (target.isIntersecting) {
-        fetchReviews(true);
-      }
+      if (target.isIntersecting && hasNextPage) fetchNextPage();
     };
 
     const observerOptions = {
@@ -101,78 +137,18 @@ const ReviewPage = ({
       observerCallback,
       observerOptions,
     );
-    if (loaderRef.current) observer.observe(loaderRef.current);
+    observer.observe(loaderRef.current);
 
-    return () => {
-      if (observer) observer.disconnect(); // 기존 옵저버를 철저히 해제
-    };
-  }, [cursor, hasMore, filters, selectedCategory, loaderRef]);
+    return () => observer.disconnect();
+  }, [fetchNextPage, hasNextPage]);
 
-  // 탭 전환 시 초기화
-  useEffect(() => {
-    setCursor(1); // 페이지 번호 초기화
-    setHasMore(true); // 더 많은 데이터가 있는 상태로 초기화
+  if (!hasNextPage)
+    return <p className="text-center">더 이상 데이터가 없습니다.</p>;
+  if (isLoading) return <p className="text-center">로딩 중...</p>;
 
-    if (selectedCategory === '달램핏') {
-      setReviews(initialDalRampitReviews);
-    } else {
-      setReviews(initialWorkationReviews);
-    }
-    fetchReviews(false); // 명시적으로 첫 데이터 요청
-  }, [selectedCategory]);
-
-  // 필터 변경 시 요청
-  useEffect(() => {
-    // console.log('현재 필터 상태:', filters);
-    fetchReviews(false); // 새로운 데이터 요청
-  }, [filters.region, filters.subRegion, filters.sort]);
-
-  return (
-    <div className="mx-auto max-w-7xl px-4 py-6">
-      <Tabs
-        tabs={[{ category: '달램핏' }, { category: '워케이션' }]}
-        defaultTab="달램핏"
-        onTabChange={(category) => {
-          setSelectedCategory(category); // 탭 변경
-          setFilters({
-            region: null,
-            subRegion: null,
-            date: null,
-            sort: null,
-          }); // 필터 초기화
-        }}
-        renderContent={() => (
-          <>
-            <FilterBar
-              filters={filters}
-              onFilterChange={(newFilters) => {
-                // console.log('필터 변경 요청:', newFilters); // 필터 변경 요청 로그
-                setHasMore(true);
-                setFilters((prevFilters) => {
-                  const updatedFilters = { ...prevFilters, ...newFilters };
-                  // console.log('업데이트된 필터 상태:', updatedFilters); // 상태 업데이트 로그
-                  return updatedFilters;
-                });
-              }}
-              sortOptions={sortOptions}
-            />
-            <div className="mt-4">
-              <ReviewList reviews={reviews} />
-            </div>
-
-            <div ref={loaderRef} className="h-8" />
-            {loading && <p className="text-center">로딩 중...</p>}
-            {!hasMore && (
-              <p className="text-center">더 이상 데이터가 없습니다.</p>
-            )}
-          </>
-        )}
-      />
-    </div>
-  );
+  return <div ref={loaderRef} className="h-8" />;
 };
 
-// ISR을 이용한 초기 데이터 패칭
 export const getStaticProps = async () => {
   try {
     const [dalRampitRes, workationRes] = await Promise.all([
