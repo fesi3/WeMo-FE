@@ -11,7 +11,6 @@ interface ReviewListProps {
 const MAX_COMMENT_LENGTH = 100; // 리뷰 내용 최대 표시 글자 수
 
 const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
-  // console.log(reviews.map((review) => review.reviewId));
   const { toggleValue: isModalOpen, handleOpen, handleClose } = useToggle();
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [expandedComments, setExpandedComments] = useState<
