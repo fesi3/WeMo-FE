@@ -10,17 +10,16 @@ const noto = Noto_Sans_KR({
 });
 
 function GNB({ children }: PropsWithChildren) {
-  const { isLoading } = useAuth();
+  const { isLoading, response } = useAuth();
 
   if (isLoading) {
     return <Spinner />;
   }
-
   return (
     <main className={noto.className}>
-      <GNBHeader />
+      <GNBHeader response={response} />
       {children}
-      <GNBFooter />
+      <GNBFooter response={response} />
     </main>
   );
 }
