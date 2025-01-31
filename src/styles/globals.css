@@ -59,7 +59,6 @@
     @apply bg-gradient-to-l from-primary-10 to-primary-70;
     display: block;
     -webkit-appearance: none;
-    width: 200px;
     height: 10px;
     border-radius: 5px;
     outline: 0;

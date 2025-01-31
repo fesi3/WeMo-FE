@@ -1,7 +1,11 @@
 import { PATHS } from '@/constants/apiPath';
-import { CreatePlanRequestBody, PlanDetailResponse } from '@/types/api/plan';
+import {
+  CreatePlanRequestBody,
+  CreatePlanResponse,
+  PlanDetailResponse,
+} from '@/types/api/plan';
 import instance from './axiosInstance';
-import { AxiosResponse } from '@/types/api/axiosResponse';
+import { ApiResponse } from '@/types/api/apiResponse';
 
 interface PostPlanParams {
   meetingId: string;
@@ -12,10 +16,11 @@ export const createPlan = async ({
   meetingId,
   requestBody,
 }: PostPlanParams) => {
-  await instance.post<CreatePlanRequestBody>(
+  const response = await instance.post<CreatePlanResponse>(
     PATHS.PLAN.CREATE(meetingId),
     requestBody,
   );
+  return response.data;
 };
 
 export const fetchPlanDetail = async (planId: number) => {
@@ -28,7 +33,7 @@ export const fetchPlanDetail = async (planId: number) => {
 
 export const attendPlan = async (planId: number) => {
   if (isNaN(planId)) return;
-  const response = await instance.post<AxiosResponse<null>>(
+  const response = await instance.post<ApiResponse<null>>(
     PATHS.PLAN.ATTEND(planId.toString()),
   );
   return response.data.success;
@@ -36,7 +41,7 @@ export const attendPlan = async (planId: number) => {
 
 export const leavePlan = async (planId: number) => {
   if (isNaN(planId)) return;
-  const response = await instance.delete<AxiosResponse<null>>(
+  const response = await instance.delete<ApiResponse<null>>(
     PATHS.PLAN.ATTEND(planId.toString()),
   );
   return response.data.success;

@@ -16,13 +16,13 @@ export interface InputProps
 function Input(props: InputProps) {
   const {
     type = 'text',
-    placeholder = '입력해 주세요.',
+    placeholder = '',
     className,
     onChange,
     ...rest
   } = props;
   const inputClassName = twMerge(
-    `h-mobileInputHeight drop-shadow shrink-0 flex-grow rounded-[4px] text-base p-4 font-light focus:outline-none focus:ring focus:ring-primary-90 placeholder-gray-[#A4A4A4] md:h-tabletInputHeight`,
+    `h-mobileInputHeight drop-shadow shrink-0 flex-grow rounded-[4px] text-base p-4 font-light focus:outline-none focus:ring-1 focus:ring-primary-10 placeholder-gray-[#A4A4A4] md:h-tabletInputHeight`,
     className,
   );
   return (

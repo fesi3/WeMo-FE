@@ -79,7 +79,13 @@ function SignupForm(props: SignupFormProps) {
           />
         </div>
       </div>
-      <Button text={'회원가입'} type="signup" onClick={handleSubmit} />
+      <Button
+        text={'회원가입'}
+        size={'large'}
+        onClick={handleSubmit}
+        width={324}
+        height={42}
+      />
     </form>
   );
 }

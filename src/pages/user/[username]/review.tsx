@@ -1,103 +1,49 @@
-// import Button from '@/components/shared/Button';
 import ReviewCard from '@/components/mypage/ReviewCard';
 import { useEffect, useState } from 'react';
 import ReviewableCard from '@/components/mypage/ReviewableCard';
-import axios from 'axios';
-import { StaticImageData } from 'next/image';
 import NoData from '@/components/mypage/NoData';
 import MypageLayout from '@/components/mypage/MypageLayout';
-import { useRouter } from 'next/router';
-
-// const BASE_URL = process.env.NEXT_PUBLIC_API_KEY;
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-
-export interface ReviewData {
-  reviewId: number; // 리뷰 상세로 이동
-
-  planName: string;
-  dateTime: string;
-  category: string;
-  address: string;
-  score: number;
-  comment: string;
-  reivewImagePath: string | StaticImageData;
-  planImagePath: string | StaticImageData;
-  planId: number; // 일정 상세로 이동
-}
-
-export interface ReviewPlanData {
-  planId: number;
-  planName: string;
-  dateTime: string;
-  category: string;
-  address: string;
-  planImagePath: string | StaticImageData;
-}
+import { ReviewData, ReviewPlanData } from '@/types/mypageType';
+import useFetchDataFromKey from '@/hooks/useFetchDataFromKey';
 
 export default function MyReview() {
   const [activeTab, setActiveTab] = useState<'tabLeft' | 'tabRight'>('tabLeft');
+  const [page, setPage] = useState(1); // 페이지 상태 추가
 
-  // 데이터 상태
-  const [reviewData, setReviewData] = useState<ReviewData[]>([]);
-  const [reviewableData, setReviewableData] = useState<ReviewPlanData[]>([]);
-  const router = useRouter();
+  const apiUrl =
+    activeTab === 'tabLeft'
+      ? `/api/users/reviews?page=${page}`
+      : `/api/users/reviews/available?page=${page}`;
 
+  // activeTab이 변경될 때 page를 1로 리셋
   useEffect(() => {
-    const fetchData = async () => {
-      if (!setActiveTab) return;
-
-      const apiUrl =
-        activeTab === 'tabLeft'
-          ? `${BASE_URL}/api/users/reviews?page=1`
-          : `${BASE_URL}/api/users/reviews/available?page=1`;
-
-      try {
-        const response = await axios.get(apiUrl, { withCredentials: true });
-
-        const userReviewableData = response.data.data.planList;
-        const userReviewableCount = response.data.data.planCount;
-        const userReviewData = response.data.data.reviewList;
-        const userReviewCount = response.data.data.reviewCount;
-
-        console.log('(api응답)리뷰수', userReviewCount, userReviewData);
-        console.log(
-          '(api응답)일정 수',
-          userReviewableCount,
-          userReviewableData,
-        );
-
-        // activeTab에 따라서 데이터 처리
-        if (activeTab === 'tabLeft') {
-          setReviewData(userReviewData);
-        } else {
-          // tabRight 일 때 (reviewableData가 존재할 때만 업데이트)
-          if (userReviewableData && userReviewableData.length > 0) {
-            setReviewableData(userReviewableData);
-          } else {
-            setReviewableData([]); // 없으면 빈 배열로
-          }
-        }
-      } catch (error: unknown) {
-        if (axios.isAxiosError(error) && error.response) {
-          console.log('서버로부터 받은 에러 데이터', error.response.data);
-          if (error.response.status === 400) {
-            alert('로그인이 필요합니다!.');
-            router.push('/login');
-            return;
-          } else {
-            alert('[error] 서버와 통신 오류 발생.');
-          }
-        } else {
-          //axios 에러가 아닌 다른 예외가 발생한 경우
-          alert('[error] 오류가 발생했습니다. 다시 시도해주세요.');
-        }
-      }
-    };
-    fetchData();
+    setPage(1);
   }, [activeTab]);
 
-  console.log('업데이트 된 리뷰 ', reviewData);
-  console.log('업데이트 된 리뷰가능 목록 ', reviewableData);
+  const {
+    data: reviewData,
+    totalPage: reviewTotalPage,
+    loading: reviewDataLoading,
+    error: reviewDataError,
+  } = useFetchDataFromKey<ReviewData[]>(apiUrl, 'reviewList');
+  const {
+    data: reviewableData,
+    totalPage: reviewableTotalPage,
+    loading: reviewableDataLoading,
+    error: reviewableDataError,
+  } = useFetchDataFromKey<ReviewPlanData[]>(apiUrl, 'planList');
+
+  console.log('리뷰', reviewData);
+  console.log('리뷰가능', reviewableData);
+
+  // 로딩 및 오류 처리
+  if (reviewDataLoading || reviewableDataLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (reviewDataError || reviewableDataError) {
+    return <div>Error: {reviewDataError || reviewableDataError}</div>;
+  }
 
   return (
     <MypageLayout
@@ -109,19 +55,22 @@ export default function MyReview() {
         { key: 'tabLeft', label: '작성한 리뷰' },
         { key: 'tabRight', label: '작성 가능한 리뷰' },
       ]}
+      page={page}
+      totalPage={
+        activeTab === 'tabLeft' ? reviewTotalPage : reviewableTotalPage
+      }
+      onPageChange={setPage}
     >
       {/* activeTab에 따라 다른 컴포넌트 렌더링 */}
       {activeTab === 'tabLeft' ? (
         <section className="flex flex-col sm:w-[500px] md:w-[650px] lg:w-[850px]">
-          {reviewData.length > 0 ? (
+          {reviewData && reviewData.length > 0 ? (
             <ul className="flex flex-col gap-8">
               {reviewData.map((review) => (
-                <>
-                  <li key={review.reviewId}>
-                    <ReviewCard reviewed={review} />
-                  </li>
-                  <div className="border"></div>
-                </>
+                <li key={review.reviewId}>
+                  <ReviewCard reviewed={review} />
+                  <div className="mt-10 border"></div>
+                </li>
               ))}
             </ul>
           ) : (
@@ -130,7 +79,7 @@ export default function MyReview() {
         </section>
       ) : (
         <section className="flex flex-col sm:w-[500px] md:w-[650px] lg:w-[850px]">
-          {reviewableData.length > 0 ? (
+          {reviewableData && reviewableData.length > 0 ? (
             <ul className="flex flex-col gap-3">
               {reviewableData.map((plan) => (
                 <li key={plan.planId}>
@@ -139,7 +88,7 @@ export default function MyReview() {
               ))}
             </ul>
           ) : (
-            <NoData comment="작성할 리뷰가" />
+            <NoData comment="작성 가능한" />
           )}
         </section>
       )}

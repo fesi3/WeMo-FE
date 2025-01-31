@@ -1,4 +1,4 @@
-import Tabs from '@/components/findGatherings/tab/Tabs';
+import Tabs from '@/components/plans/tab/Tabs';
 import { GetStaticProps } from 'next';
 import { Review } from '@/types/reviewType';
 import axiosInstance from '@/api/axiosInstance';

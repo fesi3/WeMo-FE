@@ -1,9 +1,9 @@
-import Image from 'next/image';
 import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
-import CropperModal from '../plans/CropperModal';
+import CropperModal from '../planDetail/CropperModal';
 import Modal from './modals/Modal';
 import { CroppedImageType } from '@/types/cropperType';
 import CameraIcon from '@/assets/icons/camera.svg';
+import { XMarkIcon } from '@heroicons/react/20/solid';
 
 /**
  * @param croppedImages : 이미지를 자른 후 저장하는 배열 (useCropper)
@@ -55,14 +55,9 @@ export default function FileInput<T extends FieldValues>({
               <img className="w-full rounded-md" src={img.objectURL} />
               <button
                 onClick={() => handleDelete(index)}
-                className="flex-center absolute -right-1 -top-1 h-4 w-4 rounded-full border-2 border-white bg-gray-100"
+                className="flex-center absolute -right-1 -top-1 h-5 w-5 rounded-full border-2 border-white bg-gray-100"
               >
-                <Image
-                  src="/assets/icons/x.svg"
-                  width={10}
-                  height={10}
-                  alt="이미지 삭제"
-                />
+                <XMarkIcon />
               </button>
             </div>
           ))}

@@ -115,7 +115,7 @@ const RegionDropdown: React.FC<RegionDropdownProps> = ({
         onSelect={(province) => {
           handleProvinceSelect(province);
         }}
-        placeholder="상위 지역"
+        placeholder="시/구"
       />
 
       {/* 하위 지역 드롭다운 */}

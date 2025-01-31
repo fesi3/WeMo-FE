@@ -4,8 +4,9 @@ import axios from 'axios';
 import { useCursorInfiniteScroll } from '@/hooks/useCursorInfiniteScroll';
 import { PlanDataWithCategory } from '@/types/plans';
 import { RegionOption, SubRegionOption } from '@/types/reviewType';
-import Tabs from '@/components/findGatherings/tab/Tabs';
-import RenderTabContent from '@/components/findGatherings/RenderTabContent';
+import Tabs from '@/components/plans/tab/Tabs';
+import RenderTabContent from '@/components/plans/RenderTabContent';
+import { SortOption } from '@/types/reviewType';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -44,6 +45,9 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
     null,
   );
 
+  // 정렬 상태
+  const [selectedSort, setSelectedSort] = useState<SortOption | null>(null);
+
   //탭 상태 관리
   const tabs = [{ category: '달램핏' }, { category: '워케이션' }];
   const [activeTab, setActiveTab] = useState<string>('달램핏');
@@ -58,6 +62,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
     selectedSubCategory,
     selectedRegion,
     selectedSubRegion,
+    selectedSort,
     onDataFetched: (newData) => {
       setPlans((prev) => {
         const filtered = newData.filter(
@@ -72,17 +77,27 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
   // 탭 변경 시 카테고리 업데이트
   useEffect(() => {
     setSelectedCategory(activeTab);
+    setCursor(initialCursor);
   }, [activeTab]);
 
+  // 정렬이 바뀔 때 새 목록 불러오기기
+  useEffect(() => {
+    if (selectedSort) {
+      setPlans([]);
+      setCursor(initialCursor);
+      setIsFetching(false);
+    }
+  }, [selectedSort]);
+
   return (
-    <div className="mx-auto px-4 py-6">
+    <div className="mx-auto p-2">
       {/* 탭 컴포넌트 */}
       <Tabs
         tabs={tabs}
         defaultTab="달램핏"
         onTabChange={(category) => {
           setActiveTab(category);
-          setCursor(initialCursor);
+          //setCursor(initialCursor);
           setIsFetching(false);
         }}
         renderContent={(category) => (
@@ -99,6 +114,8 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
             setSelectedCategory={setSelectedCategory}
             selectedSubCategory={selectedSubCategory}
             setSelectedSubCategory={setSelectedSubCategory}
+            selectedSort={selectedSort}
+            setSelectedSort={setSelectedSort}
           />
         )}
       />
@@ -110,7 +127,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const res = await axios.get<PlanListResponse>(
-      `${baseUrl}/api/plans?size=10&page=0&`,
+      `${baseUrl}/api/plans?size=10&sort=default`,
     );
     const data = res.data;
     const initialPlans: PlanDataWithCategory[] = data.data.planList.map(
