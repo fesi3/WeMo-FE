@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import image from '@/assets/images/no_review.png';
-import Button from '../shared/Button';
+import Button from '@/components/shared/Button';
 import { useRouter } from 'next/router';
 
 type NoDataProps = {
@@ -26,7 +26,7 @@ const NoData = ({ comment, toPage, text }: NoDataProps) => {
       <p>{comment} 없어요!</p>
       {toPage ? (
         <div className="mt-10">
-          <Button type="review_create" text={text} onClick={onClickButton} />
+          <Button text={text} onClick={onClickButton} />
         </div>
       ) : null}
     </div>

@@ -73,7 +73,9 @@ export default function AddressSearchModal({
         <Button
           onClick={closeMap}
           text="확인"
-          backColor="rounded bg-primary-10 w-full text-white  font-bold"
+          size={'large'}
+          className="w-full"
+          // backColor="rounded bg-primary-10 w-full text-white  font-bold"
         />
       </div>
     </Modal>

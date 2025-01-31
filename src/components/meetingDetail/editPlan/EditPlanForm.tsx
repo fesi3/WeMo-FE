@@ -15,6 +15,7 @@ import { getImageUrls } from '@/api/images';
 import { CreatePlanRequestBody } from '@/types/api/plan';
 import ErrorWrapper from '@/components/shared/ErrorWrapper';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import Button from '@/components/shared/Button';
 dayjs.extend(customParseFormat);
 interface FormValues {
   planName: string;
@@ -325,20 +326,37 @@ export default function EditPlanForm({
           </ErrorWrapper>
         </div>
         <div className="flex gap-4">
-          <button
+          <Button
+            type="button"
+            text={'취소'}
+            size={'large'}
+            variant={'outline'}
+            height={40}
+            className="w-full rounded-md"
+          />
+
+          <Button
+            type="submit"
+            text={'만들기'}
+            size={'large'}
+            height={40}
+            className="w-full rounded-md"
+          />
+
+          {/* <button
             type="button"
             onClick={handleCloseThisModal}
             className="h-10 w-full rounded-md border border-primary-10 font-semibold text-primary-10"
           >
             취소
-          </button>
+          </button> */}
 
-          <button
+          {/* <button
             type="submit"
             className="h-10 w-full rounded-md border bg-primary-10 font-semibold text-white"
           >
             만들기
-          </button>
+          </button> */}
         </div>
       </form>
     </div>

@@ -17,21 +17,21 @@ const SubCategoryFilter = ({
       <div className="flex gap-2">
         {/* 전체 버튼 */}
         <Button
-          type="main_tab_total"
+          // type="main_tab_total"
           text="전체"
           onClick={() => setSelectedSubCategory(null)}
           isActive={selectedSubCategory === null}
         />
         {/* 오피스 스트레칭 버튼 */}
         <Button
-          type="main_tab_office"
+          // type="main_tab_office"
           text="오피스"
           onClick={() => setSelectedSubCategory('오피스 스트레칭')}
           isActive={selectedSubCategory === '오피스 스트레칭'}
         />
         {/* 마인드풀니스 버튼 */}
         <Button
-          type="main_tab_mind"
+          // type="main_tab_mind"
           text="마인드풀니스"
           onClick={() => setSelectedSubCategory('마인드풀니스')}
           isActive={selectedSubCategory === '마인드풀니스'}

@@ -84,10 +84,11 @@ export default function PlanDetailMain({
               {userEmail === planData.email && (
                 <Button
                   text={planData.isJoined ? '참석 취소하기' : '일정 참석하기'}
-                  disable={planData === undefined}
-                  type="attend"
+                  size={'large'}
+                  disabled={planData === undefined}
                   onClick={onClickJoinPlan}
-                  backColor="relative top-5 bg-primary-10 text-white w-full"
+                  height={42}
+                  // backColor="relative top-5 bg-primary-10 text-white w-full"
                 />
               )}
             </div>

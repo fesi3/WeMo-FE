@@ -134,13 +134,17 @@ export default function ReviewModal({
       <div className="flex justify-between">
         <Button
           text="취소"
-          type="reviewSubmit" // 취소 버튼 스타일
           onClick={onClose}
+          width={139.5}
+          height={42}
+          className="rounded-xl"
         />
         <Button
           text={mode === 'create' ? '등록하기' : '수정하기'}
-          type="reviewSubmit"
-          disable={!isValid} // 비활성화 여부
+          disabled={!isValid} // 비활성화 여부
+          width={139.5}
+          height={42}
+          className="rounded-xl"
         />
       </div>
     </form>
