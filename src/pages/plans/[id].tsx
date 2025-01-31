@@ -1,5 +1,5 @@
 import { attendPlan, leavePlan } from '@/api/plan';
-import PlanDetailMain from '@/components/plans/PlanDetailMain';
+import PlanDetailMain from '@/components/planDetail/PlanDetailMain';
 import Header from '@/components/shared/layout/Header';
 import usePlanDetailQuery from '@/hooks/usePlanDetailQuery';
 import { RootState } from '@/redux/store';

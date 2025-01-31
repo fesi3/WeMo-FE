@@ -15,9 +15,11 @@ const CardList: React.FC<CardListProps> = ({ plans }) => {
     );
   } else {
     return (
-      <div className="grid w-full grid-cols-1 gap-4 p-4 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid w-full grid-cols-1 gap-6 p-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {plans.map((plan) => (
-          <Card key={plan.planId} {...plan} />
+          <div key={plan.planId} className="mx-auto w-full max-w-[400px]">
+            <Card {...plan} />
+          </div>
         ))}
       </div>
     );

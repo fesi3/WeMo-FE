@@ -31,7 +31,7 @@ export default function DateModal({
 
   const buttonText = selectedDate
     ? dayjs(selectedDate).format('YYYY-MM-DD')
-    : '날짜 선택';
+    : '날짜';
 
   return (
     <div className="flex items-center gap-4">
@@ -44,7 +44,12 @@ export default function DateModal({
       <Modal isOpen={isOpen} handleClose={handleClose} title="날짜 선택">
         <div>
           <CalendarPicker onChange={handleDateChange} />
-          <button onClick={() => onDateSelect(null)}>전체보기</button>
+          <button
+            className="mt-6 border-spacing-1 rounded-xl bg-primary-40 px-2 py-1 text-white"
+            onClick={() => onDateSelect(null)}
+          >
+            전체보기
+          </button>
         </div>
       </Modal>
     </div>
