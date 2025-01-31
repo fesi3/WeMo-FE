@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import axios from 'axios';
 import FilterBar from '@/components/shared/FilterBar';
 import ReviewList from '@/components/all-reviews/ReviewList';
-import Tabs from '@/components/findGatherings/tab/Tabs';
+import Tabs from '@/components/plans/tab/Tabs';
 import { Review, FilterState, SortOption } from '@/types/reviewType';
 // import { useQuery } from '@tanstack/react-query';
 

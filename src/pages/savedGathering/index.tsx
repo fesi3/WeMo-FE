@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { PlanData } from '@/types/plans';
 import { usePageInfiniteScroll } from '@/hooks/usePageInfiniteScroll';
-import CardList from '@/components/findGatherings/card/CardList';
+import CardList from '@/components/plans/card/CardList';
 import Button from '@/components/shared/Button';
 import Header from '@/components/shared/layout/Header';
 

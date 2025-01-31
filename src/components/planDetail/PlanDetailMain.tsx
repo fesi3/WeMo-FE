@@ -8,7 +8,7 @@ import DateBadge from '@/components/shared/DateBadge';
 import AvatarList from './AvatarList';
 import Button from '../shared/Button';
 import { PlanDetail } from '@/types/api/plan';
-import IconWithCount from '../meetings/ui/IconWithCount';
+import IconWithCount from '../meetingDetail/ui/IconWithCount';
 import {
   EyeIcon,
   HandThumbUpIcon,

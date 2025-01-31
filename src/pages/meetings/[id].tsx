@@ -1,5 +1,5 @@
-import MeetingDetailFooter from '@/components/meetings/MeetingDetailFooter';
-import MeetingDetailMain from '@/components/meetings/MeetingDetailMain';
+import MeetingDetailFooter from '@/components/meetingDetail/MeetingDetailFooter';
+import MeetingDetailMain from '@/components/meetingDetail/MeetingDetailMain';
 import Header from '@/components/shared/layout/Header';
 import useMeetingDetailQuery from '@/hooks/useMeetingDetailQuery';
 import { RootState } from '@/redux/store';

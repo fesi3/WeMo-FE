@@ -4,7 +4,7 @@ import logoWithColor from '@/assets/images/logo-with-color.png';
 
 function LoginBanner({ description }: { description?: string }) {
   return (
-    <div className="flex flex-col items-center gap-6">
+    <div className="mb-[63px] flex flex-col items-center gap-6 md:mb-[65px]">
       <Link href={'/plans'}>
         <div className="flex flex-col items-center">
           <Image

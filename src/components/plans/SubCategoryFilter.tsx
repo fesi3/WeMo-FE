@@ -1,17 +1,11 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+//import { motion, AnimatePresence } from 'motion/react';
 import Button from '@/components/shared/Button';
 
 interface SubCategoryFilterProps {
   selectedSubCategory: string | null;
   setSelectedSubCategory: (category: string | null) => void;
 }
-
-const fadeVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1 },
-  exit: { opacity: 0 },
-};
 
 const SubCategoryFilter = ({
   selectedSubCategory,
@@ -20,7 +14,7 @@ const SubCategoryFilter = ({
   return (
     <div>
       {/* 버튼 필터 */}
-      <div className="mb-4 flex gap-2">
+      <div className="flex gap-2">
         {/* 전체 버튼 */}
         <Button
           // type="main_tab_total"
@@ -43,20 +37,6 @@ const SubCategoryFilter = ({
           isActive={selectedSubCategory === '마인드풀니스'}
         />
       </div>
-
-      {/* 콘텐츠 애니메이션 */}
-      <AnimatePresence mode="wait">
-        {selectedSubCategory && ( // 선택된 서브카테고리가 있을 때만 렌더링
-          <motion.div
-            key={selectedSubCategory}
-            variants={fadeVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            transition={{ duration: 0.3 }}
-          ></motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 };

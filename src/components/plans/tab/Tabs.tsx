@@ -71,41 +71,46 @@ export default function Tabs({
   }, [selectedTab]);
 
   return (
-    <div className="w-full">
-      {/* 탭 헤더 */}
-      <div
-        role="tablist"
-        className="relative mx-auto mb-4 flex max-w-lg border-b border-gray-300 lg:ml-0 lg:max-w-md lg:px-0"
-      >
-        {tabs.map((tab, idx) => {
-          const isActive = tab.category === selectedTab;
-          return (
-            <button
-              key={tab.category}
-              ref={(el) => {
-                tabRefs.current[idx] = el;
-              }}
-              onClick={() => handleTabClick(tab.category)}
-              className={`flex-1 py-2 text-center text-base transition-colors ${isActive ? 'font-bold text-primary-40' : 'text-gray-500'} `}
-            >
-              {tab.category}
-            </button>
-          );
-        })}
+    <div className="relative w-full">
+      <div className="relative w-full">
+        <div className="absolute bottom-0 left-0 w-full border-b border-gray-300"></div>
+        {/* 탭 헤더 (max-w-lg 유지) */}
+        <div
+          role="tablist"
+          className="relative mx-auto mb-4 flex w-full max-w-lg"
+        >
+          {tabs.map((tab, idx) => {
+            const isActive = tab.category === selectedTab;
+            return (
+              <button
+                key={tab.category}
+                ref={(el) => {
+                  tabRefs.current[idx] = el;
+                }}
+                onClick={() => handleTabClick(tab.category)}
+                className={`flex-1 py-2 text-center text-base transition-colors ${
+                  isActive ? 'font-bold text-primary-40' : 'text-gray-500'
+                }`}
+              >
+                {tab.category}
+              </button>
+            );
+          })}
 
-        {/* 언더바 이동 */}
-        <motion.div
-          layout
-          transition={{ type: 'spring', stiffness: 500, damping: 40 }}
-          className="absolute bottom-0 h-[3px] bg-primary-30"
-          style={{
-            width: underlineStyle.width,
-            left: underlineStyle.left,
-          }}
-        />
+          {/* 언더바 이동 (선택된 탭 강조선) */}
+          <motion.div
+            layout
+            transition={{ type: 'spring', stiffness: 500, damping: 40 }}
+            className="absolute bottom-0 h-[3px] bg-primary-30"
+            style={{
+              width: underlineStyle.width,
+              left: underlineStyle.left,
+            }}
+          />
+        </div>
       </div>
 
-      {/* 탭 콘텐츠 (fade in, fade out) */}
+      {/* 탭 콘텐츠 */}
       <div className="min-h-[150px]">
         <AnimatePresence mode="wait">
           {tabs.map((tab) =>
