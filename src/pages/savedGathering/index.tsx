@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { PlanData } from '@/types/plans';
 import { usePageInfiniteScroll } from '@/hooks/usePageInfiniteScroll';
-import CardList from '@/components/findGatherings/card/CardList';
+import CardList from '@/components/plans/card/CardList';
 import Button from '@/components/shared/Button';
 import Header from '@/components/shared/layout/Header';
 
@@ -98,13 +98,14 @@ const SavedGatheringPage = () => {
           </p>
           {/* 버튼 */}
           <Button
-            type="no_meeting"
             text="모임 보러가기"
             onClick={() => {
               window.location.href = '/meetings'; // 모임 페이지로 이동
             }}
             //   isActive
             //   disable
+            width={160}
+            height={42}
           />
         </div>
       )}

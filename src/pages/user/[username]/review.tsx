@@ -1,6 +1,5 @@
-// import Button from '@/components/shared/Button';
 import ReviewCard from '@/components/mypage/ReviewCard';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReviewableCard from '@/components/mypage/ReviewableCard';
 import NoData from '@/components/mypage/NoData';
 import MypageLayout from '@/components/mypage/MypageLayout';
@@ -9,19 +8,27 @@ import useFetchDataFromKey from '@/hooks/useFetchDataFromKey';
 
 export default function MyReview() {
   const [activeTab, setActiveTab] = useState<'tabLeft' | 'tabRight'>('tabLeft');
+  const [page, setPage] = useState(1); // 페이지 상태 추가
 
   const apiUrl =
     activeTab === 'tabLeft'
-      ? `/api/users/reviews?page=1`
-      : `/api/users/reviews/available?page=1`;
+      ? `/api/users/reviews?page=${page}`
+      : `/api/users/reviews/available?page=${page}`;
+
+  // activeTab이 변경될 때 page를 1로 리셋
+  useEffect(() => {
+    setPage(1);
+  }, [activeTab]);
 
   const {
     data: reviewData,
+    totalPage: reviewTotalPage,
     loading: reviewDataLoading,
     error: reviewDataError,
   } = useFetchDataFromKey<ReviewData[]>(apiUrl, 'reviewList');
   const {
     data: reviewableData,
+    totalPage: reviewableTotalPage,
     loading: reviewableDataLoading,
     error: reviewableDataError,
   } = useFetchDataFromKey<ReviewPlanData[]>(apiUrl, 'planList');
@@ -48,6 +55,11 @@ export default function MyReview() {
         { key: 'tabLeft', label: '작성한 리뷰' },
         { key: 'tabRight', label: '작성 가능한 리뷰' },
       ]}
+      page={page}
+      totalPage={
+        activeTab === 'tabLeft' ? reviewTotalPage : reviewableTotalPage
+      }
+      onPageChange={setPage}
     >
       {/* activeTab에 따라 다른 컴포넌트 렌더링 */}
       {activeTab === 'tabLeft' ? (

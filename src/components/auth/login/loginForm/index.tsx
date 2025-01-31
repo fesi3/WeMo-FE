@@ -37,9 +37,11 @@ function LoginForm(props: LoginFormProps) {
       </div>
       <Button
         text={'로그인'}
-        type="signup"
+        size={'large'}
         onClick={handleSubmit}
-        disable={errors['email'] || errors['password'] ? true : false}
+        width={320}
+        height={42}
+        disabled={errors['email'] || errors['password'] ? true : false}
       />
     </form>
   );

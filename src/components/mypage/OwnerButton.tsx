@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '@/components/shared/Button';
 
 interface OwnerButtonProps {
   email: string;
@@ -19,10 +20,7 @@ const OwnerButton = ({
   const isOwner = userEmail === email;
 
   return (
-    <button
-      className="border px-4 py-2 text-black"
-      onClick={() => (isOwner ? onDelete(id) : onLeave(id))}
-    >
+    <Button onClick={() => (isOwner ? onDelete(id) : onLeave(id))}>
       {
         isOwner
           ? type === 'plan'
@@ -32,7 +30,7 @@ const OwnerButton = ({
             ? '일정 취소하기' // 'plan'에서 onLeave는 "일정 취소하기"
             : '모임 탈퇴하기' // 'meeting'에서 onLeave는 "모임 탈퇴하기"
       }{' '}
-    </button>
+    </Button>
   );
 };
 

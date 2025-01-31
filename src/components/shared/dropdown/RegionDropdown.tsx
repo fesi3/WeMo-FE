@@ -116,7 +116,7 @@ const RegionDropdown: React.FC<RegionDropdownProps> = ({
           console.log('Province selected in Dropdown:', province);
           handleProvinceSelect(province);
         }}
-        placeholder="상위 지역"
+        placeholder="시/구"
       />
 
       {/* 하위 지역 드롭다운 */}
@@ -124,7 +124,7 @@ const RegionDropdown: React.FC<RegionDropdownProps> = ({
         options={extendedDistricts}
         selectedOption={selectedSubRegion}
         onSelect={handleDistrictSelect}
-        placeholder={selectedRegion ? '하위 지역' : '상위 지역 선택'}
+        placeholder="구/도"
         // disabled={!selectedRegion}
         className={!selectedRegion ? 'pointer-events-none opacity-50' : ''}
       />

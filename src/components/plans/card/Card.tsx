@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import DeadlineBadge from './DeadlinBadge';
 import MeetingDate from '../../shared/badges/MeetingDate';
 import MeetingTime from '../../shared/badges/MeetingTime';
@@ -39,11 +40,13 @@ const Card: React.FC<PlanData> = ({
         <div className="absolute inset-0 bg-gray-500 bg-opacity-50"></div>
       )}
       {/* 이미지 */}
-      <div className="relative h-48 w-full">
-        <img
+      <div className="relative aspect-[5/3] w-full">
+        <Image
           src={planImagePath}
           alt={planName}
-          className={`h-full w-full object-cover ${
+          layout="fill"
+          //objectFit="contain"
+          className={`h-full w-full object-contain ${
             isFulled ? 'opacity-50' : ''
           }`}
         />

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Button from '../shared/Button';
+import Button from '@/components/shared/Button';
 import { formatTime } from '@/utils/dateUtils';
 import { ReviewData } from '@/types/mypageType';
 
@@ -71,9 +71,7 @@ const ReviewCard = ({ reviewed }: ReviewProps) => {
           </div>
 
           <Button
-            type="modify_mypage"
             text="삭제"
-            textColor="black"
             onClick={() => {
               modifyReview(reviewId);
             }}

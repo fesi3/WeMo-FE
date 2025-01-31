@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { fromNow } from '@/utils/dateUtils';
 import { ReviewPlanData } from '@/types/mypageType';
+import Button from '@/components/shared/Button';
 
 interface reviewableProps {
   reviewable: ReviewPlanData;
@@ -44,24 +45,15 @@ const ReviewableCard = ({ reviewable }: reviewableProps) => {
           <div className="flex items-center"> </div>
         </div>
       </div>
-      <button
-        className="h-[42px] w-[132px] self-end rounded-lg border border-[#00B6AD] text-[#00B6AD]"
-        onClick={() => {
-          createReview(planId);
-        }}
-      >
-        리뷰쓰기
-      </button>
-      {/* <Button
-        type="start"
-        backColor="black"
-        textColor="white"
+      <Button
         text="리뷰쓰기"
-        border="1px solid #000000"
+        variant={'outline'}
         onClick={() => {
           createReview(planId);
         }}
-      /> */}
+        width={132}
+        height={42}
+      />
     </div>
   );
 };
