@@ -1,4 +1,5 @@
 import Avatar from '@/components/shared/avatar/Avatar';
+import Button from '@/components/shared/Button';
 import HeartRating from '@/components/shared/HeartRating';
 import useToggle from '@/hooks/useToggle';
 import type { ReviewInMeeting } from '@/types/api/meeting';
@@ -27,7 +28,19 @@ export default function ReviewInMeeting({ review }: ReviewListInMeetingProps) {
       </div>
       {toggleValue && <div>리뷰 이미지</div>}
       <div className="flex w-full justify-end">
-        <button
+        <Button
+          onClick={toggleValue ? handleClose : handleOpen}
+          className="gap-1 px-2 py-1 font-normal"
+        >
+          <span>{toggleValue ? '접기' : '펼쳐보기'}</span>
+          {toggleValue ? (
+            <ArrowUpIcon width={15} height={15} />
+          ) : (
+            <ArrowDownIcon width={15} height={15} />
+          )}
+        </Button>
+
+        {/* <button
           onClick={toggleValue ? handleClose : handleOpen}
           className="flex items-center gap-1 rounded-lg bg-primary-10 px-2 py-1 text-sm text-white"
         >
@@ -37,7 +50,7 @@ export default function ReviewInMeeting({ review }: ReviewListInMeetingProps) {
           ) : (
             <ArrowDownIcon width={15} height={15} />
           )}
-        </button>
+        </button>  */}
       </div>
     </div>
   );
