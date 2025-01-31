@@ -5,8 +5,8 @@ export default function useMeetingDetailQuery(id: number | null) {
   const queryKey = 'meetingDetail';
 
   return useQuery({
-    queryKey: [queryKey, id],
-    queryFn: () => fetchMeetingDetail(id as number),
-    enabled: id !== null,
+    queryKey: queryKey.meetingDetail(id),
+    queryFn: () => fetchMeetingDetail(id),
+    enabled: typeof id === 'number',
   });
 }
