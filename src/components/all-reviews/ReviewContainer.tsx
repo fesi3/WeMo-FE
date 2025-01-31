@@ -34,7 +34,10 @@ const ReviewContainer = ({
         onFilterChange={(newFilters) =>
           setFilters((prevFilters) => ({ ...prevFilters, ...newFilters }))
         }
-        sortOptions={[{ id: 1, name: '평점 높은 순', value: 'ratingOrder' }]}
+        sortOptions={[
+          { id: 0, name: '전체', value: '' },
+          { id: 1, name: '평점 높은 순', value: 'ratingOrder' },
+        ]}
       />
       <div className="mt-4">
         <ReviewList reviews={reviews} />

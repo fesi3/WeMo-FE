@@ -8,10 +8,10 @@ const CATEGORIES = [{ category: '달램핏' }, { category: '워케이션' }];
 const DEFAULT_CATEGORY = CATEGORIES[0].category;
 
 const ReviewPage = ({
-  initialDalRampitReviews,
+  initialDalRamfitReviews,
   initialWorkationReviews,
 }: {
-  initialDalRampitReviews: Review[];
+  initialDalRamfitReviews: Review[];
   initialWorkationReviews: Review[];
 }) => {
   return (
@@ -24,7 +24,7 @@ const ReviewPage = ({
             category={category}
             initialReviews={
               category === '달램핏'
-                ? initialDalRampitReviews
+                ? initialDalRamfitReviews
                 : initialWorkationReviews
             }
           />
@@ -36,7 +36,7 @@ const ReviewPage = ({
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
-    const [dalRampitRes, workationRes] = await Promise.all([
+    const [dalRamfitRes, workationRes] = await Promise.all([
       axiosInstance.get(`/api/reviews`, {
         params: { page: 1, size: 5, categoryId: 1 },
       }),
@@ -47,7 +47,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
     return {
       props: {
-        initialDalRampitReviews: dalRampitRes.data.data.reviewList || [],
+        initialDalRamfitReviews: dalRamfitRes.data.data.reviewList || [],
         initialWorkationReviews: workationRes.data.data.reviewList || [],
       },
       revalidate: 60,
@@ -56,7 +56,7 @@ export const getStaticProps: GetStaticProps = async () => {
     console.error('초기 데이터 패칭 오류:', error);
     return {
       props: {
-        initialDalRampitReviews: [],
+        initialDalRamfitReviews: [],
         initialWorkationReviews: [],
       },
     };
