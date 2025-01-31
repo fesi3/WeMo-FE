@@ -1,8 +1,10 @@
 import axios from 'axios';
+import store from '@/redux/store';
+import { logout, setUser } from '@/redux/authReducers';
 import { PATHS } from '@/constants/apiPath';
 
 const {
-  AUTH: { REFRESH_TOKEN },
+  AUTH: { REFRESH_TOKEN, USER_INFO },
 } = PATHS;
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -15,6 +17,22 @@ const instance = axios.create({
   withCredentials: true,
 });
 
+// ✅ Interceptor: Automatically attach user data if available
+instance.interceptors.request.use(
+  async (config) => {
+    try {
+      const response = await instance.get(USER_INFO); // Fetch user info
+      store.dispatch(setUser(response.data)); // Save user data to Redux
+    } catch (error) {
+      console.error(error);
+      store.dispatch(logout()); // If fetching user fails, logout
+    }
+
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
+
 // ✅ Response Interceptor: Handle Expired Token & Refresh Automatically
 instance.interceptors.response.use(
   (response) => response,
@@ -22,16 +40,14 @@ instance.interceptors.response.use(
     const originalRequest = error.config;
 
     if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
+      originalRequest._retry = true; // Prevent infinite loops
 
       try {
-        // ✅ Refresh Token API Call (Cookies automatically included)
-        await axios.post(REFRESH_TOKEN, {}, { withCredentials: true });
+        await instance.post(REFRESH_TOKEN, {}, { withCredentials: true });
 
-        // ✅ Retry Original Request
-        return axios(originalRequest);
+        return axios(originalRequest); // ✅ Retry Original Request
       } catch (refreshError) {
-        // dispatch(logout()); // If refresh fails, logout the user
+        store.dispatch(logout()); // ❌ If refresh fails, logout user
         return Promise.reject(refreshError);
       }
     }
