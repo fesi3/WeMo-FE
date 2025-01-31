@@ -1,5 +1,5 @@
 import React from 'react';
-import CardList from '@/components/findGatherings/card/CardList';
+import CardList from '@/components/plans/card/CardList';
 import { PlanDataWithCategory } from '@/types/plans';
 import { RegionOption, SubRegionOption } from '@/types/reviewType';
 import dayjs from 'dayjs';
