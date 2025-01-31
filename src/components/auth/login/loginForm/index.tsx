@@ -34,7 +34,13 @@ function LoginForm(props: LoginFormProps) {
           error={passwordError}
         />
       </div>
-      <Button text={'로그인'} type="signup" onClick={handleSubmit} />
+      <Button
+        text={'로그인'}
+        size={'large'}
+        onClick={handleSubmit}
+        width={320}
+        height={42}
+      />
     </form>
   );
 }
