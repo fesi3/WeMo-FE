@@ -21,10 +21,14 @@ export const hideGnbFooterRoutes = [
   '/login',
   '/start',
   '/login/oauth2/callback/kakao',
+  '/login/oauth2/callback/google',
+  '/login/oauth2/callback/naver',
 ];
 
 export const hideGnbHeaderRoutes = [
   '/login',
   '/start',
   '/login/oauth2/callback/kakao',
+  '/login/oauth2/callback/google',
+  '/login/oauth2/callback/naver',
 ];

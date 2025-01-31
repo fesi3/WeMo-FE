@@ -6,7 +6,7 @@ export const PATHS = {
     SIGNOUT: '/api/auths/signout',
     USER_INFO: '/api/auths/users',
     PROFILE_IMAGE: '/api/auths/profile',
-    REISSUE_TOKEN: '/api/auths/reissue',
+    REFRESH_TOKEN: '/api/auths/reissue',
   },
   MEETING: {
     CREATE: '/api/meetings',
