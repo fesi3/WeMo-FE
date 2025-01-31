@@ -21,6 +21,14 @@ const fetchReviews = async (
     sort: filters.sort?.value || undefined,
   };
 
+  if (filters.region && filters.region.id == 0) {
+    params.province = undefined;
+  }
+  if (filters.subRegion && filters.subRegion.id == 0) {
+    params.district = undefined;
+  }
+  console.log('API 요청 params:', params);
+
   const { data } = await axiosInstance.get('/api/reviews', { params });
   return {
     reviews: data.data.reviewList || [],
