@@ -10,37 +10,37 @@ export const PATHS = {
   },
   MEETING: {
     CREATE: '/api/meetings',
-    JOIN: (meetingId: string) => `/api/meetings/${meetingId}`,
+    JOIN: (meetingId: number) => `/api/meetings/${meetingId}`,
     GET_ALL: '/api/meetings',
-    GET_DETAIL: (meetingId: string) => `/api/meetings/${meetingId}`,
-    GET_MEMBERS: (meetingId: string, pageNumber: number, size: number) =>
+    GET_DETAIL: (meetingId: number) => `/api/meetings/${meetingId}`,
+    GET_MEMBERS: (meetingId: number, pageNumber: number, size: number) =>
       `/api/meetings/${meetingId}/members?page=${pageNumber}&size=${size}`,
-    GET_PLANS: (meetingId: string, pageNumber: number, size: number) =>
+    GET_PLANS: (meetingId: number, pageNumber: number, size: number) =>
       `/api/meetings/${meetingId}/plans?page=${pageNumber}&size=${size}`,
-    GET_REVIEWS: (meetingId: string, pageNumber: number, size: number) =>
+    GET_REVIEWS: (meetingId: number, pageNumber: number, size: number) =>
       `/api/meetings/${meetingId}/reviews?page=${pageNumber}&size=${size}`,
-    UPDATE: (meetingId: string) => `/api/meetings/${meetingId}`,
-    DELETE: (meetingId: string) => `/api/meetings/${meetingId}`,
+    UPDATE: (meetingId: number) => `/api/meetings/${meetingId}`,
+    DELETE: (meetingId: number) => `/api/meetings/${meetingId}`,
   },
   PLAN: {
-    CREATE: (meetingId: string) => `/api/plans/${meetingId}`,
+    CREATE: (meetingId: number) => `/api/plans/${meetingId}`,
     GET_ALL: (params: string) => `/api/plans?${params}`,
-    GET_DETAIL: (planId: string) => `/api/plans/${planId}`,
-    CANCEL: (planId: string) => `/api/plans/${planId}/cancel`,
-    ATTEND: (planId: string) => `/api/plans/${planId}/attendance`,
-    LIKE: (planId: string) => `/api/plans/like/${planId}`,
-    UNLIKE: (planId: string) => `/api/plans/like/${planId}`,
+    GET_DETAIL: (planId: number) => `/api/plans/${planId}`,
+    CANCEL: (planId: number) => `/api/plans/${planId}/cancel`,
+    ATTEND: (planId: number) => `/api/plans/${planId}/attendance`,
+    LIKE: (planId: number) => `/api/plans/like/${planId}`,
+    UNLIKE: (planId: number) => `/api/plans/like/${planId}`,
     GET_LIKED: (params: string) => `/api/plans/like?${params}`,
   },
   REVIEW: {
-    CREATE: (planId: string) => `/api/reviews/${planId}`,
-    UPDATE: (reviewId: string) => `/api/reviews/${reviewId}`,
-    DELETE: (reviewId: string) => `/api/reviews/${reviewId}`,
+    CREATE: (planId: number) => `/api/reviews/${planId}`,
+    UPDATE: (reviewId: number) => `/api/reviews/${reviewId}`,
+    DELETE: (reviewId: number) => `/api/reviews/${reviewId}`,
     GET_ALL: (params: string) => `/api/reviews?${params}`,
   },
   REGION: {
     GET_PROVINCES: '/api/region/province',
-    GET_DISTRICTS: (provinceId: string) =>
+    GET_DISTRICTS: (provinceId: number) =>
       `/api/region/district?provinceId=${provinceId}`,
   },
   MYPAGE: {
