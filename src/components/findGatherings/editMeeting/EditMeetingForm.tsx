@@ -9,6 +9,7 @@ import { CreateMeetingRequestBody } from '@/types/api/meeting';
 import { createMeeting } from '@/api/meeting';
 import ErrorWrapper from '@/components/shared/ErrorWrapper';
 import { useRouter } from 'next/router';
+import Button from '@/components/shared/Button';
 
 interface FormValues {
   meetingName: string;
@@ -144,20 +145,22 @@ export default function EditMeetingForm({
             </label>
           </ErrorWrapper>
           <div className="flex gap-4">
-            <button
+            <Button
+              text="취소"
               type="button"
+              size={'large'}
+              variant={'outline'}
               onClick={handleCloseThisModal}
-              className="h-10 w-full rounded-md border border-primary-10 font-semibold text-primary-10"
-            >
-              취소
-            </button>
-
-            <button
+              height={40}
+              className="w-full rounded-md"
+            />
+            <Button
+              text="만들기"
               type="submit"
-              className="h-10 w-full rounded-md border bg-primary-10 font-semibold text-white"
-            >
-              만들기
-            </button>
+              size={'large'}
+              height={40}
+              className="w-full rounded-md"
+            />
           </div>
         </form>
       </div>
