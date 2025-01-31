@@ -7,7 +7,6 @@ import Image from 'next/image';
 import DateBadge from '@/components/shared/DateBadge';
 import AvatarList from './AvatarList';
 import Button from '../shared/Button';
-import { PlanDetail } from '@/types/api/plan';
 import IconWithCount from '../meetings/ui/IconWithCount';
 import {
   EyeIcon,
@@ -19,19 +18,39 @@ import {
 import ArrowLeft from '@/assets/icons/arrow-left.svg';
 import { useRouter } from 'next/router';
 import { formatAverage } from '@/utils/formatRating';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import usePlanDetailQuery from '@/hooks/usePlanDetailQuery';
+import { attendPlan, leavePlan } from '@/api/plan';
 
 interface PlanDetailMainProps {
-  userEmail?: string;
-  planData: PlanDetail;
-  onClickJoinPlan: () => void;
+  id: number;
 }
 
-export default function PlanDetailMain({
-  userEmail,
-  planData,
-  onClickJoinPlan,
-}: PlanDetailMainProps) {
+export default function PlanDetailMain({ id }: PlanDetailMainProps) {
   const router = useRouter();
+
+  const { data, isLoading, refetch } = usePlanDetailQuery(id);
+  const planData = data?.data;
+  const auth = useSelector((state: RootState) => state.auth);
+  const onClickJoinPlan = async () => {
+    if (!auth.isLoggedIn) {
+      router.push('/login');
+      return;
+    }
+    try {
+      if (!data?.data.isJoined) {
+        await attendPlan(id);
+      } else {
+        await leavePlan(id);
+      }
+    } finally {
+      refetch();
+    }
+  };
+
+  if (isLoading) return <div>로딩중</div>;
+  if (!data || !planData) return <div>데이터 없음</div>;
   return (
     <>
       <>
@@ -81,7 +100,7 @@ export default function PlanDetailMain({
               <div className="text-sm">
                 {`모집 마감일 ${dayjs(planData.registrationEnd).format('YYYY.MM.DD')}`}
               </div>
-              {userEmail === planData.email && (
+              {auth.user?.email === planData.email && (
                 <Button
                   text={planData.isJoined ? '참석 취소하기' : '일정 참석하기'}
                   disable={planData === undefined}

@@ -5,7 +5,10 @@ import { useQuery } from '@tanstack/react-query';
 export default function useMeetingDetailQuery(id: number) {
   return useQuery({
     queryKey: queryKey.meetingDetail(id),
-    queryFn: () => fetchMeetingDetail(id),
+    queryFn: () => {
+      console.log('클라이언트');
+      return fetchMeetingDetail(id);
+    },
     enabled: typeof id === 'number',
   });
 }
