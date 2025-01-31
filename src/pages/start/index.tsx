@@ -14,13 +14,17 @@ const StartPage = () => {
       </div>
       <div className="mb-4">
         <Link href={'/plans'}>
-          <button className="h-[42px] w-[324px] rounded-[8px] border-[1px] border-primary-10 font-normal text-primary-10 hover:bg-primary-30 hover:bg-opacity-10">
-            {'비회원으로 시작하기'}
-          </button>
+          <Button
+            text={'비회원으로 시작하기'}
+            size={'large'}
+            variant={'outline'}
+            width={324}
+            height={42}
+          />
         </Link>
       </div>
       <Link href={'/signup'} rel="noopener noreferrer" target="_blank">
-        <Button text={'회원가입'} type="signup" textColor="text-primary-10" />
+        <Button text={'회원가입'} size={'large'} width={320} height={42} />
       </Link>
       <div className="mb-[22px] mt-[39px] flex items-center justify-center text-center">
         <p className="font-base mr-2 text-[#6C6C6C]">이미 가입하셨나요?</p>

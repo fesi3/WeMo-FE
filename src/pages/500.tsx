@@ -1,3 +1,4 @@
+import Button from '@/components/shared/Button';
 import Link from 'next/link';
 import React from 'react';
 
@@ -14,9 +15,7 @@ function InternalServerError() {
       </p>
 
       <Link href={'/plans'}>
-        <button className="rounded-lg bg-[#00B6AD] px-6 py-2 font-medium text-white hover:bg-[#009c96]">
-          Back to Homepage
-        </button>
+        <Button text="Back to Homepage" className="px-6 py-2" />
       </Link>
     </div>
   );

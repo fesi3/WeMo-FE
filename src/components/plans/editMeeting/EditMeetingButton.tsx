@@ -10,9 +10,10 @@ export default function EditMeetingButton() {
     <>
       <Button
         text="모임 만들기"
-        type="meeting_create"
-        backColor="relative top-5 bg-primary-10 text-white w-full"
+        // backColor="relative top-5 bg-primary-10 text-white w-full"
         onClick={handleOpen}
+        width={336}
+        height={42}
       />
       <Modal isOpen={toggleValue} handleClose={handleClose} title="모임 만들기">
         <EditMeetingForm handleCloseThisModal={handleClose} />
