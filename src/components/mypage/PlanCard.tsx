@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import OwnerButton from './OwnerButton';
 import { PlanData } from '@/types/mypageType';
 import { useCancle } from '@/hooks/useCancle';
+import Button from '@/components/shared/Button';
 
 interface PlanCardProps {
   planData: PlanData;
@@ -66,15 +67,10 @@ const PlanCard = ({ planData }: PlanCardProps) => {
       {isFulled && ( // isCancled로 바꾸기
         <div className="absolute inset-0 z-10 flex items-center justify-center bg-gray-500 bg-opacity-50">
           <div className="flex flex-col">
-            <p className="bg-primary-95 bg-opacity-70 p-3 font-semibold text-primary-10">
+            <p className="mb-4 bg-primary-95 bg-opacity-70 p-3 font-semibold text-primary-10">
               주최자에 의해 취소된 일정입니다.
             </p>
-            <button
-              onClick={() => handleLeavePlan(planId)}
-              className="m-5 rounded-md bg-primary-10 px-4 py-2 text-white"
-            >
-              삭제하기
-            </button>
+            <Button text="삭제하기" onClick={() => handleLeavePlan(planId)} />
           </div>
         </div>
       )}
