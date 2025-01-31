@@ -19,7 +19,7 @@ function GNBFooter() {
         <footer className="fixed bottom-0 z-10 flex h-[50px] w-full items-center bg-white pt-1 shadow-md md:invisible">
           <ul className="flex w-full justify-around px-5">
             {menuItems.map((item) => (
-              <GNBItem name={item.name} path={item.path} />
+              <GNBItem key={item.key} name={item.name} path={item.path} />
             ))}
             <GNBItem
               name={isLoggedIn ? '마이페이지' : '로그인'}

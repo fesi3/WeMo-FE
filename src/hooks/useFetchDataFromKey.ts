@@ -18,13 +18,6 @@ const useFetchDataFromKey = <T>(param: string, key?: string) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    //isLoggedIn 가 false 인 경우
-    if (!isLoggedIn) {
-      alert('로그인이 필요합니다!');
-      router.push('/login');
-      return;
-    }
-
     //isLoggedIn 가 true 인 경우- api 요청
     const fetchDataFromApi = async () => {
       setLoading(true);
