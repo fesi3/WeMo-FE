@@ -12,11 +12,16 @@ const {
   AUTH: { SIGNIN },
 } = PATHS;
 
+interface LoginFormType {
+  email: string;
+  password: string;
+}
+
 function useLoginForm() {
   const router = useRouter();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const [loginFormValue, setLoginFormValue] = useState({
+  const [loginFormValue, setLoginFormValue] = useState<LoginFormType>({
     email: '',
     password: '',
   });
