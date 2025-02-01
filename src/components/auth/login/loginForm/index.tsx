@@ -41,7 +41,7 @@ function LoginForm(props: LoginFormProps) {
         onClick={handleSubmit}
         width={320}
         height={42}
-        disabled={errors['email'] || errors['password'] ? true : false}
+        disabled={emailError || passwordError ? true : false}
       />
     </form>
   );
