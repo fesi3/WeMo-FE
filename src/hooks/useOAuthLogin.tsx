@@ -15,6 +15,9 @@ function useOAuthLogin(platform: string) {
   // 리다이렉트 페이지 쿼리 스트링에는 구글서버에서 보내주는 authcode가 담겨져있습니다.
   const authCode = searchParams.get('code');
   useEffect(() => {
+    if (!authCode || isFetched.current) return; // ✅ authCode가 없거나 이미 요청을 보냈다면 실행하지 않음
+
+    isFetched.current = true; // ✅ 요청 전에 상태 업데이트
     const fetchAuthCode = async () => {
       try {
         //authcode를 쿼리스트링으로 담아서 리소스 서버에 요청을 보냅니다.
@@ -28,19 +31,15 @@ function useOAuthLogin(platform: string) {
         if (success) {
           dispatch(login());
           queryClient.invalidateQueries({ queryKey: ['auth'] });
-          router.push('/plans');
+          router.replace('/plans');
         }
       } catch (error) {
         console.error(`${platform} oAuth Error fetching data:`, error);
         throw error;
       }
     };
-
-    if (authCode !== null && !isFetched.current) {
-      isFetched.current = true;
-      fetchAuthCode();
-    }
-  }, []);
+    fetchAuthCode();
+  }, [authCode]);
 }
 
 export default useOAuthLogin;
