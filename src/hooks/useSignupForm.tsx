@@ -1,5 +1,6 @@
 /* eslint-disable no-useless-escape */
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import debounce from 'lodash/debounce';
 
 function useSignupForm() {
   const [signupFormValue, setSignupFormValue] = useState({
@@ -18,7 +19,7 @@ function useSignupForm() {
     passwordCheck: '',
   });
 
-  const validateFrom = (name: string, value: string) => {
+  const validateForm = (name: string, value: string) => {
     let errorMessage;
     switch (name) {
       case 'nickname':
@@ -67,10 +68,22 @@ function useSignupForm() {
     return errorMessage;
   };
 
+  // 디바운스된 유효성 검사 함수
+  const debouncedValidate = useCallback(
+    debounce((name: string, value: string) => {
+      const error = validateForm(name, value);
+      setErrors((prev) => ({ ...prev, [name]: error }));
+    }, 300),
+    [],
+  );
+
   // 입력창 제어 함수
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id: name, value } = e.target;
-    const error = validateFrom(name, value);
+    const error = validateForm(name, value);
+
+    // 디바운스를 적용한 유효성 검사 실행
+    debouncedValidate(name, value);
 
     // 폼 벨류 세터 함수
     setSignupFormValue((prev) => ({
