@@ -19,7 +19,7 @@ function withError<T extends object>(WrappedComponent: React.ComponentType<T>) {
           className={twMerge(
             inputClassName,
             `rounded`,
-            error ? 'border-red-400' : 'border-gray-300',
+            error ? 'border-red-400 focus:ring-red-400' : 'border-gray-300',
           )}
         />
         {/* 에러 메세지 */}

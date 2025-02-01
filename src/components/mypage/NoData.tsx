@@ -1,18 +1,23 @@
 import Image from 'next/image';
 import image from '@/assets/images/no_review.png';
-import Button from '../shared/Button';
+import Button from '@/components/shared/Button';
 import { useRouter } from 'next/router';
 
 type NoDataProps = {
   comment: string;
   toPage?: string;
+  text?: string;
 };
 
-const NoData = ({ comment, toPage }: NoDataProps) => {
+const NoData = ({ comment, toPage, text }: NoDataProps) => {
   const router = useRouter();
 
   const onClickButton = () => {
-    router.push('/meetings');
+    if (toPage) {
+      router.push(toPage); // `toPage`가 있으면 해당 경로로 이동
+    } else {
+      router.push('/');
+    }
   };
 
   return (
@@ -21,7 +26,7 @@ const NoData = ({ comment, toPage }: NoDataProps) => {
       <p>{comment} 없어요!</p>
       {toPage ? (
         <div className="mt-10">
-          <Button type="review_create" text={toPage} onClick={onClickButton} />
+          <Button text={text} onClick={onClickButton} />
         </div>
       ) : null}
     </div>

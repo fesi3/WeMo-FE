@@ -1,4 +1,4 @@
-import { menuItems } from '@/constants/gnbMenu';
+import { hideGnbFooterRoutes, menuItems } from '@/constants/gnb';
 import GNBItem from '../item';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
@@ -11,23 +11,20 @@ import { useRouter } from 'next/router';
 function GNBFooter() {
   const router = useRouter();
   const { isLoggedIn, user } = useSelector((state: RootState) => state.auth);
-  const hideGnbFooterRoutes = ['/signup', '/login', '/start'];
+
   const showGnbFooter = hideGnbFooterRoutes.includes(router.pathname);
   return (
     <>
       {showGnbFooter || (
-        <footer className="fixed bottom-0 z-10 flex h-[50px] w-full items-center bg-white shadow-md md:invisible">
+        <footer className="fixed bottom-0 z-10 flex h-[50px] w-full items-center bg-white pt-1 shadow-md md:invisible">
           <ul className="flex w-full justify-around px-5">
             {menuItems.map((item) => (
-              <GNBItem text={item.name} path={item.path} />
+              <GNBItem name={item.name} path={item.path} />
             ))}
-            {isLoggedIn ? (
-              <GNBItem text={'마이페이지'} path={`/user/${user?.nickname}`} />
-            ) : (
-              <div>
-                <GNBItem text={'로그인'} path={'/start'} />
-              </div>
-            )}
+            <GNBItem
+              name={isLoggedIn ? '마이페이지' : '로그인'}
+              path={isLoggedIn ? `/user/${user?.nickname}` : '/start'}
+            />
           </ul>
         </footer>
       )}
