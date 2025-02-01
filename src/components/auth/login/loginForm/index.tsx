@@ -7,7 +7,7 @@ interface LoginFormProps {
   handleSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   loginFormValue: LoginFormTypes;
-  errors: { [key: string]: string };
+  errors: { [key: string]: string | null };
 }
 
 const InputWithMessage = withError(Input);

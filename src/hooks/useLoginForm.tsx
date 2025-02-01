@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { useQueryClient } from '@tanstack/react-query';
 import { login } from '@/redux/authReducers';
 import { PATHS } from '@/constants/apiPath';
+import { AxiosError } from 'axios';
 const {
   AUTH: { SIGNIN },
 } = PATHS;
@@ -17,6 +18,8 @@ interface LoginFormType {
   password: string;
 }
 
+type loginErrorType = Record<keyof LoginFormType, string | null>;
+
 function useLoginForm() {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -25,9 +28,9 @@ function useLoginForm() {
     email: '',
     password: '',
   });
-  const [errors, setErrors] = useState({
-    email: '',
-    password: '',
+  const [errors, setErrors] = useState<loginErrorType>({
+    email: null,
+    password: null,
   });
 
   const validateField = (name: string, value: string) => {
@@ -47,9 +50,9 @@ function useLoginForm() {
   };
 
   const validateForm = () => {
-    const newErrors: { email: string; password: string } = {
-      email: '',
-      password: '',
+    const newErrors: loginErrorType = {
+      email: null,
+      password: null,
     };
 
     if (!loginFormValue.email) {
@@ -64,14 +67,18 @@ function useLoginForm() {
       newErrors.password = '비밀번호를 작성해주세요.';
     }
 
-    if (newErrors.email.length || newErrors.password.length) {
+    if (newErrors.email || newErrors.password) {
       setErrors(newErrors);
+      return false;
     } else {
       return true;
     }
   };
 
-  const mutation = useMutation<LoginFormTypes>({
+  const loginMutation = useMutation<
+    LoginFormTypes,
+    AxiosError<{ message: string }>
+  >({
     mutationFn: () =>
       fetchData({
         param: SIGNIN,
@@ -85,9 +92,19 @@ function useLoginForm() {
       queryClient.invalidateQueries({ queryKey: ['auth'] });
       router.replace('/plans');
     },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onError: (error: any) => {
-      setErrors((prev) => ({ ...prev, email: error.response.data.message }));
+    onError: (error) => {
+      console.error(error);
+      if (error.response?.data.message === '비밀번호가 일치하지 않습니다.') {
+        setErrors((prev) => ({
+          ...prev,
+          password: error.response?.data.message || null,
+        }));
+      } else {
+        setErrors((prev) => ({
+          ...prev,
+          email: error.response?.data.message || null,
+        }));
+      }
     },
   });
 
@@ -108,10 +125,9 @@ function useLoginForm() {
     e.preventDefault();
     // 폼 검증 실행
     const isValid = validateForm();
-
     // 폼이 유효하면 mutation 호출
     if (isValid) {
-      mutation.mutate();
+      loginMutation.mutate();
     }
   };
   return { loginFormValue, handleChange, handleSubmit, errors };

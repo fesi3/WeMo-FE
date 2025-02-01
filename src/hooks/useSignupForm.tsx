@@ -6,6 +6,7 @@ import { useMutation } from '@tanstack/react-query';
 import fetchData from '@/api/fetchData';
 import { useRouter } from 'next/router';
 import { PATHS } from '@/constants/apiPath';
+import { AxiosError } from 'axios';
 
 interface SignupFormType {
   email: string;
@@ -37,7 +38,10 @@ function useSignupForm() {
     AUTH: { SIGNUP },
   } = PATHS;
 
-  const mutation = useMutation<SignupFormTypes>({
+  const signupMutation = useMutation<
+    SignupFormTypes,
+    AxiosError<{ message: string }>
+  >({
     mutationFn: () =>
       fetchData({
         param: SIGNUP,
@@ -48,8 +52,8 @@ function useSignupForm() {
       alert('회원가입이 완료되었습니다!');
       router.push('/login');
     },
-    onError: () => {
-      alert('회원가입이 실패했습니다!');
+    onError: (error) => {
+      alert(error.response?.data.message);
     },
   });
 
@@ -197,7 +201,7 @@ function useSignupForm() {
 
     // 폼이 유효하면 mutation 호출
     if (isValid) {
-      mutation.mutate();
+      signupMutation.mutate();
     }
   };
 
