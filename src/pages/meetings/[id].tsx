@@ -1,5 +1,5 @@
 import { fetchMeetingDetail } from '@/api/meeting';
-import MeetingDetailMain from '@/components/meetings/MeetingDetailMain';
+import MeetingDetailMain from '@/components/meetingDetail/MeetingDetailMain';
 import { queryKey } from '@/constants/queryKey';
 import {
   dehydrate,
