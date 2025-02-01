@@ -62,7 +62,9 @@ export default function ReviewModal({
       await uploadImagesToS3(croppedImages, presignedUrls);
 
       // Presigned URL에서 실제 S3 파일 경로 추출
-      const fileUrls = presignedUrls;
+      // const fileUrls = presignedUrls;
+      const fileUrls = presignedUrls.map((url) => url.split('?')[0]);
+      console.log('➡️ 최종 저장할 이미지 URL:', fileUrls);
 
       // 최종 데이터 작성
       const finalData = {
