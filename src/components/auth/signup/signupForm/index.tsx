@@ -8,7 +8,7 @@ interface SignupFormProps {
   handleSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   signupFormValue: SignupFormTypes;
-  errors: { [key: string]: string };
+  errors: { [key: string]: string | null };
 }
 
 const InputWithMessage = withError<InputProps>(Input);
@@ -85,6 +85,15 @@ function SignupForm(props: SignupFormProps) {
         onClick={handleSubmit}
         width={324}
         height={42}
+        disabled={
+          nicknameError ||
+          companyNameError ||
+          emailError ||
+          passwordError ||
+          passwordCheckError
+            ? true
+            : false
+        }
       />
     </form>
   );
