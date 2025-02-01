@@ -1,12 +1,14 @@
 import Image from 'next/image';
 import ProgressIndicator from './Indicator';
-import { planCardDay, planCardTime } from '@/utils/dateUtils';
 import moreBtn from '@/assets/icons/more-vertical.png';
 import { useRouter } from 'next/router';
 import OwnerButton from './OwnerButton';
 import { PlanData } from '@/types/mypageType';
 import { useCancle } from '@/hooks/useCancle';
 import Button from '@/components/shared/Button';
+import MeetingDate from '../shared/badges/MeetingDate';
+import MeetingTime from '../shared/badges/MeetingTime';
+import DistrictBadge from '../shared/badges/DistrictBadge';
 
 interface PlanCardProps {
   planData: PlanData;
@@ -28,8 +30,8 @@ const PlanCard = ({ planData }: PlanCardProps) => {
     participants,
     // registrationEnd,
     // isOpened,
-    // isCancled,
-    isFulled,
+    isCancled,
+    // isFulled,
     // isLiked,
   } = planData;
 
@@ -64,7 +66,7 @@ const PlanCard = ({ planData }: PlanCardProps) => {
   return (
     <div className="relative mb-4 flex flex-col rounded-md border border-gray-200 sm:flex-row sm:items-center sm:gap-3 md:gap-5">
       {/* 반투명 오버레이 */}
-      {isFulled && ( // isCancled로 바꾸기
+      {isCancled && (
         <div className="absolute inset-0 z-10 flex items-center justify-center bg-gray-500 bg-opacity-50">
           <div className="flex flex-col">
             <p className="mb-4 bg-primary-95 bg-opacity-70 p-3 font-semibold text-primary-10">
@@ -102,22 +104,15 @@ const PlanCard = ({ planData }: PlanCardProps) => {
 
         {/* 구분선 */}
         <div className="my-4 border-b border-gray-200"></div>
-
         {/* 날짜, 시간, 위치 */}
-        <div className="flex items-center gap-2 text-sm font-medium">
-          <span className="rounded-full bg-gray-100 px-3 py-1 font-medium">
-            {planCardDay(dateTime)}
-          </span>
-          <span className="rounded-full bg-gray-100 px-3 py-1 font-medium">
-            {planCardTime(dateTime)}
-          </span>
-          <span className="rounded-full bg-gray-100 px-3 py-1 font-medium">
-            {province} {district}
-          </span>
+        <div className="ml-2 flex items-center gap-2 text-sm font-medium">
+          <MeetingDate dateTime={dateTime} />
+          <MeetingTime dateTime={dateTime} />
+          <DistrictBadge district={`${province} ${district}`} />
         </div>
 
         <div className="flex">
-          <div className="flex flex-1 flex-col gap-1 p-2">
+          <div className="flex flex-1 flex-col gap-1 p-2 md:mt-3">
             {/* 제목 */}
             <div
               onClick={handleDetailPage}
