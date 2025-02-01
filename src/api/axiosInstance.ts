@@ -4,7 +4,7 @@ import store from '@/redux/store';
 import { logout } from '@/redux/authReducers';
 
 const {
-  AUTH: { REFRESH_TOKEN },
+  AUTH: { REFRESH_TOKEN, SIGNOUT },
 } = PATHS;
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -27,10 +27,10 @@ instance.interceptors.response.use(
 
       try {
         await instance.post(REFRESH_TOKEN);
-
         return instance(originalRequest); // 실패한 요청 재시도
       } catch (error) {
         // Case 2: 리프레시 토큰 만료
+        await instance.post(SIGNOUT);
         alert('세션이 만료되었습니다.');
         store.dispatch(logout()); // ✅ Clear user from Redux
         window.location.href = '/start';
