@@ -1,5 +1,6 @@
 /* eslint-disable no-useless-escape */
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import debounce from 'lodash/debounce';
 import { useMutation } from '@tanstack/react-query';
 import { LoginFormTypes } from '@/components/auth/type';
 import fetchData from '@/api/fetchData';
@@ -33,16 +34,18 @@ function useLoginForm() {
     password: null,
   });
 
-  const validateField = (name: string, value: string) => {
+  const validateField = (name: string, formValues: LoginFormType) => {
+    const { email: currentEmailValue, password: currentPasswordValue } =
+      formValues;
     let errorMessage = '';
     if (name === 'email') {
-      if (!value) {
+      if (!currentEmailValue) {
         errorMessage = '이메일을 작성해주세요.';
-      } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(value)) {
+      } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(currentEmailValue)) {
         errorMessage = '이메일 형식이 아닙니다.';
       }
     } else if (name === 'password') {
-      if (!value) {
+      if (!currentPasswordValue) {
         errorMessage = '비밀번호를 작성해주세요.';
       }
     }
@@ -108,17 +111,24 @@ function useLoginForm() {
     },
   });
 
+  // 디바운스된 유효성 검사 함수
+  const debouncedValidate = useCallback(
+    debounce((name: string, currentValues: LoginFormType) => {
+      const error = validateField(name, currentValues);
+      setErrors((prev) => ({ ...prev, [name]: error }));
+    }, 300),
+    [],
+  );
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id: name, value } = e.target;
-    //
-    setLoginFormValue((prev) => ({ ...prev, [name]: value }));
 
-    if (errors['email'] || errors['password']) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        [name]: validateField(name, value),
-      }));
-    }
+    setLoginFormValue((prev) => {
+      const newValues = { ...prev, [name]: value };
+
+      debouncedValidate(name, newValues); // ✅ Pass latest form values
+      return newValues;
+    });
   };
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {

@@ -57,49 +57,57 @@ function useSignupForm() {
     },
   });
 
-  const validateField = (
-    name: string,
-    value: string,
-    formValues: SignupFormType,
-  ) => {
+  const validateField = (name: string, formValues: SignupFormType) => {
     let errorMessage;
+    const {
+      nickname: currentNicknameValue,
+      companyName: currentCompanyNameValue,
+      email: currentEmailValue,
+      password: currentPasswordValue,
+      passwordCheck: currentPasswordCheckValue,
+    } = formValues;
     switch (name) {
       case 'nickname':
-        if (!value) {
+        if (!currentNicknameValue) {
           errorMessage = '닉네임을 작성해주세요.';
-        } else if (value.length < 2 || value.length > 20) {
+        } else if (
+          currentNicknameValue.length < 2 ||
+          currentNicknameValue.length > 20
+        ) {
           errorMessage = '닉네임은 최소 2자, 최대 20자 이어야 합니다.';
         }
         break;
       case 'companyName':
-        if (!value) {
+        if (!currentCompanyNameValue) {
           errorMessage = '회사명을 작성해주세요.';
         }
         break;
       case 'email':
-        if (!value) {
+        if (!currentEmailValue) {
           errorMessage = '이메일을 작성해주세요.';
-        } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(value)) {
+        } else if (
+          !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(currentEmailValue)
+        ) {
           errorMessage = '이메일 형식이 아닙니다.';
         }
         break;
       case 'password':
-        if (!value) {
+        if (!currentPasswordValue) {
           errorMessage = '비밀번호를 작성해주세요.';
         } else if (
           !/(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])/g.test(
-            value,
+            currentPasswordValue,
           )
         ) {
           errorMessage = '문자, 숫자, 특수기호를 하나 이상 포함해야 합니다.';
-        } else if (value.length < 8) {
+        } else if (currentPasswordValue.length < 8) {
           errorMessage = '비밀번호는 8자리 이상 이어야 합니다.';
         }
         break;
       case 'passwordCheck':
-        if (!value) {
+        if (!currentPasswordCheckValue) {
           errorMessage = '비밀번호를 작성해주세요.';
-        } else if (value !== formValues.password) {
+        } else if (currentPasswordCheckValue !== formValues.password) {
           errorMessage = '비밀번호가 일치하지 않습니다.';
         }
         break;
@@ -174,8 +182,8 @@ function useSignupForm() {
 
   // 디바운스된 유효성 검사 함수
   const debouncedValidate = useCallback(
-    debounce((name: string, value: string, currentValues) => {
-      const error = validateField(name, value, currentValues);
+    debounce((name: string, currentValues) => {
+      const error = validateField(name, currentValues);
       setErrors((prev) => ({ ...prev, [name]: error }));
     }, 300),
     [],
@@ -188,7 +196,7 @@ function useSignupForm() {
     setSignupFormValue((prev) => {
       const newValues = { ...prev, [name]: value };
 
-      debouncedValidate(name, value, newValues); // ✅ Pass latest form values
+      debouncedValidate(name, newValues); // ✅ Pass latest form values
       return newValues;
     });
   };
