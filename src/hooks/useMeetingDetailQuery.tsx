@@ -7,5 +7,6 @@ export default function useMeetingDetailQuery(id: number) {
     queryKey: queryKey.meetingDetail(id),
     queryFn: () => fetchMeetingDetail(id),
     enabled: typeof id === 'number',
+    staleTime: 0,
   });
 }

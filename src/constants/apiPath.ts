@@ -11,6 +11,7 @@ export const PATHS = {
   MEETING: {
     CREATE: '/api/meetings',
     JOIN: (meetingId: number) => `/api/meetings/${meetingId}`,
+    LEAVE: (meetingId: number) => `/api/meetings/${meetingId}/joinCancel`,
     GET_ALL: '/api/meetings',
     GET_DETAIL: (meetingId: number) => `/api/meetings/${meetingId}`,
     GET_MEMBERS: (meetingId: number, pageNumber: number, size: number) =>

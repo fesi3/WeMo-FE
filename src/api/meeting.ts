@@ -35,23 +35,31 @@ export const fetchMeetingDetail = async (meetingId: number) => {
 export const joinMeeting = async (meetingId: number) => {
   try {
     if (isNaN(meetingId)) throw new Error('유효하지 않은 모임ID입니다.');
-    await instance.post<ApiResponse>(PATHS.MEETING.JOIN(meetingId));
+    const response = await instance.post<ApiResponse>(
+      PATHS.MEETING.JOIN(meetingId),
+    );
+    return response.data.success;
   } catch (error) {
     if (!isAxiosError(error)) return;
     if (!error.response) return;
     const response = error.response.data as ApiErrorResponse;
     alert(error.message || response.message); // 토스트로 리팩토링
+    return false;
   }
 };
 
 export const leaveMeeting = async (meetingId: number) => {
   try {
     if (isNaN(meetingId)) throw new Error('유효하지 않은 모임ID입니다.');
-    await instance.delete<ApiResponse>(PATHS.MEETING.JOIN(meetingId));
+    const response = await instance.delete<ApiResponse>(
+      PATHS.MEETING.LEAVE(meetingId),
+    );
+    return response.data.success;
   } catch (error) {
     if (!isAxiosError(error)) return;
     if (!error.response) return;
     const response = error.response.data as ApiErrorResponse;
     alert(error.message || response.message); // 토스트로 리팩토링
+    return false;
   }
 };

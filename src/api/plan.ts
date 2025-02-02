@@ -32,17 +32,35 @@ export const fetchPlanDetail = async (planId: number) => {
 };
 
 export const attendPlan = async (planId: number) => {
-  if (isNaN(planId)) return;
-  const response = await instance.post<ApiResponse<null>>(
-    PATHS.PLAN.ATTEND(planId),
-  );
-  return response.data.success;
+  try {
+    if (isNaN(planId)) return;
+    const response = await instance.post<ApiResponse>(
+      PATHS.PLAN.ATTEND(planId),
+    );
+    return response.data.success;
+  } catch {
+    return false;
+  }
 };
 
 export const leavePlan = async (planId: number) => {
-  if (isNaN(planId)) return;
-  const response = await instance.delete<ApiResponse<null>>(
-    PATHS.PLAN.ATTEND(planId),
-  );
-  return response.data.success;
+  try {
+    if (isNaN(planId)) return;
+    const response = await instance.delete<ApiResponse>(
+      PATHS.PLAN.ATTEND(planId),
+    );
+    return response.data.success;
+  } catch {
+    return false;
+  }
+};
+
+export const likePlan = async (planId: number) => {
+  try {
+    if (isNaN(planId)) return;
+    const response = await instance.post<ApiResponse>(PATHS.PLAN.LIKE(planId));
+    return response.data.success;
+  } catch {
+    return false;
+  }
 };

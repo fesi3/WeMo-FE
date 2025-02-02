@@ -18,7 +18,7 @@ import useMeetingDetailQuery from '@/hooks/useMeetingDetailQuery';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import MeetingDetailFooter from './MeetingDetailFooter';
-import useJoinMeetingMutation from '@/hooks/useJoinMeeting';
+import useJoinMeetingMutation from '@/hooks/useJoinMeetingMutation';
 
 export default function MeetingDetailMain() {
   const [isHost, setIsHost] = useState(false);
@@ -32,8 +32,11 @@ export default function MeetingDetailMain() {
     meetingId: idNum,
     isJoined: meetingData?.isJoined,
   });
-  const onClickJoin = () => {
+  const onClickJoinOrLeave = () => {
     mutate();
+  };
+  const handleLoginRedirection = () => {
+    router.push('/login');
   };
   useEffect(() => {
     if (user?.email === data?.data.email) {
@@ -101,8 +104,9 @@ export default function MeetingDetailMain() {
         </SectionContainer>
       </div>
       <MeetingDetailFooter
-        onClickJoin={onClickJoin}
-        onClickLeave={() => {}}
+        isLogined={user !== null}
+        handleLoginRedirection={handleLoginRedirection}
+        onClickJoinOrLeave={onClickJoinOrLeave}
         isHost={isHost}
         isJoined={meetingData.isJoined}
       />
