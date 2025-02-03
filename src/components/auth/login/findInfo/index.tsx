@@ -17,7 +17,7 @@ function FindInfo() {
         비밀번호 찾기
       </span>
       <div className="h-3 border-l-2" />
-      <Link href={'/signup'} rel="noopener noreferrer" target="_blank">
+      <Link href={'/signup'}>
         <span className="text-sm text-gray-400">회원가입</span>
       </Link>
     </div>
