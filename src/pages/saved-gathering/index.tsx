@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import instance from '@/api/axiosInstance'; // ✅ axios instance 사용
 import { PlanData } from '@/types/plans';
 import { usePageInfiniteScroll } from '@/hooks/usePageInfiniteScroll';
@@ -16,14 +16,14 @@ const SavedGatheringPage = () => {
   //Redux에서 로그인 상태 가져오기
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
-  useEffect(() => {
-    console.log('현재 로그인 상태:', isLoggedIn);
-  }, [isLoggedIn]); // 로그인 상태 변경될 때마다 확인
+  // useEffect(() => {
+  //   console.log('현재 로그인 상태:', isLoggedIn);
+  // }, [isLoggedIn]); // 로그인 상태 변경될 때마다 확인
 
   // 데이터 로드
   const fetchLikedPlans = async (page: number): Promise<boolean> => {
     if (!isLoggedIn) {
-      console.log('Redux에서 로그인 상태 false. API 요청을 보내지 않음.');
+      //console.log('Redux에서 로그인 상태 false. API 요청을 보내지 않음.');
       return false;
     }
 
@@ -31,17 +31,17 @@ const SavedGatheringPage = () => {
     setError(null);
 
     try {
-      console.log(`[API 요청] 찜한 일정 불러오기 (페이지: ${page})`);
+      //console.log(`[API 요청] 찜한 일정 불러오기 (페이지: ${page})`);
 
       const response = await instance.get(
         `/api/plans/like?page=${page}&size=10`,
       );
 
-      console.log('[API 응답] 데이터:', response.data);
+      //console.log('[API 응답] 데이터:', response.data);
 
       const newPlans: PlanData[] = response.data.data.planList ?? [];
 
-      console.log('[처리된 데이터] newPlans:', newPlans);
+      //console.log('[처리된 데이터] newPlans:', newPlans);
 
       if (newPlans.length > 0) {
         setPlans((prevPlans) => [
@@ -67,11 +67,11 @@ const SavedGatheringPage = () => {
   const { loaderRef } = usePageInfiniteScroll({
     fetchMore: fetchLikedPlans,
     initialPage: 1,
-    onPageLoadComplete: (dataAvailable) => {
-      if (!dataAvailable) {
-        console.log('더 이상 불러올 데이터가 없습니다.');
-      }
-    },
+    // onPageLoadComplete: (dataAvailable) => {
+    //   if (!dataAvailable) {
+    //     console.log('더 이상 불러올 데이터가 없습니다.');
+    //   }
+    // },
   });
 
   // 로그인하지 않았을 경우 UI 처리
@@ -118,7 +118,7 @@ const SavedGatheringPage = () => {
             />
           </div>
         ) : (
-          <div className="mt-6">
+          <div className="my-6">
             <CardList plans={plans} />
           </div>
         )}
