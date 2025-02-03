@@ -1,6 +1,8 @@
 import { useEffect, useRef, useCallback } from 'react';
-import axios from 'axios';
-//import instance from '@/api/axiosInstance';
+//import axios from 'axios';
+import instance from '@/api/axiosInstance';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 import { RegionOption, SortOption, SubRegionOption } from '@/types/reviewType';
 import { PlanDataWithCategory } from '@/types/plans';
 import { getCategoryId } from '@/utils/categoryUtils';
@@ -30,6 +32,7 @@ export const useCursorInfiniteScroll = ({
   selectedSort,
   onDataFetched,
 }: UseCursorInfiniteScrollProps) => {
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   const loaderRef = useRef<HTMLDivElement | null>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
@@ -55,13 +58,21 @@ export const useCursorInfiniteScroll = ({
         try {
           const categoryParam = getCategoryId(selectedCategory || '');
           const sortParam = selectedSort ? `&sort=${selectedSort.value}` : '';
-
           let url = `${baseURL}/api/plans?size=10&categoryId=${categoryParam}${sortParam}`;
+
           if (cursor !== undefined) {
             url += `&cursor=${cursor}`;
           }
 
-          const res = await axios.get(url);
+          let res;
+          if (isLoggedIn) {
+            // 회원이면 쿠키 포함 요청
+            res = await instance.get(url);
+          } else {
+            // 비회원이면 쿠키 없이 요청
+            res = await instance.get(url, { withCredentials: false });
+          }
+
           const newData = res.data;
           const formatted = newData.data.planList as PlanDataWithCategory[];
           onDataFetched(formatted);
@@ -89,6 +100,7 @@ export const useCursorInfiniteScroll = ({
       setCursor,
       setIsFetching,
       onDataFetched,
+      isLoggedIn,
     ],
   );
 
