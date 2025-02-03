@@ -45,6 +45,7 @@ export interface MeetingDetail {
   reviewCounts: number;
   reviewAverage: number;
   reviewList: ReviewInMeeting[];
+  isJoined: boolean;
 }
 
 export interface MeetingDetailResponse {
