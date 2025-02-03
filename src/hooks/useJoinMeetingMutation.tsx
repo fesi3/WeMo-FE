@@ -3,7 +3,7 @@ import { queryKey } from '@/constants/queryKey';
 import { MeetingDetailResponse } from '@/types/api/meeting';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-interface useJoinMeetingProps {
+interface useJoinMeetingParams {
   meetingId: number;
   isJoined?: boolean;
 }
@@ -11,7 +11,7 @@ interface useJoinMeetingProps {
 export default function useJoinMeetingMutation({
   meetingId,
   isJoined,
-}: useJoinMeetingProps) {
+}: useJoinMeetingParams) {
   const queryClient = useQueryClient();
   const meetingDetailQueryKey = queryKey.meetingDetail(meetingId);
   return useMutation({

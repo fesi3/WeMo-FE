@@ -64,3 +64,15 @@ export const likePlan = async (planId: number) => {
     return false;
   }
 };
+
+export const unLikePlan = async (planId: number) => {
+  try {
+    if (isNaN(planId)) return;
+    const response = await instance.delete<ApiResponse>(
+      PATHS.PLAN.LIKE(planId),
+    );
+    return response.data.success;
+  } catch {
+    return false;
+  }
+};
