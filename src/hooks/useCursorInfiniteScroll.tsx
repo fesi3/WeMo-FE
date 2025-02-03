@@ -1,8 +1,11 @@
 import { useEffect, useRef, useCallback } from 'react';
-import instance from '@/api/axiosInstance';
+import axios from 'axios';
+//import instance from '@/api/axiosInstance';
 import { RegionOption, SortOption, SubRegionOption } from '@/types/reviewType';
 import { PlanDataWithCategory } from '@/types/plans';
 import { getCategoryId } from '@/utils/categoryUtils';
+
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
 interface UseCursorInfiniteScrollProps {
   cursor: number | null | undefined;
@@ -53,12 +56,12 @@ export const useCursorInfiniteScroll = ({
           const categoryParam = getCategoryId(selectedCategory || '');
           const sortParam = selectedSort ? `&sort=${selectedSort.value}` : '';
 
-          let url = `/api/plans?size=10&categoryId=${categoryParam}${sortParam}`;
+          let url = `${baseURL}/api/plans?size=10&categoryId=${categoryParam}${sortParam}`;
           if (cursor !== undefined) {
             url += `&cursor=${cursor}`;
           }
 
-          const res = await instance.get(url);
+          const res = await axios.get(url);
           const newData = res.data;
           const formatted = newData.data.planList as PlanDataWithCategory[];
           onDataFetched(formatted);
