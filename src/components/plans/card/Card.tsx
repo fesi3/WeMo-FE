@@ -76,7 +76,7 @@ const Card: React.FC<PlanData> = ({
           {/* 개설 확정 여부 */}
           <div className="text-xs">
             {isOpened ? (
-              <span className="rounded-xl bg-primary-10 px-2 py-1 text-xs text-white">
+              <span className="rounded-lg border border-primary-10 px-2 py-1 text-xs font-semibold text-primary-10">
                 개설 확정
               </span>
             ) : null}
