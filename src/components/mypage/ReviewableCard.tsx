@@ -2,6 +2,12 @@ import Image from 'next/image';
 import { fromNow } from '@/utils/dateUtils';
 import { ReviewPlanData } from '@/types/mypageType';
 import Button from '@/components/shared/Button';
+import useToggle from '@/hooks/useToggle';
+import { useState } from 'react';
+import Modal from '../shared/modals/Modal';
+import ReviewModal from './ReviewsModal';
+import fetchData from '@/api/fetchData';
+import { extractPathFromPresignedUrl } from '@/utils/extractPathFromPresignedUrl';
 
 interface reviewableProps {
   reviewable: ReviewPlanData;
@@ -15,14 +21,57 @@ const ReviewableCard = ({ reviewable }: reviewableProps) => {
     // 일정 상세로 이동
   };
 
-  const createReview = (planId: number) => {
-    console.log(`일정 ${planId} 번 리뷰 작성 모달 열림`);
-    // 일정에 대한 리뷰 작성 모달 열리기
+  // useToggle 훅으로 모달 열림/닫힘 관리
+  const { toggleValue: isModalOpen, handleOpen, handleClose } = useToggle();
+  const [submittedData, setSubmittedData] = useState<{
+    score: number;
+    comment: string;
+  } | null>(null); // 제출된 데이터 상태 관리
+
+  console.log(submittedData);
+
+  // ReviewModal 제출 핸들러
+  const handleSubmit = async (data: {
+    score: number;
+    comment: string;
+    imageUrls?: string[];
+  }) => {
+    try {
+      // 이미지 URL이 있으면 Presigned URL에서 경로 추출
+      const formattedImageUrls = data.imageUrls
+        ? extractPathFromPresignedUrl(data.imageUrls)
+        : [];
+
+      console.log('이미지 url ', formattedImageUrls);
+
+      // API 요청 데이터
+      const requestData = {
+        ...data,
+        imageUrls: formattedImageUrls,
+      };
+
+      // 리뷰 데이터 API로 전송
+      const response = await fetchData({
+        param: `/api/reviews/${planId}`, // 리뷰 작성 API 경로
+        method: 'post', // POST 요청
+        requestData, // 리뷰 데이터
+      });
+
+      console.log(response);
+      setSubmittedData(requestData); // 제출된 데이터를 상태에 저장
+      handleClose(); // 모달 닫기
+    } catch (error) {
+      console.error('리뷰 제출 실패:', error);
+      // 오류 처리
+    }
   };
+
   return (
-    <div className="my-5 flex flex-col gap-3 rounded-md border px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:p-6 md:gap-5">
-      <div className="flex flex-col gap-2">
-        <div className="text-[#A4A4A4]">{fromNow(dateTime)} 이용완료</div>
+    <div className="my-5 flex flex-col gap-3 rounded-md border px-4 py-3 shadow-[0px_4px_6px_1px_rgba(0,0,0,0.1)] sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:p-6 md:gap-5">
+      <div className="flex flex-col gap-4">
+        <div className="text-[rgb(164,164,164)]">
+          {fromNow(dateTime)} 이용완료
+        </div>
 
         <div className="mb-3 flex gap-3">
           <div className="relative h-[60px] w-[70px]">
@@ -45,15 +94,26 @@ const ReviewableCard = ({ reviewable }: reviewableProps) => {
           <div className="flex items-center"> </div>
         </div>
       </div>
+      <div></div>
       <Button
         text="리뷰쓰기"
         variant={'outline'}
         onClick={() => {
-          createReview(planId);
+          handleOpen();
         }}
-        width={132}
+        // width={132}
         height={42}
+        className="w-full self-end sm:w-[132px]"
       />
+
+      {/* 모달 */}
+      <Modal isOpen={isModalOpen} handleClose={handleClose} title="리뷰 작성">
+        <ReviewModal
+          mode="create" // 작성 모드
+          onSubmit={handleSubmit} // 제출 핸들러 연결
+          onClose={handleClose} // 모달 닫기 핸들러
+        />
+      </Modal>
     </div>
   );
 };
