@@ -8,7 +8,7 @@ interface CreateReviewRequestBody {
 }
 
 export const createReview = async (
-  planId: string,
+  planId: number,
   requestBody: CreateReviewRequestBody,
 ) => {
   try {
