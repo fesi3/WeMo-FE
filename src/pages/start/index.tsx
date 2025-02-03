@@ -23,7 +23,7 @@ const StartPage = () => {
           />
         </Link>
       </div>
-      <Link href={'/signup'} rel="noopener noreferrer" target="_blank">
+      <Link href={'/signup'}>
         <Button text={'회원가입'} size={'large'} width={320} height={42} />
       </Link>
       <div className="mb-[22px] mt-[39px] flex items-center justify-center text-center">

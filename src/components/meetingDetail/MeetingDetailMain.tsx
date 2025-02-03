@@ -1,4 +1,3 @@
-import { MeetingDetail } from '@/types/api/meeting';
 import Avatar from '../shared/avatar/Avatar';
 import Carousel from '../shared/Carousel';
 import DateBadge from '../shared/DateBadge';
@@ -13,14 +12,39 @@ import {
 import PlanCardListInMeeting from './ui/PlanCardListInMeeting';
 import ReviewListInMeeting from './ui/ReviewInMeeting';
 import { formatAverage } from '@/utils/formatRating';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import useMeetingDetailQuery from '@/hooks/useMeetingDetailQuery';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import MeetingDetailFooter from './MeetingDetailFooter';
+import useJoinMeetingMutation from '@/hooks/useJoinMeetingMutation';
 
-interface MeetingDetailMainProps {
-  meetingData: MeetingDetail;
-}
-
-export default function MeetingDetailMain({
-  meetingData,
-}: MeetingDetailMainProps) {
+export default function MeetingDetailMain() {
+  const [isHost, setIsHost] = useState(false);
+  const router = useRouter();
+  const { id } = router.query;
+  const idNum = parseInt(id as string);
+  const { isLoading, data, isError } = useMeetingDetailQuery(idNum);
+  const meetingData = data?.data;
+  const user = useSelector((state: RootState) => state.auth.user);
+  const { mutate } = useJoinMeetingMutation({
+    meetingId: idNum,
+    isJoined: meetingData?.isJoined,
+  });
+  const onClickJoinOrLeave = () => {
+    mutate();
+  };
+  const handleLoginRedirection = () => {
+    router.push('/login');
+  };
+  useEffect(() => {
+    if (user?.email === data?.data.email) {
+      setIsHost(true);
+    }
+  }, [data?.data.email, user?.email]);
+  if (isLoading) return <div>로딩중</div>;
+  if (isError || !meetingData) return <div>에러</div>;
   return (
     <>
       <div className="flex w-full flex-col gap-10 p-3">
@@ -79,6 +103,13 @@ export default function MeetingDetailMain({
           </div>
         </SectionContainer>
       </div>
+      <MeetingDetailFooter
+        isLogined={user !== null}
+        handleLoginRedirection={handleLoginRedirection}
+        onClickJoinOrLeave={onClickJoinOrLeave}
+        isHost={isHost}
+        isJoined={meetingData.isJoined}
+      />
     </>
   );
 }
