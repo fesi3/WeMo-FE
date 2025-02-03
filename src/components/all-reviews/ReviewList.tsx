@@ -3,6 +3,7 @@ import HeartRating from '@/components/shared/HeartRating';
 import ReviewImageModal from '@/components/all-reviews/ReviewImageModal';
 import { Review } from '../../types/reviewType';
 import useToggle from '@/hooks/useToggle';
+import defaultImage from '@/assets/images/study.png'; // 기본 이미지 임포트
 
 interface ReviewListProps {
   reviews: Review[];
@@ -28,6 +29,7 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
       [reviewId]: !prev[reviewId],
     }));
   };
+
   if (!Array.isArray(reviews) || reviews.length === 0) {
     return (
       <p className="text-center text-gray-600">
@@ -46,6 +48,10 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
             shouldTruncate && !isExpanded
               ? `${review.comment.slice(0, MAX_COMMENT_LENGTH)}...`
               : review.comment;
+          const imageSrc =
+            typeof review.reviewImages?.[0] === 'string'
+              ? review.reviewImages[0]
+              : defaultImage.src;
 
           return (
             <li
@@ -63,7 +69,7 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
                 className="relative mb-4 aspect-[5/3] w-full cursor-pointer rounded-md"
               >
                 <img
-                  src={review.reviewImages?.[0]}
+                  src={imageSrc}
                   alt={review.planName}
                   className="object-cover"
                 />
