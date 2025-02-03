@@ -1,5 +1,5 @@
 import { useEffect, useRef, useCallback } from 'react';
-import axios from 'axios';
+import instance from '@/api/axiosInstance';
 import { RegionOption, SortOption, SubRegionOption } from '@/types/reviewType';
 import { PlanDataWithCategory } from '@/types/plans';
 import { getCategoryId } from '@/utils/categoryUtils';
@@ -24,13 +24,10 @@ export const useCursorInfiniteScroll = ({
   setIsFetching,
   selectedCategory,
   selectedSubCategory,
-  //selectedRegion,
-  //selectedSubRegion,
   selectedSort,
   onDataFetched,
 }: UseCursorInfiniteScrollProps) => {
   const loaderRef = useRef<HTMLDivElement | null>(null);
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   // 요청한 cursor를 저장하여 중복 요청 방지
@@ -56,18 +53,15 @@ export const useCursorInfiniteScroll = ({
           const categoryParam = getCategoryId(selectedCategory || '');
           const sortParam = selectedSort ? `&sort=${selectedSort.value}` : '';
 
-          let url = `${baseUrl}/api/plans?size=10&categoryId=${categoryParam}${sortParam}`;
+          let url = `/api/plans?size=10&categoryId=${categoryParam}${sortParam}`;
           if (cursor !== undefined) {
             url += `&cursor=${cursor}`;
           }
 
-          const res = await axios.get(url);
+          const res = await instance.get(url);
           const newData = res.data;
           const formatted = newData.data.planList as PlanDataWithCategory[];
           onDataFetched(formatted);
-
-          //console.log('응답 plan IDs:', formatted.map(plan => plan.planId));
-          //console.log('응답 nextCursor:', newData.data.nextCursor);
 
           if (newData.data.nextCursor === null || formatted.length === 0) {
             setCursor(null);
@@ -97,8 +91,6 @@ export const useCursorInfiniteScroll = ({
 
   /**
    * IntersectionObserver 등록 및 해제
-   * - handleObserver를 트리거할 IntersectionObserver를 등록
-   * - cleanup 함수에서 옵저버 해제
    */
   useEffect(() => {
     if (!selectedCategory) return;
@@ -125,14 +117,18 @@ export const useCursorInfiniteScroll = ({
     };
   }, [handleObserver, cursor, selectedCategory]);
 
-  //정렬 필터 변경 시 requestedCursors 초기화
+  /**
+   * 정렬 필터 변경 시 requestedCursors 초기화
+   */
   useEffect(() => {
     if (selectedSort) {
-      requestedCursors.current.clear(); // 기존 요청된 cursor 초기화
+      requestedCursors.current.clear();
     }
   }, [selectedSort]);
 
-  //카테고리 변경 시 requestedCursors 초기화
+  /**
+   * 카테고리 변경 시 requestedCursors 초기화
+   */
   useEffect(() => {
     if (selectedCategory || selectedSubCategory) {
       requestedCursors.current.clear();
