@@ -8,7 +8,7 @@ import instance from './axiosInstance';
 import { ApiResponse } from '@/types/api/apiResponse';
 
 interface PostPlanParams {
-  meetingId: string;
+  meetingId: number;
   requestBody: CreatePlanRequestBody;
 }
 
@@ -26,23 +26,41 @@ export const createPlan = async ({
 export const fetchPlanDetail = async (planId: number) => {
   if (isNaN(planId)) return;
   const response = await instance<PlanDetailResponse>(
-    PATHS.PLAN.GET_DETAIL(planId.toString()),
+    PATHS.PLAN.GET_DETAIL(planId),
   );
   return response.data;
 };
 
 export const attendPlan = async (planId: number) => {
-  if (isNaN(planId)) return;
-  const response = await instance.post<ApiResponse<null>>(
-    PATHS.PLAN.ATTEND(planId.toString()),
-  );
-  return response.data.success;
+  try {
+    if (isNaN(planId)) return;
+    const response = await instance.post<ApiResponse>(
+      PATHS.PLAN.ATTEND(planId),
+    );
+    return response.data.success;
+  } catch {
+    return false;
+  }
 };
 
 export const leavePlan = async (planId: number) => {
-  if (isNaN(planId)) return;
-  const response = await instance.delete<ApiResponse<null>>(
-    PATHS.PLAN.ATTEND(planId.toString()),
-  );
-  return response.data.success;
+  try {
+    if (isNaN(planId)) return;
+    const response = await instance.delete<ApiResponse>(
+      PATHS.PLAN.ATTEND(planId),
+    );
+    return response.data.success;
+  } catch {
+    return false;
+  }
+};
+
+export const likePlan = async (planId: number) => {
+  try {
+    if (isNaN(planId)) return;
+    const response = await instance.post<ApiResponse>(PATHS.PLAN.LIKE(planId));
+    return response.data.success;
+  } catch {
+    return false;
+  }
 };

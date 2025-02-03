@@ -115,7 +115,10 @@ export default function EditPlanForm({
       fileUrls,
     };
     try {
-      const result = await createPlan({ meetingId: id as string, requestBody });
+      const result = await createPlan({
+        meetingId: parseInt(id as string),
+        requestBody,
+      });
       if (!result || result.success) {
         throw new Error('일정 생성 실패');
       }
