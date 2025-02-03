@@ -119,7 +119,7 @@ export default function EditPlanForm({
         meetingId: parseInt(id as string),
         requestBody,
       });
-      if (!result || result.success) {
+      if (!result || !result.success) {
         throw new Error('일정 생성 실패');
       }
       alert('일정이 생성됐습니다.'); //토스트
