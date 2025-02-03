@@ -109,6 +109,7 @@ const ReviewableCard = ({ reviewable }: reviewableProps) => {
       {/* 모달 */}
       <Modal isOpen={isModalOpen} handleClose={handleClose} title="리뷰 작성">
         <ReviewModal
+          planId={planId}
           mode="create" // 작성 모드
           onSubmit={handleSubmit} // 제출 핸들러 연결
           onClose={handleClose} // 모달 닫기 핸들러
