@@ -38,8 +38,14 @@ instance.interceptors.response.use(
         await instance.post(REFRESH_TOKEN);
         isRefreshing = false;
         return instance(originalRequest); // 실패한 요청 재시도
-      } catch (error) {
-        console.log(error.response?.data.message);
+      } catch (error: unknown) {
+        if (axios.isAxiosError(error)) {
+          console.error(error.response?.data.message);
+        } else if (error instanceof Error) {
+          console.error(error.message);
+        } else {
+          console.error('Unexpected error:', error);
+        }
 
         // Case 2: 리프레시 토큰 만료 -> 로그아웃 처리
         // await instance.post(SIGNOUT);
