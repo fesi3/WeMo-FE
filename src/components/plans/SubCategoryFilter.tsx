@@ -11,31 +11,30 @@ const SubCategoryFilter = ({
   selectedSubCategory,
   setSelectedSubCategory,
 }: SubCategoryFilterProps) => {
+  const commonButtonStyles =
+    'rounded-2xl drop-shadow-[0_0_6px_rgba(0,0,0,0.2)] px-4 py-1';
+
+  const buttons = [
+    { text: '전체', category: null },
+    { text: '오피스', category: '오피스 스트레칭' },
+    { text: '마인드풀니스', category: '마인드풀니스' },
+  ];
+
   return (
-    <div>
-      {/* 버튼 필터 */}
-      <div className="flex gap-2">
-        {/* 전체 버튼 */}
-        <Button
-          // type="main_tab_total"
-          text="전체"
-          onClick={() => setSelectedSubCategory(null)}
-          isActive={selectedSubCategory === null}
-        />
-        {/* 오피스 스트레칭 버튼 */}
-        <Button
-          // type="main_tab_office"
-          text="오피스"
-          onClick={() => setSelectedSubCategory('오피스 스트레칭')}
-          isActive={selectedSubCategory === '오피스 스트레칭'}
-        />
-        {/* 마인드풀니스 버튼 */}
-        <Button
-          // type="main_tab_mind"
-          text="마인드풀니스"
-          onClick={() => setSelectedSubCategory('마인드풀니스')}
-          isActive={selectedSubCategory === '마인드풀니스'}
-        />
+    <div className="flex flex-col">
+      <div className="flex gap-2 lg:gap-4">
+        {buttons.map(({ text, category }) => (
+          <Button
+            key={text}
+            text={text}
+            variant="option"
+            onClick={() => setSelectedSubCategory(category)}
+            isActive={selectedSubCategory === category}
+            className={`${commonButtonStyles} ${
+              selectedSubCategory !== category ? 'bg-primary-70 text-white' : ''
+            }`}
+          />
+        ))}
       </div>
     </div>
   );

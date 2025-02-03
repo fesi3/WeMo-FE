@@ -11,7 +11,7 @@ const Greeting = ({ className }: GreetingProps) => {
   const { isLoggedIn, user } = useSelector((state: RootState) => state.auth);
 
   const nickname =
-    isLoggedIn && user ? user.nickname : '아직 로그인을 하지 않았어요!';
+    isLoggedIn && user ? `${user.nickname} 님` : '아직 로그인을 하지 않았어요!';
   const message = isLoggedIn
     ? '안녕하세요! 오늘은 어떤 모임을 찾으시나요?'
     : '모임에 참여하려면 로그인이 필요해요.';
@@ -19,7 +19,7 @@ const Greeting = ({ className }: GreetingProps) => {
   return (
     <div className={`space-y-2 ${className || ''}`.trim()}>
       <div className="bg-primary-95 px-4 py-8">
-        <p className="text-xl font-bold">{nickname} 님 </p>
+        <p className="text-xl font-bold">{nickname} </p>
         <p className="py-2 text-sm text-gray-400">{message}</p>
       </div>
     </div>
