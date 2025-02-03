@@ -1,15 +1,12 @@
-/*
- * 커서 기반 무한스크롤 로직, 추후 재사용할 수 있도록 추상화 필요.
- */
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 import { RegionOption, SortOption, SubRegionOption } from '@/types/reviewType';
 import { PlanDataWithCategory } from '@/types/plans';
 import { getCategoryId } from '@/utils/categoryUtils';
 
 interface UseCursorInfiniteScrollProps {
-  cursor: number | null;
-  setCursor: (cursor: number | null) => void;
+  cursor: number | null | undefined;
+  setCursor: (cursor: number | null | undefined) => void;
   isFetching: boolean;
   setIsFetching: (fetching: boolean) => void;
   selectedCategory: string | null;
@@ -27,69 +24,53 @@ export const useCursorInfiniteScroll = ({
   setIsFetching,
   selectedCategory,
   selectedSubCategory,
-  selectedRegion,
-  selectedSubRegion,
+  //selectedRegion,
+  //selectedSubRegion,
   selectedSort,
   onDataFetched,
 }: UseCursorInfiniteScrollProps) => {
   const loaderRef = useRef<HTMLDivElement | null>(null);
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  // ref를 통해 observer 인스턴스를 저장하여 필요시 disconnect 가능
   const observerRef = useRef<IntersectionObserver | null>(null);
 
-  useEffect(() => {
-    //console.log('Cursor:', cursor);
-    //console.log('Is fetching:', isFetching);
-    if (!selectedCategory) return;
+  // 요청한 cursor를 저장하여 중복 요청 방지
+  const requestedCursors = useRef(new Set<number | null | undefined>());
 
-    setIsFetching(false);
-
-    //데이터 로딩이 끝났으면 observer 해제
-    if (cursor === null) {
-      //console.log('Cursor === null observer 해제');
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-        observerRef.current = null;
-      }
-      return;
-    }
-
-    // observer 콜백
-    const handleObserver: IntersectionObserverCallback = async (entries) => {
+  /**
+   * IntersectionObserver 콜백 함수
+   * - isFetching이 true이면 중복 요청 방지
+   * - requestedCursors를 이용해 이미 요청한 cursor인지 확인
+   */
+  const handleObserver = useCallback(
+    async (entries: IntersectionObserverEntry[]) => {
       const target = entries[0];
-      // target이 보여지고, API 호출 중이 아니며, cursor 값이 존재하는 경우에만 호출
+
       if (target.isIntersecting && !isFetching && cursor !== null) {
+        // 이미 요청한 cursor인지 확인하여 중복 요청 방지
+        if (requestedCursors.current.has(cursor)) return;
+
         setIsFetching(true);
+        requestedCursors.current.add(cursor); // 요청한 cursor 저장
+
         try {
-          // params 설정
           const categoryParam = getCategoryId(selectedCategory || '');
-          // const provinceParam =
-          //   selectedRegion && selectedRegion.id > 0
-          //     ? `&province=${selectedRegion.name}`
-          //     : '';
-          // const districtParam =
-          //   selectedSubRegion && selectedSubRegion.id > 0
-          //     ? `&district=${selectedSubRegion.name}`
-          //     : '';
           const sortParam = selectedSort ? `&sort=${selectedSort.value}` : '';
-          const res = await axios.get(
-            //`https://677e23a294bde1c1252a8cc0.mockapi.io/plans`
-            `${baseUrl}/api/plans?cursor=${cursor}&size=10&categoryId=${categoryParam}${sortParam}`,
-          );
+
+          let url = `${baseUrl}/api/plans?size=10&categoryId=${categoryParam}${sortParam}`;
+          if (cursor !== undefined) {
+            url += `&cursor=${cursor}`;
+          }
+
+          const res = await axios.get(url);
           const newData = res.data;
-          // API 리스폰스: newData.data.planList 과 newData.data.nextCursor를 사용
           const formatted = newData.data.planList as PlanDataWithCategory[];
           onDataFetched(formatted);
-          // nextCursor가 null이면 더 이상 로딩하지 않음
-          if (
-            newData.data.nextCursor === undefined ||
-            newData.data.nextCursor === null ||
-            formatted.length === 0
-          ) {
-            // console.log(
-            //   '잘못된 nextCursor 값. 더 이상 데이터를 불러오지 않음.',
-            // );
-            setCursor(null); // 무한 호출 방지
+
+          //console.log('응답 plan IDs:', formatted.map(plan => plan.planId));
+          //console.log('응답 nextCursor:', newData.data.nextCursor);
+
+          if (newData.data.nextCursor === null || formatted.length === 0) {
+            setCursor(null);
             if (observerRef.current) {
               observerRef.current.disconnect();
             }
@@ -102,9 +83,33 @@ export const useCursorInfiniteScroll = ({
           setIsFetching(false);
         }
       }
-    };
+    },
+    [
+      cursor,
+      isFetching,
+      selectedCategory,
+      selectedSort,
+      setCursor,
+      setIsFetching,
+      onDataFetched,
+    ],
+  );
 
-    // 옵저버 인스턴스 생성 (의존성 변경 시마다 새로 생성됨)
+  /**
+   * IntersectionObserver 등록 및 해제
+   * - handleObserver를 트리거할 IntersectionObserver를 등록
+   * - cleanup 함수에서 옵저버 해제
+   */
+  useEffect(() => {
+    if (!selectedCategory) return;
+    if (cursor === null) {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+        observerRef.current = null;
+      }
+      return;
+    }
+
     const observer = new IntersectionObserver(handleObserver, {
       threshold: 0.1,
     });
@@ -112,22 +117,27 @@ export const useCursorInfiniteScroll = ({
     if (loaderRef.current) {
       observer.observe(loaderRef.current);
     }
+
     return () => {
       if (observerRef.current) {
         observerRef.current.disconnect();
       }
     };
-  }, [
-    // 아래 값들이 변경되면 observer가 새로 생성,
-    // cursor가 null 인 경우 observer 해제
-    cursor,
-    isFetching,
-    selectedSubCategory,
-    selectedRegion,
-    selectedSubRegion,
-    onDataFetched,
-    selectedSort,
-  ]);
+  }, [handleObserver, cursor, selectedCategory]);
+
+  //정렬 필터 변경 시 requestedCursors 초기화
+  useEffect(() => {
+    if (selectedSort) {
+      requestedCursors.current.clear(); // 기존 요청된 cursor 초기화
+    }
+  }, [selectedSort]);
+
+  //카테고리 변경 시 requestedCursors 초기화
+  useEffect(() => {
+    if (selectedCategory || selectedSubCategory) {
+      requestedCursors.current.clear();
+    }
+  }, [selectedCategory, selectedSubCategory]);
 
   return { loaderRef };
 };

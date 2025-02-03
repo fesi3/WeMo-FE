@@ -30,7 +30,9 @@ interface HomeProps {
 const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
   //상태관리
   const [plans, setPlans] = useState<PlanDataWithCategory[]>(initialPlans);
-  const [cursor, setCursor] = useState<number | null>(initialCursor);
+  const [cursor, setCursor] = useState<number | null | undefined>(
+    initialCursor,
+  );
   const [isFetching, setIsFetching] = useState<boolean>(false);
 
   // 필터 상태 관리
@@ -77,14 +79,15 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
   // 탭 변경 시 카테고리 업데이트
   useEffect(() => {
     setSelectedCategory(activeTab);
-    setCursor(initialCursor);
+    setCursor(undefined);
+    setSelectedSort(null);
   }, [activeTab]);
 
   // 정렬이 바뀔 때 새 목록 불러오기기
   useEffect(() => {
     if (selectedSort) {
       setPlans([]);
-      setCursor(initialCursor);
+      setCursor(undefined);
       setIsFetching(false);
     }
   }, [selectedSort]);
@@ -97,7 +100,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
         defaultTab="달램핏"
         onTabChange={(category) => {
           setActiveTab(category);
-          //setCursor(initialCursor);
+          setCursor(undefined);
           setIsFetching(false);
         }}
         renderContent={(category) => (
@@ -145,7 +148,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     return {
       props: {
         initialPlans: [],
-        initialCursor: null,
+        initialCursor: undefined,
       },
     };
   }
