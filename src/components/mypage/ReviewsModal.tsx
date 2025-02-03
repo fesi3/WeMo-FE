@@ -15,7 +15,7 @@ export interface ReviewModalProps {
   initialData?: { score: number; comment: string; images?: string[] };
   onSubmit: (data: ReviewFormValues) => void;
   onClose: () => void;
-  planId: string;
+  planId: number;
 }
 
 export default function ReviewModal({

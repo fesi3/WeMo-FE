@@ -53,7 +53,7 @@ export interface ReviewData {
   address: string;
   score: number;
   comment: string;
-  reivewImagePath: string | StaticImageData;
+  reviewImagePath: string | string[]; //외부 url은 string으로만
   planImagePath: string | StaticImageData;
   planId: number; // 일정 상세로 이동
 }
