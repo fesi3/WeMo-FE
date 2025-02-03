@@ -93,7 +93,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
   }, [selectedSort]);
 
   return (
-    <div className="mx-auto p-2">
+    <div className="mx-auto px-4 py-2">
       {/* 탭 컴포넌트 */}
       <Tabs
         tabs={tabs}
@@ -104,22 +104,24 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
           setIsFetching(false);
         }}
         renderContent={(category) => (
-          <RenderTabContent
-            category={category}
-            plans={plans}
-            selectedDate={selectedDate}
-            setSelectedDate={setSelectedDate}
-            selectedRegion={selectedRegion}
-            setSelectedRegion={setSelectedRegion}
-            selectedSubRegion={selectedSubRegion}
-            setSelectedSubRegion={setSelectedSubRegion}
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-            selectedSubCategory={selectedSubCategory}
-            setSelectedSubCategory={setSelectedSubCategory}
-            selectedSort={selectedSort}
-            setSelectedSort={setSelectedSort}
-          />
+          <div className="mt-4">
+            <RenderTabContent
+              category={category}
+              plans={plans}
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+              selectedRegion={selectedRegion}
+              setSelectedRegion={setSelectedRegion}
+              selectedSubRegion={selectedSubRegion}
+              setSelectedSubRegion={setSelectedSubRegion}
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+              selectedSubCategory={selectedSubCategory}
+              setSelectedSubCategory={setSelectedSubCategory}
+              selectedSort={selectedSort}
+              setSelectedSort={setSelectedSort}
+            />
+          </div>
         )}
       />
       <div ref={loaderRef} className="h-12"></div>
