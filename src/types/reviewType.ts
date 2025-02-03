@@ -62,10 +62,3 @@ export interface ReviewFormValues {
   images: File[];
   fileUrls?: string[];
 }
-
-export interface ReviewModalProps {
-  mode: 'create' | 'edit';
-  initialData?: { score: number; comment: string; images?: string[] };
-  onSubmit: (data: ReviewFormValues) => void;
-  onClose: () => void;
-}

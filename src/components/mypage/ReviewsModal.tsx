@@ -5,14 +5,24 @@ import useCropper from '@/hooks/useCropper';
 import FileInput from '@/components/shared/FileInput';
 import HeartRating from '@/components/shared/HeartRating';
 import Button from '@/components/shared/Button';
-import { ReviewFormValues, ReviewModalProps } from '@/types/reviewType';
-import { getPresignedUrls, uploadImagesToS3 } from '@/api/createReview';
+import { ReviewFormValues } from '@/types/reviewType';
+// import { getPresignedUrls, uploadImagesToS3 } from '@/api/createReview';
+import { getImageUrls } from '@/api/images';
+import { createReview } from '@/api/createReview';
+
+export interface ReviewModalProps {
+  mode: 'create' | 'edit';
+  initialData?: { score: number; comment: string; images?: string[] };
+  onSubmit: (data: ReviewFormValues) => void;
+  onClose: () => void;
+  planId: string;
+}
 
 export default function ReviewModal({
   mode, // 작성(create) 또는 수정(edit) 모드
   initialData, // 초기 리뷰 데이터 (수정 모드에서 사용)
-  onSubmit, // 리뷰 제출 콜백
   onClose, // 모달 닫기 콜백
+  planId,
 }: ReviewModalProps) {
   const { croppedImages, onCrop, removeCroppedImage } = useCropper();
   const { toggleValue, handleOpen, handleClose } = useToggle();
@@ -51,27 +61,32 @@ export default function ReviewModal({
   // 리뷰 제출 핸들러
   const onSubmitHandler: SubmitHandler<ReviewFormValues> = async (data) => {
     if (croppedImages.length === 0) {
-      onSubmit({ ...data, fileUrls: [] });
+      createReview(planId, { ...data, fileUrls: [] });
       return;
     }
     try {
-      // Presigned URL 요청
-      const presignedUrls = await getPresignedUrls(croppedImages.length);
+      // // Presigned URL 요청
+      // const presignedUrls = await getPresignedUrls(croppedImages.length);
 
-      // 이미지 업로드
-      await uploadImagesToS3(croppedImages, presignedUrls);
+      // // 이미지 업로드
+      // await uploadImagesToS3(croppedImages, presignedUrls);
 
-      // Presigned URL에서 실제 S3 파일 경로 추출
-      const fileUrls = presignedUrls;
+      // // Presigned URL에서 실제 S3 파일 경로 추출
+      // const fileUrls = presignedUrls;
 
+      const imageFiles = croppedImages.map((e) => e.blobImg);
+      const fileUrls = await getImageUrls(imageFiles);
+      if (!fileUrls) return;
       // 최종 데이터 작성
       const finalData = {
-        ...data,
+        score: data.score,
+        comment: data.comment,
         fileUrls, // URL 배열 포함
       };
 
       // 데이터 제출
-      onSubmit(finalData);
+      await createReview(planId, finalData);
+      onClose();
     } catch (error) {
       console.error(error);
     } finally {
