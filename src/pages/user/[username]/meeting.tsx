@@ -12,7 +12,7 @@ export default function MyMeeting() {
   const apiUrl =
     activeTab === 'tabLeft'
       ? `/api/users/meetings?page=${page}` // 참여한 모임
-      : `/api/users/meetings?page=${page}`; // 내가 만든 모임
+      : `/api/users/meetings/me?page=${page}`; // 내가 만든 모임
 
   // activeTab이 변경될 때 page를 1로 리셋
   useEffect(() => {
