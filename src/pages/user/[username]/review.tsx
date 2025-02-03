@@ -88,7 +88,7 @@ export default function MyReview() {
               ))}
             </ul>
           ) : (
-            <NoData comment="작성 가능한" />
+            <NoData comment="작성 가능한 리뷰가" />
           )}
         </section>
       )}
