@@ -2,16 +2,10 @@ import React, { useState } from 'react';
 import { useReviews } from '@/hooks/useReviews';
 import FilterBar from '@/components/shared/FilterBar';
 import ReviewList from '@/components/all-reviews/ReviewList';
-import { Review, FilterState } from '@/types/reviewType';
+import { FilterState } from '@/types/reviewType';
 import Loader from './Loader';
 
-const ReviewContainer = ({
-  category,
-  initialReviews,
-}: {
-  category: string;
-  initialReviews: Review[];
-}) => {
+const ReviewContainer = ({ category }: { category: string }) => {
   const [filters, setFilters] = useState<FilterState>({
     region: null,
     subRegion: null,
@@ -22,7 +16,6 @@ const ReviewContainer = ({
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useReviews(
     category,
     filters,
-    initialReviews,
   );
 
   const reviews = data?.pages.flatMap((page) => page.reviews) || [];
