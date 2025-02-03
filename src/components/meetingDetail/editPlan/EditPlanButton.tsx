@@ -7,12 +7,6 @@ export default function EditPlanButton() {
   const { toggleValue, handleOpen, handleClose } = useToggle();
   return (
     <>
-      {/* <button
-        className="h-[42px] w-full rounded-md bg-primary-10 font-bold text-white"
-        onClick={handleOpen}
-      >
-        일정 만들기
-      </button> */}
       <Button
         text={'일정 만들기'}
         size={'large'}

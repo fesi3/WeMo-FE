@@ -10,7 +10,6 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <title>WeMo - 직장인 힐링 모임 매칭 서비스</title>
       </Head>
-
       <Provider>
         <GNB>
           <Component {...pageProps} />

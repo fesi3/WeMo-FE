@@ -16,22 +16,29 @@ function useAuth() {
     return response.data;
   };
 
-  const { isSuccess, data: response } = useQuery({
+  const {
+    isSuccess,
+    isLoading,
+    data: response,
+  } = useQuery({
     queryKey: ['auth'],
     queryFn: fetchUserInfo,
+    retry: false,
   });
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isLoading) return;
+
+    if (isSuccess && response) {
       dispatch(login());
       dispatch(setUser(response.data));
     } else {
       dispatch(logout());
       dispatch(clearUser());
     }
-  }, [response]);
+  }, [response, isLoading, isSuccess]);
 
-  return { response };
+  return { response, isLoading };
 }
 
 export default useAuth;
