@@ -12,7 +12,7 @@ export default function MyPlan() {
   const apiUrl =
     activeTab === 'tabLeft'
       ? `/api/users/plans?page=${page}` // 참여한 일정
-      : `/api/users/reviews/available?page=${page}`; // 내가 만든 일정
+      : `/api/users/plans/me?page=${page}`; // 내가 만든 일정
 
   // activeTab이 변경될 때 page를 1로 리셋
   useEffect(() => {
