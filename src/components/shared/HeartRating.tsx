@@ -1,4 +1,6 @@
 import React from 'react';
+import YellowStar from '../../../src/assets/icons/yellowStar.svg';
+import EmptyStar from '../../../src/assets/icons/emptyStar.svg';
 
 interface HeartRatingProps {
   rating: number; // 현재 평점
@@ -18,19 +20,19 @@ const HeartRating: React.FC<HeartRatingProps> = ({
   };
 
   return (
-    <div className="flex justify-center gap-2">
+    <div className="flex justify-center gap-1">
       {Array.from({ length: maxRating }, (_, index) => (
-        <img
+        <div
           key={index}
-          src={
-            index < rating
-              ? '/assets/icons/yellowStar.svg'
-              : '/assets/icons/emptyStar.svg'
-          }
-          alt={`Heart ${index + 1}`}
-          className="// 태블릿 // PC h-5 w-5 cursor-pointer md:h-4 md:w-4 xl:h-5 xl:w-5"
           onClick={() => handleClick(index)}
-        />
+          className="cursor-pointer"
+        >
+          {index < rating ? (
+            <YellowStar className="h-6 w-6 md:h-4 md:w-4 xl:h-5 xl:w-5" />
+          ) : (
+            <EmptyStar className="h-6 w-6 md:h-4 md:w-4 xl:h-5 xl:w-5" />
+          )}
+        </div>
       ))}
     </div>
   );

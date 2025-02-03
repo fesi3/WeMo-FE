@@ -43,7 +43,6 @@ export const getImageUrls = async (imageFiles: File[] | Blob[]) => {
   const count = imageFiles.length;
   const response = await getPresignedUrls(count);
   const presignedUrl = response?.data.presignedUrl;
-  console.log(presignedUrl);
   if (!presignedUrl) return;
   const result = await Promise.all(
     imageFiles.map(async (file, index) => {
