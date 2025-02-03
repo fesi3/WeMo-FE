@@ -3,6 +3,7 @@ import HeartRating from '@/components/shared/HeartRating';
 import ReviewImageModal from '@/components/all-reviews/ReviewImageModal';
 import { Review } from '../../types/reviewType';
 import useToggle from '@/hooks/useToggle';
+import defaultImage from '@/assets/images/study.png'; // 기본 이미지 임포트
 
 interface ReviewListProps {
   reviews: Review[];
@@ -11,7 +12,6 @@ interface ReviewListProps {
 const MAX_COMMENT_LENGTH = 100; // 리뷰 내용 최대 표시 글자 수
 
 const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
-  // console.log(reviews.map((review) => review.reviewId));
   const { toggleValue: isModalOpen, handleOpen, handleClose } = useToggle();
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [expandedComments, setExpandedComments] = useState<
@@ -29,6 +29,7 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
       [reviewId]: !prev[reviewId],
     }));
   };
+
   if (!Array.isArray(reviews) || reviews.length === 0) {
     return (
       <p className="text-center text-gray-600">
@@ -47,6 +48,10 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
             shouldTruncate && !isExpanded
               ? `${review.comment.slice(0, MAX_COMMENT_LENGTH)}...`
               : review.comment;
+          const imageSrc =
+            typeof review.reviewImages?.[0] === 'string'
+              ? review.reviewImages[0]
+              : defaultImage.src;
 
           return (
             <li
@@ -61,10 +66,10 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
                       : [],
                   )
                 } // 이미지 클릭 시 모달 열기
-                className="relative mb-4 aspect-[5/3] w-full cursor-pointer rounded-md md:mb-0 md:mr-4 md:h-24 md:w-24"
+                className="relative mb-4 aspect-[5/3] w-full cursor-pointer rounded-md"
               >
                 <img
-                  src={review.reviewImages?.[0]}
+                  src={imageSrc}
                   alt={review.planName}
                   className="object-cover"
                 />
