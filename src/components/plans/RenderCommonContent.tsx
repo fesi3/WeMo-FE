@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 import PlanFilter from './PlanFilter';
 import EditMeetingButton from './editMeeting/EditMeetingButton';
 import PlanList from './PlanList';
@@ -38,18 +40,12 @@ const RenderCommonContent: React.FC<RenderCommonContentProps> = ({
   selectedSort,
   setSelectedSort,
 }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
   const sortOptions: SortOption[] = [
     { id: 1, name: '최신순', value: 'default' },
     { id: 2, name: '마감임박순', value: 'closeDate' },
   ];
-  //console.log('selectedSort:', selectedSort);
-
-  useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    setIsAuthenticated(!!token);
-  }, []);
 
   return (
     <div>
@@ -82,7 +78,8 @@ const RenderCommonContent: React.FC<RenderCommonContentProps> = ({
           </div>
         </div>
       </div>
-      {isAuthenticated && (
+      {/* 로그인 상태일 때만 모임 만들기 버튼 표시 */}
+      {isLoggedIn && (
         <div className="fixed bottom-20 right-5 z-50">
           <EditMeetingButton />
         </div>
