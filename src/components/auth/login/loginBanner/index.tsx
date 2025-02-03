@@ -1,10 +1,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import logoWithColor from '@/assets/images/logo-with-color.png';
+import { twMerge } from 'tailwind-merge';
 
 function LoginBanner({ description }: { description?: string }) {
   return (
-    <div className="mb-[63px] flex flex-col items-center gap-6 md:mb-[65px]">
+    <div
+      className={twMerge(
+        description && 'mb-[63px] md:mb-[65px]',
+        'flex flex-col items-center gap-6',
+      )}
+    >
       <Link href={'/plans'}>
         <div className="flex flex-col items-center">
           <Image
