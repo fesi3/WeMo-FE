@@ -44,11 +44,9 @@ const Card: React.FC<PlanData> = ({
         <Image
           src={planImagePath}
           alt={planName}
-          layout="fill"
-          //objectFit="contain"
-          className={`h-full w-full object-contain ${
-            isFulled ? 'opacity-50' : ''
-          }`}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className={`h-full w-full object-contain ${isFulled ? 'opacity-50' : ''}`}
         />
         {/* 찜 버튼 */}
         <div className="absolute bottom-2 right-2">
