@@ -43,7 +43,10 @@ export default function LightningMap() {
 
       <p>현재 선택된 위치: {address}</p>
       <p>
-        현재 센터 위치: {mapCenter.lat} {mapCenter.lng}
+        내 위치 센터 위치: {coordinate.lat} {coordinate.lng}
+      </p>
+      <p>
+        현재 중앙 위치: {mapCenter.lat} {mapCenter.lng}
       </p>
 
       <button

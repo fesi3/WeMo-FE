@@ -22,6 +22,16 @@ export default function useLightningMap() {
     { id: number; lat: number; lng: number; name: string }[]
   >([]);
 
+  //좌표를 받아 주소로 변환하는 함수
+  const updateAddress = async (lat: number, lng: number) => {
+    try {
+      const updatedLocation = await coordinateToAddress(lat, lng);
+      setAddress(updatedLocation);
+    } catch (error) {
+      console.error('주소 변환 중 오류 발생:', error);
+    }
+  };
+
   // 내 위치 가져오기
   const getCurrentLocation = async () => {
     if (navigator.geolocation) {
@@ -32,14 +42,35 @@ export default function useLightningMap() {
         setCoordinate({ lat, lng });
 
         // 좌표를 주소로 변환
-        const updatedLocation = await coordinateToAddress(lat, lng);
-        setAddress(updatedLocation);
+        updateAddress(lat, lng);
 
         // 내 위치 기준으로 번개팟 모임 가져오기
         fetchMeetups(lat, lng);
       });
     }
   };
+
+  useEffect(() => {
+    if (!isMapLoading) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          async (data) => {
+            const lat = data.coords.latitude;
+            const lng = data.coords.longitude;
+            setCoordinate({ lat, lng });
+            updateAddress(lat, lng);
+            fetchMeetups(lat, lng);
+          },
+          (error) => {
+            console.error('내 위치를 가져오는 데 실패:', error);
+            fetchMeetups(INITIAL_COORDINATE.lat, INITIAL_COORDINATE.lng);
+          },
+        );
+      } else {
+        fetchMeetups(INITIAL_COORDINATE.lat, INITIAL_COORDINATE.lng);
+      }
+    }
+  }, [isMapLoading]);
 
   // 현재 위치 기반으로 번개팟 모임 가져오기
   const fetchMeetups = async (lat: number, lng: number) => {
@@ -49,6 +80,8 @@ export default function useLightningMap() {
       //   );
       //   const data = await response.json();
       //   setMeetups(data);
+      updateAddress(lat, lng);
+      // 더미 데이터로 대체
       const dummyMeetups = [
         { id: 1, lat: lat + 0.001, lng: lng + 0.001, name: '번개팟 1' },
         { id: 2, lat: lat - 0.002, lng: lng - 0.002, name: '번개팟 2' },
@@ -61,12 +94,12 @@ export default function useLightningMap() {
     }
   };
 
-  useEffect(() => {
-    // 초기 로딩 시 기본 좌표(서울 시청) 기준으로 번개팟 가져오기
-    if (!isMapLoading) {
-      fetchMeetups(INITIAL_COORDINATE.lat, INITIAL_COORDINATE.lng);
-    }
-  }, [isMapLoading]);
+  //   useEffect(() => {
+  //     // 초기 로딩 시 기본 좌표(서울 시청) 기준으로 번개팟 가져오기
+  //     if (!isMapLoading) {
+  //       fetchMeetups(INITIAL_COORDINATE.lat, INITIAL_COORDINATE.lng);
+  //     }
+  //   }, [isMapLoading]);
 
-  return { coordinate, address, getCurrentLocation, meetups };
+  return { coordinate, address, getCurrentLocation, meetups, fetchMeetups };
 }
