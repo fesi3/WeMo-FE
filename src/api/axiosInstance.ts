@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { PATHS } from '@/constants/apiPath';
+import { API_PATHS } from '@/constants/apiPath';
 // import store from '@/redux/store';
 // import { logout } from '@/redux/authReducers';
 
 const {
   AUTH: { REFRESH_TOKEN },
-} = PATHS;
+} = API_PATHS;
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 

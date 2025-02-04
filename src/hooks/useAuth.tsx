@@ -1,12 +1,12 @@
 import instance from '@/api/axiosInstance';
 import { useQuery } from '@tanstack/react-query';
-import { PATHS } from '@/constants/apiPath';
+import { API_PATHS } from '@/constants/apiPath';
 import { useDispatch } from 'react-redux';
 import { clearUser, login, logout, setUser } from '@/redux/authReducers';
 import { useEffect } from 'react';
 const {
   AUTH: { USER_INFO },
-} = PATHS;
+} = API_PATHS;
 
 function useAuth() {
   const dispatch = useDispatch();
