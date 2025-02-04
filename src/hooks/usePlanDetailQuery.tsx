@@ -1,10 +1,10 @@
 import { fetchPlanDetail } from '@/api/plan';
-import { queryKey } from '@/constants/queryKey';
+import { QUERY_KEY } from '@/constants/queryKey';
 import { useQuery } from '@tanstack/react-query';
 
 export default function usePlanDetailQuery(id: number) {
   return useQuery({
-    queryKey: queryKey.planDetail(id),
+    queryKey: QUERY_KEY.planDetail(id),
     queryFn: () => fetchPlanDetail(id),
     enabled: typeof id === 'number',
   });

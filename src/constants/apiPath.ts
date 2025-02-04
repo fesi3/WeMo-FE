@@ -1,4 +1,4 @@
-export const PATHS = {
+export const API_PATHS = {
   AUTH: {
     SIGNUP: '/api/auths/signup',
     CHECK_EMAIL: '/api/auths/check-email',

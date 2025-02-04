@@ -1,10 +1,10 @@
 import { fetchMeetingDetail } from '@/api/meeting';
-import { queryKey } from '@/constants/queryKey';
+import { QUERY_KEY } from '@/constants/queryKey';
 import { useQuery } from '@tanstack/react-query';
 
 export default function useMeetingDetailQuery(id: number) {
   return useQuery({
-    queryKey: queryKey.meetingDetail(id),
+    queryKey: QUERY_KEY.meetingDetail(id),
     queryFn: () => fetchMeetingDetail(id),
     enabled: typeof id === 'number',
     staleTime: 0,
