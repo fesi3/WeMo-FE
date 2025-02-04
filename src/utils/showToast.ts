@@ -3,6 +3,12 @@ import { addToast, removeToast, removeFirstToast } from '@/redux/toastReducers';
 import { v4 as uuidv4 } from 'uuid';
 
 type ShowToastStatus = 'success' | 'error' | 'info';
+
+/**
+ * showToast 호출로 간단하게 토스트 메시지를 추가할 수 있습니다.
+ * @param status 'success' | 'error' | 'info' 토스트가 나타낼 상태를 넣어주세요요
+ * @param message 토스트 메시지를 넣어주세요
+ */
 export const showToast = (status: ShowToastStatus, message: string) => {
   const state = store.getState();
   const toasts = state.toast;
@@ -21,6 +27,6 @@ export const showToast = (status: ShowToastStatus, message: string) => {
   }, 2000);
 };
 
-export const closeToast = (id: string) => {
-  store.dispatch(removeToast(id));
-};
+// export const closeToast = (id: string) => {
+//   store.dispatch(removeToast(id));
+// };
