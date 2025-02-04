@@ -50,6 +50,7 @@ function GNBHeader({ response }: GNBProps) {
                       path={'/all-meetings'}
                       isHeader
                     />
+                    <GNBItem name={'번개 모임'} path={'/lightning'} isHeader />
                     <GNBItem
                       name={response?.success ? '마이페이지' : '로그인'}
                       path={
