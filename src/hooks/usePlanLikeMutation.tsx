@@ -1,5 +1,5 @@
 import { likePlan, unLikePlan } from '@/api/plan';
-import { queryKey } from '@/constants/queryKey';
+import { QUERY_KEY } from '@/constants/queryKey';
 import { PlanDetailResponse } from '@/types/api/plan';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -13,7 +13,7 @@ export default function usePlanLikeMutation({
   isLiked,
 }: usePlanLikeMutationParams) {
   const queryClient = useQueryClient();
-  const planDetailQueryKey = queryKey.planDetail(planId);
+  const planDetailQueryKey = QUERY_KEY.planDetail(planId);
   return useMutation({
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: planDetailQueryKey });

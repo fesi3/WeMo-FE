@@ -1,6 +1,6 @@
 import { fetchMeetingDetail } from '@/api/meeting';
 import MeetingDetailMain from '@/components/meetingDetail/MeetingDetailMain';
-import { queryKey } from '@/constants/queryKey';
+import { QUERY_KEY } from '@/constants/queryKey';
 import {
   dehydrate,
   DehydratedState,
@@ -14,7 +14,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient();
   const idNum = parseInt(id as string);
   await queryClient.prefetchQuery({
-    queryKey: queryKey.meetingDetail(idNum),
+    queryKey: QUERY_KEY.meetingDetail(idNum),
     queryFn: () => fetchMeetingDetail(idNum),
   });
 

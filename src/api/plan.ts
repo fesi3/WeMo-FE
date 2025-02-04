@@ -1,4 +1,4 @@
-import { PATHS } from '@/constants/apiPath';
+import { API_PATHS } from '@/constants/apiPath';
 import {
   CreatePlanRequestBody,
   CreatePlanResponse,
@@ -17,7 +17,7 @@ export const createPlan = async ({
   requestBody,
 }: PostPlanParams) => {
   const response = await instance.post<CreatePlanResponse>(
-    PATHS.PLAN.CREATE(meetingId),
+    API_PATHS.PLAN.CREATE(meetingId),
     requestBody,
   );
   return response.data;
@@ -26,7 +26,7 @@ export const createPlan = async ({
 export const fetchPlanDetail = async (planId: number) => {
   if (isNaN(planId)) return;
   const response = await instance<PlanDetailResponse>(
-    PATHS.PLAN.GET_DETAIL(planId),
+    API_PATHS.PLAN.GET_DETAIL(planId),
   );
   return response.data;
 };
@@ -35,7 +35,7 @@ export const attendPlan = async (planId: number) => {
   try {
     if (isNaN(planId)) return;
     const response = await instance.post<ApiResponse>(
-      PATHS.PLAN.ATTEND(planId),
+      API_PATHS.PLAN.ATTEND(planId),
     );
     return response.data.success;
   } catch {
@@ -47,7 +47,7 @@ export const leavePlan = async (planId: number) => {
   try {
     if (isNaN(planId)) return;
     const response = await instance.delete<ApiResponse>(
-      PATHS.PLAN.ATTEND(planId),
+      API_PATHS.PLAN.ATTEND(planId),
     );
     return response.data.success;
   } catch {
@@ -58,7 +58,9 @@ export const leavePlan = async (planId: number) => {
 export const likePlan = async (planId: number) => {
   try {
     if (isNaN(planId)) return;
-    const response = await instance.post<ApiResponse>(PATHS.PLAN.LIKE(planId));
+    const response = await instance.post<ApiResponse>(
+      API_PATHS.PLAN.LIKE(planId),
+    );
     return response.data.success;
   } catch {
     return false;
@@ -69,7 +71,7 @@ export const unLikePlan = async (planId: number) => {
   try {
     if (isNaN(planId)) return;
     const response = await instance.delete<ApiResponse>(
-      PATHS.PLAN.LIKE(planId),
+      API_PATHS.PLAN.LIKE(planId),
     );
     return response.data.success;
   } catch {

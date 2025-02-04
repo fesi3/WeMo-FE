@@ -5,7 +5,7 @@ import { SignupFormTypes } from '@/components/auth/type';
 import { useMutation } from '@tanstack/react-query';
 import fetchData from '@/api/fetchData';
 import { useRouter } from 'next/router';
-import { PATHS } from '@/constants/apiPath';
+import { API_PATHS } from '@/constants/apiPath';
 import { AxiosError } from 'axios';
 
 interface SignupFormType {
@@ -36,7 +36,7 @@ function useSignupForm() {
   const router = useRouter();
   const {
     AUTH: { SIGNUP },
-  } = PATHS;
+  } = API_PATHS;
 
   const signupMutation = useMutation<
     SignupFormTypes,
