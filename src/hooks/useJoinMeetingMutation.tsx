@@ -1,9 +1,11 @@
 import { joinMeeting, leaveMeeting } from '@/api/meeting';
-import { queryKey } from '@/constants/queryKey';
+import { QUERY_KEY } from '@/constants/queryKey';
+import TOAST_MESSAGE from '@/constants/toastMessage';
 import { MeetingDetailResponse } from '@/types/api/meeting';
+import { showToast } from '@/utils/showToast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-interface useJoinMeetingProps {
+interface useJoinMeetingParams {
   meetingId: number;
   isJoined?: boolean;
 }
@@ -11,9 +13,9 @@ interface useJoinMeetingProps {
 export default function useJoinMeetingMutation({
   meetingId,
   isJoined,
-}: useJoinMeetingProps) {
+}: useJoinMeetingParams) {
   const queryClient = useQueryClient();
-  const meetingDetailQueryKey = queryKey.meetingDetail(meetingId);
+  const meetingDetailQueryKey = QUERY_KEY.meetingDetail(meetingId);
   return useMutation({
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: meetingDetailQueryKey });
@@ -41,14 +43,22 @@ export default function useJoinMeetingMutation({
       if (!result) throw new Error();
     },
     onSuccess: () => {
-      alert('모임 참여/탈퇴 됨'); //토스트로 바꾸기기
+      showToast(
+        'success',
+        isJoined ? TOAST_MESSAGE.LEAVE_MEETING : TOAST_MESSAGE.JOIN_MEETING,
+      );
     },
     onError: (error, _, context) => {
       queryClient.setQueryData(
         meetingDetailQueryKey,
         context?.meetingDetailData,
       );
-      alert('모임 참여/탈퇴 실패'); //토스트로 바꾸기기
+      showToast(
+        'error',
+        isJoined
+          ? TOAST_MESSAGE.LEAVE_MEETING_ERROR
+          : TOAST_MESSAGE.JOIN_MEETING_ERROR,
+      );
     },
   });
 }
