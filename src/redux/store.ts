@@ -1,14 +1,16 @@
-import { combineReducers, legacy_createStore as createStore } from 'redux';
+import { configureStore, ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
 import authReducer from './authReducers';
-import { composeWithDevTools } from '@redux-devtools/extension';
+import toastReducer from './toastReducers';
 
-const rootReducer = combineReducers({
-  auth: authReducer,
+const store = configureStore({
+  reducer: {
+    auth: authReducer,
+    toast: toastReducer,
+  },
+  devTools: process.env.NODE_ENV !== 'production',
 });
 
-export type RootState = ReturnType<typeof rootReducer>;
-export type AppDispatch = typeof store.dispatch;
-
-const store = createStore(rootReducer, composeWithDevTools());
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = ThunkDispatch<RootState, undefined, UnknownAction>;
 
 export default store;
