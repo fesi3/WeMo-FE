@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import type { NextPage, GetServerSideProps } from 'next';
-import axios from 'axios';
+//import axios from 'axios';
+import instance from '@/api/axiosInstance';
+import { SortOption } from '@/types/reviewType';
 import { useCursorInfiniteScroll } from '@/hooks/useCursorInfiniteScroll';
 import { PlanDataWithCategory } from '@/types/plans';
 import { RegionOption, SubRegionOption } from '@/types/reviewType';
 import Tabs from '@/components/plans/tab/Tabs';
 import RenderTabContent from '@/components/plans/RenderTabContent';
-import { SortOption } from '@/types/reviewType';
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+//const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 interface PlanListData {
   planCount: number;
@@ -129,11 +130,21 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   try {
-    const res = await axios.get<PlanListResponse>(
-      `${baseUrl}/api/plans?size=10&sort=default`,
+    //console.log('SSR 초기 데이터 요청 실행');
+    //console.log('SSR 요청 쿠키:', req.headers.cookie || '없음');
+
+    const res = await instance.get<PlanListResponse>(
+      `/api/plans?size=10&sort=default`,
+      {
+        headers: {
+          Cookie: req.headers.cookie || '', // SSR 요청 시 쿠키 직접 포함
+        },
+      },
     );
+
+    //onsole.log('SSR API 응답 데이터:', res.data);
     const data = res.data;
     const initialPlans: PlanDataWithCategory[] = data.data.planList.map(
       (item) => ({ ...item }),
