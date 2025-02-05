@@ -1,60 +1,26 @@
-import { useEffect, useRef, useState } from 'react';
-import useLightningMap from '@/hooks/useLightningMap';
+import LightningMap from '@/components/lightning/lightningMap';
+// import { GetServerSideProps } from 'next';
 
-export default function LightningMap() {
-  const mapRef = useRef<HTMLDivElement>(null);
-  const { coordinate, address, getCurrentLocation, meetups } =
-    useLightningMap();
-
-  const [mapCenter, setMapCenter] = useState(coordinate);
-
-  useEffect(() => {
-    if (window.kakao && window.kakao.maps && mapRef.current) {
-      const map = new window.kakao.maps.Map(mapRef.current, {
-        center: new window.kakao.maps.LatLng(coordinate.lat, coordinate.lng),
-        level: 5,
-      });
-
-      // 번개팟 모임 데이터를 마커로 표시
-      meetups.forEach((meetup) => {
-        new window.kakao.maps.Marker({
-          position: new window.kakao.maps.LatLng(meetup.lat, meetup.lng),
-          map: map,
-        });
-      });
-
-      //현위치 지도에 마커롶 표시
-      // new window.kakao.maps.Marker({
-      //   position: new window.kakao.maps.LatLng(coordinate.lat, coordinate.lng),
-      //   map: map,
-      // });
-
-      // 지도 중심 좌표 업데이트
-      window.kakao.maps.event.addListener(map, 'center_changed', function () {
-        const center = map.getCenter();
-        setMapCenter({ lat: center.getLat(), lng: center.getLng() });
-      });
-    }
-  }, [coordinate, meetups]);
-
+const LightningPage = () => {
   return (
     <div>
-      <div ref={mapRef} style={{ width: '100%', height: '400px' }} />
-
-      <p>현재 선택된 위치: {address}</p>
-      <p>
-        내 위치 센터 위치: {coordinate.lat} {coordinate.lng}
-      </p>
-      <p>
-        현재 중앙 위치: {mapCenter.lat} {mapCenter.lng}
-      </p>
-
-      <button
-        onClick={getCurrentLocation}
-        className="rounded bg-blue-500 px-4 py-2 text-white"
-      >
-        내 위치 가져오기
-      </button>
+      <LightningMap />
     </div>
   );
-}
+};
+
+// export const getSurverSideProps: GetServerSideProps = async () => {
+//   // 서버에서 기본 위치 (서울 시청) 기준 번개팟 데이터를 미리 가져옴
+//   const response = await fetch(
+//     `https://your-api.com/lightning-meetups?lat=37.5665&lng=126.9780`,
+//   );
+//   const initialMeetups = await response.json();
+
+//   return {
+//     props: {
+//       initialMeetups,
+//     },
+//   };
+// };
+
+export default LightningPage;
