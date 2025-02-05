@@ -43,9 +43,6 @@ export default function useLightningMap() {
 
         // 좌표를 주소로 변환
         updateAddress(lat, lng);
-
-        // 내 위치 기준으로 번개팟 모임 가져오기
-        fetchMeetups(lat, lng);
       });
     }
   };
