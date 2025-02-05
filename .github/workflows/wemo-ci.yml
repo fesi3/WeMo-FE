@@ -78,13 +78,13 @@ jobs:
             <!-- 공유하고 싶은 사진이 있다면 올려주세요! -->
 
             ## ✅ 리뷰 요구사항 (선택)
-            - 확인해주세요!:
+            - 확인해주세요:
               - [ ] 요구사항1
               - [ ] 요구사항2
               - [ ] 요구사항3
 
-            > <!-- 리뷰어가 확인했으면 하는 내용을 중점으로 작성해주세요. -->
-
           base: ${{ github.ref == 'dev' && 'main' || 'dev' }}
           branch: ${{ github.ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
+          delete-branch: false  # 기존 브랜치 삭제 방지
+          draft: false  # 기존 PR 내용을 유지
