@@ -1,8 +1,9 @@
-import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import Head from 'next/head';
 import GNB from '@/components/shared/layout/GNB';
 import Provider from '@/components/provider';
+import '@/styles/globals.css';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -12,6 +13,7 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <Provider>
         <GNB>
+          <SpeedInsights />
           <Component {...pageProps} />
         </GNB>
       </Provider>
