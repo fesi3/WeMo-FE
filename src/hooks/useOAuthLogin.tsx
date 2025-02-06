@@ -14,12 +14,8 @@ function useOAuthLogin(platform: string) {
   const [isFetched, setIsFetched] = useState(false); // ✅ 2번 요청 보내는 것 방지
   // 리다이렉트 페이지 쿼리 스트링에는 구글서버에서 보내주는 authcode가 담겨져있습니다.
   const authCode = searchParams.get('code');
-  console.log(authCode, '---authCode---');
-  console.log(isFetched, '---isFetched---');
   useEffect(() => {
-    console.log('유즈 이펙트 실행 중...');
     if (!authCode || isFetched) {
-      console.log('Skipping fetch - authCode missing or already fetched');
       return;
     } // ✅ authCode가 없거나 이미 요청을 보냈다면 실행하지 않음
 
@@ -46,13 +42,6 @@ function useOAuthLogin(platform: string) {
     };
     fetchAuthCode();
   }, [authCode]);
-
-  useEffect(() => {
-    console.log('---마운트---');
-    return () => {
-      console.log('---언마운트---');
-    };
-  }, []);
 }
 
 export default useOAuthLogin;
