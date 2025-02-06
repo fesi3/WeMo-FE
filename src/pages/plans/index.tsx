@@ -132,15 +132,17 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   try {
+    const cookie = req.headers.cookie || ''; // 요청에서 쿠키 가져오기
+    const isLoggedIn = !!cookie.includes('accessToken'); // accessToken 존재 여부로 로그인 상태 판별
+
     //console.log('SSR 초기 데이터 요청 실행');
     //console.log('SSR 요청 쿠키:', req.headers.cookie || '없음');
 
     const res = await instance.get<PlanListResponse>(
       `/api/plans?size=10&sort=default`,
       {
-        headers: {
-          Cookie: req.headers.cookie || '', // SSR 요청 시 쿠키 직접 포함
-        },
+        headers: isLoggedIn ? { Cookie: cookie } : {}, // 로그인 시 쿠키 포함
+        withCredentials: isLoggedIn, // 로그인 여부에 따라 withCredentials 설정
       },
     );
 
