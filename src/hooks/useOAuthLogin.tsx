@@ -1,7 +1,7 @@
 import instance from '@/api/axiosInstance';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { login } from '@/redux/authReducers';
 import { useQueryClient } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
@@ -11,13 +11,19 @@ function useOAuthLogin(platform: string) {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
-  const isFetched = useRef(false); // ✅ 2번 요청 보내는 것 방지
+  const [isFetched, setIsFetched] = useState(false); // ✅ 2번 요청 보내는 것 방지
   // 리다이렉트 페이지 쿼리 스트링에는 구글서버에서 보내주는 authcode가 담겨져있습니다.
   const authCode = searchParams.get('code');
+  console.log(authCode, '---authCode---');
+  console.log(isFetched, '---isFetched---');
   useEffect(() => {
-    if (!authCode || isFetched.current) return; // ✅ authCode가 없거나 이미 요청을 보냈다면 실행하지 않음
+    console.log('유즈 이펙트 실행 중...');
+    if (!authCode || isFetched) {
+      console.log('Skipping fetch - authCode missing or already fetched');
+      return;
+    } // ✅ authCode가 없거나 이미 요청을 보냈다면 실행하지 않음
 
-    isFetched.current = true; // ✅ 요청 전에 상태 업데이트
+    setIsFetched(true); // ✅ 요청 전에 상태 업데이트
     const fetchAuthCode = async () => {
       try {
         //authcode를 쿼리스트링으로 담아서 리소스 서버에 요청을 보냅니다.
@@ -30,8 +36,8 @@ function useOAuthLogin(platform: string) {
         // 요청이 성공해 accessToken이 클라이언트에 잘 전달됐다면 invalidateQueries를 통해 GNB 컴포넌트에서 useAuth 함수 안에 쿼리를 실행합니다.
         if (success) {
           dispatch(login());
-          queryClient.invalidateQueries({ queryKey: ['auth'] });
           router.replace('/plans');
+          queryClient.invalidateQueries({ queryKey: ['auth'] });
         }
       } catch (error) {
         console.error(`${platform} oAuth Error fetching data:`, error);
@@ -40,6 +46,13 @@ function useOAuthLogin(platform: string) {
     };
     fetchAuthCode();
   }, [authCode]);
+
+  useEffect(() => {
+    console.log('---마운트---');
+    return () => {
+      console.log('---언마운트---');
+    };
+  }, []);
 }
 
 export default useOAuthLogin;
