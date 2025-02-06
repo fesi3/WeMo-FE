@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { UserGroupIcon } from '@heroicons/react/20/solid';
 import dayjs from 'dayjs';
 import Image from 'next/image';
@@ -23,9 +24,14 @@ type Meeting = {
 const Card = ({ meeting }: { meeting: Meeting }) => {
   const maxItems = 3;
   const displayedPlans = meeting.planList.slice(0, maxItems);
+  const router = useRouter();
+  const handleClick = () => {
+    router.push(`/meetings/${meeting.meetingId}`);
+  };
 
   return (
-    <div className="cursor-pointer rounded-lg border bg-white p-4 shadow-md">
+    <div className="rounded-lg border bg-white p-4 shadow-md">
+      {/* 모임 정보 */}
       <div className="flex items-center">
         <div className="flex-1">
           <h2 className="text-lg font-bold">{meeting.meetingName}</h2>
@@ -51,8 +57,8 @@ const Card = ({ meeting }: { meeting: Meeting }) => {
           </div>
         )}
       </div>
-
-      <div className="mt-2 border-t pt-2">
+      {/* 일정 정보 */}
+      <div className="mt-2 cursor-pointer border-t pt-2" onClick={handleClick}>
         <div className="relative">
           <h3 className="mb-2 text-sm font-semibold">예정된 일정</h3>
           {meeting.planList.length > 0 ? (
