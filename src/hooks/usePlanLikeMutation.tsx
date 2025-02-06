@@ -41,10 +41,6 @@ export default function usePlanLikeMutation({
     },
     onError: (error, _, context) => {
       queryClient.setQueryData(planDetailQueryKey, context?.planDetailData);
-      alert('좋아요 및 취소 실패');
-    },
-    onSuccess: () => {
-      alert('좋아요 및 취소 성공');
     },
   });
 }
