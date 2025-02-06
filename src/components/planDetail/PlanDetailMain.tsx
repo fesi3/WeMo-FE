@@ -6,7 +6,6 @@ import { splitAddress } from '@/utils/splitAddress';
 import Image from 'next/image';
 import DateBadge from '@/components/shared/DateBadge';
 import AvatarList from './AvatarList';
-import Button from '../shared/Button';
 import IconWithCount from '../meetingDetail/ui/IconWithCount';
 import {
   EyeIcon,
@@ -24,6 +23,7 @@ import usePlanDetailQuery from '@/hooks/usePlanDetailQuery';
 import { attendPlan, leavePlan } from '@/api/plan';
 import LikePlanButton from './LikePlanButton';
 import usePlanLikeMutation from '@/hooks/usePlanLikeMutation';
+import PlanAttendButton from './PlanAttendButton';
 
 interface PlanDetailMainProps {
   id: number;
@@ -118,16 +118,13 @@ export default function PlanDetailMain({ id }: PlanDetailMainProps) {
               <div className="text-sm">
                 {`모집 마감일 ${dayjs(planData.registrationEnd).format('YYYY.MM.DD')}`}
               </div>
-              {auth.user?.email === planData.email && (
-                <Button
-                  text={planData.isJoined ? '참석 취소하기' : '일정 참석하기'}
-                  size={'large'}
-                  disabled={planData === undefined}
-                  onClick={onClickJoinPlan}
-                  height={42}
-                  // backColor="relative top-5 bg-primary-10 text-white w-full"
-                />
-              )}
+              <PlanAttendButton
+                isFulled={planData.isFulled}
+                isJoined={planData.isJoined}
+                isOpened={planData.isOpened}
+                isHost={auth.user?.email === planData.email}
+                onClick={onClickJoinPlan}
+              />
             </div>
           </div>
           <div className="flex flex-col gap-2">
