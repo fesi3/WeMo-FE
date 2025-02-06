@@ -64,6 +64,7 @@ const Card = ({ meeting }: { meeting: Meeting }) => {
                       plan.isFulled
                         ? 'bg-gray-100 text-gray-400 line-through'
                         : ''
+                      // 마감 안된 일정 뱃지 -> 디자인 나오면 추후 수정
                     }`}
                   >
                     {dayjs(plan.dateTime).format('M/D HH:mm')}
