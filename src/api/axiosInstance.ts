@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { isAxiosError } from 'axios';
 import { API_PATHS } from '@/constants/apiPath';
 import store from '@/redux/store';
 import { logout } from '@/redux/authReducers';
@@ -52,10 +52,14 @@ instance.interceptors.response.use(
             await instance.post(SIGNOUT); // Attempt to sign out
             console.log('✅ SIGNOUT successful');
           } catch (signoutError: unknown) {
-            console.warn(
-              'SIGNOUT failed with error',
-              signoutError.response?.status,
-            );
+            if (isAxiosError(signoutError)) {
+              console.error(
+                'SIGNOUT failed with error',
+                signoutError.response?.status,
+              );
+            } else {
+              console.error('SIGNOUT failed with unknown error', signoutError);
+            }
           } finally {
             // Always execute this block, regardless of SIGNOUT success or failure
             store.dispatch(logout()); // Clear global user information
