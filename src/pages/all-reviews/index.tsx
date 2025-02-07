@@ -21,7 +21,7 @@ interface ReviewPageProps {
 const ReviewPage = ({ dehydratedState }: ReviewPageProps) => {
   return (
     <HydrationBoundary state={dehydratedState}>
-      <div className="mx-auto max-w-7xl px-4 py-6">
+      <div className="mx-auto max-w-7xl px-4 py-2">
         <Tabs
           tabs={CATEGORIES}
           defaultTab={DEFAULT_CATEGORY}
@@ -41,12 +41,13 @@ export const getStaticProps: GetStaticProps = async () => {
     queryFn: ({ pageParam = 1 }) => fetchReviews(category, filters, pageParam),
     initialPageParam: 1,
     getNextPageParam: (lastPage: { reviews: Review[]; nextPage?: number }) =>
-      lastPage.nextPage || undefined,
+      lastPage.nextPage ?? null,
   });
+
+  const dehydratedState = dehydrate(queryClient);
+
   return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
+    props: JSON.parse(JSON.stringify({ dehydratedState })),
     revalidate: 60,
   };
 };
