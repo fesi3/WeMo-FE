@@ -1,17 +1,13 @@
 import Button from '../shared/Button';
 import EditPlanButton from './editPlan/EditPlanButton';
 interface MeetingDetailFooterProps {
-  isLogined: boolean;
   isHost: boolean;
   isJoined: boolean;
-  handleLoginRedirection: () => void;
   onClickJoinOrLeave: () => void;
 }
 export default function MeetingDetailFooter({
-  isLogined,
   isHost,
   isJoined,
-  handleLoginRedirection,
   onClickJoinOrLeave,
 }: MeetingDetailFooterProps) {
   return (
@@ -25,7 +21,7 @@ export default function MeetingDetailFooter({
             size={'large'}
             height={42}
             className="flex-center z-[9] w-full"
-            onClick={isLogined ? onClickJoinOrLeave : handleLoginRedirection}
+            onClick={onClickJoinOrLeave}
           />
         ) : (
           <Button
