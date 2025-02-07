@@ -19,7 +19,8 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
   >({});
 
   const handleImageClick = (images: string[]) => {
-    setSelectedImages(images);
+    const uniqueImages = Array.from(new Set(images)); // 중복 제거
+    setSelectedImages(uniqueImages);
     handleOpen();
   };
 
