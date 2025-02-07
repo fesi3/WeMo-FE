@@ -10,8 +10,11 @@ const MeetingPage: React.FC = () => {
   useEffect(() => {
     const fetchMeetings = async () => {
       try {
+        const cookie = document.cookie || ''; // 브라우저 환경에서 쿠키 가져오기
+        const isLoggedIn = cookie.includes('accessToken'); // 로그인 여부 판단
+
         const response = await axios.get('/api/meetings', {
-          withCredentials: false, //추후 수정(회원/비회원)
+          withCredentials: isLoggedIn,
         });
         setMeetings(response.data.data.meetingList);
       } catch (error) {
