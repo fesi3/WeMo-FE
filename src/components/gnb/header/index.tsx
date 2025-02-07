@@ -3,7 +3,7 @@ import Link from 'next/link';
 import logo from '@/assets/images/title.png';
 import GNBItem from '../item';
 import { useRouter } from 'next/router';
-import { hideGnbHeaderRoutes } from '@/constants/gnb';
+import { hideGnbHeaderRoutes, menuItems } from '@/constants/gnb';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 
@@ -31,26 +31,18 @@ function GNBHeader() {
                     alt="wemo-gnb-logo"
                   />
                 </Link>
-                <div className="flex items-center">
+                <nav className="flex items-center">
                   <ul className="flex space-x-6">
-                    <GNBItem name={'홈'} path={'/plans'} isHeader />
-                    <GNBItem
-                      name={'모든 리뷰'}
-                      path={'/all-reviews'}
-                      isHeader
-                    />
-                    <GNBItem
-                      name={'모임 찾기'}
-                      path={'/all-meetings'}
-                      isHeader
-                    />
+                    {menuItems.map(({ name, key, path }) => (
+                      <GNBItem key={key} name={name} path={path} isHeader />
+                    ))}
                     <GNBItem
                       name={isLoggedIn ? '마이페이지' : '로그인'}
                       path={isLoggedIn ? `/user/${user?.nickname}` : '/start'}
                       isHeader
                     />
                   </ul>
-                </div>
+                </nav>
               </div>
             </div>
           </header>
