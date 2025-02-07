@@ -21,8 +21,10 @@ type Meeting = {
   planList: Plan[];
 };
 
+const MAX_DISPLAY_PLANS = 3;
+
 const Card = ({ meeting }: { meeting: Meeting }) => {
-  const maxItems = 3;
+  const maxItems = MAX_DISPLAY_PLANS;
   const displayedPlans = meeting.planList.slice(0, maxItems);
   const router = useRouter();
   const handleClick = () => {
