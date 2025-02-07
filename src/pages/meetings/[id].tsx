@@ -11,11 +11,12 @@ import { GetServerSideProps } from 'next';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
+  const cookie = context.req.headers.cookie || '';
   const queryClient = new QueryClient();
   const idNum = parseInt(id as string);
   await queryClient.prefetchQuery({
     queryKey: QUERY_KEY.meetingDetail(idNum),
-    queryFn: () => fetchMeetingDetail(idNum),
+    queryFn: () => fetchMeetingDetail(idNum, cookie),
   });
 
   return {
