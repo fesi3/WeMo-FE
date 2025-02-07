@@ -43,10 +43,10 @@ export default function Carousel({ images }: CarouselProps) {
         onDragEnd={onDragEnd}
         className="flex w-full shrink-0"
       >
-        {images.map((image, index) => (
+        {images.map((image) => (
           <div
             className="relative w-full shrink-0 pt-[60%]"
-            key={index} /**바꿔야댐 */
+            key={image} /**바꿔야댐 */
             onClick={(e) => e.preventDefault()}
           >
             <Image
@@ -61,10 +61,10 @@ export default function Carousel({ images }: CarouselProps) {
         ))}
       </motion.div>
       <div className="absolute bottom-[5%] left-1/2 flex -translate-x-1/2 gap-1.5">
-        {images.map((_, index) => (
+        {images.map((image, index) => (
           <span
-            key={index}
-            /**바꿔야댐 */ className={`h-[10px] w-[10px] rounded-full bg-white ${imageIndex !== index && 'opacity-30'}`}
+            key={image}
+            className={`h-[10px] w-[10px] rounded-full bg-white ${imageIndex !== index && 'opacity-30'}`}
           ></span>
         ))}
       </div>
@@ -72,7 +72,7 @@ export default function Carousel({ images }: CarouselProps) {
         onClick={() => {
           handleImageIndex('left');
         }}
-        className="absolute left-[2%] top-1/2 hidden h-[50px] w-[50px] -translate-y-1/2 items-center justify-center rounded-full bg-black text-xl opacity-60 md:flex"
+        className="absolute left-[2%] top-1/2 hidden h-[50px] w-[50px] -translate-y-1/2 items-center justify-center rounded-full bg-black text-xl opacity-30 md:flex"
       >
         <ArrowLeftIcon color="white" />
       </button>
@@ -80,7 +80,7 @@ export default function Carousel({ images }: CarouselProps) {
         onClick={() => {
           handleImageIndex('right');
         }}
-        className="absolute right-[2%] top-1/2 hidden h-[50px] w-[50px] -translate-y-1/2 items-center justify-center rounded-full bg-black text-xl opacity-60 md:flex"
+        className="absolute right-[2%] top-1/2 hidden h-[50px] w-[50px] -translate-y-1/2 items-center justify-center rounded-full bg-black text-xl opacity-30 md:flex"
       >
         <ArrowRightIcon color="white" />
       </button>

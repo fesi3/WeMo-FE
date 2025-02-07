@@ -1,8 +1,6 @@
 import { joinMeeting, leaveMeeting } from '@/api/meeting';
 import { QUERY_KEY } from '@/constants/queryKey';
-import TOAST_MESSAGE from '@/constants/toastMessage';
 import { MeetingDetailResponse } from '@/types/api/meeting';
-import { showToast } from '@/utils/showToast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface useJoinMeetingParams {
@@ -42,22 +40,10 @@ export default function useJoinMeetingMutation({
         : await leaveMeeting(meetingId);
       if (!result) throw new Error();
     },
-    onSuccess: () => {
-      showToast(
-        'success',
-        isJoined ? TOAST_MESSAGE.LEAVE_MEETING : TOAST_MESSAGE.JOIN_MEETING,
-      );
-    },
     onError: (error, _, context) => {
       queryClient.setQueryData(
         meetingDetailQueryKey,
         context?.meetingDetailData,
-      );
-      showToast(
-        'error',
-        isJoined
-          ? TOAST_MESSAGE.LEAVE_MEETING_ERROR
-          : TOAST_MESSAGE.JOIN_MEETING_ERROR,
       );
     },
   });

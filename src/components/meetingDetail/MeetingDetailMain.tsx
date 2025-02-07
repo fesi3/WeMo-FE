@@ -12,7 +12,6 @@ import {
 import PlanCardListInMeeting from './ui/PlanCardListInMeeting';
 import ReviewListInMeeting from './ui/ReviewInMeeting';
 import { formatAverage } from '@/utils/formatRating';
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useMeetingDetailQuery from '@/hooks/useMeetingDetailQuery';
 import { useSelector } from 'react-redux';
@@ -21,28 +20,20 @@ import MeetingDetailFooter from './MeetingDetailFooter';
 import useJoinMeetingMutation from '@/hooks/useJoinMeetingMutation';
 
 export default function MeetingDetailMain() {
-  const [isHost, setIsHost] = useState(false);
   const router = useRouter();
   const { id } = router.query;
   const idNum = parseInt(id as string);
   const { isLoading, data, isError } = useMeetingDetailQuery(idNum);
   const meetingData = data?.data;
-  const user = useSelector((state: RootState) => state.auth.user);
+  const auth = useSelector((state: RootState) => state.auth);
   const { mutate } = useJoinMeetingMutation({
     meetingId: idNum,
     isJoined: meetingData?.isJoined,
   });
   const onClickJoinOrLeave = () => {
-    mutate();
+    if (auth.isLoggedIn) mutate();
   };
-  const handleLoginRedirection = () => {
-    router.push('/login');
-  };
-  useEffect(() => {
-    if (user?.email === data?.data.email) {
-      setIsHost(true);
-    }
-  }, [data?.data.email, user?.email]);
+
   if (isLoading) return <div>로딩중</div>;
   if (isError || !meetingData) return <div>에러</div>;
   return (
@@ -104,10 +95,8 @@ export default function MeetingDetailMain() {
         </SectionContainer>
       </div>
       <MeetingDetailFooter
-        isLogined={user !== null}
-        handleLoginRedirection={handleLoginRedirection}
         onClickJoinOrLeave={onClickJoinOrLeave}
-        isHost={isHost}
+        isHost={auth.user?.email === meetingData.email}
         isJoined={meetingData.isJoined}
       />
     </>
