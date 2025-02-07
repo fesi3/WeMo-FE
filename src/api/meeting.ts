@@ -5,7 +5,7 @@ import {
   CreateMeetingResponse,
 } from '@/types/api/meeting';
 import instance from './axiosInstance';
-import { isAxiosError } from 'axios';
+import { AxiosRequestConfig, isAxiosError } from 'axios';
 import { ApiErrorResponse, ApiResponse } from '@/types/api/apiResponse';
 import { showToast } from '@/utils/showToast';
 import TOAST_MESSAGE from '@/constants/toastMessage';
@@ -31,10 +31,17 @@ export const createMeeting = async (requestBody: CreateMeetingRequestBody) => {
   //에러핸들링 어떻게 할지 고민중
 };
 
-export const fetchMeetingDetail = async (meetingId: number) => {
+export const fetchMeetingDetail = async (
+  meetingId: number,
+  cookie?: string,
+) => {
   if (isNaN(meetingId)) return;
+  const config: AxiosRequestConfig = cookie
+    ? { headers: { Cookie: cookie }, withCredentials: true }
+    : {};
   const response = await instance<MeetingDetailResponse>(
     API_PATHS.MEETING.GET_DETAIL(meetingId),
+    config,
   );
   return response.data;
 };
