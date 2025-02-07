@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { UserGroupIcon } from '@heroicons/react/20/solid';
+import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import CategoryBadge from '@/components/shared/badges/CategoryBadge';
@@ -87,8 +88,9 @@ const Card = ({ meeting }: { meeting: Meeting }) => {
               아직 일정이 없어요. 무슨 모임인지 알아볼까요?
             </p>
           )}
-          <span className="absolute right-0 top-0 text-sm text-gray-400">
-            더보기 &nbsp; &gt;
+          <span className="absolute right-0 top-0 flex items-center gap-x-1 text-sm text-gray-400">
+            더보기
+            <ArrowRightIcon className="h-4 w-4" />
           </span>
         </div>
       </div>
