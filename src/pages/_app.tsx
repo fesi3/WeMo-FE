@@ -2,7 +2,7 @@ import type { AppProps } from 'next/app';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 import Head from 'next/head';
-import GNB from '@/components/shared/layout/GNB';
+import GNB from '@/components/gnb';
 import Provider from '@/components/provider';
 import '@/styles/globals.css';
 
