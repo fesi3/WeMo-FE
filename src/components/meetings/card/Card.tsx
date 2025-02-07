@@ -23,6 +23,12 @@ type Meeting = {
 
 const MAX_DISPLAY_PLANS = 3;
 
+const getPlanBadgeClass = (isFulled: boolean) => {
+  return isFulled
+    ? 'bg-gray-200 text-white line-through'
+    : 'bg-white text-primary-10 border border-primary-10';
+};
+
 const Card = ({ meeting }: { meeting: Meeting }) => {
   const maxItems = MAX_DISPLAY_PLANS;
   const displayedPlans = meeting.planList.slice(0, maxItems);
@@ -36,13 +42,13 @@ const Card = ({ meeting }: { meeting: Meeting }) => {
       {/* 모임 정보 */}
       <div className="flex items-center">
         <div className="flex-1">
-          <h2 className="text-lg font-bold">{meeting.meetingName}</h2>
-          <CategoryBadge className="my-2" category={meeting.category} />
-          <p className="text-md text-gray-600">{meeting.description}</p>
-          <div className="text-md mt-2 inline-flex items-center gap-x-1 text-gray-500">
+          <CategoryBadge category={meeting.category} />
+          <h2 className="mt-2 text-lg font-bold">{meeting.meetingName}</h2>
+          <p className="text-md mt-1 text-gray-400">{meeting.description}</p>
+          <div className="text-md mt-2 inline-flex items-center gap-x-1 font-semibold text-gray-400">
             <UserGroupIcon className="h-4 w-4" />
             <p>멤버 수 {meeting.memberCount}</p>
-            <p className="before:mx-1 before:content-['·']">예정 모임 n</p>{' '}
+            <p className="before:mx-1 before:content-['·']">예정 일정 n</p>{' '}
             {/* {meeting.planCount} */}
           </div>
         </div>
@@ -68,12 +74,7 @@ const Card = ({ meeting }: { meeting: Meeting }) => {
               {displayedPlans.map((plan) => (
                 <li key={plan.planId} className="inline-flex">
                   <span
-                    className={`rounded px-2 py-1 ${
-                      plan.isFulled
-                        ? 'bg-gray-100 text-gray-400 line-through'
-                        : ''
-                      // 마감 안된 일정 뱃지 -> 디자인 나오면 추후 수정
-                    }`}
+                    className={`rounded px-3 py-1 text-xs ${getPlanBadgeClass(plan.isFulled)}`}
                   >
                     {dayjs(plan.dateTime).format('M/D HH:mm')}
                   </span>
@@ -86,8 +87,8 @@ const Card = ({ meeting }: { meeting: Meeting }) => {
               아직 일정이 없어요. 무슨 모임인지 알아볼까요?
             </p>
           )}
-          <span className="absolute right-0 top-0 text-sm font-semibold text-blue-500">
-            더보기 →
+          <span className="absolute right-0 top-0 text-sm text-gray-400">
+            더보기 &nbsp; &gt;
           </span>
         </div>
       </div>
