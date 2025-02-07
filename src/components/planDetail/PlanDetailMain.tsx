@@ -6,7 +6,6 @@ import { splitAddress } from '@/utils/splitAddress';
 import Image from 'next/image';
 import DateBadge from '@/components/shared/DateBadge';
 import AvatarList from './AvatarList';
-import Button from '../shared/Button';
 import IconWithCount from '../meetingDetail/ui/IconWithCount';
 import {
   EyeIcon,
@@ -22,6 +21,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import usePlanDetailQuery from '@/hooks/usePlanDetailQuery';
 import { attendPlan, leavePlan } from '@/api/plan';
+import LikePlanButton from './LikePlanButton';
+import usePlanLikeMutation from '@/hooks/usePlanLikeMutation';
+import PlanAttendButton from './PlanAttendButton';
 
 interface PlanDetailMainProps {
   id: number;
@@ -33,11 +35,16 @@ export default function PlanDetailMain({ id }: PlanDetailMainProps) {
   const { data, isLoading, refetch } = usePlanDetailQuery(id);
   const planData = data?.data;
   const auth = useSelector((state: RootState) => state.auth);
+  const { mutate } = usePlanLikeMutation({
+    planId: id,
+    isLiked: planData?.isLiked || false,
+  });
   const onClickJoinPlan = async () => {
     if (!auth.isLoggedIn) {
       router.push('/login');
       return;
     }
+    //mutation으로 리팩토링링
     try {
       if (!data?.data.isJoined) {
         await attendPlan(id);
@@ -48,7 +55,12 @@ export default function PlanDetailMain({ id }: PlanDetailMainProps) {
       refetch();
     }
   };
-
+  const onClickLike = () => {
+    if (auth === null || !auth.isLoggedIn) {
+      router.push('/login');
+    }
+    mutate();
+  };
   if (isLoading) return <div>로딩중</div>;
   if (!data || !planData) return <div>데이터 없음</div>;
   return (
@@ -58,13 +70,19 @@ export default function PlanDetailMain({ id }: PlanDetailMainProps) {
           <div className="flex flex-col justify-center gap-6 overflow-hidden rounded-lg border-[2px] border-[#E5E7EB] pb-5">
             <Carousel images={planData.planImagePath} />
             <div className="flex flex-col gap-3 px-3 pb-[21px] pt-4">
-              <div className="flex gap-2">
-                <DateBadge>
-                  {dayjs(planData.dateTime).format('M월 D일')}
-                </DateBadge>
-                <DateBadge>
-                  {dayjs(planData.dateTime).format('HH:mm')}
-                </DateBadge>
+              <div className="flex w-full justify-between">
+                <div className="flex gap-2">
+                  <DateBadge>
+                    {dayjs(planData.dateTime).format('M월 D일')}
+                  </DateBadge>
+                  <DateBadge>
+                    {dayjs(planData.dateTime).format('HH:mm')}
+                  </DateBadge>
+                </div>
+                <LikePlanButton
+                  isLiked={planData.isLiked}
+                  onClick={onClickLike}
+                />
               </div>
               <span className="font-bold">{planData.planName}</span>
               <p className="text-sm font-bold">{planData.content}</p>
@@ -100,16 +118,13 @@ export default function PlanDetailMain({ id }: PlanDetailMainProps) {
               <div className="text-sm">
                 {`모집 마감일 ${dayjs(planData.registrationEnd).format('YYYY.MM.DD')}`}
               </div>
-              {auth.user?.email === planData.email && (
-                <Button
-                  text={planData.isJoined ? '참석 취소하기' : '일정 참석하기'}
-                  size={'large'}
-                  disabled={planData === undefined}
-                  onClick={onClickJoinPlan}
-                  height={42}
-                  // backColor="relative top-5 bg-primary-10 text-white w-full"
-                />
-              )}
+              <PlanAttendButton
+                isFulled={planData.isFulled}
+                isJoined={planData.isJoined}
+                isOpened={planData.isOpened}
+                isHost={auth.user?.email === planData.email}
+                onClick={onClickJoinPlan}
+              />
             </div>
           </div>
           <div className="flex flex-col gap-2">

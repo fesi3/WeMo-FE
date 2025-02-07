@@ -61,18 +61,14 @@ export default function EditMeetingForm({
       categoryId: parseInt(data.categoryId),
       fileUrls,
     };
-    try {
-      const response = await createMeeting(requestData);
-      if (!response) {
-        throw new Error('모임 생성 실패');
-      }
-      alert('모임이 생성되었습니다.'); //토스트
-      handleCloseThisModal();
-      const newMeetingId = response.data.meetingId;
-      router.push(`/meetings/${newMeetingId}`);
-    } catch {
-      alert('모임이 생성되지 않았습니다.'); //토스트
+
+    const response = await createMeeting(requestData);
+    if (!response) {
+      return;
     }
+    handleCloseThisModal();
+    const newMeetingId = response.data.meetingId;
+    router.push(`/meetings/${newMeetingId}`);
   };
 
   useEffect(() => {

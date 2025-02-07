@@ -8,11 +8,11 @@ import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { useQueryClient } from '@tanstack/react-query';
 import { login } from '@/redux/authReducers';
-import { PATHS } from '@/constants/apiPath';
+import { API_PATHS } from '@/constants/apiPath';
 import { AxiosError } from 'axios';
 const {
   AUTH: { SIGNIN },
-} = PATHS;
+} = API_PATHS;
 
 interface LoginFormType {
   email: string;
