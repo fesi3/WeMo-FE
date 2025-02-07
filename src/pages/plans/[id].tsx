@@ -12,11 +12,12 @@ import { GetServerSideProps } from 'next';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
+  const cookie = context.req.headers.cookie || '';
   const queryClient = new QueryClient();
   const idNum = parseInt(id as string);
   await queryClient.prefetchQuery({
     queryKey: QUERY_KEY.planDetail(idNum),
-    queryFn: () => fetchPlanDetail(idNum),
+    queryFn: () => fetchPlanDetail(idNum, cookie),
   });
 
   return {
