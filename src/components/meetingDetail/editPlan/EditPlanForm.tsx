@@ -114,19 +114,14 @@ export default function EditPlanForm({
       ),
       fileUrls,
     };
-    try {
-      const result = await createPlan({
-        meetingId: parseInt(id as string),
-        requestBody,
-      });
-      if (!result || !result.success) {
-        throw new Error('일정 생성 실패');
-      }
-      alert('일정이 생성됐습니다.'); //토스트
-      handleCloseThisModal();
-    } catch {
-      alert('일정 생성에 실패했습니다.'); //토스트
+    const result = await createPlan({
+      meetingId: parseInt(id as string),
+      requestBody,
+    });
+    if (!result || !result.success) {
+      return;
     }
+    handleCloseThisModal();
   };
 
   const handleClickMap = async ({ lat, lng }: Coordinate) => {
