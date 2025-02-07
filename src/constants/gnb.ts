@@ -13,7 +13,7 @@ export const menuItems = [
   {
     name: '모임 찾기',
     key: 3,
-    path: '/search-meetings',
+    path: '/meetings',
     icon: GNBProfileIcon,
   },
 ];
