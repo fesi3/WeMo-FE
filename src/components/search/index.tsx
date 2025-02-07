@@ -1,7 +1,7 @@
 function Search() {
   return (
     <div>
-      <div>sdf</div>
+      <div>{'searchModal입니다'}</div>
     </div>
   );
 }

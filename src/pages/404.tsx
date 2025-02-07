@@ -13,7 +13,7 @@ function NotFound() {
         {'페이지를 찾을 수 없음'}
       </h1>
       <p className="mb-6 text-center text-gray-600">
-        {'찾으시는 페이지는 존재하지 않습니다. 홈으로 이동해주세요. '}
+        {'찾으시는 페이지는 존재하지 않습니다. 홈으로 이동해주세요.'}
         <br />
         <span className="opacity-40">
           {'알고 계셨나요? WeMo를 대표하는 색상은'}{' '}
