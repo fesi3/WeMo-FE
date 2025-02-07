@@ -24,6 +24,8 @@ function useAuth() {
     queryKey: ['auth'],
     queryFn: fetchUserInfo,
     retry: false,
+    gcTime: 0,
+    staleTime: 0,
   });
 
   useEffect(() => {
