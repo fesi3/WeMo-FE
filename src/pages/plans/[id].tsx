@@ -1,6 +1,6 @@
 import { fetchPlanDetail } from '@/api/plan';
 import PlanDetailMain from '@/components/planDetail/PlanDetailMain';
-import { queryKey } from '@/constants/queryKey';
+import { QUERY_KEY } from '@/constants/queryKey';
 
 import {
   dehydrate,
@@ -12,11 +12,12 @@ import { GetServerSideProps } from 'next';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
+  const cookie = context.req.headers.cookie || '';
   const queryClient = new QueryClient();
   const idNum = parseInt(id as string);
   await queryClient.prefetchQuery({
-    queryKey: queryKey.planDetail(idNum),
-    queryFn: () => fetchPlanDetail(idNum),
+    queryKey: QUERY_KEY.planDetail(idNum),
+    queryFn: () => fetchPlanDetail(idNum, cookie),
   });
 
   return {

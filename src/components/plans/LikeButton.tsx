@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import instance from '@/api/axiosInstance';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 import HeartIcon from '@/assets/icons/heart.svg';
 import EmptyHeartIcon from '@/assets/icons/emptyHeart.svg';
 
@@ -8,45 +10,29 @@ type LikeButtonProps = {
   initialIsLiked: boolean;
 };
 
-const getAccessTokenFromCookies = (): string | null => {
-  const cookieString = document.cookie;
-  const cookies = cookieString.split('; ');
-  const accessTokenCookie = cookies.find((cookie) =>
-    cookie.startsWith('accessToken='),
-  );
-  return accessTokenCookie ? accessTokenCookie.split('=')[1] : null;
-};
-
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-
 const LikeButton = ({ planId, initialIsLiked }: LikeButtonProps) => {
   const [isLiked, setIsLiked] = useState(initialIsLiked);
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
   const handleLikeToggle = async () => {
-    const accessToken = getAccessTokenFromCookies();
-
-    if (!accessToken) {
+    if (!isLoggedIn) {
       alert('로그인이 필요합니다');
       return;
     }
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      };
 
+    try {
       if (isLiked) {
-        // 좋아요 취소 요청
-        await axios.delete(`${baseUrl}/api/plans/like/${planId}`, config);
+        await instance.delete(`/api/plans/like/${planId}`);
+        alert('좋아요를 취소했습니다.');
       } else {
-        // 좋아요 요청
-        await axios.post(`${baseUrl}/api/plans/like/${planId}`, {}, config);
+        await instance.post(`/api/plans/like/${planId}`, {});
+        alert('일정에 좋아요를 눌렀습니다.');
       }
-      // 성공 시 상태 업데이트
+
       setIsLiked(!isLiked);
     } catch (error) {
       console.error('Failed to toggle like:', error);
+      alert('좋아요 처리 중 오류가 발생했습니다.');
     }
   };
 
@@ -58,11 +44,7 @@ const LikeButton = ({ planId, initialIsLiked }: LikeButtonProps) => {
         handleLikeToggle();
       }}
     >
-      {isLiked ? (
-        <HeartIcon className="fill-red-500" />
-      ) : (
-        <EmptyHeartIcon className="fill-gray-500" />
-      )}
+      {isLiked ? <HeartIcon /> : <EmptyHeartIcon />}
     </div>
   );
 };

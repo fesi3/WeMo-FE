@@ -13,7 +13,9 @@ export default function ErrorWrapper({
       <div className="flex flex-col">
         {children}
         {errorMessage && (
-          <span className="text-sm text-heart">{errorMessage}</span>
+          <span className="flex w-full justify-end text-sm text-heart">
+            {errorMessage}
+          </span>
         )}
       </div>
     </>

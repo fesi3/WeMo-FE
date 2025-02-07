@@ -1,6 +1,6 @@
 import { fetchMeetingDetail } from '@/api/meeting';
 import MeetingDetailMain from '@/components/meetingDetail/MeetingDetailMain';
-import { queryKey } from '@/constants/queryKey';
+import { QUERY_KEY } from '@/constants/queryKey';
 import {
   dehydrate,
   DehydratedState,
@@ -11,11 +11,12 @@ import { GetServerSideProps } from 'next';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
+  const cookie = context.req.headers.cookie || '';
   const queryClient = new QueryClient();
   const idNum = parseInt(id as string);
   await queryClient.prefetchQuery({
-    queryKey: queryKey.meetingDetail(idNum),
-    queryFn: () => fetchMeetingDetail(idNum),
+    queryKey: QUERY_KEY.meetingDetail(idNum),
+    queryFn: () => fetchMeetingDetail(idNum, cookie),
   });
 
   return {

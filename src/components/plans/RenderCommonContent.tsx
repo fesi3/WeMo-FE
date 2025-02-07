@@ -84,9 +84,6 @@ const RenderCommonContent: React.FC<RenderCommonContentProps> = ({
           <EditMeetingButton />
         </div>
       )}
-      <div className="fixed bottom-20 right-5 z-50">
-        <EditMeetingButton />
-      </div>
       {/* 일정 카드 목록 */}
       <PlanList
         plans={plans || []}

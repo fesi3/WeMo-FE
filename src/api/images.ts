@@ -1,4 +1,4 @@
-import { PATHS } from '@/constants/apiPath';
+import { API_PATHS } from '@/constants/apiPath';
 import axios from 'axios';
 import instance from './axiosInstance';
 import { extractPathFromPresignedUrl } from '@/utils/extractPathFromPresignedUrl';
@@ -15,7 +15,7 @@ interface PresignedUrlsResponse {
 
 export const getPresignedUrls = async (count: number) => {
   try {
-    const response = await instance.get(PATHS.IMAGE.UPLOAD(count));
+    const response = await instance.get(API_PATHS.IMAGE.UPLOAD(count));
     const data: PresignedUrlsResponse = response.data;
     return data;
   } catch (e) {
