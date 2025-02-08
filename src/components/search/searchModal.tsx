@@ -31,16 +31,17 @@ function SearchModal({
   return (
     isOpen && (
       <ModalPortal>
-        <ModalBackDrop isOpen={isOpen} handleClose={handleClose}>
-          <button
-            type="button"
+        <ModalBackDrop
+          isOpen={isOpen}
+          handleClose={handleClose}
+          className="z-[13]"
+        >
+          <CloseIcon
             onClick={handleClose}
-            className="absolute right-2 top-2"
-          >
-            <CloseIcon />
-          </button>
+            className="absolute right-2 top-2 cursor-pointer"
+          />
           <div
-            className={twMerge('z-[12]', className)}
+            className={twMerge('z-[14]', className)}
             onClick={(e) => e.stopPropagation()}
           >
             {children}

@@ -43,7 +43,7 @@ function GNBHeader() {
           <div className="invisible md:h-[80px]" />
 
           <SearchModal isOpen={toggleValue} handleClose={handleClose}>
-            <div>123</div>
+            <div className="h-[300px] w-full bg-white">123</div>
           </SearchModal>
         </>
       )}
