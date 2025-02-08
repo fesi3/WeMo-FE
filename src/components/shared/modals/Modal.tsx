@@ -4,10 +4,10 @@ import ModalBackDrop from './ModalBackDrop';
 import { XMarkIcon } from '@heroicons/react/20/solid';
 import { twMerge } from 'tailwind-merge';
 
-interface ModalProps {
+export interface ModalProps {
   handleClose: () => void;
   isOpen: boolean;
-  title: string;
+  title?: string;
   className?: string;
 }
 
@@ -22,7 +22,7 @@ export default function Modal({
   return (
     isOpen && (
       <ModalPortal>
-        <ModalBackDrop isOpen={isOpen} />
+        <ModalBackDrop isOpen={isOpen} handleClose={handleClose} />
         <div
           className={twMerge(
             'fixed left-1/2 top-1/2 z-[11] flex w-full max-w-screen-md -translate-x-1/2 -translate-y-1/2 p-6',
