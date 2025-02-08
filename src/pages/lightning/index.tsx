@@ -1,26 +1,48 @@
-import LightningMap from '@/components/lightning/lightningMap';
-// import { GetServerSideProps } from 'next';
+import LightningMap from '@/components/lightning/LightningMap';
+import LightningList from '@/components/lightning/LightningList';
+import LightningFilter from '@/components/lightning/LightningFilter';
+import { GetServerSideProps } from 'next';
+import axiosInstance from '@/api/axiosInstance';
+import { LightningMeetup } from '@/types/lightningType';
 
-const LightningPage = () => {
+interface LightningPageProps {
+  initialMeetups: LightningMeetup[];
+}
+
+interface LightningPageProps {
+  initialCoordinate: { lat: number; lng: number };
+}
+
+const LightningPage = ({ initialMeetups }: LightningPageProps) => {
   return (
     <div>
-      <LightningMap />
+      <h1>번개팟 지도</h1>
+      <LightningFilter />
+      <LightningMap initialMeetups={initialMeetups} />
+      <LightningList meetups={initialMeetups} />
     </div>
   );
 };
 
-// export const getSurverSideProps: GetServerSideProps = async () => {
-//   // 서버에서 기본 위치 (서울 시청) 기준 번개팟 데이터를 미리 가져옴
-//   const response = await fetch(
-//     `https://your-api.com/lightning-meetups?lat=37.5665&lng=126.9780`,
-//   );
-//   const initialMeetups = await response.json();
+export const getServerSideProps: GetServerSideProps = async () => {
+  const initialCoordinate = { lat: 37.5664056, lng: 126.9778222 };
 
-//   return {
-//     props: {
-//       initialMeetups,
-//     },
-//   };
-// };
+  try {
+    const { data } = await axiosInstance.get(
+      `/api/lightnings?lat=${initialCoordinate.lat}&lng=${initialCoordinate.lng}`,
+    );
+
+    console.log('SSR에서 받은 데이터:', data);
+
+    return {
+      props: {
+        initialMeetups: data.data.lightningList || [],
+      },
+    };
+  } catch (error) {
+    console.error('API 요청 실패:', error);
+    return { props: { initialMeetups: [] } };
+  }
+};
 
 export default LightningPage;
