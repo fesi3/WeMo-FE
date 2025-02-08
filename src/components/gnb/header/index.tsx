@@ -4,6 +4,7 @@ import logo from '@/assets/images/title.png';
 import GNBItem from '../item';
 import { useRouter } from 'next/router';
 import { hideGnbHeaderRoutes } from '@/constants/gnb';
+import Search from '@/components/search';
 
 // GNB 레이아웃 컴포넌트에서 렌더링 되는 header 컴포넌트입니다.
 // 페이지마다 출력이 달라 path를 조회해 조건부 렌더링 합니다.
@@ -17,21 +18,20 @@ function GNBHeader() {
     <>
       {showGnbHeader || (
         <>
-          <header>
-            <div className="fixed top-0 z-10 flex w-full items-center bg-white py-2 shadow-md">
-              <div className="flex h-9 w-full justify-between px-9">
-                <Link href={'/plans'} className="my-auto">
-                  <Image width={70} height={0} src={logo} alt="wemo-gnb-logo" />
-                </Link>
-                <nav className="flex items-center">
-                  <ul className="flex space-x-6">
-                    <GNBItem name={'검색'} isHeader isRouteDisabled />
-                    <GNBItem name={'알림'} isHeader isRouteDisabled />
-                  </ul>
-                </nav>
-              </div>
+          <header className="fixed top-0 z-10 flex w-full items-center bg-white py-3 shadow-sm">
+            <div className="mx-9 flex w-full items-center">
+              {/* 로고 */}
+              <Link href={'/plans'} className="my-auto">
+                <Image width={70} height={0} src={logo} alt="wemo-gnb-logo" />
+              </Link>
+              {/* 검색바 */}
+              <Search />
+              {/* 알림 */}
+              <GNBItem name={'알림'} isHeader isRouteDisabled />
             </div>
           </header>
+
+          {/* 헤더 공간 확보 */}
           <div className="invisible md:h-[80px]" />
         </>
       )}

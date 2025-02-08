@@ -56,7 +56,7 @@ function GNBItem({
         className={twMerge(
           router.pathname === path ? 'font-bold text-black' : 'text-[#BEBEBE]',
           isHeader ? 'text-base' : 'text-xs',
-          'group flex cursor-pointer flex-col items-center hover:text-black',
+          'group flex cursor-pointer flex-col items-center justify-center hover:text-black',
         )}
       >
         {isHeader ? '' : icon}
