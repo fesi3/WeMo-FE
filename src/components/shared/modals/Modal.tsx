@@ -24,6 +24,7 @@ export default function Modal({
       <ModalPortal>
         <ModalBackDrop isOpen={isOpen} handleClose={handleClose}>
           <div
+            onClick={(e) => e.stopPropagation()}
             className={twMerge(
               'fixed left-1/2 top-1/2 z-[12] flex w-full max-w-screen-md -translate-x-1/2 -translate-y-1/2 p-6',
               className,
