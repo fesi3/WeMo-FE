@@ -1,6 +1,14 @@
 import { useEffect } from 'react';
 
-export default function ModalBackDrop({ isOpen }: { isOpen: boolean }) {
+interface ModalBackDropProps {
+  isOpen: boolean;
+  handleClose: () => void;
+}
+
+export default function ModalBackDrop({
+  isOpen,
+  handleClose,
+}: ModalBackDropProps) {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -12,5 +20,10 @@ export default function ModalBackDrop({ isOpen }: { isOpen: boolean }) {
       document.body.style.overflow = '';
     };
   }, [isOpen]);
-  return <div className="fixed inset-0 z-[11] bg-black opacity-50" />;
+  return (
+    <div
+      className="fixed inset-0 z-[11] bg-black opacity-50"
+      onClick={() => handleClose()}
+    />
+  );
 }

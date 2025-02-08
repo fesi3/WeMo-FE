@@ -5,6 +5,8 @@ import GNBItem from '../item';
 import { useRouter } from 'next/router';
 import { hideGnbHeaderRoutes } from '@/constants/gnb';
 import Search from '@/components/search';
+import SearchModal from '@/components/search/searchModal';
+import useToggle from '@/hooks/useToggle';
 
 // GNB 레이아웃 컴포넌트에서 렌더링 되는 header 컴포넌트입니다.
 // 페이지마다 출력이 달라 path를 조회해 조건부 렌더링 합니다.
@@ -13,6 +15,10 @@ import Search from '@/components/search';
 function GNBHeader() {
   const router = useRouter();
   const showGnbHeader = hideGnbHeaderRoutes.includes(router.pathname);
+  const { toggleValue, handleOpen, handleClose } = useToggle();
+  const searchHandleClick = () => {
+    handleOpen();
+  };
 
   return (
     <>
@@ -25,7 +31,7 @@ function GNBHeader() {
                 <Image width={70} height={0} src={logo} alt="wemo-gnb-logo" />
               </Link>
               {/* 검색바 */}
-              <Search />
+              <Search searchHandleClick={searchHandleClick} />
               {/* 알림 */}
               <div onClick={() => alert('구현 예정입니다.')}>
                 <GNBItem name={'알림'} isHeader isRouteDisabled />
@@ -35,6 +41,10 @@ function GNBHeader() {
 
           {/* 헤더 공간 확보 */}
           <div className="invisible md:h-[80px]" />
+
+          <SearchModal isOpen={toggleValue} handleClose={handleClose}>
+            <div>123</div>
+          </SearchModal>
         </>
       )}
     </>
