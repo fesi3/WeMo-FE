@@ -7,6 +7,5 @@ export default function usePlanDetailQuery(id: number) {
     queryKey: QUERY_KEY.planDetail(id),
     queryFn: () => fetchPlanDetail(id),
     enabled: typeof id === 'number',
-    staleTime: 0,
   });
 }

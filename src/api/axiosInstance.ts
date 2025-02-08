@@ -60,7 +60,7 @@ instance.interceptors.response.use(
             console.error('SIGNOUT failed with unknown error', signoutError);
           }
         } finally {
-          store.dispatch(logout());
+          store.dispatch(logout()); // 유저 정보 초기화
           alert('세션이 만료되었습니다. 다시 로그인 해주세요.');
           window.location.href = '/start';
         }
