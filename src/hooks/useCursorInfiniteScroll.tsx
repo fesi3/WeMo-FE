@@ -1,6 +1,6 @@
 import { useEffect, useRef, useCallback } from 'react';
 //import axios from 'axios';
-import instance from '@/api/axiosInstance';
+import instance from '@/utils/axios';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { RegionOption, SortOption, SubRegionOption } from '@/types/reviewType';

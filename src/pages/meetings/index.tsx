@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from '@/api/axiosInstance';
+import axios from '@/utils/axios';
 import CardList from '@/components/meetings/card/CardList';
 import { Meeting } from '@/components/meetings/card/Card';
 
