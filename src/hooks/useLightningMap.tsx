@@ -1,5 +1,5 @@
-import { useState } from 'react';
-// import useKakaoLoader from '../hooks/useKakaoLoader';
+import { useEffect, useState } from 'react';
+import useKakaoLoader from '../hooks/useKakaoLoader';
 import { coordinateToAddress } from '@/utils/coordinateToAddress';
 import useMeetupFetcher from '@/hooks/useMeetingFetcher';
 
@@ -17,13 +17,14 @@ export default function useLightningMap() {
   // 현재 선택된 위치의 주소
   const [address, setAddress] = useState('');
   // 카카오맵 API 로딩 여부
-  // const [isMapLoading] = useKakaoLoader();
+  const [isMapLoading] = useKakaoLoader();
   // API에서 가져올 번개팟 모임 리스트
   const { meetups, fetchMeetups, isLoading, error } = useMeetupFetcher(
     coordinate.lat,
     coordinate.lng,
     '/api/lightnings?lat=37.6&lng=127.06',
   );
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
 
   //좌표를 받아 주소로 변환하는 함수
   const updateAddress = async (lat: number, lng: number) => {
@@ -35,40 +36,13 @@ export default function useLightningMap() {
     }
   };
 
-  // useEffect(() => {
-  //   if (!isMapLoading) {
-  //     fetchMeetups(INITIAL_COORDINATE.lat, INITIAL_COORDINATE.lng);
-  //   }
-  // }, [isMapLoading]);
-
-  // // 현재 위치 기반으로 번개팟 모임 가져오기
-  // const fetchMeetups = async (lat: number, lng: number) => {
-  //   try {
-  //     //   const response = await fetch(
-  //     //     `/api/light?lat=${lat}&lng=${lng}`,
-  //     //   );
-  //     //   const data = await response.json();
-  //     //   setMeetups(data);
-  //     updateAddress(lat, lng);
-  //     // 더미 데이터로 대체
-  //     const dummyMeetups = [
-  //       { id: 1, lat: lat + 0.001, lng: lng + 0.001, name: '번개팟 1' },
-  //       { id: 2, lat: lat - 0.002, lng: lng - 0.002, name: '번개팟 2' },
-  //       { id: 3, lat: lat + 0.003, lng: lng - 0.003, name: '번개팟 3' },
-  //     ];
-
-  //     setMeetups(dummyMeetups); // 상태 업데이트
-  //   } catch (error) {
-  //     console.error('모임 데이터를 불러오는 중 오류 발생:', error);
-  //   }
-  // };
-
-  //   useEffect(() => {
-  //     // 초기 로딩 시 기본 좌표(서울 시청) 기준으로 번개팟 가져오기
-  //     if (!isMapLoading) {
-  //       fetchMeetups(INITIAL_COORDINATE.lat, INITIAL_COORDINATE.lng);
-  //     }
-  //   }, [isMapLoading]);
+  useEffect(() => {
+    if (!isMapLoading) {
+      console.log('✅ 맵 로딩 완료! 초기 데이터 패칭 시작...');
+      fetchMeetups(coordinate.lat, coordinate.lng);
+      setIsInitialLoading(false); // ✅ 초기 로딩 종료
+    }
+  }, [isMapLoading]);
 
   return {
     coordinate,
@@ -78,6 +52,7 @@ export default function useLightningMap() {
     fetchMeetups,
     updateAddress,
     isLoading,
+    isInitialLoading,
     error,
   };
 }
