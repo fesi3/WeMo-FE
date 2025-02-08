@@ -27,7 +27,9 @@ function GNBHeader() {
               {/* 검색바 */}
               <Search />
               {/* 알림 */}
-              <GNBItem name={'알림'} isHeader isRouteDisabled />
+              <div onClick={() => alert('구현 예정입니다.')}>
+                <GNBItem name={'알림'} isHeader isRouteDisabled />
+              </div>
             </div>
           </header>
 
