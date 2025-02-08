@@ -3,6 +3,7 @@ import { twMerge } from 'tailwind-merge';
 
 interface ModalBackDropProps {
   isOpen: boolean;
+  isSearch?: boolean;
   handleClose: () => void;
   className?: string;
   children: ReactNode;
@@ -10,6 +11,7 @@ interface ModalBackDropProps {
 
 export default function ModalBackDrop({
   isOpen,
+  isSearch = false,
   handleClose,
   className,
   children,
@@ -28,7 +30,8 @@ export default function ModalBackDrop({
   return (
     <div
       className={twMerge(
-        'fixed inset-0 z-[11] bg-black bg-opacity-50',
+        isSearch ? 'bg-opacity-80' : 'bg-opacity-50',
+        'fixed inset-0 z-[11] bg-black',
         className,
       )}
       onClick={() => handleClose()}

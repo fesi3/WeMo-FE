@@ -32,6 +32,7 @@ function SearchModal({
     isOpen && (
       <ModalPortal>
         <ModalBackDrop
+          isSearch
           isOpen={isOpen}
           handleClose={handleClose}
           className="z-[13]"
@@ -40,12 +41,7 @@ function SearchModal({
             onClick={handleClose}
             className="absolute right-2 top-2 cursor-pointer"
           />
-          <div
-            className={twMerge('z-[14]', className)}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {children}
-          </div>
+          <div className={twMerge('z-[14]', className)}>{children}</div>
         </ModalBackDrop>
       </ModalPortal>
     )
