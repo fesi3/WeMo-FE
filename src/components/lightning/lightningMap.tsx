@@ -28,7 +28,7 @@ const LightningMap = ({ initialMeetups }: LightningMapProps) => {
     )
       return;
 
-    console.log('📌 지도 초기화 시작');
+    console.log('지도 초기화 시작');
 
     const newMap = new window.kakao.maps.Map(mapRef.current, {
       center: new window.kakao.maps.LatLng(
@@ -84,28 +84,32 @@ const LightningMap = ({ initialMeetups }: LightningMapProps) => {
   };
 
   return (
-    <div>
-      <p>현재 선택된 위치: {address}</p>
-      <div className="fixed bottom-4 right-4">
-        <button
-          onClick={getCurrentLocation}
-          className="rounded bg-blue-500 px-4 py-2 text-white"
-        >
-          내 위치 가져오기
-        </button>
-      </div>
-      <div ref={mapRef} style={{ width: '100%', height: '400px' }} />
+    <div className="mt-4 flex w-full flex-col items-center px-4">
+      <p>현재 위치 : {address}</p>
 
-      <p>
-        <button
-          onClick={() =>
-            fetchMeetups(mapCenter.current.lat, mapCenter.current.lng)
-          }
-          className="rounded bg-green-500 px-4 py-2 text-white"
-        >
-          여기에서 모임 찾기
-        </button>
-      </p>
+      {/* 🗺️ 지도 컨테이너 */}
+      <div className="relative h-[450px] w-full max-w-[1200px] overflow-hidden rounded-xl shadow-md">
+        {/* 🗺️ 지도 자체 */}
+        <div ref={mapRef} className="h-full w-full" />
+
+        {/* 📌 버튼 컨테이너 (지도 위에 오버레이) */}
+        <div className="absolute bottom-4 right-4 z-10 flex gap-2">
+          <button
+            onClick={getCurrentLocation}
+            className="rounded bg-blue-500 px-4 py-2 text-white shadow-md"
+          >
+            내 위치 가져오기
+          </button>
+          <button
+            onClick={() =>
+              fetchMeetups(mapCenter.current.lat, mapCenter.current.lng)
+            }
+            className="rounded bg-green-500 px-4 py-2 text-white shadow-md"
+          >
+            여기에서 모임 찾기
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
