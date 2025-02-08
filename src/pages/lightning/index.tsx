@@ -9,10 +9,6 @@ interface LightningPageProps {
   initialMeetups: LightningMeetup[];
 }
 
-interface LightningPageProps {
-  initialCoordinate: { lat: number; lng: number };
-}
-
 const LightningPage = ({ initialMeetups }: LightningPageProps) => {
   return (
     <div>
