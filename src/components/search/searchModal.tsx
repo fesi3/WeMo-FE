@@ -13,13 +13,15 @@ function SearchModal({
   return (
     isOpen && (
       <ModalPortal>
-        <ModalBackDrop isOpen={isOpen} handleClose={handleClose} />
-        <div className="flex w-full flex-col rounded-lg bg-white p-6 text-black">
-          <button onClick={handleClose}>
+        <ModalBackDrop isOpen={isOpen} handleClose={handleClose}>
+          <button
+            onClick={handleClose}
+            className="absolute left-1 top-1 bg-white"
+          >
             <XMarkIcon className="w-8 opacity-50" />
           </button>
-          <div className="h-full w-full">{children}</div>
-        </div>
+          <div className="z-[12]">{children}</div>
+        </ModalBackDrop>
       </ModalPortal>
     )
   );

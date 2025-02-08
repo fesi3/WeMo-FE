@@ -1,13 +1,15 @@
-import { useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 interface ModalBackDropProps {
   isOpen: boolean;
   handleClose: () => void;
+  children: ReactNode;
 }
 
 export default function ModalBackDrop({
   isOpen,
   handleClose,
+  children,
 }: ModalBackDropProps) {
   useEffect(() => {
     if (isOpen) {
@@ -22,8 +24,10 @@ export default function ModalBackDrop({
   }, [isOpen]);
   return (
     <div
-      className="fixed inset-0 z-[11] bg-black opacity-50"
+      className="fixed inset-0 z-[11] bg-black bg-opacity-50"
       onClick={() => handleClose()}
-    />
+    >
+      {children}
+    </div>
   );
 }
