@@ -8,14 +8,14 @@ export const fetchMeetings = async ({
 }: QueryFunctionContext<
   [string, string | undefined, number | undefined]
 >): Promise<FetchMeetingsResponse> => {
-  const [, sort, categoryId] = queryKey;
+  const [, selectedSort, selectedCategory] = queryKey;
 
   const response = await instance.get('/api/meetings', {
     params: {
-      cursor: pageParam || undefined,
+      sort: selectedSort, // 정렬 기준 추가
+      category: selectedCategory, // 카테고리 추가
+      cursor: pageParam,
       size: 10,
-      categoryId: categoryId || undefined,
-      sort: sort || 'default',
     },
     withCredentials: true,
   });
