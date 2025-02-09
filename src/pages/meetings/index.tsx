@@ -52,7 +52,7 @@ const MeetingsPage = ({ initialMeetings, nextCursor }: MeetingsPageProps) => {
       data as unknown as InfiniteData<FetchMeetingsResponse, number | null>
     )?.pages.flatMap((page) => page.meetingList) || [];
 
-  // 정렬 & 카테고리 변경 시 즉시 반영되도록 useEffect 추가
+  // 정렬, 카테고리 변경 시 즉시 반영되도록 useEffect 추가
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: ['meetings'] }); // 쿼리 무효화 후 최신 상태 반영
     //refetch();
@@ -113,7 +113,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       params: {
         size: 10,
       },
-      withCredentials: true,
+      withCredentials: false,
     });
     return {
       props: {
