@@ -6,7 +6,7 @@ interface LightningListProps {
 
 const LightningList = ({ meetups }: LightningListProps) => {
   return (
-    <div className="mx-auto h-[400px] w-full max-w-[1200px] overflow-y-auto rounded-b-xl border-t border-gray-200 bg-white p-4 shadow-md">
+    <div className="mx-auto h-[400px] w-full max-w-[1200px] overflow-y-auto rounded-b-xl bg-white p-4">
       {meetups.map((meetup) => (
         <div
           key={meetup.lightningId}

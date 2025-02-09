@@ -1,4 +1,8 @@
 import { useState } from 'react';
+import { FunnelIcon } from '@heroicons/react/24/outline';
+
+const categories = ['밥친구', '운동', '카풀'];
+const times = ['출근 전', '점심', '퇴근 후'];
 
 const LightningFilter = () => {
   const [category, setCategory] = useState<string | null>(null);
@@ -10,23 +14,47 @@ const LightningFilter = () => {
   };
 
   return (
-    <div>
-      <h2>필터</h2>
-      <select onChange={(e) => setCategory(e.target.value)}>
-        <option value="">카테고리 선택</option>
-        <option value="운동">운동</option>
-        <option value="취미">취미</option>
-        <option value="카풀">카풀</option>
-      </select>
+    <div className="flex w-full flex-col items-center px-4 py-2">
+      {/* 필터 제목 */}
+      <h2 className="mb-4 mt-2 text-lg font-semibold">
+        내 주변 번개팟 <span className="text-yellow-500">⚡</span>
+      </h2>
 
-      <select onChange={(e) => setTime(e.target.value)}>
-        <option value="">시간 선택</option>
-        <option value="출근 전">출근 전</option>
-        <option value="점심">점심</option>
-        <option value="퇴근 후">퇴근 후</option>
-      </select>
+      {/* 필터 버튼 */}
+      <div className="flex items-center gap-3">
+        {/* 카테고리 선택 버튼 */}
+        {categories.map((category) => (
+          <button
+            key={category}
+            onClick={() => setCategory(category)}
+            className={`rounded-full px-4 py-2 text-sm ${
+              category === category
+                ? 'bg-teal-500 text-white'
+                : 'bg-gray-200 text-gray-700'
+            }`}
+          >
+            {category}
+          </button>
+        ))}
 
-      <button onClick={applyFilter}>필터 적용</button>
+        {/* 시간 선택 드롭다운 */}
+        <select
+          onChange={(e) => setTime(e.target.value)}
+          className="rounded-lg border px-3 py-2 text-sm text-gray-700"
+        >
+          <option value="">시간 선택</option>
+          {times.map((time) => (
+            <option key={time} value={time}>
+              {time}
+            </option>
+          ))}
+        </select>
+
+        {/* 필터 아이콘 버튼 */}
+        <button onClick={applyFilter} className="text-gray-600">
+          <FunnelIcon />
+        </button>
+      </div>
     </div>
   );
 };

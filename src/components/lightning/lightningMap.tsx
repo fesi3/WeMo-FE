@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import useLightningMap from '@/hooks/useLightningMap';
+import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
 
 interface LightningMapProps {
   initialMeetups: {
@@ -58,7 +59,7 @@ const LightningMap = ({ initialMeetups }: LightningMapProps) => {
 
       window.kakao.maps.event.addListener(marker, 'click', () => {
         setSelectedMeetup(meetup.lightningName);
-        console.log(`📌 선택된 모임: ${meetup.lightningName}`);
+        console.log(`선택된 모임: ${meetup.lightningName}`);
       });
     });
   }, [isInitialLoading]);
@@ -84,7 +85,7 @@ const LightningMap = ({ initialMeetups }: LightningMapProps) => {
   };
 
   return (
-    <div className="mt-4 flex w-full flex-col items-center px-4">
+    <div className="flex w-full flex-col items-center px-4">
       <p>현재 위치 : {address}</p>
 
       {/* 🗺️ 지도 컨테이너 */}
@@ -94,19 +95,27 @@ const LightningMap = ({ initialMeetups }: LightningMapProps) => {
 
         {/* 📌 버튼 컨테이너 (지도 위에 오버레이) */}
         <div className="absolute bottom-4 right-4 z-10 flex gap-2">
-          <button
-            onClick={getCurrentLocation}
-            className="rounded bg-blue-500 px-4 py-2 text-white shadow-md"
-          >
-            내 위치 가져오기
-          </button>
+          <div className="group relative">
+            <button
+              onClick={getCurrentLocation}
+              className="rounded-full bg-[#00B6AD] px-4 py-2 shadow-md"
+            >
+              <PaperAirplaneIcon
+                className="h-6 w-6 text-white hover:text-gray-800"
+                aria-hidden="true"
+              />
+            </button>
+            <div className="absolute -top-10 left-1/2 hidden -translate-x-1/2 whitespace-nowrap rounded-md bg-gray-800 px-2 py-1 text-xs text-white shadow-md group-hover:block">
+              현위치로
+            </div>
+          </div>
           <button
             onClick={() =>
               fetchMeetups(mapCenter.current.lat, mapCenter.current.lng)
             }
-            className="rounded bg-green-500 px-4 py-2 text-white shadow-md"
+            className="rounded-full bg-[#00B6AD] px-4 py-2 text-white shadow-md hover:text-gray-800"
           >
-            여기에서 모임 찾기
+            모임 찾기
           </button>
         </div>
       </div>
