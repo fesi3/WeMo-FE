@@ -3,26 +3,7 @@ import React from 'react';
 import IndexNav from '@/components/mypage/IndexNav';
 import MypageLayout from '@/components/mypage/MypageLayout';
 import StatisticsCard from '@/components/mypage/StatisticsCard';
-import { UserDataResponse } from '@/types/mypageType';
-import instance from '@/api/axiosInstance';
-import { useQuery } from '@tanstack/react-query';
-
-// 마이 페이지 데이터를 가져오는 함수
-const fetchMypageUserInfo = async () => {
-  const response = await instance<UserDataResponse>('/api/auths/users');
-  return response.data;
-};
-
-// 마이페이지 사용자 데이터를 가져오는 커스텀 훅
-function useMypageUserInfo() {
-  // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-  return useQuery({
-    queryKey: ['mypageIndex'],
-    queryFn: fetchMypageUserInfo,
-    //   enabled: isLoggedIn, // (로그인 상태일 때만 실행)
-    staleTime: 100 * 1000, // 10초
-  });
-}
+import { useMypageUserInfo } from '@/hooks/mypage/fetch/useMypageData';
 
 export default function MyPage() {
   const { data, isLoading, error } = useMypageUserInfo();

@@ -2,39 +2,12 @@ import MeetingCard from '@/components/mypage/MeetingCard';
 import { useEffect, useState } from 'react';
 import NoData from '@/components/mypage/NoData';
 import MypageLayout from '@/components/mypage/MypageLayout';
-import { MeetingDataResponse } from '@/types/mypageType';
-import instance from '@/api/axiosInstance';
-import { useQuery } from '@tanstack/react-query';
-
-// 마이페이지 모임 가져오는 함수
-const fetchMypageMeetings = async (url: string) => {
-  const response = await instance<MeetingDataResponse>(url);
-  return response.data;
-};
-
-// 모임 데이터를 가져오는 커스텀 훅
-const useMypageMeetings = (
-  apiUrl: string,
-  status: string,
-  page: number,
-  enabled: boolean,
-) => {
-  // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-  return useQuery({
-    queryKey: ['meetingList', status, page],
-    queryFn: () => fetchMypageMeetings(apiUrl),
-    //   enabled: isLoggedIn, // (로그인 상태일 때만 실행)
-    staleTime: 100 * 1000, // 10초
-    enabled,
-  });
-};
+import { useMypageMeetings } from '@/hooks/mypage/fetch/useMypageData';
+import { API_PATHS } from '@/constants/apiPath';
 
 export default function MyMeeting() {
   const [activeTab, setActiveTab] = useState<'tabLeft' | 'tabRight'>('tabLeft');
   const [page, setPage] = useState(1);
-
-  const joinedMeetingApiUrl = `/api/users/meetings?page=${page}`; // 참여한 모임
-  const createdMeetingApiUrl = `/api/users/meetings/me?page=${page}`; // 내가 만든 모임
 
   // activeTab이 변경될 때 page를 1로 리셋
   useEffect(() => {
@@ -47,7 +20,7 @@ export default function MyMeeting() {
     isLoading: joinedMeetingsLoading,
     error: joinedMeetingsError,
   } = useMypageMeetings(
-    joinedMeetingApiUrl,
+    API_PATHS.MYPAGE.GET_JOINED_MEETINGS(page),
     'joined',
     page,
     activeTab === 'tabLeft',
@@ -59,7 +32,7 @@ export default function MyMeeting() {
     isLoading: createdMeetingsLoading,
     error: createdMeetingsError,
   } = useMypageMeetings(
-    createdMeetingApiUrl,
+    API_PATHS.MYPAGE.GET_CREATED_MEETINGS(page),
     'created',
     page,
     activeTab === 'tabRight',

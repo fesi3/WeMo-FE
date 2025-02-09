@@ -3,52 +3,15 @@ import { useEffect, useState } from 'react';
 import ReviewableCard from '@/components/mypage/ReviewableCard';
 import NoData from '@/components/mypage/NoData';
 import MypageLayout from '@/components/mypage/MypageLayout';
-import { ReviewableDataResponse, ReviewDataResponse } from '@/types/mypageType';
-import instance from '@/api/axiosInstance';
-import { useQuery } from '@tanstack/react-query';
-
-// 마이페이지 리뷰 데이터 가져오는 함수
-const fetchMypageReviews = async (url: string) => {
-  const response = await instance<ReviewDataResponse>(url);
-  return response.data;
-};
-
-// 마이페이지 리뷰 가능한 데이터 가져오는 함수
-const fetchMypageReviewables = async (url: string) => {
-  const response = await instance<ReviewableDataResponse>(url);
-  return response.data;
-};
-
-// 리뷰 데이터를 가져오는 커스텀 훅
-const useMypageReviews = (apiUrl: string, page: number, enabled: boolean) => {
-  return useQuery({
-    queryKey: ['reviewedList', page],
-    queryFn: () => fetchMypageReviews(apiUrl),
-    staleTime: 100 * 1000, // 10초
-    enabled,
-  });
-};
-
-// 리뷰 가능한 데이터를 가져오는 커스텀 훅
-const useMypageReviewables = (
-  apiUrl: string,
-  page: number,
-  enabled: boolean,
-) => {
-  return useQuery({
-    queryKey: ['reviewableList', page],
-    queryFn: () => fetchMypageReviewables(apiUrl),
-    staleTime: 100 * 1000, // 10초
-    enabled,
-  });
-};
+import { API_PATHS } from '@/constants/apiPath';
+import {
+  useMypageReviewables,
+  useMypageReviews,
+} from '@/hooks/mypage/fetch/useMypageData';
 
 export default function MyReview() {
   const [activeTab, setActiveTab] = useState<'tabLeft' | 'tabRight'>('tabLeft');
   const [page, setPage] = useState(1); // 페이지 상태 추가
-
-  const reviewApiUrl = `/api/users/reviews?page=${page}`;
-  const reviewableApiUrl = `/api/users/reviews/available?page=${page}`;
 
   // activeTab이 변경될 때 page를 1로 리셋
   useEffect(() => {
@@ -59,28 +22,36 @@ export default function MyReview() {
     data: reviewed,
     isLoading: reviewDataLoading,
     error: reviewDataError,
-  } = useMypageReviews(reviewApiUrl, page, activeTab === 'tabLeft');
+  } = useMypageReviews(
+    API_PATHS.MYPAGE.GET_MY_REVIEWS(page),
+    page,
+    activeTab === 'tabLeft',
+  );
   const {
     data: reviewable,
     isLoading: reviewableDataLoading,
     error: reviewableDataError,
-  } = useMypageReviewables(reviewableApiUrl, page, activeTab === 'tabRight');
-
-  const reviewData = reviewed?.data.reviewList;
-  const reviewableData = reviewable?.data.planList;
+  } = useMypageReviewables(
+    API_PATHS.MYPAGE.GET_AVAILABLE_REVIEWS(page),
+    page,
+    activeTab === 'tabRight',
+  );
 
   //로딩 및 에러 처리
   if (activeTab === 'tabLeft') {
     if (reviewDataLoading) return <div>작성한 리뷰 로딩 중...</div>;
     if (reviewDataError) return <div>Error: {reviewDataError.message} </div>;
   }
-
   if (activeTab === 'tabRight') {
     if (reviewableDataLoading) return <div>작성가능한 리뷰 로딩 중...</div>;
     if (reviewableDataError)
       return <div>Error: {reviewableDataError.message} </div>;
   }
 
+  //데이터
+  const reviewData = reviewed?.data.reviewList;
+  const reviewableData = reviewable?.data.planList;
+  // totalPage
   const reviewTotalPage = reviewed?.data.totalPage;
   const reviewableTotalPage = reviewable?.data.totalPage;
 
