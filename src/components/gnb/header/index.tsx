@@ -46,7 +46,7 @@ function GNBHeader() {
           <SearchModal
             isOpen={toggleValue}
             handleClose={handleClose}
-            className="flex h-screen flex-col gap-[38px] px-[30px] py-28 md:px-[65px] lg:max-w-none lg:items-center"
+            className="flex h-screen flex-col gap-[38px] px-[30px] pb-[119px] pt-28 md:px-[65px] md:pt-[188px] lg:max-w-none lg:items-center"
           >
             <SearchForm />
           </SearchModal>
