@@ -7,7 +7,7 @@ import { hideGnbHeaderRoutes } from '@/constants/gnb';
 import Search from '@/components/search';
 import SearchModal from '@/components/search/searchModal';
 import useToggle from '@/hooks/useToggle';
-import SearchForm from '@/components/search/searchForm';
+import SearchContents from '@/components/search/searchContents';
 
 // GNB 레이아웃 컴포넌트에서 렌더링 되는 header 컴포넌트입니다.
 // 페이지마다 출력이 달라 path를 조회해 조건부 렌더링 합니다.
@@ -48,7 +48,7 @@ function GNBHeader() {
             handleClose={handleClose}
             className="flex h-screen flex-col gap-[38px] px-[30px] pb-[119px] pt-28 md:px-[65px] md:pt-[188px] lg:max-w-none lg:items-center"
           >
-            <SearchForm />
+            <SearchContents />
           </SearchModal>
         </>
       )}

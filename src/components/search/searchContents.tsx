@@ -1,12 +1,12 @@
 import Input from '../shared/input';
 
-function SearchForm() {
+function SearchContents() {
   return (
     <div className="flex max-h-full w-full flex-col lg:items-center">
       {/* 서치 바  */}
       <Input
         id="search"
-        placeholder={'찾고 싶은 모임을 입력해주세요.'}
+        placeholder={'찾고 싶은 모임을 검색해 보세요!'}
         className="h-12 flex-grow-0 rounded-[20px] lg:w-[724px]"
         onClick={(e) => e.stopPropagation()}
         autoFocus
@@ -69,4 +69,4 @@ function SearchForm() {
   );
 }
 
-export default SearchForm;
+export default SearchContents;
