@@ -54,8 +54,9 @@ const MeetingsPage = ({ initialMeetings, nextCursor }: MeetingsPageProps) => {
 
   // 정렬, 카테고리 변경 시 즉시 반영되도록 useEffect 추가
   useEffect(() => {
-    queryClient.invalidateQueries({ queryKey: ['meetings'] }); // 쿼리 무효화 후 최신 상태 반영
-    //refetch();
+    queryClient.invalidateQueries({
+      queryKey: ['meetings', selectedSort, selectedCategory],
+    });
   }, [selectedSort, selectedCategory, queryClient]);
 
   // 정렬 변경 핸들러

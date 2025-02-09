@@ -14,8 +14,8 @@ export const fetchMeetings = async ({
   try {
     const response = await instance.get('/api/meetings', {
       params: {
-        sort: selectedSort, // 정렬 기준 추가
-        category: selectedCategory, // 카테고리 추가
+        sort: selectedSort,
+        categoryId: selectedCategory === 0 ? undefined : selectedCategory,
         cursor: pageParam,
         size: 10,
       },
