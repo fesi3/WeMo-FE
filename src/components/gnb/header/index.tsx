@@ -41,7 +41,7 @@ function GNBHeader() {
           </header>
 
           {/* 헤더 공간 확보 */}
-          <div className="invisible md:h-[80px]" />
+          <div className="invisible h-14" />
 
           <SearchModal
             isOpen={toggleValue}
