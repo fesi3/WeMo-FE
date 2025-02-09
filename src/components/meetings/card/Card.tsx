@@ -30,12 +30,12 @@ const Card = ({ meeting }: { meeting: Meeting }) => {
           <CategoryBadge category={meeting.category} />
           <h2 className="mt-2 text-lg font-bold">{meeting.meetingName}</h2>
           <p className="text-md mt-1 text-gray-400">{meeting.description}</p>
-          <div className="text-md mt-2 inline-flex items-center gap-x-1 font-semibold text-gray-400">
+          <div className="text-md mt-2 flex items-center space-x-1 whitespace-nowrap font-semibold text-gray-400">
             <UserGroupIcon className="h-4 w-4" />
             <p>멤버 수 {meeting.memberCount}</p>
             <p className="before:mx-1 before:content-['·']">
-              예정 일정 {meeting.planCount}{' '}
-            </p>{' '}
+              예정 일정 {meeting.planCount}
+            </p>
           </div>
         </div>
         {meeting.meetingImagePath && (
