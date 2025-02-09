@@ -4,23 +4,7 @@ import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import CategoryBadge from '@/components/shared/badges/CategoryBadge';
-
-type Plan = {
-  planId: number;
-  planName: string;
-  dateTime: string;
-  isFulled: boolean;
-};
-
-type Meeting = {
-  meetingId: number;
-  meetingName: string;
-  description: string;
-  memberCount: number;
-  meetingImagePath: string;
-  category: string;
-  planList: Plan[];
-};
+import { Meeting } from '@/types/api/meetingList';
 
 const MAX_DISPLAY_PLANS = 3;
 
@@ -70,7 +54,7 @@ const Card = ({ meeting }: { meeting: Meeting }) => {
       <div className="mt-2 cursor-pointer border-t pt-2" onClick={handleClick}>
         <div className="relative">
           <h3 className="mb-2 text-sm font-semibold">예정된 일정</h3>
-          {meeting.planList.length > 0 ? (
+          {meeting.planCount > 0 ? (
             <ul className="flex flex-wrap gap-2 pr-16 text-sm text-gray-600">
               {displayedPlans.map((plan) => (
                 <li key={plan.planId} className="inline-flex">
@@ -81,7 +65,7 @@ const Card = ({ meeting }: { meeting: Meeting }) => {
                   </span>
                 </li>
               ))}
-              {meeting.planList.length >= maxItems && <li>...</li>}
+              {meeting.planCount >= maxItems && <li>...</li>}
             </ul>
           ) : (
             <p className="text-xs text-gray-400">
