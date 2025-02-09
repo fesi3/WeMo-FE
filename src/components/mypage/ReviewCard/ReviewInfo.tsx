@@ -10,16 +10,6 @@ interface ReviewInfoProps {
   reviewImagePath: string | string[];
 }
 
-// 테스트용(API 수정 필요 - 이미지가 1개만 들어오고 있음.)
-// const testImages = [
-//   'https://we-mo.s3.ap-northeast-2.amazonaws.com/b317d007-5ec7-4ad5-917e-51df8ec04faa-1738447857644',
-//   'https://we-mo.s3.ap-northeast-2.amazonaws.com/893055b0-e585-4ed7-8d5d-0a369deffb09-1738447857645',
-//   'https://we-mo.s3.ap-northeast-2.amazonaws.com/4e339f54-6448-4988-b03c-1cf183261a2b-1738447857645',
-// ];
-// const reviewImages = Array.isArray(reviewImagePath)
-//   ? reviewImagePath
-//   : testImages;
-
 const ReviewInfo = ({
   score,
   reviewId,
@@ -56,19 +46,19 @@ const ReviewInfo = ({
           onClick={() => {
             handleDeleteReview(reviewId);
           }}
-          className="px-6 hover:border-none hover:bg-red-400"
+          className="px-6 hover:border-red-400 hover:bg-red-400"
         />
       </div>
       {/* 코멘트 */}
       <div>{comment}</div>
 
       {/* 이미지 여러 개인 경우까지 포함*/}
-      <div className="flex h-[140px] w-full gap-3">
+      <div className="flex w-full gap-3">
         {/* 최대 2개 이미지까지만 출력 */}
         {reviewImages.slice(0, 2).map((image, index) => (
           <div
             key={index}
-            className={`relative flex ${Array.isArray(reviewImages) && reviewImages.length === 1 ? 'w-full' : ''} h-[180px] rounded-lg`}
+            className={`relative flex ${Array.isArray(reviewImages) && reviewImages.length === 1 ? 'w-full' : ''} rounded-lg`}
           >
             <Image
               src={image}

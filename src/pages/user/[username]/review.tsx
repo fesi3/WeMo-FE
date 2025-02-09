@@ -85,7 +85,7 @@ export default function MyReview() {
               {reviewData.map((review) => (
                 <li key={review.reviewId}>
                   <ReviewCard reviewed={review} />
-                  <div className="mt-10 border"></div>
+                  {/* <div className="mt-10 border"></div> */}
                 </li>
               ))}
             </ul>
