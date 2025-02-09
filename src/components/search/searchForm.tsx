@@ -2,7 +2,7 @@ import Input from '../shared/input';
 
 function SearchForm() {
   return (
-    <div className="flex max-h-full w-full flex-col">
+    <div className="flex max-h-full w-full flex-col lg:items-center">
       {/* 서치 바  */}
       <Input
         id="search"
@@ -11,15 +11,15 @@ function SearchForm() {
         onClick={(e) => e.stopPropagation()}
         autoFocus
       />
-      {/* 검색결과 */}
-      <div className="flex w-full flex-col items-center md:items-start lg:w-[724px]">
+      {/* 안내 텍스트  */}
+      <div className="mt-[38px] flex w-full flex-col items-center md:items-start lg:w-[724px]">
         <span className="text- font-semibold text-primary-100">
           {'모임에 대한 검색 결과'}
         </span>
-        {/* 카드 리스트 */}
+        {/* 검색 결과 카드 리스트 */}
         <div
           onClick={(e) => e.stopPropagation()}
-          className="flex h-[calc(100vh-296px)] w-full flex-col items-center gap-3 overflow-y-scroll rounded-b-sm rounded-t-lg md:mt-[41px] md:w-[446px] lg:mt-[10px] [&::-webkit-scrollbar]:hidden"
+          className="mt-[10px] flex h-[calc(100vh-342px)] w-full flex-col items-center gap-3 overflow-y-scroll rounded-b-sm rounded-t-lg md:mt-[41px] md:h-[calc(100vh-430px)] md:w-[446px] [&::-webkit-scrollbar]:hidden"
         >
           <div className="w-full rounded-lg bg-slate-50 p-4">
             <div className="h-[100px] bg-gray-200">이미지</div>
