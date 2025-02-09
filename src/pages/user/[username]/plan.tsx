@@ -2,39 +2,12 @@ import { useEffect, useState } from 'react';
 import PlanCard from '@/components/mypage/PlanCard';
 import NoData from '@/components/mypage/NoData';
 import MypageLayout from '@/components/mypage/MypageLayout';
-import { PlanDataResponse } from '@/types/mypageType';
-import instance from '@/api/axiosInstance';
-import { useQuery } from '@tanstack/react-query';
-
-// 마이페이지 일정 가져오는 함수
-const fetchMypagePlans = async (url: string) => {
-  const response = await instance<PlanDataResponse>(url);
-  return response.data;
-};
-
-// 일정 데이터를 가져오는 커스텀 훅
-const useMypagePlans = (
-  apiUrl: string,
-  status: string,
-  page: number,
-  enabled: boolean,
-) => {
-  // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-  return useQuery({
-    queryKey: ['planList', status, page],
-    queryFn: () => fetchMypagePlans(apiUrl),
-    //   enabled: isLoggedIn, // (로그인 상태일 때만 실행)
-    staleTime: 100 * 1000, // 10초
-    enabled,
-  });
-};
+import { useMypagePlans } from '@/hooks/mypage/fetch/useMypageData';
+import { API_PATHS } from '@/constants/apiPath';
 
 export default function MyPlan() {
   const [activeTab, setActiveTab] = useState<'tabLeft' | 'tabRight'>('tabLeft');
   const [page, setPage] = useState(1); // 페이지 상태 추가
-
-  const joinedPlanApiUrl = `/api/users/plans?page=${page}`; // 참여한 일정
-  const createdPlanApiUrl = `/api/users/plans/me?page=${page}`; // 내가 만든 일정
 
   // activeTab이 변경될 때 page를 1로 리셋
   useEffect(() => {
@@ -46,7 +19,12 @@ export default function MyPlan() {
     data: joinedPlans,
     isLoading: joinedPlansLoading,
     error: joinedPlansError,
-  } = useMypagePlans(joinedPlanApiUrl, 'joined', page, activeTab === 'tabLeft');
+  } = useMypagePlans(
+    API_PATHS.MYPAGE.GET_JOINED_PLANS(page),
+    'joined',
+    page,
+    activeTab === 'tabLeft',
+  );
 
   // 내가 만든 일정
   const {
@@ -54,7 +32,7 @@ export default function MyPlan() {
     isLoading: createdPlansLoading,
     error: createdPlansError,
   } = useMypagePlans(
-    createdPlanApiUrl,
+    API_PATHS.MYPAGE.GET_CREATED_PLANS(page),
     'created',
     page,
     activeTab === 'tabRight',

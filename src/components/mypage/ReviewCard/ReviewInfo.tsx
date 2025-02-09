@@ -1,7 +1,7 @@
-import fetchData from '@/api/fetchData';
 import Button from '@/components/shared/Button';
 import Image from 'next/image';
 import { scoreRender } from '@/utils/scoreRender';
+import { useDeleteReviewMutation } from '@/hooks/mypage/mutation/useDeleteMutation';
 
 interface ReviewInfoProps {
   score: number;
@@ -20,16 +20,6 @@ interface ReviewInfoProps {
 //   ? reviewImagePath
 //   : testImages;
 
-const deleteReview = async (reviewId: number) => {
-  console.log(reviewId, '번 리뷰 삭제');
-  await fetchData({
-    param: `/api/reviews/${reviewId}`,
-    method: 'delete',
-  });
-  alert('삭제되었습니다!');
-  window.location.reload(); // 페이지 새로고침
-};
-
 const ReviewInfo = ({
   score,
   reviewId,
@@ -40,6 +30,18 @@ const ReviewInfo = ({
   const reviewImages = Array.isArray(reviewImagePath)
     ? reviewImagePath
     : [reviewImagePath]; // 배열로 변환
+
+  const deleteReviewMutation = useDeleteReviewMutation();
+
+  const handleDeleteReview = (reviewId: number) => {
+    console.log(reviewId, '번 리뷰 삭제');
+    const isConfirmed = window.confirm(
+      '리뷰를 삭제하시겠습니까? 복구할 수 없습니다!',
+    );
+    if (isConfirmed) {
+      deleteReviewMutation.mutate(reviewId);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -52,7 +54,7 @@ const ReviewInfo = ({
           text="삭제"
           variant={'outline'}
           onClick={() => {
-            deleteReview(reviewId);
+            handleDeleteReview(reviewId);
           }}
           className="px-6 hover:border-none hover:bg-red-400"
         />
