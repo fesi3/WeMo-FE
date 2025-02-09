@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FunnelIcon } from '@heroicons/react/24/outline';
+import { FunnelIcon } from '@heroicons/react/20/solid';
 
 const categories = ['밥친구', '운동', '카풀'];
 const times = ['출근 전', '점심', '퇴근 후'];
@@ -52,7 +52,10 @@ const LightningFilter = () => {
 
         {/* 필터 아이콘 버튼 */}
         <button onClick={applyFilter} className="text-gray-600">
-          <FunnelIcon />
+          <FunnelIcon
+            className="h-6 w-6 text-white hover:text-gray-800"
+            aria-hidden="true"
+          />
         </button>
       </div>
     </div>

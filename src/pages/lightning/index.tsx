@@ -24,7 +24,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   try {
     const { data } = await axiosInstance.get(
-      `/api/lightnings?lat=${initialCoordinate.lat}&lng=${initialCoordinate.lng}`,
+      `/api/lightnings?lat=${initialCoordinate.lat}&lng=${initialCoordinate.lng}&radius=0.5`,
     );
 
     console.log('SSR에서 받은 데이터:', data);

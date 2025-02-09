@@ -115,7 +115,7 @@ const LightningMap = ({ initialMeetups }: LightningMapProps) => {
             }
             className="rounded-full bg-[#00B6AD] px-4 py-2 text-white shadow-md hover:text-gray-800"
           >
-            모임 찾기
+            현 지도에서 검색
           </button>
         </div>
       </div>
