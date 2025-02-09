@@ -2,14 +2,14 @@ import GNBItem from '../gnb/item';
 import Input from '../shared/input';
 
 interface SearchProps {
-  searchHandleClick: () => void;
+  handleSearchBarClick: () => void;
 }
 
-function Search({ searchHandleClick }: SearchProps) {
+function Search({ handleSearchBarClick }: SearchProps) {
   return (
     <div
       className="relative mx-6 flex flex-1 cursor-pointer items-center"
-      onClick={searchHandleClick}
+      onClick={handleSearchBarClick}
     >
       <Input
         id="search"
