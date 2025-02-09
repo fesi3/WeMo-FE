@@ -13,6 +13,7 @@ import { useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { API_PATHS } from '@/constants/apiPath';
 import instance from '@/api/axiosInstance';
+import { PlanListData, PlanListResponse } from '@/types/plans';
 
 // GNB 레이아웃 컴포넌트에서 렌더링 되는 header 컴포넌트입니다.
 // 페이지마다 출력이 달라 path를 조회해 조건부 렌더링 합니다.
@@ -40,18 +41,21 @@ function GNBHeader() {
     router.push(`${router.pathname}/?q=${e.target.value}`);
   };
 
-  const query = useQuery({
+  useQuery<PlanListResponse, Error, PlanListData>({
     queryKey: ['searchKeyword'],
     queryFn: async () => {
-      return await instance.get(`${GET_ALL(`query=${encodedSearchKeyWord}`)}`);
+      const response = await instance.get(
+        `${GET_ALL(`query=${encodedSearchKeyWord}`)}`,
+      );
+      return response.data;
     },
     gcTime: 0,
     staleTime: 0,
+    select: (data) => data?.data,
   });
 
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: ['searchKeyword'] });
-    console.log(query.data?.data.data);
   }, [searchKeyword]);
 
   return (
