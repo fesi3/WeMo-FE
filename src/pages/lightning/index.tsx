@@ -12,7 +12,6 @@ interface LightningPageProps {
 const LightningPage = ({ initialMeetups }: LightningPageProps) => {
   return (
     <div>
-      <h1>번개팟 지도</h1>
       <LightningFilter />
       <LightningMap initialMeetups={initialMeetups} />
       <LightningList meetups={initialMeetups} />
