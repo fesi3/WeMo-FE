@@ -19,7 +19,7 @@ function SearchForm() {
         {/* 검색 결과 카드 리스트 */}
         <div
           onClick={(e) => e.stopPropagation()}
-          className="mt-[10px] flex h-[calc(100vh-342px)] w-full flex-col items-center gap-3 overflow-y-scroll rounded-b-sm rounded-t-lg md:mt-[41px] md:h-[calc(100vh-430px)] md:w-[446px] [&::-webkit-scrollbar]:hidden"
+          className="mt-[10px] flex h-[58vh] w-full flex-col items-center gap-3 overflow-y-scroll rounded-b-sm rounded-t-lg md:mt-[41px] md:h-[58vh] md:w-[446px] [&::-webkit-scrollbar]:hidden"
         >
           <div className="w-full rounded-lg bg-slate-50 p-4">
             <div className="h-[100px] bg-gray-200">이미지</div>
