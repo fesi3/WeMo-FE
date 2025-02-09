@@ -6,7 +6,7 @@ import Image from 'next/image';
 import CategoryBadge from '@/components/shared/badges/CategoryBadge';
 import { Meeting } from '@/types/api/meetingList';
 
-const MAX_DISPLAY_PLANS = 3;
+const MAX_DISPLAY_PLANS = 4;
 
 const getPlanBadgeClass = (isFulled: boolean) => {
   return isFulled
@@ -33,12 +33,13 @@ const Card = ({ meeting }: { meeting: Meeting }) => {
           <div className="text-md mt-2 inline-flex items-center gap-x-1 font-semibold text-gray-400">
             <UserGroupIcon className="h-4 w-4" />
             <p>멤버 수 {meeting.memberCount}</p>
-            <p className="before:mx-1 before:content-['·']">예정 일정 n</p>{' '}
-            {/* {meeting.planCount} */}
+            <p className="before:mx-1 before:content-['·']">
+              예정 일정 {meeting.planCount}{' '}
+            </p>{' '}
           </div>
         </div>
         {meeting.meetingImagePath && (
-          <div className="relative ml-4 h-24 w-40">
+          <div className="relative ml-4 aspect-[5/3] h-auto w-40 overflow-hidden rounded-lg">
             <Image
               src={meeting.meetingImagePath}
               alt="Meeting"
@@ -54,7 +55,7 @@ const Card = ({ meeting }: { meeting: Meeting }) => {
       <div className="mt-2 cursor-pointer border-t pt-2" onClick={handleClick}>
         <div className="relative">
           <h3 className="mb-2 text-sm font-semibold">예정된 일정</h3>
-          {meeting.planCount > 0 ? (
+          {meeting.planList.length > 0 ? (
             <ul className="flex flex-wrap gap-2 pr-16 text-sm text-gray-600">
               {displayedPlans.map((plan) => (
                 <li key={plan.planId} className="inline-flex">
@@ -65,7 +66,7 @@ const Card = ({ meeting }: { meeting: Meeting }) => {
                   </span>
                 </li>
               ))}
-              {meeting.planCount >= maxItems && <li>...</li>}
+              {meeting.planList.length >= maxItems && <li>...</li>}
             </ul>
           ) : (
             <p className="text-xs text-gray-400">
@@ -83,4 +84,3 @@ const Card = ({ meeting }: { meeting: Meeting }) => {
 };
 
 export default Card;
-export type { Meeting };
