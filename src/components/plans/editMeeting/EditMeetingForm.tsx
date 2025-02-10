@@ -46,7 +46,7 @@ export default function EditMeetingForm({
     if (!croppedImages.length) {
       setError('imageFiles', {
         type: 'required',
-        message: '이미지를 등록해 주세요.',
+        message: '대표 이미지를 등록해 주세요.',
       });
       return;
     }
