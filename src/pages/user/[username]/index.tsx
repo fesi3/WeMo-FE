@@ -14,7 +14,7 @@ export default function MyPage() {
 
   return (
     <MypageLayout headerProps="마이페이지">
-      <div className="flex flex-col gap-7 sm:gap-10">
+      <div className="flex flex-col gap-4 md:gap-7">
         {userData ? (
           <>
             <section>
@@ -23,7 +23,7 @@ export default function MyPage() {
             <section>
               <StatisticsCard user={userData} />
             </section>
-            <section>
+            <section className="mt-3">
               <IndexNav nickname={userData?.nickname} />
             </section>
           </>
