@@ -3,7 +3,7 @@ import type { NextPage, GetServerSideProps } from 'next';
 //import axios from 'axios';
 import instance from '@/utils/axios';
 import { SortOption } from '@/types/reviewType';
-import { useCursorInfiniteScroll } from '@/hooks/useCursorInfiniteScroll';
+import { useCursorInfiniteScroll } from '@/hooks/useCursorInfiniteScrollPlans';
 import { PlanDataWithCategory } from '@/types/plans';
 import { RegionOption, SubRegionOption } from '@/types/reviewType';
 import Tabs from '@/components/plans/tab/Tabs';
