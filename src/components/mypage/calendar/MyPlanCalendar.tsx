@@ -1,4 +1,5 @@
-import { SchedulePlanProps, Value } from '@/pages/user/[username]/calendar';
+import { Value } from '@/pages/user/[username]/calendar';
+import { CalendarPlanData } from '@/types/mypageType';
 import React from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -7,7 +8,7 @@ interface CalendarComponentProps {
   selectedDate: Value;
   handleDateChange: (newDate: Value) => void;
   currentDate: { year: number; month: number; day: number };
-  filteredSchedulesInThisMonth: SchedulePlanProps[];
+  filteredSchedulesInThisMonth: CalendarPlanData[];
   heartsPlan: number[];
 }
 
