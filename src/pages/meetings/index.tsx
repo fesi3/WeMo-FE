@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { GetServerSideProps } from 'next';
-import instance from '@/api/axiosInstance';
+//import instance from '@/utils/axios';
+import ssrInstance from '@/utils/axios';
 //import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 //import { InfiniteData } from '@tanstack/react-query';
 import Header from '@/components/shared/layout/Header';
@@ -111,7 +112,7 @@ const MeetingsPage = ({ initialMeetings, nextCursor }: MeetingsPageProps) => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    const response = await instance.get('/api/meetings', {
+    const response = await ssrInstance.get('/api/meetings', {
       params: {
         size: 10,
       },
