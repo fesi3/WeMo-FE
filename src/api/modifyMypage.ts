@@ -1,6 +1,6 @@
 import { API_PATHS } from '@/constants/apiPath';
-import instance from './axiosInstance';
 import { ApiResponse } from '@/types/api/apiResponse';
+import instance from '@/utils/axios';
 
 // 마이페이지 일정 - 참석한 일정 취소하기
 export const leaveJoinedPlan = async (planId: number) => {
