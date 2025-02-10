@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import instance from '@/api/axiosInstance';
+import instance from '@/utils/axios';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import HeartIcon from '@/assets/icons/heart.svg';
