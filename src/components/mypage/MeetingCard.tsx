@@ -3,7 +3,8 @@ import meetingImg from '@/assets/images/Rectangle 6188.png';
 import { useRouter } from 'next/router';
 import OwnerButton from './OwnerButton';
 import { MeetingData } from '@/types/mypageType';
-import { useCancle } from '@/hooks/useCancle';
+import { useLeaveMeetingMutation } from '@/hooks/mypage/mutation/useLeaveMutation';
+import { useDeleteMeetingMutation } from '@/hooks/mypage/mutation/useDeleteMutation';
 
 export interface MeetingProps {
   meetingData: MeetingData;
@@ -22,26 +23,27 @@ const MeetingCard = ({ meetingData }: MeetingProps) => {
   const imageSrc = meetingImagePath || meetingImg; // 서버에서 받아온 데이터가 없을 시 기본 이미지로 대체
   const router = useRouter();
 
-  // "삭제" 버튼 클릭 시 처리 함수
+  const leaveMeetingMutation = useLeaveMeetingMutation();
+  const deleteMeetingMutation = useDeleteMeetingMutation();
+
+  // "삭제" 버튼 클릭 시 처리 함수 (내가 만든 모임)
   const handleDeleteMeeting = (meetingId: number) => {
     console.log(`${meetingId}번 모임을 삭제합니다.`);
-    useCancle({
-      url: `/api/meetings/${meetingId}`,
-      successMessage: '모임이 삭제되었습니다.',
-      router,
-    });
+    const isConfirmed = window.confirm(
+      '모임을 삭제하시겠습니까? 다시 복구할 수 없습니다!',
+    );
+    if (isConfirmed) {
+      deleteMeetingMutation.mutate(meetingId);
+    }
   };
 
-  // "탈퇴" 버튼 클릭 시 처리 함수 - api 아직 안 나옴
+  // "탈퇴" 버튼 클릭 시 처리 함수 (내가 참여한 모임)
   const handleLeaveMeeting = (meetingId: number) => {
-    // 탈퇴 로직 추가/api/meetings/{meetingId}
     console.log(`${meetingId}번 모임을 탈퇴합니다.`);
-    alert('모임 탈퇴하기는 아직 api 구현 중입니다!');
-    // cancleBtnApi({
-    //   url: `/api/meetings/${meetingId}`,
-    //   successMessage: '모임에서 탈퇴되었습니다.',
-    //   router
-    // });
+    const isConfirmed = window.confirm('모임을 탈퇴하시겠습니까?');
+    if (isConfirmed) {
+      leaveMeetingMutation.mutate(meetingId);
+    }
   };
 
   // 페이지 이동

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import instance from '@/api/axiosInstance'; // ✅ axios instance 사용
+import instance from '@/utils/axios'; // ✅ axios instance 사용
 import { PlanData } from '@/types/plans';
 import { usePageInfiniteScroll } from '@/hooks/usePageInfiniteScroll';
 import CardList from '@/components/plans/card/CardList';

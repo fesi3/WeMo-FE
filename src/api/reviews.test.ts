@@ -1,8 +1,8 @@
 import fetchReviews from '@/api/reviews';
-import axiosInstance from '@/api/axiosInstance';
+import axiosInstance from '@/utils/axios';
 import { FilterState } from '@/types/reviewType';
 
-jest.mock('@/api/axiosInstance'); // axiosInstance를 목 함수로 만들어줍니다.
+jest.mock('@/utils/axios'); // axiosInstance를 목 함수로 만들어줍니다.
 
 describe('fetchReviews', () => {
   const mockFilters: FilterState = {

@@ -1,6 +1,6 @@
 import { API_PATHS } from '@/constants/apiPath';
 import axios from 'axios';
-import instance from './axiosInstance';
+import instance from '../utils/axios';
 import { extractPathFromPresignedUrl } from '@/utils/extractPathFromPresignedUrl';
 
 interface PresignedUrl {

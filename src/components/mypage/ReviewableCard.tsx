@@ -6,8 +6,8 @@ import useToggle from '@/hooks/useToggle';
 import { useState } from 'react';
 import Modal from '../shared/modals/Modal';
 import ReviewModal from './ReviewsModal';
-import fetchData from '@/api/fetchData';
 import { extractPathFromPresignedUrl } from '@/utils/extractPathFromPresignedUrl';
+import { createReview } from '@/api/createReview';
 
 interface reviewableProps {
   reviewable: ReviewPlanData;
@@ -47,19 +47,15 @@ const ReviewableCard = ({ reviewable }: reviewableProps) => {
       // API 요청 데이터
       const requestData = {
         ...data,
-        imageUrls: formattedImageUrls,
+        fileUrls: formattedImageUrls,
       };
 
       // 리뷰 데이터 API로 전송
-      const response = await fetchData({
-        param: `/api/reviews/${planId}`, // 리뷰 작성 API 경로
-        method: 'post', // POST 요청
-        requestData, // 리뷰 데이터
-      });
+      await createReview(planId, requestData);
 
-      console.log(response);
       setSubmittedData(requestData); // 제출된 데이터를 상태에 저장
       handleClose(); // 모달 닫기
+      window.location.reload();
     } catch (error) {
       console.error('리뷰 제출 실패:', error);
       // 오류 처리
