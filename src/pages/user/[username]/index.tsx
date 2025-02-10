@@ -3,20 +3,14 @@ import React from 'react';
 import IndexNav from '@/components/mypage/IndexNav';
 import MypageLayout from '@/components/mypage/MypageLayout';
 import StatisticsCard from '@/components/mypage/StatisticsCard';
-import { UserData } from '@/types/mypageType';
-import useFetchDataFromKey from '@/hooks/useFetchDataFromKey';
+import { useMypageUserInfo } from '@/hooks/mypage/fetch/useMypageData';
 
 export default function MyPage() {
-  const {
-    data: userData,
-    loading,
-    error,
-  } = useFetchDataFromKey<UserData>(`/api/auths/users`);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-  // console.log('닉네임', userData?.nickname);
-  // console.log(userData);
+  const { data, isLoading, error } = useMypageUserInfo();
+  const userData = data?.data;
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>[Error!!]{error.message}</div>;
+  if (!userData) return <div>No Data...</div>;
 
   return (
     <MypageLayout headerProps="마이페이지">
