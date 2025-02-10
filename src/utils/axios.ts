@@ -28,10 +28,10 @@ instance.interceptors.response.use(
     // Case 1: 액세스 토큰 expired (401)
     if (error.response?.status === 401 && !originalRequest._retry) {
       if (window.location.pathname === '/start') {
-        return Promise.reject(error); // 시작 페이지로 이동시 리프레시 토큰 중복 갱신 요청 방지
+        return Promise.reject(error); // /start 페이지에서는 실행하지 않음
       }
       if (isRefreshing) {
-        return Promise.reject(error); // 리프레시 토큰 중복 갱신 요청 방지
+        return Promise.reject(error); // 중복 요청 방식
       }
 
       originalRequest._retry = true;
@@ -44,11 +44,11 @@ instance.interceptors.response.use(
         isRefreshing = false;
         return instance(originalRequest); // 실패한 요청 재시도
       } catch (refreshError: unknown) {
-        console.error('❌ 액세트 토큰 갱신 실패', error);
+        console.error('❌ 액세스 토큰 갱신 실패', error);
 
         // Case 2: 리프레시 토큰 만료 -> 로그아웃 처리
         try {
-          await instance.post(SIGNOUT); // 로그아웃 시도
+          await instance.post(SIGNOUT); // 서버에 로그아웃 요청
           console.log('✅ SIGNOUT successful');
         } catch (signoutError: unknown) {
           if (isAxiosError(signoutError)) {

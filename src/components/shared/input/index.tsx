@@ -22,7 +22,8 @@ function Input(props: InputProps) {
     ...rest
   } = props;
   const inputClassName = twMerge(
-    `h-mobileInputHeight drop-shadow shrink-0 flex-grow rounded-[4px] text-base p-4 font-light focus:outline-none focus:ring-1 focus:ring-primary-10 placeholder-gray-[#A4A4A4] md:h-tabletInputHeight`,
+    `drop-shadow shrink-0 flex-grow rounded-[4px] text-base p-4 font-light focus:outline-none focus:ring-1 focus:ring-primary-10 placeholder-gray-[#A4A4A4]`,
+    'h-[40px] md:h-[44px]',
     className,
   );
   return (

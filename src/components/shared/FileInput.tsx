@@ -64,7 +64,12 @@ export default function FileInput<T extends FieldValues>({
         {croppedImages.length < 5 && (
           <label className="flex aspect-[5/3] w-[30%] shrink-0 cursor-pointer items-center justify-center rounded-md bg-gray-200 opacity-40">
             <CameraIcon />
-            <input className="hidden" type="file" {...register(name)} />
+            <input
+              className="hidden"
+              accept="image/jpeg, image/png, image/webp"
+              type="file"
+              {...register(name)}
+            />
           </label>
         )}
       </div>
