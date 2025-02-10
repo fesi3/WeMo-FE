@@ -22,7 +22,6 @@ export default function useLightningMap() {
   const { meetups, fetchMeetups, isLoading, error } = useMeetupFetcher(
     coordinate.lat,
     coordinate.lng,
-    '/api/lightnings?lat=37.6&lng=127.06',
   );
   const [isInitialLoading, setIsInitialLoading] = useState(true);
 
@@ -38,7 +37,7 @@ export default function useLightningMap() {
 
   useEffect(() => {
     if (!isMapLoading) {
-      console.log('✅ 맵 로딩 완료! 초기 데이터 패칭 시작...');
+      console.log('맵 로딩 완료! 초기 데이터 패칭 시작...');
       fetchMeetups(coordinate.lat, coordinate.lng);
       setIsInitialLoading(false); // 초기 로딩 종료
     }
