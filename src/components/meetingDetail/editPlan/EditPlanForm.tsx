@@ -16,6 +16,8 @@ import { CreatePlanRequestBody } from '@/types/api/plan';
 import ErrorWrapper from '@/components/shared/ErrorWrapper';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import Button from '@/components/shared/Button';
+import { useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEY } from '@/constants/queryKey';
 dayjs.extend(customParseFormat);
 interface FormValues {
   planName: string;
@@ -55,7 +57,7 @@ export default function EditPlanForm({
       registrationEnd: dayjs(new Date()).format('YYYY-MM-DD A hh:mm'),
     },
   });
-
+  const queryClient = useQueryClient();
   const [imageURL, setImageURL] = useState<string>('');
   const [addressValue, setAddressValue] = useState('');
   const {
@@ -122,6 +124,9 @@ export default function EditPlanForm({
     if (!result || !result.success) {
       return;
     }
+    queryClient.invalidateQueries({
+      queryKey: QUERY_KEY.meetingDetail(parseInt(id as string)),
+    });
     handleCloseThisModal();
   };
 
