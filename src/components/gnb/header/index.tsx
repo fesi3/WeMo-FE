@@ -12,7 +12,7 @@ import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { API_PATHS } from '@/constants/apiPath';
-import instance from '@/api/axiosInstance';
+import axiosInstance from '@/utils/axios';
 import { PlanListData, PlanListResponse } from '@/types/plans';
 import { debounce } from 'lodash';
 
@@ -53,7 +53,7 @@ function GNBHeader() {
   const { data: planData } = useQuery<PlanListResponse, Error, PlanListData>({
     queryKey: ['searchKeyword'],
     queryFn: async () => {
-      const response = await instance.get(
+      const response = await axiosInstance.get(
         `${GET_ALL(`query=${encodedSearchKeyWord}`)}`,
       );
       return response.data;
