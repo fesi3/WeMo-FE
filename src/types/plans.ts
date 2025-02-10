@@ -1,3 +1,15 @@
+export interface PlanListData {
+  planCount: number;
+  planList: PlanDataWithCategory[];
+  nextCursor: number | null;
+}
+
+export interface PlanListResponse {
+  success: boolean;
+  message: string;
+  data: PlanListData;
+}
+
 export interface PlanData {
   planId: string;
   meetingId?: string;
@@ -7,7 +19,7 @@ export interface PlanData {
   meetingName: string;
   province: string;
   district: string;
-  participants: string;
+  participants: number;
   capacity: string;
   isOpened: boolean;
   isLiked: boolean;
