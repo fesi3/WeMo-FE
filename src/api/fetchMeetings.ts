@@ -1,4 +1,4 @@
-import instance from '@/api/axiosInstance';
+import instance from '@/utils/axios';
 import { QueryFunctionContext } from '@tanstack/react-query';
 import { FetchMeetingsResponse } from '@/types/api/meetingList';
 import { AxiosError } from 'axios';
