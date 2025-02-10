@@ -9,11 +9,12 @@ import SearchModal from '@/components/search/searchModal';
 import useToggle from '@/hooks/useToggle';
 import SearchContents from '@/components/search/searchContents';
 import { useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { API_PATHS } from '@/constants/apiPath';
 import instance from '@/api/axiosInstance';
 import { PlanListData, PlanListResponse } from '@/types/plans';
+import { debounce } from 'lodash';
 
 // GNB 레이아웃 컴포넌트에서 렌더링 되는 header 컴포넌트입니다.
 // 페이지마다 출력이 달라 path를 조회해 조건부 렌더링 합니다.
@@ -27,6 +28,7 @@ function GNBHeader() {
     ? encodeURIComponent(searchKeyword)
     : '';
   const router = useRouter();
+  const { pathname, query, replace } = router;
   const queryClient = useQueryClient();
   const {
     PLAN: { GET_ALL },
@@ -37,9 +39,16 @@ function GNBHeader() {
     handleOpen();
   };
 
-  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    router.push(`${router.pathname}/?q=${e.target.value}`);
-  };
+  const handleSearchInputChange = useCallback(
+    debounce((e: React.ChangeEvent<HTMLInputElement>) => {
+      // 기존 쿼리를 유지하면서 검색어 추가
+      replace({
+        pathname,
+        query: { ...query, q: e.target.value },
+      });
+    }, 300), // 300ms 지연
+    [pathname],
+  );
 
   useQuery<PlanListResponse, Error, PlanListData>({
     queryKey: ['searchKeyword'],
@@ -89,6 +98,7 @@ function GNBHeader() {
             <SearchContents
               searchKeyword={searchKeyword}
               handleSearchInputChange={handleSearchInputChange}
+              handleClose={handleClose}
             />
           </SearchModal>
         </>

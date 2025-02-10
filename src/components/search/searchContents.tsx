@@ -6,11 +6,13 @@ import SearchResultCardList from './searchResultCardList';
 interface SearchContentsProps {
   handleSearchInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   searchKeyword: string | null;
+  handleClose: () => void;
 }
 
 function SearchContents({
   handleSearchInputChange,
   searchKeyword,
+  handleClose,
 }: SearchContentsProps) {
   const queryClient = useQueryClient();
   // [수정 필요] select한 data가 취득이 되지 않는 이유는???
@@ -38,7 +40,7 @@ function SearchContents({
             : ''}
         </span>
         {/* 검색 결과 카드 리스트 */}
-        <SearchResultCardList />
+        <SearchResultCardList handleClose={handleClose} />
       </div>
     </div>
   );
