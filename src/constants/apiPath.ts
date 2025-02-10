@@ -45,14 +45,19 @@ export const API_PATHS = {
       `/api/region/district?provinceId=${provinceId}`,
   },
   MYPAGE: {
-    GET_MY_MEETINGS: (pageNumber: number, size: number) =>
-      `/api/users/meetings?page=${pageNumber}&size=${size}`,
-    GET_MY_PLANS: (pageNumber: number, size: number) =>
-      `/api/users/plans?page=${pageNumber}&size=${size}`,
-    GET_MY_REVIEWS: (pageNumber: number, size: number) =>
-      `/api/users/reviews?page=${pageNumber}&size=${size}`,
-    GET_AVAILABLE_REVIEWS: (pageNumber: number, size: number) =>
-      `/api/users/reviews/available?page=${pageNumber}&size=${size}`,
+    GET_MY_INFO: '/api/auths/users',
+    GET_JOINED_PLANS: (pageNumber: number) =>
+      `/api/users/plans?page=${pageNumber}`,
+    GET_CREATED_PLANS: (pageNumber: number) =>
+      `/api/users/plans/me?page=${pageNumber}`,
+    GET_JOINED_MEETINGS: (pageNumber: number) =>
+      `/api/users/meetings?page=${pageNumber}`,
+    GET_CREATED_MEETINGS: (pageNumber: number) =>
+      `/api/users/meetings/me?page=${pageNumber}`,
+    GET_MY_REVIEWS: (pageNumber: number) =>
+      `/api/users/reviews?page=${pageNumber}`,
+    GET_AVAILABLE_REVIEWS: (pageNumber: number) =>
+      `/api/users/reviews/available?page=${pageNumber}`,
   },
   IMAGE: {
     UPLOAD: (count: number) => `/api/images?count=${count}`,
