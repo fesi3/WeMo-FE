@@ -4,10 +4,11 @@ import {
   CreatePlanResponse,
   PlanDetailResponse,
 } from '@/types/api/plan';
-import instance from './axiosInstance';
+import instance from '../utils/axios';
 import { ApiResponse } from '@/types/api/apiResponse';
 import { showToast } from '@/utils/showToast';
 import TOAST_MESSAGE from '@/constants/toastMessage';
+import { AxiosRequestConfig } from 'axios';
 
 interface PostPlanParams {
   meetingId: number;
@@ -33,10 +34,14 @@ export const createPlan = async ({
   }
 };
 
-export const fetchPlanDetail = async (planId: number) => {
+export const fetchPlanDetail = async (planId: number, cookie?: string) => {
   if (isNaN(planId)) return;
+  const config: AxiosRequestConfig = cookie
+    ? { headers: { Cookie: cookie }, withCredentials: true }
+    : {};
   const response = await instance<PlanDetailResponse>(
     API_PATHS.PLAN.GET_DETAIL(planId),
+    config,
   );
   return response.data;
 };
