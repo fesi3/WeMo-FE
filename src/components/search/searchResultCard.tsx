@@ -1,11 +1,11 @@
 import Image from 'next/image';
 import MemberIcon from '@/assets/icons/member.svg';
 import defaultImage from '@/assets/images/default-image.png';
-import { PlanData } from '@/types/mypageType';
 import { useRouter } from 'next/router';
+import { PlanDataWithCategory } from '@/types/plans';
 
 type SearchResultCardTypes = Pick<
-  PlanData,
+  PlanDataWithCategory,
   'planImagePath' | 'planName' | 'meetingName' | 'participants' | 'planId'
 >;
 
@@ -40,6 +40,7 @@ function SearchResultCard({
             onError={() => defaultImage}
             alt="result-card-image"
             fill
+            sizes="33vw"
           />
         </div>
         {/* // 텍스트 영역 */}

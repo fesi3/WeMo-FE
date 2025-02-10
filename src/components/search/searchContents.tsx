@@ -15,9 +15,12 @@ function SearchContents({
   handleClose,
 }: SearchContentsProps) {
   const queryClient = useQueryClient();
-  // [수정 필요] select한 data가 취득이 되지 않는 이유는???
-  const data = queryClient.getQueryData<PlanListResponse>(['searchKeyword']);
-  const planCount = data?.data.planCount;
+  const searchData = queryClient.getQueryData<PlanListResponse>([
+    'searchKeyword',
+  ]);
+
+  const planList = searchData?.data ? searchData?.data.planList : [];
+  const planCount = searchData?.data ? searchData?.data.planCount : 0;
 
   return (
     <div className="flex max-h-full w-full flex-col lg:items-center">
@@ -40,7 +43,9 @@ function SearchContents({
             : ''}
         </span>
         {/* 검색 결과 카드 리스트 */}
-        <SearchResultCardList handleClose={handleClose} />
+        {searchData && (
+          <SearchResultCardList planList={planList} handleClose={handleClose} />
+        )}
       </div>
     </div>
   );
