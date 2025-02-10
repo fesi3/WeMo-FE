@@ -15,14 +15,13 @@ function SearchModal({
 }: PropsWithChildren<ModalProps>) {
   const router = useRouter();
   const handleSearchClose = () => {
-    router.replace(router.pathname);
+    router.replace(router.pathname, undefined, { shallow: true });
     handleClose();
   };
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        handleClose();
-        router.replace(router.pathname);
+        handleSearchClose();
       }
     };
 
