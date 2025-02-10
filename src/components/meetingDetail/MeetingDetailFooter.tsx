@@ -33,7 +33,6 @@ export default function MeetingDetailFooter({
           />
         )}
       </div>
-      <div className="h-[50px] md:hidden"></div>
     </>
   );
 }

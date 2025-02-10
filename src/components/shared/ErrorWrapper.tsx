@@ -10,10 +10,10 @@ export default function ErrorWrapper({
 }: PropsWithChildren<ErrorWrapperProps>) {
   return (
     <>
-      <div className="flex flex-col">
+      <div className="relative flex flex-col">
         {children}
         {errorMessage && (
-          <span className="flex w-full justify-end text-sm text-heart">
+          <span className="absolute -bottom-5 right-0 text-tiny text-red-400">
             {errorMessage}
           </span>
         )}
