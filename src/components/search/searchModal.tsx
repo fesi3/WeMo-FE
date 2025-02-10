@@ -15,7 +15,13 @@ function SearchModal({
 }: PropsWithChildren<ModalProps>) {
   const router = useRouter();
   const handleSearchClose = () => {
-    router.replace(router.pathname, undefined, { shallow: true });
+    const { pathname, query, replace } = router;
+
+    // 기존 쿼리에서 `q`만 제거
+    const updatedQuery = { ...query };
+    delete updatedQuery.q;
+
+    replace({ pathname, query: updatedQuery }, undefined, { shallow: true });
     handleClose();
   };
   useEffect(() => {
