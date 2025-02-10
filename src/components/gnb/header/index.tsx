@@ -42,10 +42,14 @@ function GNBHeader() {
   const handleSearchInputChange = useCallback(
     debounce((e: React.ChangeEvent<HTMLInputElement>) => {
       // 기존 쿼리를 유지하면서 검색어 추가
-      replace({
-        pathname,
-        query: { ...query, q: e.target.value },
-      });
+      replace(
+        {
+          pathname,
+          query: { ...query, q: e.target.value },
+        },
+        undefined,
+        { shallow: true },
+      );
     }, 200), // 300ms 지\
     [pathname],
   );
@@ -71,6 +75,12 @@ function GNBHeader() {
         planList: [],
         nextCursor: null,
       });
+      const { pathname, query, replace } = router;
+      // `q`를 제외한 새로운 객체 생성
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { q, ...updateQuery } = query;
+
+      replace({ pathname, query: updateQuery }, undefined, { shallow: true });
     } else {
       queryClient.invalidateQueries({ queryKey: ['searchKeyword'] });
     }
