@@ -1,5 +1,6 @@
 import { fetchMeetingDetail } from '@/api/meeting';
 import MeetingDetailMain from '@/components/meetingDetail/MeetingDetailMain';
+import Header from '@/components/shared/layout/Header';
 import { QUERY_KEY } from '@/constants/queryKey';
 import {
   dehydrate,
@@ -8,6 +9,7 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
@@ -33,8 +35,15 @@ interface MeetingDetailPageProps {
 export default function MeetingDetailPage({
   dehydratedState,
 }: MeetingDetailPageProps) {
+  const router = useRouter();
   return (
     <HydrationBoundary state={dehydratedState}>
+      <Header
+        title="모임 상세"
+        onClickBack={() => {
+          router.push('/meetings');
+        }}
+      />
       <div className="mx-auto max-w-screen-md">
         <MeetingDetailMain />
       </div>

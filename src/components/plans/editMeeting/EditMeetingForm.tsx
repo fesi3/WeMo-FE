@@ -46,7 +46,7 @@ export default function EditMeetingForm({
     if (!croppedImages.length) {
       setError('imageFiles', {
         type: 'required',
-        message: '이미지를 등록해 주세요.',
+        message: '대표 이미지를 등록해 주세요.',
       });
       return;
     }
@@ -85,7 +85,7 @@ export default function EditMeetingForm({
   return (
     <>
       <div>
-        <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
+        <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
           <ErrorWrapper errorMessage={errors.meetingName?.message}>
             <label className="form-label">
               모임 이름
@@ -110,12 +110,14 @@ export default function EditMeetingForm({
               onCrop={onCrop}
             />
           </ErrorWrapper>
-          <span className="form-label">선택 서비스</span>
-          <CategoryRadioInput
-            register={register}
-            name="categoryId"
-            categoryValue={categoryValue}
-          />
+          <label className="form-label">
+            선택 서비스
+            <CategoryRadioInput
+              register={register}
+              name="categoryId"
+              categoryValue={categoryValue}
+            />
+          </label>
           <div className="flex gap-5"></div>
           <ErrorWrapper errorMessage={errors.description?.message}>
             <label className="form-label">
@@ -140,7 +142,7 @@ export default function EditMeetingForm({
               />
             </label>
           </ErrorWrapper>
-          <div className="flex gap-4">
+          <div className="flex gap-4 pt-5">
             <Button
               text="취소"
               type="button"

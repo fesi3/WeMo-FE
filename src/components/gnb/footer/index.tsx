@@ -57,6 +57,7 @@ function GNBFooter() {
           </ul>
         </footer>
       )}
+      <div className="h-[50px] md:hidden"></div>
     </>
   );
 }
