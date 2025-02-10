@@ -3,17 +3,15 @@ import { useEffect, useState } from 'react';
 import ReviewableCard from '@/components/mypage/ReviewableCard';
 import NoData from '@/components/mypage/NoData';
 import MypageLayout from '@/components/mypage/MypageLayout';
-import { ReviewData, ReviewPlanData } from '@/types/mypageType';
-import useFetchDataFromKey from '@/hooks/useFetchDataFromKey';
+import { API_PATHS } from '@/constants/apiPath';
+import {
+  useMypageReviewables,
+  useMypageReviews,
+} from '@/hooks/mypage/fetch/useMypageData';
 
 export default function MyReview() {
   const [activeTab, setActiveTab] = useState<'tabLeft' | 'tabRight'>('tabLeft');
   const [page, setPage] = useState(1); // 페이지 상태 추가
-
-  const apiUrl =
-    activeTab === 'tabLeft'
-      ? `/api/users/reviews?page=${page}`
-      : `/api/users/reviews/available?page=${page}`;
 
   // activeTab이 변경될 때 page를 1로 리셋
   useEffect(() => {
@@ -21,29 +19,41 @@ export default function MyReview() {
   }, [activeTab]);
 
   const {
-    data: reviewData,
-    totalPage: reviewTotalPage,
-    loading: reviewDataLoading,
+    data: reviewed,
+    isLoading: reviewDataLoading,
     error: reviewDataError,
-  } = useFetchDataFromKey<ReviewData[]>(apiUrl, 'reviewList');
+  } = useMypageReviews(
+    API_PATHS.MYPAGE.GET_MY_REVIEWS(page),
+    page,
+    activeTab === 'tabLeft',
+  );
   const {
-    data: reviewableData,
-    totalPage: reviewableTotalPage,
-    loading: reviewableDataLoading,
+    data: reviewable,
+    isLoading: reviewableDataLoading,
     error: reviewableDataError,
-  } = useFetchDataFromKey<ReviewPlanData[]>(apiUrl, 'planList');
+  } = useMypageReviewables(
+    API_PATHS.MYPAGE.GET_AVAILABLE_REVIEWS(page),
+    page,
+    activeTab === 'tabRight',
+  );
 
-  console.log('리뷰', reviewData);
-  console.log('리뷰가능', reviewableData);
-
-  // 로딩 및 오류 처리
-  if (reviewDataLoading || reviewableDataLoading) {
-    return <div>Loading...</div>;
+  //로딩 및 에러 처리
+  if (activeTab === 'tabLeft') {
+    if (reviewDataLoading) return <div>작성한 리뷰 로딩 중...</div>;
+    if (reviewDataError) return <div>Error: {reviewDataError.message} </div>;
+  }
+  if (activeTab === 'tabRight') {
+    if (reviewableDataLoading) return <div>작성가능한 리뷰 로딩 중...</div>;
+    if (reviewableDataError)
+      return <div>Error: {reviewableDataError.message} </div>;
   }
 
-  if (reviewDataError || reviewableDataError) {
-    return <div>Error: {reviewDataError || reviewableDataError}</div>;
-  }
+  //데이터
+  const reviewData = reviewed?.data.reviewList;
+  const reviewableData = reviewable?.data.planList;
+  // totalPage
+  const reviewTotalPage = reviewed?.data.totalPage;
+  const reviewableTotalPage = reviewable?.data.totalPage;
 
   return (
     <MypageLayout
@@ -57,7 +67,13 @@ export default function MyReview() {
       ]}
       page={page}
       totalPage={
-        activeTab === 'tabLeft' ? reviewTotalPage : reviewableTotalPage
+        activeTab === 'tabLeft'
+          ? reviewTotalPage
+            ? reviewTotalPage
+            : 0
+          : reviewableTotalPage
+            ? reviewableTotalPage
+            : 0
       }
       onPageChange={setPage}
     >
@@ -69,7 +85,7 @@ export default function MyReview() {
               {reviewData.map((review) => (
                 <li key={review.reviewId}>
                   <ReviewCard reviewed={review} />
-                  <div className="mt-10 border"></div>
+                  {/* <div className="mt-10 border"></div> */}
                 </li>
               ))}
             </ul>

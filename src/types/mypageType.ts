@@ -1,5 +1,55 @@
 import { StaticImageData } from 'next/image';
 
+export interface UserDataResponse {
+  success: boolean;
+  message: string;
+  data: UserData;
+}
+
+export interface MeetingDataResponse {
+  success: boolean;
+  message: string;
+  data: MeetingDataInfo;
+}
+
+export interface MeetingDataInfo {
+  totalPage: number;
+  meetingList: MeetingData[];
+}
+
+export interface PlanDataResponse {
+  success: boolean;
+  message: string;
+  data: PlanDataInfo;
+}
+
+export interface PlanDataInfo {
+  totalPage: number;
+  planList: PlanData[];
+}
+
+export interface ReviewDataResponse {
+  success: boolean;
+  message: string;
+  data: ReviewDataInfo;
+}
+
+export interface ReviewableDataResponse {
+  success: boolean;
+  message: string;
+  data: ReviewableDataInfo;
+}
+
+export interface ReviewDataInfo {
+  totalPage: number;
+  reviewList: ReviewData[];
+}
+
+export interface ReviewableDataInfo {
+  totalPage: number;
+  planList: ReviewPlanData[];
+}
+
 //index페이지에서 사용하는 유저데이터
 export interface UserData {
   email: string;
@@ -53,7 +103,7 @@ export interface ReviewData {
   address: string;
   score: number;
   comment: string;
-  reviewImagePath: string | string[]; //외부 url은 string으로만
+  reviewImages: string | string[]; //외부 url은 string으로만
   planImagePath: string | StaticImageData;
   planId: number; // 일정 상세로 이동
 }

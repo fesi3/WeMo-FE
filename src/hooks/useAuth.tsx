@@ -1,4 +1,4 @@
-import instance from '@/api/axiosInstance';
+import instance from '@/utils/axios';
 import { useQuery } from '@tanstack/react-query';
 import { API_PATHS } from '@/constants/apiPath';
 import { useDispatch } from 'react-redux';

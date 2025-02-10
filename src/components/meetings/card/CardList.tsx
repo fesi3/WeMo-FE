@@ -1,5 +1,5 @@
 import Card from './Card';
-import { Meeting } from './Card';
+import { Meeting } from '@/types/api/meetingList';
 
 const CardList = ({ meetings }: { meetings: Meeting[] }) => {
   return (
