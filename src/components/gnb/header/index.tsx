@@ -50,7 +50,7 @@ function GNBHeader() {
     [pathname],
   );
 
-  const { data: planData } = useQuery<PlanListResponse, Error, PlanListData>({
+  useQuery<PlanListResponse, Error, PlanListData>({
     queryKey: ['searchKeyword'],
     queryFn: async () => {
       const response = await axiosInstance.get(
@@ -75,7 +75,6 @@ function GNBHeader() {
       queryClient.invalidateQueries({ queryKey: ['searchKeyword'] });
     }
   }, [searchKeyword]);
-  console.log(planData, '---planData---');
 
   return (
     <div className="flex max-h-full w-full flex-col">
