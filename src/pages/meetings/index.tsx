@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { GetServerSideProps } from 'next';
 import instance from '@/api/axiosInstance';
-import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import { InfiniteData } from '@tanstack/react-query';
+//import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
+//import { InfiniteData } from '@tanstack/react-query';
 import Header from '@/components/shared/layout/Header';
 import CardList from '@/components/meetings/card/CardList';
 import MeetingsSortDropdown, {
@@ -11,9 +11,12 @@ import MeetingsSortDropdown, {
 import CategoryDropdown, {
   categories,
 } from '@/components/meetings/dropdown/CategoryDropdown';
-import { fetchMeetings } from '@/api/fetchMeetings';
-import { FetchMeetingsResponse, Meeting } from '@/types/api/meetingList';
+//import { fetchMeetings } from '@/api/fetchMeetings';
+//import { FetchMeetingsResponse, Meeting } from '@/types/api/meetingList';
 import { useInfiniteScroll } from '@/hooks/useScrollObserver';
+import { useMeetings } from '@/hooks/useMeetingsQuery';
+import { InfiniteData } from '@tanstack/react-query';
+import { FetchMeetingsResponse, Meeting } from '@/types/api/meetingList';
 
 interface MeetingsPageProps {
   initialMeetings: Meeting[];
@@ -21,43 +24,43 @@ interface MeetingsPageProps {
 }
 
 const MeetingsPage = ({ initialMeetings, nextCursor }: MeetingsPageProps) => {
-  const queryClient = useQueryClient();
+  // 정렬 및 카테고리 상태
   const [selectedSort, setSelectedSort] = useState(meetingsortOptions[0].value);
   const [selectedCategory, setSelectedCategory] = useState<number | undefined>(
     categories[0].id,
   );
 
-  // React Query의 무한 스크롤 API
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery<
-      FetchMeetingsResponse,
-      Error,
-      FetchMeetingsResponse,
-      [string, string | undefined, number | undefined],
-      number | null
-    >({
-      queryKey: ['meetings', selectedSort, selectedCategory], // 최신 상태 반영
-      queryFn: fetchMeetings,
-      initialPageParam: null,
-      getNextPageParam: (lastPage) => lastPage.nextCursor ?? null,
-      enabled: selectedCategory !== undefined,
-      initialData: {
-        pages: [{ meetingList: initialMeetings, nextCursor }], // initialMeetings 적용
-        pageParams: [null],
-      },
-    });
+  // 기본 정렬 및 카테고리 값
+  const defaultSort = meetingsortOptions[0].value;
+  const defaultCategory = categories[0].id;
 
+  // SSR로 전달받은 초기 데이터를 React Query에 전달
+  const initialData: InfiniteData<FetchMeetingsResponse, null> = {
+    pages: [{ meetingList: initialMeetings, nextCursor }],
+    pageParams: [null],
+  };
+
+  // 기본 정렬/카테고리인 경우에만 initialData 사용
+  const queryInitialData =
+    selectedSort === defaultSort && selectedCategory === defaultCategory
+      ? initialData
+      : undefined;
+
+  // 커스텀 훅을 통해 무한 스크롤 관련 데이터 및 메서드 획득
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useMeetings({
+    sort: selectedSort,
+    category: selectedCategory,
+    initialData: queryInitialData,
+  });
+
+  // 모임 데이터를 하나의 배열로 병합합
   const meetings =
     (
-      data as unknown as InfiniteData<FetchMeetingsResponse, number | null>
+      data as unknown as InfiniteData<FetchMeetingsResponse, null>
     )?.pages.flatMap((page) => page.meetingList) || [];
 
-  // 정렬, 카테고리 변경 시 즉시 반영되도록 useEffect 추가
-  useEffect(() => {
-    queryClient.invalidateQueries({
-      queryKey: ['meetings', selectedSort, selectedCategory],
-    });
-  }, [selectedSort, selectedCategory, queryClient]);
+  //const meetings = data?.pages.flatMap((page) => page.meetingList) || [];
+  // 타입 오류로 강제 캐스팅, 추후 타입 정의 검토 리팩토링 예정
 
   // 정렬 변경 핸들러
   const handleSortChange = (
@@ -99,8 +102,6 @@ const MeetingsPage = ({ initialMeetings, nextCursor }: MeetingsPageProps) => {
         />
       </div>
       <CardList meetings={meetings} />
-
-      {/* 로딩 요소 */}
       <div ref={loaderRef} className="flex h-10 items-center justify-center">
         {isFetchingNextPage && <span>Loading...</span>}
       </div>
