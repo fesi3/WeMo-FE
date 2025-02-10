@@ -100,7 +100,7 @@ export default function EditPlanForm({
     if (!fileUrls) return;
     const requestBody: CreatePlanRequestBody = {
       planName: data.planName,
-      dateTime: dayjs(data.dateTime, 'YYYY-MM-HH A hh:mm').format(
+      dateTime: dayjs(data.dateTime, 'YYYY-MM-DD A hh:mm').format(
         'YYYY-MM-DDTHH:mm:ss',
       ),
       address: data.address,
@@ -109,11 +109,12 @@ export default function EditPlanForm({
       latitude: data.coordinate.lat,
       capacity: data.capacity,
       content: data.content,
-      registrationEnd: dayjs(data.registrationEnd, 'YYYY-MM-HH A hh:mm').format(
+      registrationEnd: dayjs(data.registrationEnd, 'YYYY-MM-DD A hh:mm').format(
         'YYYY-MM-DDTHH:mm:ss',
       ),
       fileUrls,
     };
+
     const result = await createPlan({
       meetingId: parseInt(id as string),
       requestBody,
@@ -297,10 +298,10 @@ export default function EditPlanForm({
               max="30"
               className="form-input-range w-full"
             />
-            <div className="flex w-8 overflow-hidden rounded-md border border-primary-10">
+            <div className="relative flex h-6 w-9 overflow-hidden rounded-md border border-primary-10">
               <input
                 type="number"
-                className="flex-center outline-none"
+                className="flex-center absolute left-[7px] top-1/2 w-9 -translate-y-1/2 outline-none"
                 min={5}
                 max={30}
                 value={capacityValue}
@@ -331,6 +332,7 @@ export default function EditPlanForm({
             variant={'outline'}
             height={40}
             className="w-full rounded-md"
+            onClick={handleCloseThisModal}
           />
 
           <Button
@@ -340,21 +342,6 @@ export default function EditPlanForm({
             height={40}
             className="w-full rounded-md"
           />
-
-          {/* <button
-            type="button"
-            onClick={handleCloseThisModal}
-            className="h-10 w-full rounded-md border border-primary-10 font-semibold text-primary-10"
-          >
-            취소
-          </button> */}
-
-          {/* <button
-            type="submit"
-            className="h-10 w-full rounded-md border bg-primary-10 font-semibold text-white"
-          >
-            만들기
-          </button> */}
         </div>
       </form>
     </div>
