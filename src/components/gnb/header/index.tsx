@@ -46,11 +46,11 @@ function GNBHeader() {
         pathname,
         query: { ...query, q: e.target.value },
       });
-    }, 300), // 300ms 지연
+    }, 200), // 300ms 지\
     [pathname],
   );
 
-  useQuery<PlanListResponse, Error, PlanListData>({
+  const { data: planData } = useQuery<PlanListResponse, Error, PlanListData>({
     queryKey: ['searchKeyword'],
     queryFn: async () => {
       const response = await instance.get(
@@ -58,14 +58,24 @@ function GNBHeader() {
       );
       return response.data;
     },
+    enabled: !!encodedSearchKeyWord, // 검색어가 있을 때만 요청
     gcTime: 0,
     staleTime: 0,
     select: (data) => data?.data,
   });
 
   useEffect(() => {
-    queryClient.invalidateQueries({ queryKey: ['searchKeyword'] });
+    if (!searchKeyword) {
+      queryClient.setQueryData(['searchKeyword'], {
+        planCount: 0,
+        planList: [],
+        nextCursor: null,
+      });
+    } else {
+      queryClient.invalidateQueries({ queryKey: ['searchKeyword'] });
+    }
   }, [searchKeyword]);
+  console.log(planData, '---planData---');
 
   return (
     <div className="flex max-h-full w-full flex-col">
