@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import useLightningMap from '@/hooks/useLightningMap';
 import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
+import { LightningMeetup } from '@/types/lightningType';
 
 interface LightningMapProps {
   initialMeetups: {
@@ -9,13 +10,17 @@ interface LightningMapProps {
     latitude: number;
     longitude: number;
   }[];
+  onUpdateMeetups: (meetups: LightningMeetup[]) => void;
 }
 
 const INITIAL_COORDINATE = { lat: 37.5664056, lng: 126.9778222 };
 
-const LightningMap = ({ initialMeetups }: LightningMapProps) => {
+const LightningMap = ({
+  initialMeetups,
+  onUpdateMeetups,
+}: LightningMapProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
-  const { address, fetchMeetups, isInitialLoading } = useLightningMap();
+  const { fetchMeetups, isInitialLoading } = useLightningMap();
   const mapInstance = useRef<kakao.maps.Map | null>(null);
   const mapCenter = useRef(INITIAL_COORDINATE);
   const [, setSelectedMeetup] = useState<string | null>(null);
@@ -84,10 +89,22 @@ const LightningMap = ({ initialMeetups }: LightningMapProps) => {
     });
   };
 
+  // 🔹 지도 중심 좌표 기준으로 모임 패칭
+  const fetchMeetupsByCenter = async () => {
+    const meetups = await fetchMeetups(
+      mapCenter.current.lat,
+      mapCenter.current.lng,
+    );
+
+    console.log('✅ 패치된 모임 리스트:', meetups);
+
+    if (meetups) {
+      onUpdateMeetups(meetups); // 리스트 업데이트
+    }
+  };
+
   return (
     <div className="flex w-full flex-col items-center px-4">
-      <p>현재 위치 : {address}</p>
-
       {/* 🗺️ 지도 컨테이너 */}
       <div className="relative h-[450px] w-full max-w-[1200px] overflow-hidden rounded-xl shadow-md">
         {/* 🗺️ 지도 자체 */}
@@ -110,9 +127,7 @@ const LightningMap = ({ initialMeetups }: LightningMapProps) => {
             </div>
           </div>
           <button
-            onClick={() =>
-              fetchMeetups(mapCenter.current.lat, mapCenter.current.lng)
-            }
+            onClick={() => fetchMeetupsByCenter()}
             className="rounded-full bg-[#00B6AD] px-4 py-2 text-white shadow-md hover:text-gray-800"
           >
             현 지도에서 검색

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import LightningMap from '@/components/lightning/LightningMap';
 import LightningList from '@/components/lightning/LightningList';
 import LightningFilter from '@/components/lightning/LightningFilter';
@@ -10,11 +11,15 @@ interface LightningPageProps {
 }
 
 const LightningPage = ({ initialMeetups }: LightningPageProps) => {
+  const [meetups, setMeetups] = useState<LightningMeetup[]>(initialMeetups);
   return (
     <div>
       <LightningFilter />
-      <LightningMap initialMeetups={initialMeetups} />
-      <LightningList meetups={initialMeetups} />
+      <LightningMap
+        initialMeetups={initialMeetups}
+        onUpdateMeetups={setMeetups}
+      />
+      <LightningList meetups={meetups} />
     </div>
   );
 };
@@ -24,7 +29,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   try {
     const { data } = await axiosInstance.get(
-      `/api/lightnings?lat=${initialCoordinate.lat}&lng=${initialCoordinate.lng}&radius=0.5`,
+      `/api/lightnings?latitude=${initialCoordinate.lat}&longitude=${initialCoordinate.lng}&radius=0.5`,
     );
 
     console.log('SSR에서 받은 데이터:', data);
