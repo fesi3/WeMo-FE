@@ -80,7 +80,7 @@ const RenderCommonContent: React.FC<RenderCommonContentProps> = ({
       </div>
       {/* 로그인 상태일 때만 모임 만들기 버튼 표시 */}
       {isLoggedIn && (
-        <div className="fixed bottom-20 right-5 z-50">
+        <div className="fixed bottom-20 right-5 z-10">
           <EditMeetingButton />
         </div>
       )}
