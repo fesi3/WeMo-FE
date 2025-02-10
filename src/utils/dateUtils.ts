@@ -3,7 +3,7 @@
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
-import { SchedulePlanProps } from '@/pages/user/[username]/calendar';
+import { CalendarPlanData } from '@/types/mypageType';
 
 dayjs.extend(relativeTime);
 dayjs.locale('ko');
@@ -49,7 +49,7 @@ export function getDateInfo(date?: Date | string | null) {
 
 // 특정 월의 일정만 필터링
 export function getFilteredSchedulesByMonth(
-  schedules: SchedulePlanProps[], // 서버에서 받아오는 일정 배열
+  schedules: CalendarPlanData[], // 서버에서 받아오는 일정 배열
   targetDate: Date | string, // 필터링할 기준 날짜(달력 날짜 기준)
 ) {
   const { year, month } = getDateInfo(targetDate); // 달력의 연, 월
@@ -59,4 +59,19 @@ export function getFilteredSchedulesByMonth(
     );
     return scheduleYear === year && scheduleMonth === month;
   });
+}
+
+// 특정 월의 첫째 날 - 마지막 날 반환
+export function getFirstAndLastDayOfMonth(year: number, month: number) {
+  const startDate = dayjs()
+    .year(year)
+    .month(month - 1)
+    .startOf('month')
+    .format('YYYY-MM-DD'); // month는 0부터 시작
+  const endDate = dayjs()
+    .year(year)
+    .month(month - 1)
+    .endOf('month')
+    .format('YYYY-MM-DD'); // month는 0부터 시작
+  return { startDate, endDate };
 }
