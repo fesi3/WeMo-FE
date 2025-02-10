@@ -1,4 +1,4 @@
-import instance from '@/api/axiosInstance';
+import instance from '@/utils/axios';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
