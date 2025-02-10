@@ -4,7 +4,7 @@ import {
   CreateMeetingRequestBody,
   CreateMeetingResponse,
 } from '@/types/api/meeting';
-import instance from './axiosInstance';
+import instance from '../utils/axios';
 import { AxiosRequestConfig, isAxiosError } from 'axios';
 import { ApiErrorResponse, ApiResponse } from '@/types/api/apiResponse';
 import { showToast } from '@/utils/showToast';
@@ -19,16 +19,15 @@ export const createMeeting = async (requestBody: CreateMeetingRequestBody) => {
     if (!response.data.success) {
       throw new Error('실패');
     }
-    showToast('success', TOAST_MESSAGE.CREATE_PLAN);
+    showToast('success', TOAST_MESSAGE.CREATE_MEETING);
     return response.data;
   } catch (error) {
     if (!isAxiosError(error)) return;
     if (!error.response) return;
     const response = error.response.data as ApiErrorResponse;
     console.error(`${error.status}: ${response.message}`);
-    showToast('error', TOAST_MESSAGE.CREATE_PLAN_ERROR);
+    showToast('error', TOAST_MESSAGE.CREATE_MEETING_ERROR);
   }
-  //에러핸들링 어떻게 할지 고민중
 };
 
 export const fetchMeetingDetail = async (

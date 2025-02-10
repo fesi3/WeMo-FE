@@ -1,5 +1,5 @@
 import { Review, FilterState } from '@/types/reviewType';
-import axiosInstance from '@/api/axiosInstance';
+import axiosInstance from '@/utils/axios';
 
 const fetchReviews = async (
   category: string,

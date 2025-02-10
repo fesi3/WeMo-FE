@@ -1,4 +1,4 @@
-import axiosInstance from '@/api/axiosInstance';
+import axiosInstance from '@/utils/axios';
 import { API_PATHS } from '@/constants/apiPath';
 
 interface CreateReviewRequestBody {

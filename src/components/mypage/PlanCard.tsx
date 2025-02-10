@@ -4,11 +4,12 @@ import moreBtn from '@/assets/icons/more-vertical.png';
 import { useRouter } from 'next/router';
 import OwnerButton from './OwnerButton';
 import { PlanData } from '@/types/mypageType';
-import { useCancle } from '@/hooks/useCancle';
 import Button from '@/components/shared/Button';
 import MeetingDate from '../shared/badges/MeetingDate';
 import MeetingTime from '../shared/badges/MeetingTime';
 import DistrictBadge from '../shared/badges/DistrictBadge';
+import { useLeavePlanMutation } from '@/hooks/mypage/mutation/useLeaveMutation';
+import { useDeletePlanMutation } from '@/hooks/mypage/mutation/useDeleteMutation';
 
 interface PlanCardProps {
   planData: PlanData;
@@ -37,24 +38,25 @@ const PlanCard = ({ planData }: PlanCardProps) => {
 
   const router = useRouter();
 
+  const leavePlanMutation = useLeavePlanMutation();
+  const deletePlanMutation = useDeletePlanMutation();
+
+  //일정 취소(내가 참여한 일정)
   const handleLeavePlan = (planId: number) => {
-    // 탈퇴 로직 추가/api/plans/{planId}/attendance
     console.log(`${planId}번 일정을 탈퇴합니다.`);
-    useCancle({
-      url: `/api/plans/${planId}/attendance`,
-      successMessage: '일정을 취소했습니다.',
-      router,
-    });
+    const isConfirmed = window.confirm('일정을 취소하시겠습니까?');
+    if (isConfirmed) {
+      leavePlanMutation.mutate(planId);
+    }
   };
 
+  //일정 삭제(내가 만든 일정)
   const handleDeletePlan = (planId: number) => {
-    // 삭제 로직 추가 /api/plans/{planId}/cancel
     console.log(`${planId}번 일정을 삭제합니다.`);
-    useCancle({
-      url: `/api/plans/${planId}/cancel`,
-      successMessage: '일정을 삭제했습니다.',
-      router,
-    });
+    const isConfirmed = window.confirm('일정을 취소하시겠습니까?');
+    if (isConfirmed) {
+      deletePlanMutation.mutate(planId);
+    }
   };
 
   // 페이지 이동

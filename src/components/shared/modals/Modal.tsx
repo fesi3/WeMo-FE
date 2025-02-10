@@ -4,10 +4,10 @@ import ModalBackDrop from './ModalBackDrop';
 import { XMarkIcon } from '@heroicons/react/20/solid';
 import { twMerge } from 'tailwind-merge';
 
-interface ModalProps {
+export interface ModalProps {
   handleClose: () => void;
   isOpen: boolean;
-  title: string;
+  title?: string;
   className?: string;
 }
 
@@ -22,25 +22,27 @@ export default function Modal({
   return (
     isOpen && (
       <ModalPortal>
-        <ModalBackDrop isOpen={isOpen} />
-        <div
-          className={twMerge(
-            'fixed left-1/2 top-1/2 z-[11] flex w-full max-w-screen-md -translate-x-1/2 -translate-y-1/2 p-6',
-            className,
-          )}
-        >
-          <div className="flex w-full flex-col rounded-lg bg-white p-6 text-black">
-            <div className="flex justify-end pb-5">
-              {title ? (
-                <span className="grow text-xl font-semibold">{title}</span>
-              ) : null}
-              <button onClick={handleClose}>
-                <XMarkIcon className="w-8 opacity-50" />
-              </button>
+        <ModalBackDrop isOpen={isOpen} handleClose={handleClose}>
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className={twMerge(
+              'fixed left-1/2 top-1/2 z-[12] flex w-full max-w-screen-md -translate-x-1/2 -translate-y-1/2 p-6',
+              className,
+            )}
+          >
+            <div className="flex w-full flex-col rounded-lg bg-white p-6 text-black">
+              <div className="flex justify-end pb-5">
+                {title ? (
+                  <span className="grow text-xl font-semibold">{title}</span>
+                ) : null}
+                <button onClick={handleClose}>
+                  <XMarkIcon className="w-8 opacity-50" />
+                </button>
+              </div>
+              <div className="h-full w-full">{children}</div>
             </div>
-            <div className="h-full w-full">{children}</div>
           </div>
-        </div>
+        </ModalBackDrop>
       </ModalPortal>
     )
   );

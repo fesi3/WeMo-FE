@@ -2,50 +2,62 @@ import MeetingCard from '@/components/mypage/MeetingCard';
 import { useEffect, useState } from 'react';
 import NoData from '@/components/mypage/NoData';
 import MypageLayout from '@/components/mypage/MypageLayout';
-import { MeetingData } from '@/types/mypageType';
-import useFetchDataFromKey from '@/hooks/useFetchDataFromKey';
+import { useMypageMeetings } from '@/hooks/mypage/fetch/useMypageData';
+import { API_PATHS } from '@/constants/apiPath';
 
 export default function MyMeeting() {
   const [activeTab, setActiveTab] = useState<'tabLeft' | 'tabRight'>('tabLeft');
   const [page, setPage] = useState(1);
-
-  const apiUrl =
-    activeTab === 'tabLeft'
-      ? `/api/users/meetings?page=${page}` // 참여한 모임
-      : `/api/users/meetings/me?page=${page}`; // 내가 만든 모임
 
   // activeTab이 변경될 때 page를 1로 리셋
   useEffect(() => {
     setPage(1);
   }, [activeTab]);
 
+  // useMeetings 훅을 통해 모임 데이터 가져오기
   const {
     data: joinedMeetings,
-    totalPage: joinedMeetingsTotalPage,
-    loading: joinedMeetingsLoading,
+    isLoading: joinedMeetingsLoading,
     error: joinedMeetingsError,
-  } = useFetchDataFromKey<MeetingData[]>(apiUrl, 'meetingList');
+  } = useMypageMeetings(
+    API_PATHS.MYPAGE.GET_JOINED_MEETINGS(page),
+    'joined',
+    page,
+    activeTab === 'tabLeft',
+  );
 
+  // 내가 만든 모임 데이터 가져오기 (useMeetings)
   const {
     data: createdMeetings,
-    totalPage: createdMeetingsTotalPage,
-    loading: createdMeetingsLoading,
+    isLoading: createdMeetingsLoading,
     error: createdMeetingsError,
-  } = useFetchDataFromKey<MeetingData[]>(apiUrl, 'meetingList');
+  } = useMypageMeetings(
+    API_PATHS.MYPAGE.GET_CREATED_MEETINGS(page),
+    'created',
+    page,
+    activeTab === 'tabRight',
+  );
 
-  // console.log('내가 만든 모임데이터', createdMeetings);
-  // console.log('참여한 데이터', joinedMeetings);
+  //로딩 및 에러 처리
+  if (activeTab === 'tabLeft') {
+    if (joinedMeetingsLoading) return <div>참여한 모임 로딩 중...</div>;
+    if (joinedMeetingsError)
+      return <div>Error: {joinedMeetingsError.message} </div>;
+  }
+
+  if (activeTab === 'tabRight') {
+    if (createdMeetingsLoading) return <div>생성한 모임 로딩 중...</div>;
+    if (createdMeetingsError)
+      return <div>Error: {createdMeetingsError.message} </div>;
+  }
 
   const meetingData =
-    activeTab === 'tabLeft' ? joinedMeetings : createdMeetings;
+    activeTab === 'tabLeft'
+      ? joinedMeetings?.data.meetingList
+      : createdMeetings?.data.meetingList;
 
-  if (joinedMeetingsLoading || createdMeetingsLoading) {
-    return <div>Loading...</div>;
-  }
-  if (joinedMeetingsError || createdMeetingsError) {
-    return <div>Error: {joinedMeetingsError || createdMeetingsError}</div>;
-  }
-  // console.log('업데이트 데이터', meetings);
+  const joinedMeetingsTotalPage = joinedMeetings?.data.totalPage;
+  const createdMeetingsTotalPage = createdMeetings?.data.totalPage;
 
   return (
     <MypageLayout
@@ -58,9 +70,14 @@ export default function MyMeeting() {
       ]}
       page={page}
       totalPage={
+        // activeTab === 'tabLeft' ? joinedPlansTotalPage : createdPlansTotalPage
         activeTab === 'tabLeft'
           ? joinedMeetingsTotalPage
+            ? joinedMeetingsTotalPage
+            : 0
           : createdMeetingsTotalPage
+            ? createdMeetingsTotalPage
+            : 0
       }
       onPageChange={setPage}
     >
