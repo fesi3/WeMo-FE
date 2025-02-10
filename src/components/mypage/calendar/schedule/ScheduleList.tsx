@@ -1,9 +1,9 @@
 import Button from '@/components/shared/Button';
-import { SchedulePlanProps } from '@/pages/user/[username]/calendar';
+import { CalendarPlanData } from '@/types/mypageType';
 import React from 'react';
 
 interface ScheduleListProps {
-  renderPlanListData: SchedulePlanProps;
+  renderPlanListData: CalendarPlanData;
 }
 
 const ScheduleList = ({ renderPlanListData }: ScheduleListProps) => {
