@@ -1,4 +1,4 @@
-import instance from './axiosInstance';
+import instance from '../utils/axios';
 
 interface FetchDataOptions<T> {
   param: string;
