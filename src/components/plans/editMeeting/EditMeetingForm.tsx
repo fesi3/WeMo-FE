@@ -123,7 +123,7 @@ export default function EditMeetingForm({
               categoryValue={categoryValue}
             />
           </label>
-          <div className="flex gap-5"></div>
+
           <ErrorWrapper errorMessage={errors.description?.message}>
             <label className="form-label">
               모임 설명
