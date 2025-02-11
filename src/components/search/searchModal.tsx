@@ -16,12 +16,11 @@ function SearchModal({
   const router = useRouter();
   const handleSearchClose = () => {
     const { pathname, query, replace } = router;
+    // `q`를 제외한 새로운 객체 생성
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { q, ...updateQuery } = query;
 
-    // 기존 쿼리에서 `q`만 제거
-    const updatedQuery = { ...query };
-    delete updatedQuery.q;
-
-    replace({ pathname, query: updatedQuery }, undefined, { shallow: true });
+    replace({ pathname, query: updateQuery }, undefined, { shallow: true });
     handleClose();
   };
   useEffect(() => {
