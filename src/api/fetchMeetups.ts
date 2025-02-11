@@ -5,13 +5,23 @@ import { LightningMeetup } from '@/types/lightningType';
 export const fetchLightningMeetups = async (
   lat: number,
   lng: number,
+  size: number,
+  type?: number | null,
+  time?: number | null,
 ): Promise<LightningMeetup[]> => {
   try {
-    console.log(`번개팟 데이터 요청: lat=${lat}, lng=${lng}`);
+    console.log(`번개팟 데이터 요청: lat=${lat}, lng=${lng},size=${size}`);
 
-    const { data } = await axiosInstance.get(
-      `/api/lightnings?latitude=${lat}&longitude=${lng}&radius=0.5&size=10`,
-    );
+    const { data } = await axiosInstance.get('/api/lightnings', {
+      params: {
+        latitude: lat,
+        longitude: lng,
+        radius: 1,
+        size,
+        lightningTypeId: type ?? undefined, // 필터가 없으면 undefined 처리
+        lightningTimeId: time ?? undefined,
+      },
+    });
 
     console.log('번개팟 응답 데이터:', data);
     return data.data.lightningList || [];
