@@ -38,7 +38,7 @@ const LikeButton = ({ planId, initialIsLiked }: LikeButtonProps) => {
 
   return (
     <div
-      className="h-8 w-8 cursor-pointer"
+      className="h-5 w-5 cursor-pointer"
       onClick={(e) => {
         e.stopPropagation();
         handleLikeToggle();
