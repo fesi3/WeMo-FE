@@ -2,6 +2,7 @@ import { useState } from 'react';
 import LightningMap from '@/components/lightning/LightningMap';
 import LightningList from '@/components/lightning/LightningList';
 import LightningFilter from '@/components/lightning/LightningFilter';
+import LightningCreateContainer from '@/components/lightning/LightningCreateContainer';
 import { GetServerSideProps } from 'next';
 import axiosInstance from '@/api/axiosInstance';
 import { LightningMeetup } from '@/types/lightningType';
@@ -21,6 +22,7 @@ const LightningPage = ({ initialMeetups }: LightningPageProps) => {
     type: null,
     time: null,
   });
+
   const handleUpdateFilters = (
     newFilters: Partial<{ type: number | null; time: number | null }>,
   ) => {
@@ -29,16 +31,17 @@ const LightningPage = ({ initialMeetups }: LightningPageProps) => {
       ...newFilters,
     }));
   };
+
   const [mapCenter, setMapCenter] = useState(INITIAL_COORDINATE);
 
-  // React Query를 이용
   const { data: meetups, refetch } = useLightningMeetups(
-    37.5664056, // 초기 위도
-    126.9778222, // 초기 경도
-    10, // size (최대 불러올 개수)
-    initialMeetups, // 초기 SSR 데이터
-    filters, // 필터 적용
+    mapCenter.lat,
+    mapCenter.lng,
+    10,
+    initialMeetups,
+    filters,
   );
+
   return (
     <div>
       <LightningFilter onUpdateFilters={handleUpdateFilters} />
@@ -50,6 +53,8 @@ const LightningPage = ({ initialMeetups }: LightningPageProps) => {
         refetchMeetups={refetch}
       />
       <LightningList meetups={meetups || []} />
+
+      <LightningCreateContainer />
     </div>
   );
 };
