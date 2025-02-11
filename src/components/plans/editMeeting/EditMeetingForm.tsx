@@ -28,6 +28,7 @@ export default function EditMeetingForm({
   const { croppedImages, onCrop, removeCroppedImage } = useCropper();
   const { toggleValue, handleOpen, handleClose } = useToggle();
   const [imageURL, setImageURL] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const {
     register,
@@ -52,23 +53,27 @@ export default function EditMeetingForm({
     }
 
     const imageFiles = croppedImages.map((image) => image.blobImg);
+    try {
+      setIsSubmitting(true);
+      const fileUrls = await getImageUrls(imageFiles);
+      if (!fileUrls) return;
+      const requestData: CreateMeetingRequestBody = {
+        meetingName: data.meetingName,
+        description: data.description,
+        categoryId: parseInt(data.categoryId),
+        fileUrls,
+      };
 
-    const fileUrls = await getImageUrls(imageFiles);
-    if (!fileUrls) return;
-    const requestData: CreateMeetingRequestBody = {
-      meetingName: data.meetingName,
-      description: data.description,
-      categoryId: parseInt(data.categoryId),
-      fileUrls,
-    };
-
-    const response = await createMeeting(requestData);
-    if (!response) {
-      return;
+      const response = await createMeeting(requestData);
+      if (!response) {
+        return;
+      }
+      const newMeetingId = response.data.meetingId;
+      await router.push(`/meetings/${newMeetingId}`);
+      handleCloseThisModal();
+    } finally {
+      setIsSubmitting(false);
     }
-    handleCloseThisModal();
-    const newMeetingId = response.data.meetingId;
-    router.push(`/meetings/${newMeetingId}`);
   };
 
   useEffect(() => {
@@ -118,7 +123,7 @@ export default function EditMeetingForm({
               categoryValue={categoryValue}
             />
           </label>
-          <div className="flex gap-5"></div>
+
           <ErrorWrapper errorMessage={errors.description?.message}>
             <label className="form-label">
               모임 설명
@@ -153,12 +158,14 @@ export default function EditMeetingForm({
               className="w-full rounded-md"
             />
             <Button
-              text="만들기"
               type="submit"
+              disabled={isSubmitting}
               size={'large'}
               height={40}
               className="w-full rounded-md"
-            />
+            >
+              {isSubmitting ? '만드는 중' : '만들기'}
+            </Button>
           </div>
         </form>
       </div>
