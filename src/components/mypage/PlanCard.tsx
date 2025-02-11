@@ -64,7 +64,7 @@ const PlanCard = ({ planData }: PlanCardProps) => {
     router.push(`/plans/${planId}`);
   };
 
-  const currentStatus = participants < 5 ? 'pending' : 'available';
+  const currentStatus = participants < 3 ? 'pending' : 'available';
   return (
     <div className="relative mb-4 flex flex-col rounded-md border border-gray-200 sm:flex-row sm:items-center sm:gap-3 md:gap-5">
       {/* 반투명 오버레이 */}
