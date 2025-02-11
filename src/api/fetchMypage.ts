@@ -1,6 +1,7 @@
 // 마이페이지 인덱스, 리뷰, 모임, 일정 등 get api 요청 처리
 
 import {
+  CalendarDataResponse,
   MeetingDataResponse,
   PlanDataResponse,
   ReviewableDataResponse,
@@ -39,5 +40,16 @@ export const fetchMypageReviews = async (url: string) => {
 // 마이페이지 리뷰 가능한 데이터 가져오기 API
 export const fetchMypageReviewables = async (url: string) => {
   const response = await instance<ReviewableDataResponse>(url);
+  return response.data;
+};
+
+// 마이페이지 달력 데이터 가져오기 API
+export const fetchMyPlanCalendar = async (
+  startDate: string,
+  endDate: string,
+) => {
+  const response = await instance<CalendarDataResponse>(
+    API_PATHS.MYPAGE.GET_PLAN_CALENDAR(startDate, endDate),
+  );
   return response.data;
 };
