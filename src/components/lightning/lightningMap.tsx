@@ -25,10 +25,10 @@ const LightningMap = ({
   const mapInstance = useRef<kakao.maps.Map | null>(null);
   const [, setSelectedMeetup] = useState<string | null>(null);
 
-  // ✅ 카카오맵 API 로딩 상태 체크
+  // 카카오맵 API 로딩 상태 체크
   const [loading, error] = useKakaoLoader();
 
-  // ✅ React Query를 사용한 모임 데이터 관리
+  // React Query를 사용한 모임 데이터 관리
   const { data: meetups, refetch } = useLightningMeetups(
     mapCenter.lat,
     mapCenter.lng,
@@ -40,18 +40,18 @@ const LightningMap = ({
   useEffect(() => {
     if (loading) return; // 🔹 카카오맵 로딩 중이면 실행 안함
     if (error) {
-      console.error('❌ 카카오맵 로드 실패:', error);
+      console.error('카카오맵 로드 실패:', error);
       return;
     }
 
     if (!window.kakao || !window.kakao.maps || !mapRef.current) {
-      console.error('❌ 카카오맵 API가 로드되지 않았습니다.');
+      console.error('카카오맵 API가 로드되지 않았습니다.');
       return;
     }
 
-    console.log('✅ 지도 초기화 시작');
+    console.log('지도 초기화 시작');
 
-    // ✅ 지도 객체 생성 (최초 1회만 실행)
+    //지도 객체 생성 (최초 1회만 실행)
     mapInstance.current = new window.kakao.maps.Map(mapRef.current, {
       center: new window.kakao.maps.LatLng(mapCenter.lat, mapCenter.lng),
       level: 5,
@@ -64,11 +64,11 @@ const LightningMap = ({
     });
   }, [loading, error]);
 
-  // ✅ 마커 업데이트 (지도 변경될 때마다 실행)
+  //마커 업데이트 (지도 변경될 때마다 실행)
   useEffect(() => {
     if (!mapInstance.current || !meetups) return;
 
-    console.log('🟢 마커 업데이트', meetups);
+    console.log('마커 업데이트', meetups);
 
     // 기존 마커 초기화
     const currentMarkers: kakao.maps.Marker[] = [];
@@ -85,7 +85,7 @@ const LightningMap = ({
       // 마커 클릭 이벤트 추가
       window.kakao.maps.event.addListener(marker, 'click', () => {
         setSelectedMeetup(meetup.lightningName);
-        console.log(`📌 선택된 모임: ${meetup.lightningName}`);
+        console.log(`선택된 모임: ${meetup.lightningName}`);
       });
 
       currentMarkers.push(marker);
@@ -97,10 +97,10 @@ const LightningMap = ({
     };
   }, [meetups]);
 
-  // ✅ 현재 위치 가져오기
+  //현재 위치 가져오기
   const getCurrentLocation = () => {
     if (!navigator.geolocation) {
-      alert('❌ 위치 정보를 가져올 수 없습니다.');
+      alert('위치 정보를 가져올 수 없습니다.');
       return;
     }
 
@@ -114,22 +114,22 @@ const LightningMap = ({
         mapInstance.current.setCenter(new window.kakao.maps.LatLng(lat, lng));
       }
 
-      refetch(); // 🔄 데이터 다시 가져오기
+      refetch(); //데이터 다시 가져오기
     });
   };
 
   return (
     <div className="flex w-full flex-col items-center px-4">
-      {/* ✅ 카카오맵 로드 중일 때 로딩 메시지 표시 */}
+      {/* 카카오맵 로드 중일 때 로딩 메시지 표시 */}
       {loading ? (
-        <div className="flex h-[450px] w-full max-w-[1200px] items-center justify-center text-gray-500">
-          🚀 지도 로딩 중...
+        <div className="flex h-[450px] w-full max-w-[1500px] items-center justify-center text-gray-500">
+          지도 로딩 중...
         </div>
       ) : (
-        <div className="relative h-[450px] w-full max-w-[1200px] overflow-hidden rounded-xl shadow-md">
+        <div className="relative h-[450px] w-full max-w-[1500px] overflow-hidden rounded-xl shadow-md">
           <div ref={mapRef} className="h-full w-full" />
 
-          {/* 📌 버튼 컨테이너 (지도 위에 오버레이) */}
+          {/* 버튼 컨테이너 (지도 위에 오버레이) */}
           <div className="absolute bottom-4 right-4 z-10 flex gap-2">
             <div className="group relative">
               <button
