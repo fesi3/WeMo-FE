@@ -21,7 +21,7 @@ interface ReviewPageProps {
 const ReviewPage = ({ dehydratedState }: ReviewPageProps) => {
   return (
     <HydrationBoundary state={dehydratedState}>
-      <div className="mx-auto max-w-7xl px-4 py-6">
+      <div className="mx-auto max-w-7xl px-4 py-4">
         <Tabs
           tabs={CATEGORIES}
           defaultTab={DEFAULT_CATEGORY}
