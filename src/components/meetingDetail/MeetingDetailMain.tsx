@@ -32,7 +32,11 @@ export default function MeetingDetailMain() {
   });
   const onClickJoinOrLeave = () => {
     if (isPending) return;
-    if (auth.isLoggedIn) mutate();
+    if (auth.isLoggedIn) {
+      mutate();
+    } else {
+      router.push('/start');
+    }
   };
 
   if (isLoading) return <div>로딩중</div>;
