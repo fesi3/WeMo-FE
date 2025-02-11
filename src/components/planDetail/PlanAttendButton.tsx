@@ -33,7 +33,7 @@ export default function PlanAttendButton({
         <Button
           text={buttonText}
           size={'large'}
-          disabled={isFulled || isOpened || isLoading}
+          disabled={isFulled || isLoading}
           onClick={onClick}
           height={42}
         />
