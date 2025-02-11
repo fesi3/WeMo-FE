@@ -20,7 +20,7 @@ const OwnerButton = ({
 }: OwnerButtonProps) => {
   const { user } = useSelector((state: RootState) => state.auth);
   const isOwner = user?.email === email;
-  user.return(
+  return (
     <Button onClick={() => (isOwner ? onDelete(id) : onLeave(id))}>
       {
         isOwner
@@ -31,7 +31,7 @@ const OwnerButton = ({
             ? '일정 취소하기' // 'plan'에서 onLeave는 "일정 취소하기"
             : '모임 탈퇴하기' // 'meeting'에서 onLeave는 "모임 탈퇴하기"
       }{' '}
-    </Button>,
+    </Button>
   );
 };
 
