@@ -52,7 +52,7 @@ const RenderTabContent: React.FC<RenderTabContentProps> = ({
   const { headerHeight } = useHeaderHeight();
 
   return (
-    <div className="mx-auto sm:w-[400px] sm:justify-center md:w-full lg:w-full">
+    <div className="md:w-full lg:w-full">
       {/* Greeting */}
       <Greeting />
       {/* SubCategoryFilter */}
