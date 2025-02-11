@@ -116,7 +116,7 @@ export default function PlanDetailMain({ id }: PlanDetailMainProps) {
                   participants={planData.participants}
                 />
                 <div className="flex w-full justify-between text-xs text-[#374151]">
-                  <span>{`최소 인원 5명`}</span>
+                  <span>{`최소 인원 3명`}</span>
                   <span>{`최대 인원 ${planData.capacity}명`}</span>
                 </div>
               </div>

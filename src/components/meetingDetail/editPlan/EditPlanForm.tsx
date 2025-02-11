@@ -297,14 +297,14 @@ export default function EditPlanForm({
         <div className="flex flex-col">
           <span>최대 인원</span>
           <span className="pb-1 text-xs text-black-sub">
-            개설 확정을 위해 최소 5명이 필요합니다.
+            개설 확정을 위해 최소 3명이 필요합니다.
           </span>
         </div>
         <div className="flex items-center gap-5">
           <input
             {...register('capacity')}
             type="range"
-            min="5"
+            min="3"
             max="30"
             className="form-input-range w-full"
           />
@@ -312,7 +312,7 @@ export default function EditPlanForm({
             <input
               type="number"
               className="flex-center absolute left-[7px] top-1/2 w-9 -translate-y-1/2 outline-none"
-              min={5}
+              min={3}
               max={30}
               value={capacityValue}
               onChange={(e) => {
