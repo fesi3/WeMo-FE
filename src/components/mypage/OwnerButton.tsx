@@ -1,5 +1,7 @@
 import React from 'react';
 import Button from '@/components/shared/Button';
+import { RootState } from '@/redux/store';
+import { useSelector } from 'react-redux';
 
 interface OwnerButtonProps {
   email: string;
@@ -16,10 +18,9 @@ const OwnerButton = ({
   onLeave,
   type, // 'plan' 또는 'meeting'으로 구분
 }: OwnerButtonProps) => {
-  const userEmail = 'test123@test.com';
-  const isOwner = userEmail === email;
-
-  return (
+  const { user } = useSelector((state: RootState) => state.auth);
+  const isOwner = user?.email === email;
+  user.return(
     <Button onClick={() => (isOwner ? onDelete(id) : onLeave(id))}>
       {
         isOwner
@@ -30,7 +31,7 @@ const OwnerButton = ({
             ? '일정 취소하기' // 'plan'에서 onLeave는 "일정 취소하기"
             : '모임 탈퇴하기' // 'meeting'에서 onLeave는 "모임 탈퇴하기"
       }{' '}
-    </Button>
+    </Button>,
   );
 };
 
