@@ -215,6 +215,7 @@ export default function EditPlanForm({
       </ErrorWrapper>
       <ErrorWrapper errorMessage={errors.dateTime?.message}>
         <DatePickInput
+          errorMessage={errors.dateTime?.message}
           label="일정 일자"
           register={register}
           name="dateTime"
@@ -241,6 +242,7 @@ export default function EditPlanForm({
       </ErrorWrapper>
       <ErrorWrapper errorMessage={errors.registrationEnd?.message}>
         <DatePickInput
+          errorMessage={errors.registrationEnd?.message}
           label="마감 일자"
           register={register}
           name="registrationEnd"
