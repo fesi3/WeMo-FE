@@ -19,6 +19,8 @@ export default function App({ Component, pageProps }: AppProps) {
           <Analytics />
         </GNB>
       </Provider>
+      <div id="modal" />
+      <div id="toast" />
     </>
   );
 }

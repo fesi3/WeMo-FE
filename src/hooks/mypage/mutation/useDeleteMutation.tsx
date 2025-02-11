@@ -4,7 +4,7 @@ import {
   deleteCreatedPlan,
   deleteReview,
 } from '@/api/modifyMypage';
-import { showToast } from '@/utils/showToast';
+import { showToast } from '@/utils/handleToast';
 import axios from 'axios';
 
 // 마이페이지 - 일정 취소하기 버튼(내가 만든 일정) -patch로

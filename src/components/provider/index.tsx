@@ -9,7 +9,6 @@ export default function Provider({ children }: PropsWithChildren) {
     <ReduxProvider>
       <ReactQueryProvider>
         {children}
-        <div id="modal" />
         <ToastContainer />
       </ReactQueryProvider>
     </ReduxProvider>
