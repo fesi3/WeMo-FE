@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import PlanFilter from './PlanFilter';
-import EditMeetingButton from './editMeeting/EditMeetingButton';
+import CreateMeetingButton from './editMeeting/CreateMeetingButton';
 import PlanList from './PlanList';
 import SortDropdown from '../shared/dropdown/SortDropdown';
 import { SortOption } from '@/types/reviewType';
@@ -82,7 +82,7 @@ const RenderCommonContent: React.FC<RenderCommonContentProps> = ({
       {/* 로그인 상태일 때만 모임 만들기 버튼 표시 */}
       {isLoggedIn && (
         <div className="fixed bottom-20 right-5 z-10">
-          <EditMeetingButton />
+          <CreateMeetingButton />
         </div>
       )}
       {/* 일정 카드 목록 */}
