@@ -6,7 +6,7 @@ import {
 } from '@/types/api/plan';
 import instance from '../utils/axios';
 import { ApiResponse } from '@/types/api/apiResponse';
-import { showToast } from '@/utils/showToast';
+import { showToast } from '@/utils/handleToast';
 import TOAST_MESSAGE from '@/constants/toastMessage';
 import { AxiosRequestConfig } from 'axios';
 

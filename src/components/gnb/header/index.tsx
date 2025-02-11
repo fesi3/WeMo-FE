@@ -15,6 +15,7 @@ import { API_PATHS } from '@/constants/apiPath';
 import axiosInstance from '@/utils/axios';
 import { PlanListData, PlanListResponse } from '@/types/plans';
 import { debounce } from 'lodash';
+import useHeaderHeight from '@/hooks/useHeaderHeight';
 
 // GNB 레이아웃 컴포넌트에서 렌더링 되는 header 컴포넌트입니다.
 // 페이지마다 출력이 달라 path를 조회해 조건부 렌더링 합니다.
@@ -42,15 +43,19 @@ function GNBHeader() {
   const handleSearchInputChange = useCallback(
     debounce((e: React.ChangeEvent<HTMLInputElement>) => {
       // 기존 쿼리를 유지하면서 검색어 추가
-      replace({
-        pathname,
-        query: { ...query, q: e.target.value },
-      });
+      replace(
+        {
+          pathname,
+          query: { ...query, q: e.target.value },
+        },
+        undefined,
+        { shallow: true },
+      );
     }, 200), // 300ms 지\
     [pathname],
   );
 
-  const { data: planData } = useQuery<PlanListResponse, Error, PlanListData>({
+  useQuery<PlanListResponse, Error, PlanListData>({
     queryKey: ['searchKeyword'],
     queryFn: async () => {
       const response = await axiosInstance.get(
@@ -71,14 +76,22 @@ function GNBHeader() {
         planList: [],
         nextCursor: null,
       });
+      const { pathname, query, replace } = router;
+      // `q`를 제외한 새로운 객체 생성
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { q, ...updateQuery } = query;
+
+      replace({ pathname, query: updateQuery }, undefined, { shallow: true });
     } else {
       queryClient.invalidateQueries({ queryKey: ['searchKeyword'] });
     }
   }, [searchKeyword]);
-  console.log(planData, '---planData---');
+
+  const { headerRef } = useHeaderHeight();
+  //useHeaderHeight 훅을 사용하여 header 컴포넌트의 높이를 측정합니다다
 
   return (
-    <div className="flex max-h-full w-full flex-col">
+    <div ref={headerRef} className="flex max-h-full w-full flex-col">
       {showGnbHeader || (
         <>
           <header className="fixed top-0 z-10 flex w-full items-center bg-white py-3 shadow-sm">

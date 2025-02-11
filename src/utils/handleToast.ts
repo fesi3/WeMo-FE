@@ -27,6 +27,6 @@ export const showToast = (status: ShowToastStatus, message: string) => {
   }, 2000);
 };
 
-// export const closeToast = (id: string) => {
-//   store.dispatch(removeToast(id));
-// };
+export const closeToast = (id: string) => {
+  store.dispatch(removeToast(id));
+};
