@@ -1,4 +1,4 @@
-import { fetchMeetingDetail } from '@/api/meeting';
+import { fetchMeetingDetailSSR } from '@/api/ssr/meetings';
 import MeetingDetailMain from '@/components/meetingDetail/MeetingDetailMain';
 import Header from '@/components/shared/layout/Header';
 import { QUERY_KEY } from '@/constants/queryKey';
@@ -18,7 +18,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const idNum = parseInt(id as string);
   await queryClient.prefetchQuery({
     queryKey: QUERY_KEY.meetingDetail(idNum),
-    queryFn: () => fetchMeetingDetail(idNum, cookie),
+    queryFn: () => fetchMeetingDetailSSR(idNum, cookie),
   });
 
   return {

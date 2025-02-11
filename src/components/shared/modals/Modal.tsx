@@ -26,11 +26,11 @@ export default function Modal({
           <div
             onClick={(e) => e.stopPropagation()}
             className={twMerge(
-              'fixed left-1/2 top-1/2 z-[12] flex w-full max-w-screen-md -translate-x-1/2 -translate-y-1/2 p-6',
+              'fixed left-1/2 top-1/2 z-[12] flex max-h-full w-full max-w-screen-md -translate-x-1/2 -translate-y-1/2 p-6',
               className,
             )}
           >
-            <div className="flex w-full flex-col rounded-lg bg-white p-6 text-black">
+            <div className="flex w-full flex-col overflow-scroll rounded-lg bg-white p-6 text-black">
               <div className="flex justify-end pb-5">
                 {title ? (
                   <span className="grow text-xl font-semibold">{title}</span>
