@@ -23,6 +23,16 @@ export interface PlanDataResponse {
   data: PlanDataInfo;
 }
 
+export interface CalendarDataResponse {
+  success: boolean;
+  message: string;
+  data: CalendarDataInfo;
+}
+
+export interface CalendarDataInfo {
+  planList: CalendarPlanData[];
+}
+
 export interface PlanDataInfo {
   totalPage: number;
   planList: PlanData[];
@@ -116,4 +126,16 @@ export interface ReviewPlanData {
   category: string;
   address: string;
   planImagePath: string | StaticImageData;
+}
+
+// 달력 일정 데이터
+export interface CalendarPlanData {
+  planId: number;
+  planName: string;
+  planImagePath: string | StaticImageData;
+  dateTime: string | Date;
+  category: string;
+  addressDetail: string;
+  isOpened: boolean; // 개설 확정 상태
+  isCompleted: boolean; // 이용 완료 상태
 }

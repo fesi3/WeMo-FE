@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import Header from '../shared/layout/Header';
+// import Header from '../shared/layout/Header';
 import MyPageTab from './MyPageTab';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
@@ -34,7 +34,7 @@ type MypageLayoutProps = MypageLayoutWithTab | MypageLayoutWithoutTab;
 
 export default function MypageLayout({
   children,
-  headerProps,
+  // headerProps,
   activeTab,
   onTabChange,
   tabsTitle,
@@ -48,8 +48,8 @@ export default function MypageLayout({
   if (!isLoggedIn) return;
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header title={headerProps} />
+    <div className="flex h-full flex-col">
+      {/* <Header title={headerProps} /> */}
 
       {/* 활성화된 탭이 있는 경우에만 MyPageTab 렌더링 */}
       {activeTab && onTabChange && tabsTitle && (
@@ -60,7 +60,7 @@ export default function MypageLayout({
         />
       )}
 
-      <main className="mx-auto flex flex-col p-4 sm:justify-center">
+      <main className="flex flex-col items-center justify-center px-10 py-4">
         {children}
       </main>
 

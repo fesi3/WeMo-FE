@@ -12,7 +12,7 @@ const ProfileCard = ({ user }: UserProps) => {
   return (
     <div className="flex flex-col justify-center gap-3">
       {/* 상단 부분 */}
-      <div className="flex items-center justify-center gap-3 py-3.5 sm:flex-col">
+      <div className="flex items-center justify-center gap-3 sm:flex-col">
         {/* 수정 버튼 */}
         <Button
           size={'small'}
@@ -21,7 +21,7 @@ const ProfileCard = ({ user }: UserProps) => {
         >
           프로필 편집 &gt;
         </Button>
-        <div className="relative order-1 flex h-[30px] w-[30px] items-center justify-center rounded-full bg-gray-200 sm:order-2 sm:h-[168px] sm:w-[168px] sm:p-3">
+        <div className="relative order-1 flex h-[30px] w-[30px] items-center justify-center rounded-full bg-gray-200 sm:order-2 sm:h-[108px] sm:w-[108px] sm:p-3">
           <Image
             src={profileImagePath}
             alt="profile"

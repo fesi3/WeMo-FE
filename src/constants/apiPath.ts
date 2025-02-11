@@ -58,6 +58,8 @@ export const API_PATHS = {
       `/api/users/reviews?page=${pageNumber}`,
     GET_AVAILABLE_REVIEWS: (pageNumber: number) =>
       `/api/users/reviews/available?page=${pageNumber}`,
+    GET_PLAN_CALENDAR: (startDate: string, endDate: string) =>
+      `/api/users/plans/calendar?startDate=${startDate}&endDate=${endDate}`,
   },
   IMAGE: {
     UPLOAD: (count: number) => `/api/images?count=${count}`,
