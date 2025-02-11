@@ -9,7 +9,7 @@ import AvatarList from './AvatarList';
 import IconWithCount from '../meetingDetail/ui/IconWithCount';
 import {
   EyeIcon,
-  HandThumbUpIcon,
+  HeartIcon,
   MapPinIcon,
   StarIcon,
   UserIcon,
@@ -89,7 +89,7 @@ export default function PlanDetailMain({ id }: PlanDetailMainProps) {
               <div className="flex w-full items-center justify-end gap-4 text-black-sub">
                 <IconWithCount icon={<EyeIcon />} count={planData.viewCount} />
                 <IconWithCount
-                  icon={<HandThumbUpIcon />}
+                  icon={<HeartIcon />}
                   count={planData.likeCount}
                 />
               </div>
