@@ -41,8 +41,13 @@ export default function DateModal({
       >
         {buttonText}
       </button>
-      <Modal isOpen={isOpen} handleClose={handleClose} title="">
-        <div className="flex w-full flex-col items-center">
+      <Modal
+        className="max-w-md"
+        isOpen={isOpen}
+        handleClose={handleClose}
+        title="날짜 선택"
+      >
+        <div className="flex max-w-md flex-col items-center">
           <CalendarPicker onChange={handleDateChange} />
           <button
             className="mt-4 max-w-md rounded-lg bg-primary-40 px-3 py-2 text-white"
