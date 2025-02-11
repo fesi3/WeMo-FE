@@ -46,7 +46,10 @@ export default function DateModal({
           <CalendarPicker onChange={handleDateChange} />
           <button
             className="mt-6 border-spacing-1 rounded-xl bg-primary-40 px-2 py-1 text-white"
-            onClick={() => onDateSelect(null)}
+            onClick={() => {
+              onDateSelect(null);
+              handleClose();
+            }}
           >
             전체보기
           </button>
