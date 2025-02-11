@@ -16,25 +16,29 @@ const MyPlanCalendar = ({
   selectedDate,
   handleDateChange,
   currentDate,
-  // heartsPlan,
+  heartsPlan,
 }: CalendarComponentProps) => {
-  // const tileContent = ({ date }: { date: Date }) => {
-  //   // 현재 년도, 월과 비교하여 해당 일에 점 표시
-  //   // heartsPlan에 포함된 날짜가 현재 날짜보다 큰 경우 민트 점, 작은 경우 회색 점
-  //   if (heartsPlan.includes(date.getDate())) {
-  //     return date.getDate() >= currentDate.day ? (
-  //       <p className="text-primary-10">*</p> // 이용 예정 상태
-  //     ) : (
-  //       <p className="text-gray-700">*</p> // 이용 완료 상태
-  //     );
-  //   }
-  //   return null;
-  // };
+  const tileContent = ({ date }: { date: Date }) => {
+    // heartsPlan에 포함된 날짜가 현재 날짜보다 큰 경우 민트 점, 작은 경우 회색 점
+    if (heartsPlan.includes(date.getDate())) {
+      // 이용 완료/이용 예정 구분 (일을 비교)
+      return date.getDate() >= currentDate.day ? (
+        <div className="relative flex flex-col items-center">
+          <div className="absolute top-1 h-1.5 w-1.5 rounded-full bg-primary-10" />
+        </div>
+      ) : (
+        <div className="relative flex flex-col items-center">
+          <div className="absolute top-1 h-1.5 w-1.5 rounded-full bg-gray-400" />
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
-    <div>
+    <div className={styles.calendar}>
       {/* (현재 연월 표시) */}
-      <div className="mb-2 text-center text-lg font-semibold">
+      <div className="mb-3 rounded-2xl bg-primary-90 p-2 text-center text-lg font-semibold md:mb-5">
         {`${currentDate.year}년 ${currentDate.month}월`}
       </div>
       <Calendar
@@ -45,13 +49,14 @@ const MyPlanCalendar = ({
         formatDay={(locale, date) => date.getDate().toString()}
         showNavigation={false}
         view="month"
-        // tileContent={tileContent}
+        tileContent={tileContent}
         tileClassName={({ date }) => {
-          let classes = `${styles.tile} w-[45px] h-[50px] md:w-[60px] md:h-[62px] lg:h-[72px]`;
+          // 각 날짜의 칸 스타일
+          let classes = `${styles.tile} w-[45px] h-[50px] md:w-[60px] md:h-[72px] lg:h-[84px]`;
 
           // 오늘 날짜 스타일
           if (date.toDateString() === new Date().toDateString()) {
-            classes += ` ${styles.tileNow}`;
+            classes += ` ${styles.tileToday}`;
           }
 
           // 선택된 날짜 스타일 (selectedDate 비교)
@@ -62,7 +67,7 @@ const MyPlanCalendar = ({
             classes += ` ${styles.tileActive}`;
           }
 
-          // 토요일 (초록색)과 일요일 (빨간색) 색상 적용
+          // 토요일 (파란색)과 일요일 (빨간색) 색상 적용
           if (date.getDay() === 6) {
             classes += ` ${styles.tileSaturday}`; // 토요일
           } else if (date.getDay() === 0) {
@@ -71,7 +76,7 @@ const MyPlanCalendar = ({
 
           return classes;
         }}
-        className={`${styles.customCalendar} h-[336px] w-full rounded-lg border shadow-sm md:h-[450px] lg:h-[640px]`}
+        className={`h-full w-full items-center justify-center rounded-lg text-center lg:h-[450px]`}
       />
     </div>
   );
