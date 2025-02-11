@@ -1,0 +1,47 @@
+.calendar {
+  width: 100%;
+  max-width: 640px;
+  background: white;
+  border: 1px solid #d1d5db; /* Tailwind gray-300 */
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tile {
+  text-align: center;
+  padding: 10px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease-in-out;
+
+}
+
+.tile:hover {
+  background: #f3f4f6; /* Tailwind gray-200 */
+}
+
+/* 오늘 날짜짜 */
+.tileNow {
+  background: #fef3c7; /* Tailwind yellow-200 */
+  font-weight: bold;
+  border-radius: 50%;
+}
+
+.tileActive {
+  border: 1px solid rgba(0, 182, 173, 0.6); /* 60% opacity of #00B6AD */
+  border-radius: 10px;
+  background-color: rgba(0, 182, 173, 0.1); /* 10% opacity of #00B6AD */
+}
+
+.tileDisabled {
+  color: #9ca3af; /* Tailwind gray-400 */
+}
+
+/* 토요일 색상 (초록색) */
+.tileSaturday {
+  color: #2727ff; /* Tailwind green-500 */
+}
+
+/* 일요일 색상 (빨간색) */
+.tileSunday {
+  color: #ef4444; /* Tailwind red-500 */
+}

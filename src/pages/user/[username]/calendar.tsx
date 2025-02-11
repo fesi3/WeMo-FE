@@ -8,6 +8,7 @@ import ScheduleTitle from '@/components/mypage/calendar/schedule/ScheduleTitle';
 import ScheduleList from '@/components/mypage/calendar/schedule/ScheduleList';
 import MyPlanCalendar from '@/components/mypage/calendar/MyPlanCalendar';
 import { useMyPlanCalendar } from '@/hooks/mypage/fetch/useMypageData';
+import MypageLayout from '@/components/mypage/MypageLayout';
 
 type ValuePiece = Date | null;
 export type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -61,26 +62,38 @@ export default function CalendarPage() {
   });
 
   return (
-    <div>
-      <MyPlanCalendar
-        selectedDate={selectedDate}
-        handleDateChange={handleDateChange}
-        currentDate={currentDate}
-        filteredSchedulesInThisMonth={renderPlanList}
-        heartsPlan={heartsPlan}
-      />
-      <div className="w-full rounded-lg border p-4 shadow-sm md:w-1/2">
-        <ScheduleTitle
-          selectedDate={selectedDate as Date}
-          currentDate={currentDate}
-        />
+    <MypageLayout headerProps="이달의 일정">
+      <div className="flex w-full flex-col items-center gap-4 p-4 lg:flex-row lg:items-start lg:justify-center lg:gap-7">
+        {/* <div className="flex flex-col gap-4 lg:flex-row lg:gap-7 w-full max-w-[1200px] mx-auto"> */}
+        <section className="border-black-300 grid h-[336px] w-full max-w-[640px] place-items-center rounded-2xl border p-5 md:h-[540px] lg:h-[640px]">
+          <MyPlanCalendar
+            selectedDate={selectedDate}
+            handleDateChange={handleDateChange}
+            currentDate={currentDate}
+            filteredSchedulesInThisMonth={renderPlanList}
+            heartsPlan={heartsPlan}
+          />
+        </section>
+        {/* 일정 리스트 부분 */}
+        <section className="w-full max-w-[640px] rounded-2xl bg-yellow-200">
+          <div className="w-full rounded-lg border p-4 shadow-sm">
+            <ScheduleTitle
+              selectedDate={selectedDate as Date}
+              currentDate={currentDate}
+            />
 
-        {renderPlanList && renderPlanList.length > 0
-          ? renderPlanList.map((plan) => (
-              <ScheduleList key={plan.planId} renderPlanListData={plan} />
-            ))
-          : null}
+            {renderPlanList && renderPlanList.length > 0 ? (
+              renderPlanList.map((plan) => (
+                <ScheduleList key={plan.planId} renderPlanListData={plan} />
+              ))
+            ) : (
+              <div className="ml-1 mt-4 text-sm text-gray-600">
+                일정이 존재하지 않습니다.
+              </div>
+            )}
+          </div>
+        </section>
       </div>
-    </div>
+    </MypageLayout>
   );
 }
