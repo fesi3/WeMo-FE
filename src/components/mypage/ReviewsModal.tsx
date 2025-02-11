@@ -6,7 +6,6 @@ import FileInput from '@/components/shared/FileInput';
 import HeartRating from '@/components/shared/HeartRating';
 import Button from '@/components/shared/Button';
 import { ReviewFormValues } from '@/types/reviewType';
-// import { getPresignedUrls, uploadImagesToS3 } from '@/api/createReview';
 import { getImageUrls } from '@/api/images';
 import { createReview } from '@/api/createReview';
 
@@ -65,15 +64,6 @@ export default function ReviewModal({
       return;
     }
     try {
-      // // Presigned URL 요청
-      // const presignedUrls = await getPresignedUrls(croppedImages.length);
-
-      // // 이미지 업로드
-      // await uploadImagesToS3(croppedImages, presignedUrls);
-
-      // // Presigned URL에서 실제 S3 파일 경로 추출
-      // const fileUrls = presignedUrls;
-
       const imageFiles = croppedImages.map((e) => e.blobImg);
       const fileUrls = await getImageUrls(imageFiles);
       if (!fileUrls) return;

@@ -21,49 +21,60 @@ const LightningList = ({ meetups }: LightningListProps) => {
   };
 
   return (
-    <div className="mx-auto h-[400px] w-full max-w-[1200px] overflow-y-auto rounded-b-xl bg-white p-4">
+    <div className="mx-auto max-w-[1200px] overflow-y-auto rounded-b-xl bg-white p-4">
       {meetups.map((meetup) => {
         const isParticipated = participatedMeetups.includes(meetup.lightningId);
         return (
           <div
             key={meetup.lightningId}
-            className="mb-3 flex flex-col gap-2 rounded-lg border bg-white p-4 shadow-sm"
+            className="mb-3 flex flex-col gap-3 rounded-lg border bg-white p-4 shadow-sm"
           >
+            {/* 카테고리 배지 */}
             <span className="self-start rounded-full bg-gray-100 px-3 py-1 text-sm font-semibold text-gray-700">
               {meetup.lightningType}
             </span>
+
+            {/* 모임 제목 */}
             <h3 className="text-lg font-bold text-gray-900">
               {meetup.lightningName}
             </h3>
+
+            {/* 모임 설명 */}
             <p className="text-sm text-gray-600">
               {meetup.lightningTime}에 같이 하실 분 구해요.
             </p>
-            <div className="mt-2 flex items-center text-sm text-gray-500">
-              <span>{meetup.address}</span>
-              <span className="ml-4 font-semibold">
+
+            {/* 위치 및 시간 정보 (줄바꿈 고려하여 flex 정렬) */}
+            <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-gray-500">
+              <span className="truncate">{meetup.address}</span>
+              <span className="font-semibold">
                 {new Date(meetup.lightningDate).toLocaleTimeString('ko-KR', {
                   hour: '2-digit',
                   minute: '2-digit',
                 })}
               </span>
-              <div>
-                <span className="font-semibold">
-                  {meetup.lightningParticipants}/{meetup.lightningCapacity}
-                </span>
-                명 참여 예정
-              </div>
             </div>
-            <button
-              onClick={() => handleParticipation(meetup.lightningId)}
-              disabled={isParticipated}
-              className={`mt-2 w-full rounded-lg px-4 py-2 ${
-                isParticipated
-                  ? 'cursor-not-allowed bg-gray-400 text-white'
-                  : 'bg-blue-500 text-white hover:bg-blue-600'
-              }`}
-            >
-              {isParticipated ? '참여 완료' : '참여하기'}
-            </button>
+
+            {/* 참여 인원 & 버튼 (한 줄 정렬) */}
+            <div className="mt-2 flex items-center justify-between">
+              <span className="text-sm text-gray-700">
+                <strong className="text-gray-900">
+                  {meetup.lightningParticipants}/{meetup.lightningCapacity}
+                </strong>{' '}
+                명 참여 예정
+              </span>
+              <button
+                onClick={() => handleParticipation(meetup.lightningId)}
+                disabled={isParticipated}
+                className={`rounded-lg px-4 py-1 text-sm ${
+                  isParticipated
+                    ? 'cursor-not-allowed bg-gray-400 text-white'
+                    : 'bg-primary-10 text-white hover:bg-primary-40 active:bg-primary-10'
+                }`}
+              >
+                {isParticipated ? '참여 완료' : '참여하기'}
+              </button>
+            </div>
           </div>
         );
       })}
