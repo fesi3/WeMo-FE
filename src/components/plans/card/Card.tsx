@@ -49,9 +49,9 @@ const Card: React.FC<PlanData> = ({
           className={`h-full w-full object-contain ${isFulled ? 'opacity-50' : ''}`}
         />
         {/* 찜 버튼 */}
-        <div className="absolute bottom-2 right-2">
+        {/* <div className="absolute bottom-2 right-2">
           <LikeButton planId={planId} initialIsLiked={isLiked} />
-        </div>
+        </div> */}
 
         {/* 마감 뱃지 */}
         <div className="absolute bottom-2 left-2">
@@ -61,10 +61,17 @@ const Card: React.FC<PlanData> = ({
 
       {/* 카드 내용 */}
       {/* 날짜 뱃지 및 장소 */}
-      <div className="mb-0 flex items-center gap-2 p-2">
-        <MeetingDate dateTime={dateTime} />
-        <MeetingTime dateTime={dateTime} />
-        <DistrictBadge district={district} />
+      <div className="mb-0 flex items-center justify-between p-2">
+        <div className="flex items-center gap-2">
+          <MeetingDate dateTime={dateTime} />
+          <MeetingTime dateTime={dateTime} />
+          <DistrictBadge district={district} />
+        </div>
+
+        {/* 찜 버튼 이동 */}
+        <div className="ml-2 mt-2">
+          <LikeButton planId={planId} initialIsLiked={isLiked} />
+        </div>
       </div>
 
       <div className="p-2 pt-0">
