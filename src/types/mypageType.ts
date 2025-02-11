@@ -136,6 +136,6 @@ export interface CalendarPlanData {
   dateTime: string | Date;
   category: string;
   addressDetail: string;
-  isOpen: boolean; // 개설 확정 상태
-  isCompelete: boolean; // 이용 완료 상태
+  isOpened: boolean; // 개설 확정 상태
+  isCompleted: boolean; // 이용 완료 상태
 }

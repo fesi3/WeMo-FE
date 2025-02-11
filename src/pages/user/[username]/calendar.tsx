@@ -9,6 +9,8 @@ import ScheduleList from '@/components/mypage/calendar/schedule/ScheduleList';
 import MyPlanCalendar from '@/components/mypage/calendar/MyPlanCalendar';
 import { useMyPlanCalendar } from '@/hooks/mypage/fetch/useMypageData';
 import MypageLayout from '@/components/mypage/MypageLayout';
+import Button from '@/components/shared/Button';
+import { useRouter } from 'next/router';
 
 type ValuePiece = Date | null;
 export type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -40,7 +42,7 @@ export default function CalendarPage() {
 
   console.log('서버에서 온 데이터', myCalendarPlanData);
 
-  // // 일정 필터링 - 이달의 일정
+  //  일정 필터링 - 이달의 일정
   const filteredSchedulesInThisMonth = getFilteredSchedulesByMonth(
     myCalendarPlanData,
     `${currentDate.year}-${currentDate.month}`,
@@ -61,11 +63,18 @@ export default function CalendarPage() {
     return planDateInfo.day === selectedDateInfo.day;
   });
 
+  const router = useRouter();
+
+  const planViewClick = () => {
+    router.prefetch('/plans');
+    router.push('/plans');
+  };
+
   return (
     <MypageLayout headerProps="이달의 일정">
-      <div className="flex w-full flex-col items-center gap-4 p-4 lg:flex-row lg:items-start lg:justify-center lg:gap-7">
-        {/* <div className="flex flex-col gap-4 lg:flex-row lg:gap-7 w-full max-w-[1200px] mx-auto"> */}
-        <section className="border-black-300 grid h-[336px] w-full max-w-[640px] place-items-center rounded-2xl border p-5 md:h-[540px] lg:h-[640px]">
+      <div className="flex w-full min-w-[335px] flex-col items-center gap-4 p-4 lg:flex-row lg:items-start lg:justify-center lg:gap-7">
+        {/* 달력 부분 */}
+        <section className="h-[360px] max-h-[540px] w-full max-w-[520px] place-items-center rounded-2xl p-5 shadow-md md:h-[540px] lg:h-[640px]">
           <MyPlanCalendar
             selectedDate={selectedDate}
             handleDateChange={handleDateChange}
@@ -74,21 +83,33 @@ export default function CalendarPage() {
             heartsPlan={heartsPlan}
           />
         </section>
+
         {/* 일정 리스트 부분 */}
-        <section className="w-full max-w-[640px] rounded-2xl bg-yellow-200">
-          <div className="w-full rounded-lg border p-4 shadow-sm">
-            <ScheduleTitle
-              selectedDate={selectedDate as Date}
-              currentDate={currentDate}
-            />
+        <section className="w-full max-w-[520px] rounded-2xl border px-5 pb-5 lg:h-[540px] lg:overflow-y-auto">
+          <div>
+            {/* sticky 요소 적용 */}
+            <div className="sticky top-0 z-10 bg-white py-4">
+              <ScheduleTitle
+                selectedDate={selectedDate as Date}
+                currentDate={currentDate}
+              />
+            </div>
 
             {renderPlanList && renderPlanList.length > 0 ? (
               renderPlanList.map((plan) => (
                 <ScheduleList key={plan.planId} renderPlanListData={plan} />
               ))
             ) : (
-              <div className="ml-1 mt-4 text-sm text-gray-600">
-                일정이 존재하지 않습니다.
+              <div className="ml-1 mt-4 flex justify-between text-sm text-gray-600">
+                <span>{'앗! 일정이 없어요'}</span>
+
+                <Button
+                  text="일정 구경하러 가기"
+                  size={'small'}
+                  variant={'outline'}
+                  className="p-1.5"
+                  onClick={planViewClick}
+                />
               </div>
             )}
           </div>

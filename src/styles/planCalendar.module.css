@@ -1,27 +1,25 @@
 .calendar {
   width: 100%;
-  max-width: 640px;
+  max-width: 520px;
+  max-height: 0px;
   background: white;
-  border: 1px solid #d1d5db; /* Tailwind gray-300 */
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .tile {
   text-align: center;
   padding: 10px;
   border-radius: 6px;
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.1s ease-in-out;
 
 }
 
 .tile:hover {
-  background: #f3f4f6; /* Tailwind gray-200 */
+  background: #f3f4f6; 
 }
 
 /* 오늘 날짜짜 */
-.tileNow {
-  background: #fef3c7; /* Tailwind yellow-200 */
+.tileToday {
+  background: #fef3c7; 
   font-weight: bold;
   border-radius: 50%;
 }
@@ -38,10 +36,10 @@
 
 /* 토요일 색상 (초록색) */
 .tileSaturday {
-  color: #2727ff; /* Tailwind green-500 */
+  color: blue;
 }
 
 /* 일요일 색상 (빨간색) */
 .tileSunday {
-  color: #ef4444; /* Tailwind red-500 */
+  color: red;
 }
