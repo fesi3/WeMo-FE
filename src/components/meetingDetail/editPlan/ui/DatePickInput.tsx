@@ -8,6 +8,8 @@ import {
 import CalendarPicker from '@/components/shared/calendar/CalendarPicker';
 import Modal from '@/components/shared/modals/Modal';
 import { CalendarDaysIcon } from '@heroicons/react/20/solid';
+import Button from '@/components/shared/Button';
+import ErrorWrapper from '@/components/shared/ErrorWrapper';
 
 interface DatePickInputProps<T extends FieldValues> {
   register: UseFormRegister<T>;
@@ -18,6 +20,7 @@ interface DatePickInputProps<T extends FieldValues> {
   closeCalendar: () => void;
   onClickDate: (date: Date) => void;
   validate: RegisterOptions<T, Path<T>>;
+  errorMessage?: string;
 }
 export default function DatePickInput<T extends FieldValues>({
   register,
@@ -28,6 +31,7 @@ export default function DatePickInput<T extends FieldValues>({
   isOpenCalendar,
   validate,
   onClickDate,
+  errorMessage,
 }: DatePickInputProps<T>) {
   return (
     <>
@@ -50,9 +54,21 @@ export default function DatePickInput<T extends FieldValues>({
           title={label}
           handleClose={closeCalendar}
           isOpen={isOpenCalendar}
-          className="w-auto"
+          className="w-auto min-w-[350px]"
         >
-          <CalendarPicker onChange={onClickDate} />
+          <div className="flex flex-col gap-6">
+            <ErrorWrapper errorMessage={errorMessage}>
+              <CalendarPicker onChange={onClickDate} />
+            </ErrorWrapper>
+            <Button
+              onClick={closeCalendar}
+              text="확인"
+              size={'large'}
+              height={40}
+              disabled={!!errorMessage}
+              className="w-full rounded-md"
+            />
+          </div>
         </Modal>
       </div>
     </>

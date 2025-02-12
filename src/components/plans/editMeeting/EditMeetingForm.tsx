@@ -28,6 +28,7 @@ export default function EditMeetingForm({
   const { croppedImages, onCrop, removeCroppedImage } = useCropper();
   const { toggleValue, handleOpen, handleClose } = useToggle();
   const [imageURL, setImageURL] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const {
     register,
@@ -46,29 +47,33 @@ export default function EditMeetingForm({
     if (!croppedImages.length) {
       setError('imageFiles', {
         type: 'required',
-        message: '이미지를 등록해 주세요.',
+        message: '대표 이미지를 등록해 주세요.',
       });
       return;
     }
 
     const imageFiles = croppedImages.map((image) => image.blobImg);
+    try {
+      setIsSubmitting(true);
+      const fileUrls = await getImageUrls(imageFiles);
+      if (!fileUrls) return;
+      const requestData: CreateMeetingRequestBody = {
+        meetingName: data.meetingName,
+        description: data.description,
+        categoryId: parseInt(data.categoryId),
+        fileUrls,
+      };
 
-    const fileUrls = await getImageUrls(imageFiles);
-    if (!fileUrls) return;
-    const requestData: CreateMeetingRequestBody = {
-      meetingName: data.meetingName,
-      description: data.description,
-      categoryId: parseInt(data.categoryId),
-      fileUrls,
-    };
-
-    const response = await createMeeting(requestData);
-    if (!response) {
-      return;
+      const response = await createMeeting(requestData);
+      if (!response) {
+        return;
+      }
+      const newMeetingId = response.data.meetingId;
+      await router.push(`/meetings/${newMeetingId}`);
+      handleCloseThisModal();
+    } finally {
+      setIsSubmitting(false);
     }
-    handleCloseThisModal();
-    const newMeetingId = response.data.meetingId;
-    router.push(`/meetings/${newMeetingId}`);
   };
 
   useEffect(() => {
@@ -85,7 +90,7 @@ export default function EditMeetingForm({
   return (
     <>
       <div>
-        <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
+        <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
           <ErrorWrapper errorMessage={errors.meetingName?.message}>
             <label className="form-label">
               모임 이름
@@ -110,13 +115,15 @@ export default function EditMeetingForm({
               onCrop={onCrop}
             />
           </ErrorWrapper>
-          <span className="form-label">선택 서비스</span>
-          <CategoryRadioInput
-            register={register}
-            name="categoryId"
-            categoryValue={categoryValue}
-          />
-          <div className="flex gap-5"></div>
+          <label className="form-label">
+            선택 서비스
+            <CategoryRadioInput
+              register={register}
+              name="categoryId"
+              categoryValue={categoryValue}
+            />
+          </label>
+
           <ErrorWrapper errorMessage={errors.description?.message}>
             <label className="form-label">
               모임 설명
@@ -140,7 +147,7 @@ export default function EditMeetingForm({
               />
             </label>
           </ErrorWrapper>
-          <div className="flex gap-4">
+          <div className="flex gap-4 pt-5">
             <Button
               text="취소"
               type="button"
@@ -151,12 +158,14 @@ export default function EditMeetingForm({
               className="w-full rounded-md"
             />
             <Button
-              text="만들기"
               type="submit"
+              disabled={isSubmitting}
               size={'large'}
               height={40}
               className="w-full rounded-md"
-            />
+            >
+              {isSubmitting ? '만드는 중' : '만들기'}
+            </Button>
           </div>
         </form>
       </div>

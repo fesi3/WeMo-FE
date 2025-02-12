@@ -1,5 +1,6 @@
 import GNBHomeIcon from '@/assets/icons/GNB_home.svg';
 import GNBReviewIcon from '@/assets/icons/GNB_review.svg';
+import GNBThunderIcon from '@/assets/icons/GNB_thunder.svg';
 import GNBProfileIcon from '@/assets/icons/GNB_profile.svg';
 
 export const menuItems = [
@@ -11,9 +12,15 @@ export const menuItems = [
     icon: GNBReviewIcon,
   },
   {
-    name: '모임 찾기',
+    name: '번개팟',
     key: 3,
-    path: '/search-meetings',
+    path: '/bungae-pot',
+    icon: GNBThunderIcon,
+  },
+  {
+    name: '모임 찾기',
+    key: 4,
+    path: '/meetings',
     icon: GNBProfileIcon,
   },
 ];

@@ -1,27 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import type { NextPage, GetServerSideProps } from 'next';
 //import axios from 'axios';
-import instance from '@/api/axiosInstance';
+//import instance from '@/utils/axios';
+import { ssrInstance } from '@/utils/axiosSsr';
 import { SortOption } from '@/types/reviewType';
-import { useCursorInfiniteScroll } from '@/hooks/useCursorInfiniteScroll';
-import { PlanDataWithCategory } from '@/types/plans';
+import { useCursorInfiniteScroll } from '@/hooks/useCursorInfiniteScrollPlans';
+import { PlanDataWithCategory, PlanListResponse } from '@/types/plans';
 import { RegionOption, SubRegionOption } from '@/types/reviewType';
 import Tabs from '@/components/plans/tab/Tabs';
 import RenderTabContent from '@/components/plans/RenderTabContent';
 
 //const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-
-interface PlanListData {
-  planCount: number;
-  planList: PlanDataWithCategory[];
-  nextCursor: number | null;
-}
-
-interface PlanListResponse {
-  success: boolean;
-  message: string;
-  data: PlanListData;
-}
 
 interface HomeProps {
   initialPlans: PlanDataWithCategory[];
@@ -136,9 +125,9 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     const isLoggedIn = !!cookie.includes('accessToken'); // accessToken 존재 여부로 로그인 상태 판별
 
     //console.log('SSR 초기 데이터 요청 실행');
-    //console.log('SSR 요청 쿠키:', req.headers.cookie || '없음');
+    //console.log('SSR 요청 쿠키:', cookie || '없음');
 
-    const res = await instance.get<PlanListResponse>(
+    const res = await ssrInstance(cookie).get<PlanListResponse>(
       `/api/plans?size=10&sort=default`,
       {
         headers: isLoggedIn ? { Cookie: cookie } : {}, // 로그인 시 쿠키 포함

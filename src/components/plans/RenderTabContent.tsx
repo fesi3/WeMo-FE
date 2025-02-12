@@ -7,6 +7,7 @@ import { PlanDataWithCategory } from '@/types/plans';
 import { RegionOption, SubRegionOption } from '@/types/reviewType';
 import { SortOption } from '@/types/reviewType';
 import { motion, AnimatePresence } from 'motion/react';
+import useHeaderHeight from '@/hooks/useHeaderHeight';
 
 const fadeVariants = {
   hidden: { opacity: 0 },
@@ -48,13 +49,18 @@ const RenderTabContent: React.FC<RenderTabContentProps> = ({
   selectedSort,
   setSelectedSort,
 }) => {
+  const { headerHeight } = useHeaderHeight();
+
   return (
     <div className="mx-auto sm:w-[400px] sm:justify-center md:w-full lg:w-full">
       {/* Greeting */}
       <Greeting />
       {/* SubCategoryFilter */}
       {category === '달램핏' && (
-        <div className="sticky top-0 z-10 bg-white pb-2 pt-4">
+        <div
+          className="sticky z-10 bg-white pb-2 pt-4"
+          style={{ top: `${headerHeight}px` }}
+        >
           <SubCategoryFilter
             selectedSubCategory={selectedSubCategory}
             setSelectedSubCategory={setSelectedSubCategory}

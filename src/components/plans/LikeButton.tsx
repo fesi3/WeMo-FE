@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import instance from '@/api/axiosInstance';
+import instance from '@/utils/axios';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import HeartIcon from '@/assets/icons/heart.svg';
@@ -38,7 +38,7 @@ const LikeButton = ({ planId, initialIsLiked }: LikeButtonProps) => {
 
   return (
     <div
-      className="h-8 w-8 cursor-pointer"
+      className="h-5 w-5 cursor-pointer"
       onClick={(e) => {
         e.stopPropagation();
         handleLikeToggle();
