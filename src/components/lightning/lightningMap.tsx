@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLightningMeetups } from '@/hooks/useLightningMeetups';
 import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { LightningMeetup } from '@/types/lightningType';
@@ -21,7 +21,6 @@ const LightningMap = ({
 }: LightningMapProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<kakao.maps.Map | null>(null);
-  const [, setSelectedMeetup] = useState<string | null>(null);
 
   // 카카오맵 API 로딩 상태 체크
   const [loading, error] = useKakaoLoader();
@@ -35,7 +34,6 @@ const LightningMap = ({
   );
 
   useEffect(() => {
-    if (loading) return; //카카오맵 로딩 중이면 실행 안함
     if (error) {
       console.error('카카오맵 로드 실패:', error);
       return;
@@ -45,8 +43,6 @@ const LightningMap = ({
       console.error('카카오맵 API가 로드되지 않았습니다.');
       return;
     }
-
-    console.log('지도 초기화 시작');
 
     //지도 객체 생성 (최초 1회만 실행)
     mapInstance.current = new window.kakao.maps.Map(mapRef.current, {
@@ -69,6 +65,7 @@ const LightningMap = ({
 
     // 기존 마커 초기화
     const currentMarkers: kakao.maps.Marker[] = [];
+    const infoWindows: kakao.maps.InfoWindow[] = [];
 
     meetups.forEach((meetup) => {
       const marker = new window.kakao.maps.Marker({
@@ -79,9 +76,16 @@ const LightningMap = ({
         map: mapInstance.current!,
       });
 
+      const infoWindow = new window.kakao.maps.InfoWindow({
+        content: `<div style="padding:5px; font-size:12px; white-space: nowrap;">${meetup.lightningName}</div>`,
+        removable: true, // 닫기 버튼 추가
+      });
+
       // 마커 클릭 이벤트 추가
       window.kakao.maps.event.addListener(marker, 'click', () => {
-        setSelectedMeetup(meetup.lightningName);
+        infoWindows.forEach((win) => win.close());
+
+        infoWindow.open(mapInstance.current!, marker);
         console.log(`선택된 모임: ${meetup.lightningName}`);
       });
 

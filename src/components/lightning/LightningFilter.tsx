@@ -36,14 +36,17 @@ const LightningFilter = ({ onUpdateFilters }: LightningFilterProps) => {
   };
 
   return (
-    <div className="flex w-full flex-col items-center px-4 py-2">
+    <div className="flex w-full flex-col px-4 py-2">
       {/* 필터 제목 */}
-      <h2 className="mb-4 mt-2 text-lg font-semibold">
-        내 주변 번개팟 <span className="text-yellow-500">⚡</span>
-      </h2>
+
+      <div className="flex w-full">
+        <h2 className="mb-4 mt-2 text-lg font-semibold">
+          내 주변 번개팟 <span className="text-yellow-500">⚡</span>
+        </h2>
+      </div>
 
       {/* 필터 버튼 */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-start gap-3">
         {/* 카테고리 선택 버튼 */}
         {categories.map((category) => (
           <button
