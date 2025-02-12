@@ -9,6 +9,7 @@ import { AxiosError } from 'axios';
 import {
   EMAIL_VALIDATE_REG_EXP,
   PASSWORD_VALIDATE_REG_EXP,
+  WHITE_SPACE_REG_EXP,
 } from '@/constants/regExp';
 import { MESSAGE } from '@/constants/message';
 
@@ -198,9 +199,13 @@ function useSignupForm() {
   // onBlur 이벤트 핸들러
   const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id: name, value } = e.target;
-    const newValues = { ...signupFormValue, [name]: value };
-    const error = validateField(name, newValues);
-    setErrors((prev) => ({ ...prev, [name]: error }));
+    const replacedEmailValue = value.replace(WHITE_SPACE_REG_EXP, '_');
+    setSignupFormValue((prev) => {
+      const newValues = { ...prev, [name]: replacedEmailValue };
+      const error = validateField(name, newValues);
+      setErrors((prev) => ({ ...prev, [name]: error }));
+      return newValues;
+    });
   };
 
   // 폼 제출 함수
