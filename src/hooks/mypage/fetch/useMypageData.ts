@@ -4,6 +4,7 @@ import {
   fetchMypageReviewables,
   fetchMypageReviews,
   fetchMypageUserInfo,
+  fetchMyPlanCalendar,
 } from '@/api/fetchMypage';
 import { useQuery } from '@tanstack/react-query';
 
@@ -77,5 +78,15 @@ export const useMypageReviewables = (
     queryFn: () => fetchMypageReviewables(apiUrl),
     staleTime: 100 * 1000, // 10초
     enabled,
+  });
+};
+
+//마이페이지 일정 달력 가져오는 커스텀 훅
+export const useMyPlanCalendar = (startDate: string, endDate: string) => {
+  return useQuery({
+    queryKey: ['myCalendar', startDate, endDate],
+    queryFn: () => fetchMyPlanCalendar(startDate, endDate),
+    //   enabled: isLoggedIn, // (로그인 상태일 때만 실행)
+    staleTime: 100 * 1000, // 10초
   });
 };

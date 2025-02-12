@@ -4,11 +4,13 @@ interface MeetingDetailFooterProps {
   isHost: boolean;
   isJoined: boolean;
   onClickJoinOrLeave: () => void;
+  isLoading: boolean;
 }
 export default function MeetingDetailFooter({
   isHost,
   isJoined,
   onClickJoinOrLeave,
+  isLoading,
 }: MeetingDetailFooterProps) {
   return (
     <>
@@ -17,6 +19,7 @@ export default function MeetingDetailFooter({
           <EditPlanButton />
         ) : !isJoined ? (
           <Button
+            disabled={isLoading}
             text={'모임 가입하기'}
             size={'large'}
             height={42}
@@ -25,6 +28,7 @@ export default function MeetingDetailFooter({
           />
         ) : (
           <Button
+            disabled={isLoading}
             text={'모임 탈퇴하기'}
             size={'large'}
             height={42}
