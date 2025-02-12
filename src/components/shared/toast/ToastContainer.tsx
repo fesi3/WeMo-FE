@@ -10,11 +10,8 @@ import { closeToast } from '@/utils/handleToast';
 export default function ToastContainer() {
   const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);
   const toasts = useSelector((state: RootState) => state.toast, shallowEqual);
-  console.log('현재 Toast 상태:', toasts);
-
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      // ✅ 클라이언트 사이드에서만 실행
       setPortalElement(document.getElementById('toast'));
     }
   }, []);

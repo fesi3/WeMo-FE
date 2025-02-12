@@ -26,12 +26,17 @@ export default function MeetingDetailMain() {
   const { isLoading, data, isError } = useMeetingDetailQuery(idNum);
   const meetingData = data?.data;
   const auth = useSelector((state: RootState) => state.auth);
-  const { mutate } = useJoinMeetingMutation({
+  const { mutate, isPending } = useJoinMeetingMutation({
     meetingId: idNum,
     isJoined: meetingData?.isJoined,
   });
   const onClickJoinOrLeave = () => {
-    if (auth.isLoggedIn) mutate();
+    if (isPending) return;
+    if (auth.isLoggedIn) {
+      mutate();
+    } else {
+      router.push('/start');
+    }
   };
 
   if (isLoading) return <div>로딩중</div>;
@@ -98,6 +103,7 @@ export default function MeetingDetailMain() {
         onClickJoinOrLeave={onClickJoinOrLeave}
         isHost={auth.user?.email === meetingData.email}
         isJoined={meetingData.isJoined}
+        isLoading={isPending}
       />
     </>
   );

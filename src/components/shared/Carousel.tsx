@@ -46,15 +46,15 @@ export default function Carousel({ images }: CarouselProps) {
         {images.map((image) => (
           <div
             className="relative w-full shrink-0 pt-[60%]"
-            key={image} /**바꿔야댐 */
+            key={image}
             onClick={(e) => e.preventDefault()}
           >
             <Image
               src={image}
               alt="일정 상세 이미지지"
               fill
-              className="pointer-events-none object-contain"
-              sizes="50vw"
+              className="screen pointer-events-none object-contain"
+              sizes="(max-width: 768px) 50vw, 80vw"
               priority
             />
           </div>
