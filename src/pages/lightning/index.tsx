@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import LightningMap from '@/components/lightning/LightningMap';
+import LightningMap from '@/components/lightning/TempLightningMap';
 import LightningList from '@/components/lightning/LightningList';
 import LightningFilter from '@/components/lightning/LightningFilter';
 import LightningCreateContainer from '@/components/lightning/LightningCreateContainer';
