@@ -7,6 +7,7 @@ import withError from '@/components/shared/input/HOC/withError';
 interface SignupFormProps {
   handleSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleBlur: (e: React.ChangeEvent<HTMLInputElement>) => void;
   signupFormValue: SignupFormTypes;
   errors: { [key: string]: string | null };
 }
@@ -15,7 +16,8 @@ const InputWithMessage = withError<InputProps>(Input);
 const InputWithLabel = withLabel(InputWithMessage);
 
 function SignupForm(props: SignupFormProps) {
-  const { handleSubmit, handleChange, signupFormValue, errors } = props;
+  const { handleSubmit, handleChange, handleBlur, signupFormValue, errors } =
+    props;
   const { nickname, companyName, email, password, passwordCheck } =
     signupFormValue;
   const {
@@ -34,6 +36,7 @@ function SignupForm(props: SignupFormProps) {
           placeholder={'이름을 입력해 주세요.'}
           labelClassName="label"
           onChange={handleChange}
+          onBlur={handleBlur}
           value={nickname}
           error={nicknameError}
         />
@@ -43,6 +46,7 @@ function SignupForm(props: SignupFormProps) {
           labelName={'회사명'}
           labelClassName="label"
           onChange={handleChange}
+          onBlur={handleBlur}
           value={companyName}
           error={companyNameError}
         />
@@ -53,6 +57,7 @@ function SignupForm(props: SignupFormProps) {
           labelName={'이메일 주소'}
           labelClassName="label"
           onChange={handleChange}
+          onBlur={handleBlur}
           value={email}
           error={emailError}
         />
@@ -64,6 +69,7 @@ function SignupForm(props: SignupFormProps) {
             labelName={'비밀번호'}
             labelClassName="label"
             onChange={handleChange}
+            onBlur={handleBlur}
             value={password}
             error={passwordError}
           />
@@ -74,6 +80,7 @@ function SignupForm(props: SignupFormProps) {
             aria-label={'passwordCheck'}
             placeholder={'비밀번호를 다시 입력해 주세요.'}
             onChange={handleChange}
+            onBlur={handleBlur}
             value={passwordCheck}
             error={passwordCheckError}
           />

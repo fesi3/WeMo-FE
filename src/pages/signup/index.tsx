@@ -4,7 +4,7 @@ import useSignupForm from '@/hooks/useSignupForm';
 import Header from '@/components/shared/layout/Header';
 
 function Signup() {
-  const { signupFormValue, handleChange, handleSubmit, errors } =
+  const { signupFormValue, handleChange, handleSubmit, handleBlur, errors } =
     useSignupForm();
 
   return (
@@ -15,6 +15,7 @@ function Signup() {
           signupFormValue={signupFormValue}
           handleSubmit={handleSubmit}
           handleChange={handleChange}
+          handleBlur={handleBlur}
           errors={errors}
         />
       </div>

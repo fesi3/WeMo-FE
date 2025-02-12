@@ -188,13 +188,19 @@ function useSignupForm() {
   // 입력창 제어 함수
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id: name, value } = e.target;
-
     setSignupFormValue((prev) => {
       const newValues = { ...prev, [name]: value };
-
       debouncedValidate(name, newValues);
       return newValues;
     });
+  };
+
+  // onBlur 이벤트 핸들러
+  const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id: name, value } = e.target;
+    const newValues = { ...signupFormValue, [name]: value };
+    const error = validateField(name, newValues);
+    setErrors((prev) => ({ ...prev, [name]: error }));
   };
 
   // 폼 제출 함수
@@ -209,7 +215,7 @@ function useSignupForm() {
     }
   };
 
-  return { signupFormValue, handleChange, handleSubmit, errors };
+  return { signupFormValue, handleChange, handleSubmit, handleBlur, errors };
 }
 
 export default useSignupForm;
