@@ -13,6 +13,7 @@ import {
   EMAIL_VALIDATE_REG_EXP,
   WHITE_SPACE_REG_EXP,
 } from '@/constants/regExp';
+import { MESSAGE } from '@/constants/message';
 const {
   AUTH: { SIGNIN },
 } = API_PATHS;
@@ -48,13 +49,13 @@ function useLoginForm() {
     );
     if (name === 'email') {
       if (!currentEmailValue) {
-        errorMessage = '이메일을 작성해주세요.';
+        errorMessage = MESSAGE.ERROR.EMAIL_EMPTY;
       } else if (!EMAIL_VALIDATE_REG_EXP.test(replacedCurrentEmailValue)) {
-        errorMessage = '이메일 형식이 아닙니다.';
+        errorMessage = MESSAGE.ERROR.EMAIL_VALIDATE;
       }
     } else if (name === 'password') {
       if (!currentPasswordValue) {
-        errorMessage = '비밀번호를 작성해주세요.';
+        errorMessage = MESSAGE.ERROR.PASSWORD_EMPTY;
       }
     }
     return errorMessage;
@@ -67,13 +68,13 @@ function useLoginForm() {
     };
 
     if (!loginFormValue.email) {
-      newErrors.email = '이메일을 작성해주세요.';
+      newErrors.email = MESSAGE.ERROR.EMAIL_EMPTY;
     } else if (!EMAIL_VALIDATE_REG_EXP.test(loginFormValue.email)) {
-      newErrors.email = '이메일 형식이 아닙니다.';
+      newErrors.email = MESSAGE.ERROR.EMAIL_VALIDATE;
     }
 
     if (!loginFormValue.password) {
-      newErrors.password = '비밀번호를 작성해주세요.';
+      newErrors.password = MESSAGE.ERROR.PASSWORD_EMPTY;
     }
 
     if (newErrors.email || newErrors.password) {
@@ -103,7 +104,7 @@ function useLoginForm() {
     },
     onError: (error) => {
       console.error(error);
-      if (error.response?.data.message === '비밀번호가 일치하지 않습니다.') {
+      if (error.response?.data.message === MESSAGE.ERROR.PASSWORD_NOT_EQUAL) {
         setErrors((prev) => ({
           ...prev,
           password: error.response?.data.message || null,
