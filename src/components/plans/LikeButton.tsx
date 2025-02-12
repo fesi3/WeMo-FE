@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import instance from '@/utils/axios';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
-import { showToast } from '@/utils/showToast';
+import { showToast } from '@/utils/handleToast';
 import HeartIcon from '@/assets/icons/heart.svg';
 import EmptyHeartIcon from '@/assets/icons/emptyHeart.svg';
 
