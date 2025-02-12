@@ -23,7 +23,7 @@ export default function MyReview() {
 
   const {
     data: reviewed,
-    isLoading: reviewDataLoading,
+    isFetching: reviewDataLoading,
     error: reviewDataError,
   } = useMypageReviews(
     API_PATHS.MYPAGE.GET_MY_REVIEWS(page),
@@ -32,7 +32,7 @@ export default function MyReview() {
   );
   const {
     data: reviewable,
-    isLoading: reviewableDataLoading,
+    isFetching: reviewableDataLoading,
     error: reviewableDataError,
   } = useMypageReviewables(
     API_PATHS.MYPAGE.GET_AVAILABLE_REVIEWS(page),
@@ -42,11 +42,11 @@ export default function MyReview() {
 
   //로딩 및 에러 처리
   if (activeTab === 'tabLeft') {
-    if (reviewDataLoading) return <div>작성한 리뷰 로딩 중...</div>;
+    // if (reviewDataLoading) return <div>작성한 리뷰 로딩 중...</div>;
     if (reviewDataError) return <div>Error: {reviewDataError.message} </div>;
   }
   if (activeTab === 'tabRight') {
-    if (reviewableDataLoading) return <div>작성가능한 리뷰 로딩 중...</div>;
+    // if (reviewableDataLoading) return <div>작성가능한 리뷰 로딩 중...</div>;
     if (reviewableDataError)
       return <div>Error: {reviewableDataError.message} </div>;
   }
@@ -86,7 +86,7 @@ export default function MyReview() {
           fallback={<p className="text-center text-gray-500">로딩 중...</p>}
         >
           <section className="flex flex-col sm:w-[500px] md:w-[650px] lg:w-[850px]">
-            {reviewData && reviewData.length > 0 ? (
+            {!reviewDataLoading && reviewData && reviewData.length > 0 ? (
               <ul className="flex flex-col gap-8">
                 {reviewData.map((review) => (
                   <li key={review.reviewId}>
@@ -105,7 +105,9 @@ export default function MyReview() {
           fallback={<p className="text-center text-gray-500">로딩 중...</p>}
         >
           <section className="flex flex-col sm:w-[500px] md:w-[650px] lg:w-[850px]">
-            {reviewableData && reviewableData.length > 0 ? (
+            {!reviewableDataLoading &&
+            reviewableData &&
+            reviewableData.length > 0 ? (
               <ul className="flex flex-col gap-3">
                 {reviewableData.map((plan) => (
                   <li key={plan.planId}>
