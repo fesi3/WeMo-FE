@@ -85,7 +85,7 @@ const MeetingsPage = ({ initialMeetings, nextCursor }: MeetingsPageProps) => {
   });
 
   return (
-    <div className="mx-auto max-w-2xl p-4">
+    <div className="mx-auto max-w-7xl px-4 py-4">
       <Header title="모임 목록" />
       <div className="mb-4 flex space-x-4">
         <CategoryDropdown
