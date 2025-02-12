@@ -33,12 +33,12 @@ const LightningMap = ({
     mapCenter.lat,
     mapCenter.lng,
     10,
-    initialMeetups, // SSR에서 받은 초기 데이터
     filters, // 필터 추가
+    initialMeetups,
   );
 
   useEffect(() => {
-    if (loading) return; // 🔹 카카오맵 로딩 중이면 실행 안함
+    if (loading) return; //카카오맵 로딩 중이면 실행 안함
     if (error) {
       console.error('카카오맵 로드 실패:', error);
       return;
@@ -91,7 +91,7 @@ const LightningMap = ({
       currentMarkers.push(marker);
     });
 
-    // 컴포넌트가 언마운트될 때 마커 제거
+    // 새로운 마커 배열을 저장하고 이전 마커들을 지도에서 제거
     return () => {
       currentMarkers.forEach((marker) => marker.setMap(null));
     };
