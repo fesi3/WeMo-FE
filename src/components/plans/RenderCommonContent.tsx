@@ -8,6 +8,7 @@ import SortDropdown from '../shared/dropdown/SortDropdown';
 import { SortOption } from '@/types/reviewType';
 import { PlanDataWithCategory } from '@/types/plans';
 import { RegionOption, SubRegionOption } from '@/types/reviewType';
+import useHeaderHeight from '@/hooks/useHeaderHeight';
 
 interface RenderCommonContentProps {
   plans: PlanDataWithCategory[];
@@ -47,14 +48,14 @@ const RenderCommonContent: React.FC<RenderCommonContentProps> = ({
     { id: 2, name: '마감임박순', value: 'closeDate' },
   ];
 
+  const { headerHeight } = useHeaderHeight();
+  const computedTop =
+    selectedCategory === '워케이션' ? headerHeight : headerHeight + 50;
+
   return (
     <div>
       {/* PlanFilter 컴포넌트 */}
-      <div
-        className={`sticky ${
-          selectedCategory === '워케이션' ? 'top-0' : 'top-[50px]'
-        } z-10 bg-white`}
-      >
+      <div className="sticky z-10 bg-white" style={{ top: `${computedTop}px` }}>
         <div className="flex items-center gap-2 pt-2 lg:gap-4">
           <PlanFilter
             selectedDate={selectedDate}
@@ -80,7 +81,7 @@ const RenderCommonContent: React.FC<RenderCommonContentProps> = ({
       </div>
       {/* 로그인 상태일 때만 모임 만들기 버튼 표시 */}
       {isLoggedIn && (
-        <div className="fixed bottom-20 right-5 z-50">
+        <div className="fixed bottom-20 right-5 z-10">
           <EditMeetingButton />
         </div>
       )}
