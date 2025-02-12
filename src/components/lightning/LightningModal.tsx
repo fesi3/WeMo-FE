@@ -1,11 +1,12 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
+import useAddressSearch from '@/hooks/useAddressSearch';
 import axiosInstance from '@/utils/axios';
 import Button from '@/components/shared/Button';
+import { useEffect } from 'react';
 
 interface LightningMeetupFormValues {
   lightningName: string;
   lightningTypeId: number;
-  // dateTypeId: number;
   lightningDate: string;
   address: string;
   lightningContent: string;
@@ -25,6 +26,7 @@ interface LightningModalProps {
 }
 
 const LightningModal = ({ onClose }: LightningModalProps) => {
+  const { coordinate, address, handleClickOpenSearch } = useAddressSearch();
   const {
     register,
     handleSubmit,
@@ -35,16 +37,25 @@ const LightningModal = ({ onClose }: LightningModalProps) => {
     mode: 'onChange',
     defaultValues: {
       lightningName: '',
-      lightningTypeId: 3, // 기본값: 카풀
-      // dateTypeId: 1, // 기본값: 출근 전
+      lightningTypeId: 1, // 기본값: 밥친구
       lightningDate: '',
-      address: '서울 양천구 신정동 목동아파트 10단지',
+      address: '',
       lightningContent: '',
-      latitude: 37.51489494503132,
-      longitude: 126.85861232838182,
+      latitude: coordinate.lat,
+      longitude: coordinate.lng,
       lightningCapacity: 2,
     },
   });
+
+  useEffect(() => {
+    if (address) {
+      setValue('address', address);
+    }
+    if (coordinate.lat && coordinate.lng) {
+      setValue('latitude', coordinate.lat);
+      setValue('longitude', coordinate.lng);
+    }
+  }, [address, coordinate, setValue]);
 
   const capacityValue = watch('lightningCapacity');
 
@@ -125,7 +136,20 @@ const LightningModal = ({ onClose }: LightningModalProps) => {
       {errors.lightningName && (
         <p className="text-sm text-red-500">{errors.lightningName.message}</p>
       )}
-
+      <div className="flex items-center gap-2">
+        <input
+          type="text"
+          {...register('address', { required: true })}
+          readOnly
+          className="flex-1 rounded-md border p-2"
+        />
+        <button
+          onClick={handleClickOpenSearch}
+          className="rounded-md bg-primary-10 px-4 py-2 text-white"
+        >
+          주소 검색
+        </button>
+      </div>
       <select
         {...register('lightningTypeId', { required: true })}
         className="rounded-md border p-2"
