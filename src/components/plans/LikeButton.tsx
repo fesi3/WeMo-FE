@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import instance from '@/utils/axios';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
+import { showToast } from '@/utils/handleToast';
 import HeartIcon from '@/assets/icons/heart.svg';
 import EmptyHeartIcon from '@/assets/icons/emptyHeart.svg';
 
@@ -16,23 +17,23 @@ const LikeButton = ({ planId, initialIsLiked }: LikeButtonProps) => {
 
   const handleLikeToggle = async () => {
     if (!isLoggedIn) {
-      alert('로그인이 필요합니다');
+      showToast('error', '로그인이 필요합니다');
       return;
     }
 
     try {
       if (isLiked) {
         await instance.delete(`/api/plans/like/${planId}`);
-        alert('좋아요를 취소했습니다.');
+        showToast('info', '좋아요를 취소했습니다.');
       } else {
         await instance.post(`/api/plans/like/${planId}`, {});
-        alert('일정에 좋아요를 눌렀습니다.');
+        showToast('success', '일정에 좋아요를 눌렀습니다.');
       }
 
       setIsLiked(!isLiked);
     } catch (error) {
       console.error('Failed to toggle like:', error);
-      alert('좋아요 처리 중 오류가 발생했습니다.');
+      showToast('error', '좋아요 처리 중 오류가 발생했습니다.');
     }
   };
 

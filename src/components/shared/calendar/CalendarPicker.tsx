@@ -8,10 +8,10 @@ interface CalendarPickerProps {
   maxDate?: Date;
 }
 
-const CalendarPicker: React.FC<CalendarPickerProps> = ({
+export default function CalendarPicker({
   onChange,
   locale = 'en-US',
-}) => {
+}: CalendarPickerProps) {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
   const handleChange = (value: Date) => {
@@ -20,28 +20,26 @@ const CalendarPicker: React.FC<CalendarPickerProps> = ({
   };
 
   return (
-    <div className="react-calendar mx-auto w-full max-w-md rounded-lg border bg-white p-4 text-center shadow-md">
+    <div className="w-full rounded-lg border bg-white p-4 text-center shadow-md">
       <Calendar
         prevLabel="◀"
-        prev2Label={null}
         nextLabel="▶"
+        prev2Label={null}
         next2Label={null}
         onChange={(value) => handleChange(value as Date)}
         value={selectedDate}
         locale={locale}
+        className="w-full"
         tileClassName={({ date, view }) =>
           view === 'month'
-            ? `p-2 text-center ${
+            ? `p-2 text-center text-xs md:text-sm ${
                 date.toDateString() === selectedDate.toDateString()
-                  ? 'bg-primary-40 text-white rounded-full font semibold'
-                  : 'hover:bg-primary-10'
+                  ? 'bg-primary-40 text-white rounded-lg font-semibold'
+                  : 'hover:bg-primary-10 rounded-lg'
               }`
-            : 'text-gray-700 text-sm p-2 text-center rounded-lg transition-colors'
+            : 'text-gray-700 text-xs md:text-sm p-2 text-center rounded-lg transition-colors'
         }
-        //선택된 날짜 효과 추후 추가
       />
     </div>
   );
-};
-
-export default CalendarPicker;
+}
