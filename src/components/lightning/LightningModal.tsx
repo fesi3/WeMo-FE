@@ -58,6 +58,7 @@ const LightningModal = ({ onClose }: LightningModalProps) => {
   }, [address, coordinate, setValue]);
 
   const capacityValue = watch('lightningCapacity');
+  const selectedType = watch('lightningTypeId');
 
   const onSubmitHandler: SubmitHandler<LightningMeetupFormValues> = async (
     data,
@@ -125,76 +126,100 @@ const LightningModal = ({ onClose }: LightningModalProps) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmitHandler)}
-      className="flex flex-col gap-4"
+      className="flex flex-col gap-2"
     >
-      <input
-        type="text"
-        {...register('lightningName', { required: '제목을 입력해주세요.' })}
-        placeholder="제목을 입력하세요"
-        className="rounded-md border p-2"
-      />
-      {errors.lightningName && (
-        <p className="text-sm text-red-500">{errors.lightningName.message}</p>
-      )}
-      <div className="flex items-center gap-2">
+      <span className="text-sm font-semibold">테마 선택</span>
+      <div className="flex gap-2">
+        {themes.map((theme) => (
+          <label
+            key={theme.id}
+            className={`cursor-pointer rounded-full px-4 py-2 text-sm ${
+              selectedType === theme.id
+                ? 'bg-teal-400 text-white'
+                : 'bg-gray-200 text-gray-700'
+            }`}
+          >
+            <input
+              type="radio"
+              {...register('lightningTypeId')}
+              value={theme.id}
+              className="hidden"
+              onChange={() => setValue('lightningTypeId', theme.id)} // 선택 값 변경
+            />
+            {theme.name}
+          </label>
+        ))}
+      </div>
+      <div className="flex flex-col gap-3 py-3">
         <input
           type="text"
-          {...register('address', { required: true })}
-          readOnly
-          className="flex-1 rounded-md border p-2"
+          {...register('lightningName', { required: '제목을 입력해주세요.' })}
+          placeholder="제목을 입력하세요"
+          className="mt-1 rounded-md border p-2"
         />
-        <button
-          onClick={handleClickOpenSearch}
-          className="rounded-md bg-primary-10 px-4 py-2 text-white"
-        >
-          주소 검색
-        </button>
+        {errors.lightningName && (
+          <p className="text-sm text-red-500">{errors.lightningName.message}</p>
+        )}
+
+        <textarea
+          {...register('lightningContent', {
+            required: '내용을 입력해주세요.',
+          })}
+          placeholder="번개팟 내용을 입력하세요"
+          className="rounded-md border p-2"
+        />
       </div>
-      <select
-        {...register('lightningTypeId', { required: true })}
-        className="rounded-md border p-2"
-      >
-        {themes.map((theme) => (
-          <option key={theme.id} value={theme.id}>
-            {theme.name}
-          </option>
-        ))}
-      </select>
 
-      <input
-        type="datetime-local"
-        {...register('lightningDate', {
-          required: '날짜와 시간을 입력해주세요.',
-          validate: (value) => {
-            const selectedDate = new Date(value);
-            const hours = selectedDate.getHours();
+      <div>
+        <span className="text-sm font-semibold">장소 선택</span>
+        <div className="mt-1 flex items-center gap-2">
+          <input
+            type="text"
+            {...register('address', { required: true })}
+            readOnly
+            className="mt-1 flex-1 rounded-md border p-2"
+          />
+          <button
+            onClick={handleClickOpenSearch}
+            className="rounded-md bg-primary-10 px-4 py-2 text-white"
+          >
+            검색
+          </button>
+        </div>
+      </div>
 
-            // 출근 전 (06:00 ~ 09:59), 점심시간 (12:00 ~ 13:59), 퇴근 후 (17:00 ~ 23:59)만 허용
-            const isValidTime =
-              (hours >= 6 && hours < 10) ||
-              (hours >= 12 && hours < 14) ||
-              (hours >= 17 && hours < 24);
+      <div>
+        <span className="text-sm font-semibold">일정 시간</span>
+        <div className="mt-1 flex items-center gap-2">
+          <input
+            type="datetime-local"
+            {...register('lightningDate', {
+              required: '날짜와 시간을 입력해주세요.',
+              validate: (value) => {
+                const selectedDate = new Date(value);
+                const hours = selectedDate.getHours();
 
-            return (
-              isValidTime || '출근 전, 점심시간, 퇴근 후만 선택할 수 있습니다.'
-            );
-          },
-        })}
-        className="rounded-md border p-2"
-      />
+                // 출근 전 (06:00 ~ 09:59), 점심시간 (12:00 ~ 13:59), 퇴근 후 (17:00 ~ 23:59)만 허용
+                const isValidTime =
+                  (hours >= 6 && hours < 10) ||
+                  (hours >= 12 && hours < 14) ||
+                  (hours >= 17 && hours < 24);
 
-      <textarea
-        {...register('lightningContent', {
-          required: '내용을 입력해주세요.',
-        })}
-        placeholder="번개팟 내용을 입력하세요"
-        className="rounded-md border p-2"
-      />
+                return (
+                  isValidTime ||
+                  '출근 전, 점심시간, 퇴근 후만 선택할 수 있습니다.'
+                );
+              },
+            })}
+            className="mt-1 rounded-md border p-2"
+          />
+        </div>
+      </div>
 
       {/* 모임 최대 인원 선택 */}
       <div>
         <div className="flex flex-col">
-          <span>최대 인원</span>
+          <span className="text-sm font-semibold">최대 인원</span>
           <span className="pb-1 text-xs text-gray-500">
             개설 확정을 위해 최소 3명이 필요합니다.
           </span>
@@ -205,8 +230,8 @@ const LightningModal = ({ onClose }: LightningModalProps) => {
             {...register('lightningCapacity')}
             type="range"
             min="3"
-            max="30"
-            className="w-full cursor-pointer"
+            max="10"
+            className="cursor-pointed w-full"
             value={capacityValue}
             onChange={(e) =>
               setValue('lightningCapacity', parseInt(e.target.value))
@@ -218,7 +243,7 @@ const LightningModal = ({ onClose }: LightningModalProps) => {
               type="number"
               className="w-full text-center outline-none"
               min={3}
-              max={30}
+              max={10}
               value={capacityValue}
               onChange={(e) =>
                 setValue('lightningCapacity', parseInt(e.target.value))
@@ -228,7 +253,7 @@ const LightningModal = ({ onClose }: LightningModalProps) => {
         </div>
       </div>
 
-      <div className="flex justify-between">
+      <div className="flex justify-between py-3">
         <Button
           text="취소"
           onClick={onClose}
@@ -238,7 +263,7 @@ const LightningModal = ({ onClose }: LightningModalProps) => {
           text="완료"
           onClick={handleSubmit(onSubmitHandler)}
           disabled={!isValid}
-          className="rounded-md bg-blue-500 px-4 py-2 text-white disabled:opacity-50"
+          className="rounded-md bg-primary-10 px-4 py-2 text-white disabled:opacity-50"
         />
       </div>
     </form>
