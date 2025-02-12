@@ -9,7 +9,7 @@ function Signup() {
 
   return (
     <>
-      <Header title="회원목록" />
+      <Header title={'회원목록'} />
       <div className="mt-[22.5px] flex w-full justify-center md:mt-[80px]">
         <SignupForm
           signupFormValue={signupFormValue}

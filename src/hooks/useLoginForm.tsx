@@ -9,7 +9,10 @@ import { useQueryClient } from '@tanstack/react-query';
 import { login } from '@/redux/authReducers';
 import { API_PATHS } from '@/constants/apiPath';
 import { AxiosError } from 'axios';
-import { EMAIL_REG_EXP, WHITE_SPACE_REG_EXP } from '@/constants/login';
+import {
+  EMAIL_VALIDATE_REG_EXP,
+  WHITE_SPACE_REG_EXP,
+} from '@/constants/regExp';
 const {
   AUTH: { SIGNIN },
 } = API_PATHS;
@@ -46,7 +49,7 @@ function useLoginForm() {
     if (name === 'email') {
       if (!currentEmailValue) {
         errorMessage = '이메일을 작성해주세요.';
-      } else if (!EMAIL_REG_EXP.test(replacedCurrentEmailValue)) {
+      } else if (!EMAIL_VALIDATE_REG_EXP.test(replacedCurrentEmailValue)) {
         errorMessage = '이메일 형식이 아닙니다.';
       }
     } else if (name === 'password') {
@@ -65,7 +68,7 @@ function useLoginForm() {
 
     if (!loginFormValue.email) {
       newErrors.email = '이메일을 작성해주세요.';
-    } else if (!EMAIL_REG_EXP.test(loginFormValue.email)) {
+    } else if (!EMAIL_VALIDATE_REG_EXP.test(loginFormValue.email)) {
       newErrors.email = '이메일 형식이 아닙니다.';
     }
 

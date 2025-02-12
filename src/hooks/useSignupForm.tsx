@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-escape */
 import { useCallback, useState } from 'react';
 import debounce from 'lodash/debounce';
 import { SignupFormTypes } from '@/components/auth/type';
@@ -7,6 +6,10 @@ import fetchData from '@/api/fetchData';
 import { useRouter } from 'next/router';
 import { API_PATHS } from '@/constants/apiPath';
 import { AxiosError } from 'axios';
+import {
+  EMAIL_VALIDATE_REG_EXP,
+  PASSWORD_VALIDATE_REG_EXP,
+} from '@/constants/regExp';
 
 interface SignupFormType {
   email: string;
@@ -71,8 +74,8 @@ function useSignupForm() {
         if (!currentNicknameValue) {
           errorMessage = '닉네임을 작성해주세요.';
         } else if (
-          currentNicknameValue.length < 2 ||
-          currentNicknameValue.length > 20
+          currentNicknameValue.length <= 2 ||
+          currentNicknameValue.length >= 20
         ) {
           errorMessage = '닉네임은 최소 2자, 최대 20자 이어야 합니다.';
         }
@@ -85,22 +88,16 @@ function useSignupForm() {
       case 'email':
         if (!currentEmailValue) {
           errorMessage = '이메일을 작성해주세요.';
-        } else if (
-          !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(currentEmailValue)
-        ) {
+        } else if (!EMAIL_VALIDATE_REG_EXP.test(currentEmailValue)) {
           errorMessage = '이메일 형식이 아닙니다.';
         }
         break;
       case 'password':
         if (!currentPasswordValue) {
           errorMessage = '비밀번호를 작성해주세요.';
-        } else if (
-          !/(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])/g.test(
-            currentPasswordValue,
-          )
-        ) {
+        } else if (!PASSWORD_VALIDATE_REG_EXP.test(currentPasswordValue)) {
           errorMessage = '문자, 숫자, 특수기호를 하나 이상 포함해야 합니다.';
-        } else if (currentPasswordValue.length < 8) {
+        } else if (currentPasswordValue.length <= 8) {
           errorMessage = '비밀번호는 8자리 이상 이어야 합니다.';
         }
         break;
@@ -142,19 +139,18 @@ function useSignupForm() {
     // 이메일 검사
     if (!signupFormValue.email) {
       newErrors.email = '이메일을 작성해주세요.';
-    } else if (
-      !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(signupFormValue.email)
-    ) {
+    } else if (!EMAIL_VALIDATE_REG_EXP.test(signupFormValue.email)) {
       newErrors.email = '이메일 형식이 아닙니다.';
     }
 
     // 비밀번호 검사
     if (!signupFormValue.password) {
       newErrors.password = '비밀번호를 작성해주세요.';
-    } else if (signupFormValue.password.length < 8) {
+    } else if (signupFormValue.password.length <= 8) {
       newErrors.password = '비밀번호는 최소 8자 이상이어야 합니다.';
-    } else if (!/(?=.*[a-zA-Z])(?=.*[0-9])/.test(signupFormValue.password)) {
-      newErrors.password = '비밀번호는 영문 + 숫자 조합이어야 합니다.';
+    } else if (!PASSWORD_VALIDATE_REG_EXP.test(signupFormValue.password)) {
+      newErrors.password =
+        '비밀번호는 문자, 숫자, 특수기호를 하나 이상 포함해야 합니다.';
     }
 
     // 비밀번호 확인 검사
@@ -196,7 +192,7 @@ function useSignupForm() {
     setSignupFormValue((prev) => {
       const newValues = { ...prev, [name]: value };
 
-      debouncedValidate(name, newValues); // ✅ Pass latest form values
+      debouncedValidate(name, newValues);
       return newValues;
     });
   };
