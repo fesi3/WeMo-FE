@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-escape */
 import { useCallback, useState } from 'react';
 import debounce from 'lodash/debounce';
 import { useMutation } from '@tanstack/react-query';
@@ -10,6 +9,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { login } from '@/redux/authReducers';
 import { API_PATHS } from '@/constants/apiPath';
 import { AxiosError } from 'axios';
+import { EMAIL_REG_EXP, WHITE_SPACE_REG_EXP } from '@/constants/login';
 const {
   AUTH: { SIGNIN },
 } = API_PATHS;
@@ -38,10 +38,15 @@ function useLoginForm() {
     const { email: currentEmailValue, password: currentPasswordValue } =
       formValues;
     let errorMessage = '';
+    // 공백제거
+    const replacedCurrentEmailValue = currentEmailValue.replace(
+      WHITE_SPACE_REG_EXP,
+      '',
+    );
     if (name === 'email') {
       if (!currentEmailValue) {
         errorMessage = '이메일을 작성해주세요.';
-      } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(currentEmailValue)) {
+      } else if (!EMAIL_REG_EXP.test(replacedCurrentEmailValue)) {
         errorMessage = '이메일 형식이 아닙니다.';
       }
     } else if (name === 'password') {
@@ -60,9 +65,7 @@ function useLoginForm() {
 
     if (!loginFormValue.email) {
       newErrors.email = '이메일을 작성해주세요.';
-    } else if (
-      !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(loginFormValue.email)
-    ) {
+    } else if (!EMAIL_REG_EXP.test(loginFormValue.email)) {
       newErrors.email = '이메일 형식이 아닙니다.';
     }
 
@@ -122,9 +125,10 @@ function useLoginForm() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id: name, value } = e.target;
-
+    // 공백제거
+    const replacedEmailValue = value.replace(WHITE_SPACE_REG_EXP, '');
     setLoginFormValue((prev) => {
-      const newValues = { ...prev, [name]: value };
+      const newValues = { ...prev, [name]: replacedEmailValue };
 
       if (errors['email'] || errors['password']) {
         debouncedValidate(name, newValues);
