@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
-import axiosInstance from '@/api/axiosInstance';
+import axiosInstance from '@/utils/axios';
 import Button from '@/components/shared/Button';
 
 interface LightningMeetupFormValues {

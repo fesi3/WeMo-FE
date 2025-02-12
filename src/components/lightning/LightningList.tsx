@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { LightningMeetup } from '@/types/lightningType';
-import axiosInstance from '@/api/axiosInstance';
+import axiosInstance from '@/utils/axios';
 
 interface LightningListProps {
   meetups: LightningMeetup[];
