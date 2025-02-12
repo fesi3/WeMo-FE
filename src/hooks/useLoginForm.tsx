@@ -126,7 +126,10 @@ function useLoginForm() {
     setLoginFormValue((prev) => {
       const newValues = { ...prev, [name]: value };
 
-      debouncedValidate(name, newValues); // ✅ Pass latest form values
+      if (errors['email'] || errors['password']) {
+        debouncedValidate(name, newValues);
+      }
+
       return newValues;
     });
   };
