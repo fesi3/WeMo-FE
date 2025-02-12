@@ -1,6 +1,7 @@
 import getCroppedImg from '@/utils/getCroppedImage';
 import { useCallback, useState } from 'react';
 import Cropper from 'react-easy-crop';
+import Button from '../shared/Button';
 
 interface CropperModalProps {
   imageSrc: string;
@@ -64,7 +65,9 @@ export default function CropperModal({
         />
       </div>
 
-      <button onClick={onClickComplete}>완료버튼</button>
+      <Button size={'large'} className="w-full" onClick={onClickComplete}>
+        완료
+      </Button>
     </>
   );
 }

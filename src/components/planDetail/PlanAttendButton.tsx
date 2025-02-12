@@ -6,6 +6,7 @@ interface PlanAttendButtonProps {
   isFulled: boolean;
   isJoined: boolean;
   isHost: boolean;
+  isLoading: boolean;
   onClick: () => void;
 }
 
@@ -14,6 +15,7 @@ export default function PlanAttendButton({
   isFulled,
   isJoined,
   isHost,
+  isLoading,
   onClick,
 }: PlanAttendButtonProps) {
   const buttonText = useMemo(() => {
@@ -31,7 +33,7 @@ export default function PlanAttendButton({
         <Button
           text={buttonText}
           size={'large'}
-          disabled={isFulled || isOpened}
+          disabled={isFulled || isLoading}
           onClick={onClick}
           height={42}
         />
