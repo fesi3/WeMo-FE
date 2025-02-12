@@ -10,6 +10,7 @@ const LightningCreateContainer = () => {
     <>
       <LightningCreateButton
         onClick={handleOpen} // 모달 열기
+        isModalOpen={isModalOpen}
       />
       <Modal
         isOpen={isModalOpen}
