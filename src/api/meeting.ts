@@ -7,7 +7,7 @@ import {
 import instance from '../utils/axios';
 import { AxiosRequestConfig, isAxiosError } from 'axios';
 import { ApiErrorResponse, ApiResponse } from '@/types/api/apiResponse';
-import { showToast } from '@/utils/showToast';
+import { showToast } from '@/utils/handleToast';
 import TOAST_MESSAGE from '@/constants/toastMessage';
 
 export const createMeeting = async (requestBody: CreateMeetingRequestBody) => {
