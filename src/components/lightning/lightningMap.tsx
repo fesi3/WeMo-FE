@@ -1,12 +1,11 @@
 import { useEffect, useRef } from 'react';
-import { useLightningMeetups } from '@/hooks/useLightningMeetups';
 import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { LightningMeetup } from '@/types/lightningType';
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 import useKakaoLoader from '@/hooks/useKakaoLoader';
 
 interface LightningMapProps {
-  filters: { type: number | null; time: number | null };
+  meetups: LightningMeetup[];
   mapCenter: { lat: number; lng: number };
   setMapCenter: (center: { lat: number; lng: number }) => void;
   refetchMeetups: (
@@ -15,23 +14,16 @@ interface LightningMapProps {
 }
 
 const LightningMap = ({
-  filters,
+  meetups,
   mapCenter,
   setMapCenter,
+  refetchMeetups,
 }: LightningMapProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<kakao.maps.Map | null>(null);
 
   // 카카오맵 API 로딩 상태 체크
   const [loading, error] = useKakaoLoader();
-
-  // React Query를 사용한 모임 데이터 관리
-  const { data: meetups, refetch } = useLightningMeetups(
-    mapCenter.lat,
-    mapCenter.lng,
-    10,
-    filters, // 필터 추가
-  );
 
   useEffect(() => {
     if (error) {
@@ -115,7 +107,7 @@ const LightningMap = ({
         mapInstance.current.setCenter(new window.kakao.maps.LatLng(lat, lng));
       }
 
-      refetch(); //데이터 다시 가져오기
+      refetchMeetups(); //데이터 다시 가져오기
     });
   };
 
@@ -147,7 +139,7 @@ const LightningMap = ({
               </div>
             </div>
             <button
-              onClick={() => refetch()}
+              onClick={() => refetchMeetups()}
               className="rounded-full bg-[#00B6AD] px-4 py-2 text-white shadow-md hover:text-gray-800"
             >
               현 지도에서 검색

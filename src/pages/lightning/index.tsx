@@ -8,7 +8,6 @@ import {
   QueryClient,
   dehydrate,
 } from '@tanstack/react-query';
-// import { LightningMeetup } from '@/types/lightningType';
 import { useLightningMeetups } from '@/hooks/useLightningMeetups';
 import axiosInstance from '@/utils/axios';
 import { GetServerSideProps } from 'next';
@@ -35,24 +34,23 @@ const LightningPage = () => {
 
   const [mapCenter, setMapCenter] = useState(INITIAL_COORDINATE);
 
-  const { data: meetups, refetch } = useLightningMeetups(
-    mapCenter.lat,
-    mapCenter.lng,
-    10,
-    filters,
-  );
+  const {
+    data: meetups,
+    isFetching,
+    refetch,
+  } = useLightningMeetups(mapCenter.lat, mapCenter.lng, 10, filters);
 
   return (
     <HydrationBoundary>
       <div>
         <LightningFilter onUpdateFilters={handleUpdateFilters} />
         <LightningMap
-          filters={filters}
+          meetups={meetups || []}
           mapCenter={mapCenter}
           setMapCenter={setMapCenter}
           refetchMeetups={refetch}
         />
-        <LightningList meetups={meetups || []} />
+        <LightningList meetups={meetups || []} isFetching={isFetching} />
         <LightningCreateContainer />
       </div>
     </HydrationBoundary>
