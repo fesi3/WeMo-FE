@@ -10,6 +10,7 @@ import {
   EMAIL_VALIDATE_REG_EXP,
   PASSWORD_VALIDATE_REG_EXP,
 } from '@/constants/regExp';
+import { MESSAGE } from '@/constants/message';
 
 interface SignupFormType {
   email: string;
@@ -52,7 +53,7 @@ function useSignupForm() {
         requestData: signupFormValue,
       }),
     onSuccess: () => {
-      alert('회원가입이 완료되었습니다!');
+      alert(MESSAGE.SUCCESS.SIGNUP);
       router.push('/login');
     },
     onError: (error) => {
@@ -72,40 +73,40 @@ function useSignupForm() {
     switch (name) {
       case 'nickname':
         if (!currentNicknameValue) {
-          errorMessage = '닉네임을 작성해주세요.';
+          errorMessage = MESSAGE.ERROR.NICKNAME_EMPTY;
         } else if (
           currentNicknameValue.length <= 2 ||
           currentNicknameValue.length >= 20
         ) {
-          errorMessage = '닉네임은 최소 2자, 최대 20자 이어야 합니다.';
+          errorMessage = MESSAGE.ERROR.NICKNAME_BOUNDARY;
         }
         break;
       case 'companyName':
         if (!currentCompanyNameValue) {
-          errorMessage = '회사명을 작성해주세요.';
+          errorMessage = MESSAGE.ERROR.COMPANYNAME_EMPTY;
         }
         break;
       case 'email':
         if (!currentEmailValue) {
-          errorMessage = '이메일을 작성해주세요.';
+          errorMessage = MESSAGE.ERROR.EMAIL_EMPTY;
         } else if (!EMAIL_VALIDATE_REG_EXP.test(currentEmailValue)) {
-          errorMessage = '이메일 형식이 아닙니다.';
+          errorMessage = MESSAGE.ERROR.EMAIL_VALIDATE;
         }
         break;
       case 'password':
         if (!currentPasswordValue) {
-          errorMessage = '비밀번호를 작성해주세요.';
+          errorMessage = MESSAGE.ERROR.PASSWORD_EMPTY;
         } else if (!PASSWORD_VALIDATE_REG_EXP.test(currentPasswordValue)) {
-          errorMessage = '문자, 숫자, 특수기호를 하나 이상 포함해야 합니다.';
+          errorMessage = MESSAGE.ERROR.PASSWORD_VALIDATE;
         } else if (currentPasswordValue.length <= 8) {
-          errorMessage = '비밀번호는 8자리 이상 이어야 합니다.';
+          errorMessage = MESSAGE.ERROR.PASSWORD_BOUNDARY;
         }
         break;
       case 'passwordCheck':
         if (!currentPasswordCheckValue) {
-          errorMessage = '비밀번호를 작성해주세요.';
+          errorMessage = MESSAGE.ERROR.PASSWORD_EMPTY;
         } else if (currentPasswordCheckValue !== formValues.password) {
-          errorMessage = '비밀번호가 일치하지 않습니다.';
+          errorMessage = MESSAGE.ERROR.PASSWORD_NOT_EQUAL;
         }
         break;
       default:
@@ -126,38 +127,37 @@ function useSignupForm() {
 
     // 닉네임 검사
     if (!signupFormValue.nickname) {
-      newErrors.nickname = '닉네임을 작성해주세요.';
-    } else if (signupFormValue.nickname.length < 2) {
-      newErrors.nickname = '닉네임은 최소 2자 이상이어야 합니다.';
+      newErrors.nickname = MESSAGE.ERROR.NICKNAME_EMPTY;
+    } else if (signupFormValue.nickname.length <= 2) {
+      newErrors.nickname = MESSAGE.ERROR.NICKNAME_BOUNDARY;
     }
 
     // 회사명 검사
     if (!signupFormValue.companyName) {
-      newErrors.companyName = '회사명을 작성해주세요.';
+      newErrors.companyName = MESSAGE.ERROR.COMPANYNAME_EMPTY;
     }
 
     // 이메일 검사
     if (!signupFormValue.email) {
-      newErrors.email = '이메일을 작성해주세요.';
+      newErrors.email = MESSAGE.ERROR.EMAIL_EMPTY;
     } else if (!EMAIL_VALIDATE_REG_EXP.test(signupFormValue.email)) {
-      newErrors.email = '이메일 형식이 아닙니다.';
+      newErrors.email = MESSAGE.ERROR.EMAIL_VALIDATE;
     }
 
     // 비밀번호 검사
     if (!signupFormValue.password) {
-      newErrors.password = '비밀번호를 작성해주세요.';
+      newErrors.password = MESSAGE.ERROR.PASSWORD_EMPTY;
     } else if (signupFormValue.password.length <= 8) {
-      newErrors.password = '비밀번호는 최소 8자 이상이어야 합니다.';
+      newErrors.password = MESSAGE.ERROR.PASSWORD_BOUNDARY;
     } else if (!PASSWORD_VALIDATE_REG_EXP.test(signupFormValue.password)) {
-      newErrors.password =
-        '비밀번호는 문자, 숫자, 특수기호를 하나 이상 포함해야 합니다.';
+      newErrors.password = MESSAGE.ERROR.PASSWORD_VALIDATE;
     }
 
     // 비밀번호 확인 검사
     if (!signupFormValue.passwordCheck) {
-      newErrors.passwordCheck = '비밀번호 확인을 작성해주세요.';
+      newErrors.passwordCheck = MESSAGE.ERROR.PASSWORD_EMPTY;
     } else if (signupFormValue.password !== signupFormValue.passwordCheck) {
-      newErrors.passwordCheck = '비밀번호가 일치하지 않습니다.';
+      newErrors.passwordCheck = MESSAGE.ERROR.PASSWORD_NOT_EQUAL;
     }
 
     // 오류가 있으면 상태 업데이트 후 false 반환
