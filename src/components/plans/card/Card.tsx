@@ -45,7 +45,10 @@ const Card: React.FC<PlanData> = ({
           src={planImagePath}
           alt={planName}
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority
+          fetchPriority="high"
+          loading="eager"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
           className={`h-full w-full object-contain ${isFulled ? 'opacity-50' : ''}`}
         />
         {/* 찜 버튼 */}

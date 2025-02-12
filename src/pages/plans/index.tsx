@@ -83,7 +83,7 @@ const Home: NextPage<HomeProps> = ({ initialPlans, initialCursor }) => {
   }, [selectedSort]);
 
   return (
-    <div className="mx-auto px-4 py-2">
+    <div className="mx-auto max-w-7xl px-4 py-4">
       {/* 탭 컴포넌트 */}
       <Tabs
         tabs={tabs}
