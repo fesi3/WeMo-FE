@@ -5,7 +5,7 @@ import Button from '@/components/shared/Button';
 interface LightningMeetupFormValues {
   lightningName: string;
   lightningTypeId: number;
-  dateTypeId: number;
+  // dateTypeId: number;
   lightningDate: string;
   address: string;
   lightningContent: string;
@@ -20,12 +20,6 @@ const themes = [
   { id: 3, name: '카풀' },
 ];
 
-const times = [
-  { id: 1, name: '출근 전' },
-  { id: 2, name: '점심' },
-  { id: 3, name: '퇴근 후' },
-];
-
 interface LightningModalProps {
   onClose: () => void;
 }
@@ -34,13 +28,15 @@ const LightningModal = ({ onClose }: LightningModalProps) => {
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors, isValid },
   } = useForm<LightningMeetupFormValues>({
     mode: 'onChange',
     defaultValues: {
       lightningName: '',
       lightningTypeId: 3, // 기본값: 카풀
-      dateTypeId: 1, // 기본값: 출근 전
+      // dateTypeId: 1, // 기본값: 출근 전
       lightningDate: '',
       address: '서울 양천구 신정동 목동아파트 10단지',
       lightningContent: '',
@@ -50,19 +46,21 @@ const LightningModal = ({ onClose }: LightningModalProps) => {
     },
   });
 
+  const capacityValue = watch('lightningCapacity');
+
   const onSubmitHandler: SubmitHandler<LightningMeetupFormValues> = async (
     data,
   ) => {
     console.log('요청 데이터 전송:', JSON.stringify(data, null, 2));
 
-    //서버가 요구하는 `LocalDateTime` 형식으로 변환 (ISO 8601)
-    const formattedDate = new Date(data.lightningDate).toISOString();
+    const date = new Date(data.lightningDate);
+    date.setHours(date.getHours() + 9); // KST 변환
+    const formattedDate = date.toISOString().slice(0, 19);
 
-    // 수정된 데이터 객체
+    // 데이터 객체
     const requestBody = {
       lightningName: data.lightningName.trim(), // 공백 제거
       lightningTypeId: Number(data.lightningTypeId), // 숫자로 변환
-      dateTypeId: Number(data.dateTypeId), //숫자로 변환
       lightningDate: formattedDate, //ISO 8601 형식 변환
       address: data.address,
       lightningContent: data.lightningContent.trim(), // 공백 제거
@@ -139,17 +137,6 @@ const LightningModal = ({ onClose }: LightningModalProps) => {
         ))}
       </select>
 
-      <select
-        {...register('dateTypeId', { required: true })}
-        className="rounded-md border p-2"
-      >
-        {times.map((time) => (
-          <option key={time.id} value={time.id}>
-            {time.name}
-          </option>
-        ))}
-      </select>
-
       <input
         type="datetime-local"
         {...register('lightningDate', {
@@ -179,6 +166,43 @@ const LightningModal = ({ onClose }: LightningModalProps) => {
         placeholder="번개팟 내용을 입력하세요"
         className="rounded-md border p-2"
       />
+
+      {/* 모임 최대 인원 선택 */}
+      <div>
+        <div className="flex flex-col">
+          <span>최대 인원</span>
+          <span className="pb-1 text-xs text-gray-500">
+            개설 확정을 위해 최소 3명이 필요합니다.
+          </span>
+        </div>
+        <div className="flex items-center gap-5">
+          {/* 슬라이더 */}
+          <input
+            {...register('lightningCapacity')}
+            type="range"
+            min="3"
+            max="30"
+            className="w-full cursor-pointer"
+            value={capacityValue}
+            onChange={(e) =>
+              setValue('lightningCapacity', parseInt(e.target.value))
+            }
+          />
+          {/* 숫자 입력 필드 */}
+          <div className="relative flex h-8 w-10 overflow-hidden rounded-md border border-gray-300">
+            <input
+              type="number"
+              className="w-full text-center outline-none"
+              min={3}
+              max={30}
+              value={capacityValue}
+              onChange={(e) =>
+                setValue('lightningCapacity', parseInt(e.target.value))
+              }
+            />
+          </div>
+        </div>
+      </div>
 
       <div className="flex justify-between">
         <Button
