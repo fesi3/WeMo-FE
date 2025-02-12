@@ -1,7 +1,7 @@
-import axiosInstance from '@/api/axiosInstance';
+import axiosInstance from '@/utils/axios';
 import { LightningMeetup } from '@/types/lightningType';
 
-// 🔹 번개팟 데이터를 가져오는 API 함수 (다른 곳에서도 재사용 가능)
+// 번개팟 목록을 가져오는 API 함수
 export const fetchLightningMeetups = async (
   lat: number,
   lng: number,
