@@ -51,7 +51,7 @@ function GNBHeader() {
         undefined,
         { shallow: true },
       );
-    }, 200), // 300ms 지\
+    }, 200),
     [pathname],
   );
 
@@ -76,12 +76,6 @@ function GNBHeader() {
         planList: [],
         nextCursor: null,
       });
-      const { pathname, query, replace } = router;
-      // `q`를 제외한 새로운 객체 생성
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { q, ...updateQuery } = query;
-
-      replace({ pathname, query: updateQuery }, undefined, { shallow: true });
     } else {
       queryClient.invalidateQueries({ queryKey: ['searchKeyword'] });
     }
