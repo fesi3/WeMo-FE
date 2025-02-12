@@ -3,18 +3,19 @@ import LightningMap from '@/components/lightning/LightningMap';
 import LightningList from '@/components/lightning/LightningList';
 import LightningFilter from '@/components/lightning/LightningFilter';
 import LightningCreateContainer from '@/components/lightning/LightningCreateContainer';
-import { GetServerSideProps } from 'next';
-import axiosInstance from '@/utils/axios';
-import { LightningMeetup } from '@/types/lightningType';
+import {
+  HydrationBoundary,
+  QueryClient,
+  dehydrate,
+} from '@tanstack/react-query';
+// import { LightningMeetup } from '@/types/lightningType';
 import { useLightningMeetups } from '@/hooks/useLightningMeetups';
+import axiosInstance from '@/utils/axios';
+import { GetServerSideProps } from 'next';
 
 const INITIAL_COORDINATE = { lat: 37.5664056, lng: 126.9778222 };
 
-interface LightningPageProps {
-  initialMeetups: LightningMeetup[];
-}
-
-const LightningPage = ({ initialMeetups }: LightningPageProps) => {
+const LightningPage = () => {
   const [filters, setFilters] = useState<{
     type: number | null;
     time: number | null;
@@ -42,22 +43,24 @@ const LightningPage = ({ initialMeetups }: LightningPageProps) => {
   );
 
   return (
-    <div>
-      <LightningFilter onUpdateFilters={handleUpdateFilters} />
-      <LightningMap
-        initialMeetups={initialMeetups}
-        filters={filters}
-        mapCenter={mapCenter}
-        setMapCenter={setMapCenter}
-        refetchMeetups={refetch}
-      />
-      <LightningList meetups={meetups || []} />
-      <LightningCreateContainer />
-    </div>
+    <HydrationBoundary>
+      <div>
+        <LightningFilter onUpdateFilters={handleUpdateFilters} />
+        <LightningMap
+          filters={filters}
+          mapCenter={mapCenter}
+          setMapCenter={setMapCenter}
+          refetchMeetups={refetch}
+        />
+        <LightningList meetups={meetups || []} />
+        <LightningCreateContainer />
+      </div>
+    </HydrationBoundary>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
+  const queryClient = new QueryClient();
   const initialCoordinate = { lat: 37.5664056, lng: 126.9778222 };
 
   try {
@@ -67,14 +70,25 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
     console.log('SSR에서 받은 데이터:', data);
 
+    await queryClient.prefetchQuery({
+      queryKey: [
+        'lightningMeetups',
+        initialCoordinate.lat,
+        initialCoordinate.lng,
+        10,
+        {},
+      ],
+      queryFn: () => Promise.resolve(data.data.lightningList || []),
+    });
+
     return {
       props: {
-        initialMeetups: data.data.lightningList || [],
+        dehydratedState: dehydrate(queryClient),
       },
     };
   } catch (error) {
     console.error('API 요청 실패:', error);
-    return { props: { initialMeetups: [] } };
+    return { props: { dehydratedState: dehydrate(queryClient) } };
   }
 };
 

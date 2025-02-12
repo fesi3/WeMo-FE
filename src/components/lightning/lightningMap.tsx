@@ -6,7 +6,6 @@ import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 import useKakaoLoader from '@/hooks/useKakaoLoader';
 
 interface LightningMapProps {
-  initialMeetups: LightningMeetup[];
   filters: { type: number | null; time: number | null };
   mapCenter: { lat: number; lng: number };
   setMapCenter: (center: { lat: number; lng: number }) => void;
@@ -16,7 +15,6 @@ interface LightningMapProps {
 }
 
 const LightningMap = ({
-  initialMeetups,
   filters,
   mapCenter,
   setMapCenter,
@@ -34,7 +32,6 @@ const LightningMap = ({
     mapCenter.lng,
     10,
     filters, // 필터 추가
-    initialMeetups,
   );
 
   useEffect(() => {
