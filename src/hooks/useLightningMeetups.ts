@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { fetchLightningMeetups } from '@/api/fetchMeetups';
 import { LightningMeetup } from '@/types/lightningType';
 
@@ -12,14 +12,15 @@ export const useLightningMeetups = (
   lat: number,
   lng: number,
   size: number,
-  initialData: LightningMeetup[], // SSR 초기 데이터
   filters?: Filters, // 필터 적용 가능
+  initialData?: LightningMeetup[],
 ) => {
   return useQuery<LightningMeetup[]>({
-    queryKey: ['lightningMeetups', lat, lng, size, filters],
+    queryKey: ['lightningMeetups', size, filters],
     queryFn: () =>
       fetchLightningMeetups(lat, lng, size, filters?.type, filters?.time),
     staleTime: 1000 * 60 * 5, // 5분 동안 데이터 유지
-    initialData, // SSR에서 받은 초기 데이터 활용
+    placeholderData: keepPreviousData,
+    initialData,
   });
 };

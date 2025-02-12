@@ -38,7 +38,6 @@ const LightningPage = ({ initialMeetups }: LightningPageProps) => {
     mapCenter.lat,
     mapCenter.lng,
     10,
-    initialMeetups,
     filters,
   );
 
@@ -53,7 +52,6 @@ const LightningPage = ({ initialMeetups }: LightningPageProps) => {
         refetchMeetups={refetch}
       />
       <LightningList meetups={meetups || []} />
-
       <LightningCreateContainer />
     </div>
   );
