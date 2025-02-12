@@ -6,12 +6,12 @@ import {
   fetchMypageUserInfo,
   fetchMyPlanCalendar,
 } from '@/api/fetchMypage';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 // 마이페이지 사용자 데이터를 가져오는 커스텀 훅
 export function useMypageUserInfo() {
   // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: ['mypageIndex'],
     queryFn: fetchMypageUserInfo,
     //   enabled: isLoggedIn, // (로그인 상태일 때만 실행)
@@ -27,7 +27,7 @@ export const useMypagePlans = (
   tab: boolean,
 ) => {
   // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: ['planList', status, page, tab],
     queryFn: () => fetchMypagePlans(apiUrl),
     //   enabled: isLoggedIn, // (로그인 상태일 때만 실행)
@@ -44,7 +44,7 @@ export const useMypageMeetings = (
   tab: boolean,
 ) => {
   // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: ['meetingList', status, page, tab],
     queryFn: () => fetchMypageMeetings(apiUrl),
     //   enabled: isLoggedIn, // (로그인 상태일 때만 실행)
@@ -60,7 +60,7 @@ export const useMypageReviews = (
   // enabled: boolean,
   tab: boolean,
 ) => {
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: ['reviewedList', page, tab],
     queryFn: () => fetchMypageReviews(apiUrl),
     staleTime: 100 * 1000, // 10초
@@ -75,7 +75,7 @@ export const useMypageReviewables = (
   // enabled: boolean,
   tab: boolean,
 ) => {
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: ['reviewableList', page, tab],
     queryFn: () => fetchMypageReviewables(apiUrl),
     staleTime: 100 * 1000, // 10초
@@ -85,7 +85,7 @@ export const useMypageReviewables = (
 
 //마이페이지 일정 달력 가져오는 커스텀 훅
 export const useMyPlanCalendar = (startDate: string, endDate: string) => {
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: ['myCalendar', startDate, endDate],
     queryFn: () => fetchMyPlanCalendar(startDate, endDate),
     //   enabled: isLoggedIn, // (로그인 상태일 때만 실행)

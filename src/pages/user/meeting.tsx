@@ -19,7 +19,7 @@ export default function MyMeeting() {
   // useMeetings 훅을 통해 모임 데이터 가져오기
   const {
     data: joinedMeetings,
-    // isLoading: joinedMeetingsLoading,
+    isFetching: joinedMeetingsLoading,
     error: joinedMeetingsError,
   } = useMypageMeetings(
     API_PATHS.MYPAGE.GET_JOINED_MEETINGS(page),
@@ -31,7 +31,7 @@ export default function MyMeeting() {
   // 내가 만든 모임 데이터 가져오기 (useMeetings)
   const {
     data: createdMeetings,
-    // isLoading: createdMeetingsLoading,
+    isFetching: createdMeetingsLoading,
     error: createdMeetingsError,
   } = useMypageMeetings(
     API_PATHS.MYPAGE.GET_CREATED_MEETINGS(page),
@@ -88,12 +88,21 @@ export default function MyMeeting() {
       >
         <section className="mt-5 flex flex-col items-center sm:w-[350px] md:w-[700px] lg:w-[1050px]">
           <ul className="flex flex-col gap-y-10 md:flex-row md:flex-wrap md:gap-10">
-            {meetingData && meetingData.length > 0 ? (
-              meetingData.map((meet, index) => (
-                <MeetingCard key={index} meetingData={meet} />
-              ))
+            {!joinedMeetingsLoading && !createdMeetingsLoading ? (
+              meetingData && meetingData.length > 0 ? (
+                meetingData.map((meet, index) => (
+                  <MeetingCard key={index} meetingData={meet} />
+                ))
+              ) : (
+                <NoData
+                  comment="모임이"
+                  toPage="/user/1"
+                  text="모임 구경하기"
+                />
+              )
             ) : (
-              <NoData comment="모임이" toPage="/user/1" text="모임 구경하기" />
+              // 로딩 중일 때는 로딩 표시
+              <div className="text-center">Loading...</div>
             )}
           </ul>
         </section>
