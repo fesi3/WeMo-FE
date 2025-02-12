@@ -1,6 +1,6 @@
-import ReviewCard from '@/components/mypage/ReviewCard';
-import { useEffect, useState } from 'react';
-import ReviewableCard from '@/components/mypage/ReviewableCard';
+// import ReviewCard from '@/components/mypage/ReviewCard';
+import { lazy, Suspense, useEffect, useState } from 'react';
+// import ReviewableCard from '@/components/mypage/ReviewableCard';
 import NoData from '@/components/mypage/NoData';
 import MypageLayout from '@/components/mypage/MypageLayout';
 import { API_PATHS } from '@/constants/apiPath';
@@ -8,6 +8,9 @@ import {
   useMypageReviewables,
   useMypageReviews,
 } from '@/hooks/mypage/fetch/useMypageData';
+
+const ReviewCard = lazy(() => import('@/components/mypage/ReviewCard'));
+const ReviewableCard = lazy(() => import('@/components/mypage/ReviewableCard'));
 
 export default function MyReview() {
   const [activeTab, setActiveTab] = useState<'tabLeft' | 'tabRight'>('tabLeft');
@@ -79,34 +82,42 @@ export default function MyReview() {
     >
       {/* activeTab에 따라 다른 컴포넌트 렌더링 */}
       {activeTab === 'tabLeft' ? (
-        <section className="flex flex-col sm:w-[500px] md:w-[650px] lg:w-[850px]">
-          {reviewData && reviewData.length > 0 ? (
-            <ul className="flex flex-col gap-8">
-              {reviewData.map((review) => (
-                <li key={review.reviewId}>
-                  <ReviewCard reviewed={review} />
-                  {/* <div className="mt-10 border"></div> */}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <NoData comment="작성한 리뷰가" />
-          )}
-        </section>
+        <Suspense
+          fallback={<p className="text-center text-gray-500">로딩 중...</p>}
+        >
+          <section className="flex flex-col sm:w-[500px] md:w-[650px] lg:w-[850px]">
+            {reviewData && reviewData.length > 0 ? (
+              <ul className="flex flex-col gap-8">
+                {reviewData.map((review) => (
+                  <li key={review.reviewId}>
+                    <ReviewCard reviewed={review} />
+                    {/* <div className="mt-10 border"></div> */}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <NoData comment="작성한 리뷰가" />
+            )}
+          </section>
+        </Suspense>
       ) : (
-        <section className="flex flex-col sm:w-[500px] md:w-[650px] lg:w-[850px]">
-          {reviewableData && reviewableData.length > 0 ? (
-            <ul className="flex flex-col gap-3">
-              {reviewableData.map((plan) => (
-                <li key={plan.planId}>
-                  <ReviewableCard reviewable={plan} />
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <NoData comment="작성 가능한 리뷰가" />
-          )}
-        </section>
+        <Suspense
+          fallback={<p className="text-center text-gray-500">로딩 중...</p>}
+        >
+          <section className="flex flex-col sm:w-[500px] md:w-[650px] lg:w-[850px]">
+            {reviewableData && reviewableData.length > 0 ? (
+              <ul className="flex flex-col gap-3">
+                {reviewableData.map((plan) => (
+                  <li key={plan.planId}>
+                    <ReviewableCard reviewable={plan} />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <NoData comment="작성 가능한 리뷰가" />
+            )}
+          </section>
+        </Suspense>
       )}
     </MypageLayout>
   );

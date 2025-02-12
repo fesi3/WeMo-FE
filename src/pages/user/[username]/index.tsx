@@ -1,15 +1,19 @@
-import ProfileCard from '@/components/mypage/ProfileCard';
-import React from 'react';
-import IndexNav from '@/components/mypage/IndexNav';
-import MypageLayout from '@/components/mypage/MypageLayout';
-import StatisticsCard from '@/components/mypage/StatisticsCard';
+import { lazy, Suspense } from 'react';
 import { useMypageUserInfo } from '@/hooks/mypage/fetch/useMypageData';
+import MypageLayout from '@/components/mypage/MypageLayout';
+
+// Lazy load ProfileCard, StatisticsCard, and IndexNav components
+const ProfileCard = lazy(() => import('@/components/mypage/ProfileCard'));
+const StatisticsCard = lazy(() => import('@/components/mypage/StatisticsCard'));
+const IndexNav = lazy(() => import('@/components/mypage/IndexNav'));
 
 export default function MyPage() {
-  const { data, isLoading, error } = useMypageUserInfo();
+  // const { data, isLoading, error } = useMypageUserInfo();
+  const { data, error } = useMypageUserInfo();
   const userData = data?.data;
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>[Error!!]{error.message}</div>;
+
+  // if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>[Error!!] {error.message}</div>;
   if (!userData) return <div>No Data...</div>;
 
   return (
@@ -18,13 +22,19 @@ export default function MyPage() {
         {userData ? (
           <>
             <section>
-              <ProfileCard user={userData} />
+              <Suspense fallback={<div>Loading Profile...</div>}>
+                <ProfileCard user={userData} />
+              </Suspense>
             </section>
             <section>
-              <StatisticsCard user={userData} />
+              <Suspense fallback={<div>Loading Statistics...</div>}>
+                <StatisticsCard user={userData} />
+              </Suspense>
             </section>
             <section className="mt-3">
-              <IndexNav nickname={userData?.nickname} />
+              <Suspense fallback={<div>Loading Navigation...</div>}>
+                <IndexNav nickname={userData?.nickname} />
+              </Suspense>
             </section>
           </>
         ) : (
