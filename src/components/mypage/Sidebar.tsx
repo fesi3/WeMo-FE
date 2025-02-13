@@ -46,6 +46,9 @@ const Sidebar = React.memo(() => {
               text={'로그아웃'}
               variant={'text'}
               className="p-0 underline hover:text-black"
+              onClick={() => {
+                alert('준비 중인 기능입니다!');
+              }}
             />
           </li>
           <li>
@@ -53,6 +56,9 @@ const Sidebar = React.memo(() => {
               text={'탈퇴하기'}
               variant={'text'}
               className="mt-3 p-0 hover:text-red-600"
+              onClick={() => {
+                alert('준비 중인 기능입니다!');
+              }}
             />
           </li>
         </ul>
