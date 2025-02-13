@@ -64,7 +64,6 @@ export default function MyMeeting() {
 
   return (
     <MypageLayout
-      headerProps="모임 페이지"
       activeTab={activeTab}
       onTabChange={setActiveTab}
       tabsTitle={[

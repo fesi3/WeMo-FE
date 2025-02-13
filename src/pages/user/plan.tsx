@@ -61,7 +61,6 @@ export default function MyPlan() {
 
   return (
     <MypageLayout
-      headerProps="일정 페이지"
       activeTab={activeTab}
       onTabChange={setActiveTab}
       tabsTitle={[
