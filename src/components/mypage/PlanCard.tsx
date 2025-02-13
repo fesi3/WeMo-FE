@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import ProgressIndicator from './Indicator';
-import moreBtn from '@/assets/icons/more-vertical.png';
 import { useRouter } from 'next/router';
 import OwnerButton from './OwnerButton';
 import { PlanData } from '@/types/mypageType';
@@ -14,7 +13,6 @@ import { useDeletePlanMutation } from '@/hooks/mypage/mutation/useDeleteMutation
 interface PlanCardProps {
   planData: PlanData;
 }
-
 const PlanCard = ({ planData }: PlanCardProps) => {
   const {
     planId,
@@ -25,15 +23,9 @@ const PlanCard = ({ planData }: PlanCardProps) => {
     district,
     planImagePath,
     dateTime,
-    // meetingId,
-    // meetingName,
-    // capacity,
     participants,
-    // registrationEnd,
     // isOpened,
     isCancled,
-    // isFulled,
-    // isLiked,
   } = planData;
 
   const router = useRouter();
@@ -65,8 +57,9 @@ const PlanCard = ({ planData }: PlanCardProps) => {
   };
 
   const currentStatus = participants < 3 ? 'pending' : 'available';
+
   return (
-    <div className="relative mb-4 flex flex-col rounded-md border border-gray-200 sm:flex-row sm:items-center sm:gap-3 md:gap-5">
+    <div className="relative mb-4 flex min-w-[320px] max-w-[800px] flex-col rounded-2xl border border-gray-200 bg-white shadow-lg sm:flex-row sm:items-center sm:gap-3 sm:shadow-xl md:gap-0">
       {/* 반투명 오버레이 */}
       {isCancled && (
         <div className="absolute inset-0 z-10 flex items-center justify-center bg-gray-500 bg-opacity-50">
@@ -81,19 +74,19 @@ const PlanCard = ({ planData }: PlanCardProps) => {
       {/* 이미지 */}
       <div
         onClick={handleDetailPage}
-        className="relative h-[164px] w-full cursor-pointer sm:w-[200px] md:w-[300px] lg:w-[400px]"
+        className="relative h-[164px] w-full cursor-pointer sm:h-[196px] sm:w-[200px] md:w-[310px]"
       >
         <Image
           src={planImagePath}
           alt="모임 이미지"
           fill
-          className="rounded-t-md object-cover"
+          className="rounded-t-md object-cover p-0 md:rounded-l-2xl md:rounded-tr-none md:object-fill"
         />
 
         {/* 삭제 */}
-        <button className="absolute right-3 top-3 cursor-pointer">
+        {/* <button className="absolute right-3 top-3 cursor-pointer  hover:bg-gray-300">
           <Image src={moreBtn} alt="My Image" className="z-10" />
-        </button>
+        </button> */}
       </div>
 
       {/* 카드 내용 */}
