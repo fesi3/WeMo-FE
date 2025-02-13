@@ -78,7 +78,7 @@ export default function CalendarPage() {
   };
 
   return (
-    <MypageLayout headerProps="이달의 일정">
+    <MypageLayout>
       <div className="flex w-full min-w-[335px] flex-col items-center gap-4 p-4 lg:flex-row lg:items-start lg:justify-center lg:gap-7">
         {/* 달력 부분 */}
         {!isFetching && (
