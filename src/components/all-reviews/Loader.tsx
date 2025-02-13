@@ -35,8 +35,12 @@ const Loader = ({
   }, [fetchNextPage, hasNextPage]);
 
   if (!hasNextPage)
-    return <p className="mt-5 text-center">더 이상 리뷰가 없어요 ㅠㅠ</p>;
-  if (isLoading) return <p className="text-center">로딩 중...</p>;
+    return (
+      <p className="mt-5 text-center text-gray-700">
+        더 이상 리뷰가 없어요 ㅠㅠ
+      </p>
+    );
+  if (isLoading) return <p className="text-center text-gray-700">로딩 중...</p>;
 
   return <div ref={loaderRef} className="h-8" />;
 };
