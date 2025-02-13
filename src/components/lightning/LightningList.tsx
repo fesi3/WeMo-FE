@@ -44,9 +44,22 @@ const LightningList = ({ meetups, isFetching }: LightningListProps) => {
               className="mb-3 flex flex-col gap-3 rounded-lg border bg-white p-4 shadow-sm"
             >
               {/*카테고리 배지 */}
-              <span className="self-start rounded-full bg-gray-100 px-3 py-1 text-sm font-semibold text-gray-700">
-                {meetup.lightningType}
-              </span>
+              <div className="flex justify-between gap-2">
+                <span className="self-start rounded-full bg-gray-100 px-3 py-1 text-sm font-semibold text-gray-700">
+                  {meetup.lightningType}
+                </span>
+                {/*프로필 이미지와 닉네임*/}
+                <div className="flex items-center gap-2">
+                  <img
+                    src={meetup.profileImagePath}
+                    alt={meetup.nickname}
+                    className="h-8 w-8 rounded-full"
+                  />
+                  <span className="text-sm font-semibold text-gray-800">
+                    {meetup.nickname}
+                  </span>
+                </div>
+              </div>
 
               {/*모임 제목 */}
               <h3 className="text-lg font-bold text-gray-900">
