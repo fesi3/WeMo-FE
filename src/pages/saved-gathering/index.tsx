@@ -7,6 +7,8 @@ import Button from '@/components/shared/Button';
 import Header from '@/components/shared/layout/Header';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
+import Image from 'next/image';
+import image from '@/assets/images/like-page-heart.png';
 
 const SavedGatheringPage = () => {
   const [plans, setPlans] = useState<PlanData[]>([]);
@@ -99,11 +101,7 @@ const SavedGatheringPage = () => {
       <div className="mx-auto max-w-7xl px-4 py-4">
         {plans.length === 0 && !isLoading ? (
           <div className="mt-20 flex flex-col items-center justify-center">
-            <img
-              src="/assets/like-page-heart.png"
-              alt="찜한 모임 없음"
-              className="mb-6"
-            />
+            <Image src={image} alt="찜한 모임 없음" className="mb-6" />
             <p className="mb-2 text-lg font-extrabold text-gray-800">
               찜한 모임이 없어요
             </p>
