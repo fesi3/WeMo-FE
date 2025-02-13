@@ -52,7 +52,7 @@ const MeetingCard = ({ meetingData }: MeetingProps) => {
   };
 
   return (
-    <div className="flex w-[320px] flex-col items-center rounded-md bg-gray-100">
+    <div className="flex w-[320px] flex-col items-center rounded-md bg-white shadow-lg sm:shadow-xl">
       <div
         onClick={handleDetailPage}
         className="relative mb-1 h-[170px] w-full cursor-pointer overflow-hidden"
