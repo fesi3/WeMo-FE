@@ -6,7 +6,7 @@ export default function Document() {
       <Head>
         <meta
           name="keywords"
-          content="WeMo, 직장인, 힐링, 모임, 매칭 서비스, 소셜 네트워크, 스트레스 해소, 커뮤니티"
+          content="WeMo, 직장인, 힐링, 모임, 매칭 서비스, 소셜 네트워크, 스트레스 해소, 커뮤니티, 위모"
         />
         <meta
           name="description"
