@@ -20,7 +20,7 @@ const HeartRating: React.FC<HeartRatingProps> = ({
   };
 
   return (
-    <div className="flex justify-center gap-1">
+    <div className="flex justify-center">
       {Array.from({ length: maxRating }, (_, index) => (
         <div
           key={index}
@@ -28,9 +28,9 @@ const HeartRating: React.FC<HeartRatingProps> = ({
           className="cursor-pointer"
         >
           {index < rating ? (
-            <YellowStar className="h-6 w-6 md:h-4 md:w-4 xl:h-5 xl:w-5" />
+            <YellowStar className="h-6 w-6" />
           ) : (
-            <EmptyStar className="h-6 w-6 md:h-4 md:w-4 xl:h-5 xl:w-5" />
+            <EmptyStar className="h-6 w-6" />
           )}
         </div>
       ))}
