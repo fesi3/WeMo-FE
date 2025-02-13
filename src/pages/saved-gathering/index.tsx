@@ -96,7 +96,7 @@ const SavedGatheringPage = () => {
   return (
     <div>
       <Header title="찜한 일정" />
-      <div className="mt-6 px-4 md:px-8 lg:px-12">
+      <div className="mx-auto max-w-7xl px-4 py-4">
         {plans.length === 0 && !isLoading ? (
           <div className="mt-20 flex flex-col items-center justify-center">
             <img

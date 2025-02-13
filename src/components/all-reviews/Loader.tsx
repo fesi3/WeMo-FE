@@ -35,7 +35,7 @@ const Loader = ({
   }, [fetchNextPage, hasNextPage]);
 
   if (!hasNextPage)
-    return <p className="text-center">더 이상 데이터가 없습니다.</p>;
+    return <p className="mt-5 text-center">더 이상 리뷰가 없어요 ㅠㅠ</p>;
   if (isLoading) return <p className="text-center">로딩 중...</p>;
 
   return <div ref={loaderRef} className="h-8" />;

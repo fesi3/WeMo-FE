@@ -14,7 +14,7 @@ export const menuItems = [
   {
     name: '번개팟',
     key: 3,
-    path: '/bungae-pot',
+    path: '/lightning',
     icon: GNBThunderIcon,
   },
   {
