@@ -31,11 +31,11 @@ const OwnerButton = ({
       >
         {isOwner
           ? type === 'plan'
-            ? '🌟'
-            : '♥️'
+            ? '🗑️'
+            : '🗑️'
           : type === 'plan'
             ? '🗑️'
-            : '♥️'}
+            : '🗑️'}
       </Button>
       {/* 데스크탑에서만 텍스트 보이도록 */}
 
