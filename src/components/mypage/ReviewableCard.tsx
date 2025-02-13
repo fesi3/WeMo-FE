@@ -63,7 +63,7 @@ const ReviewableCard = ({ reviewable }: reviewableProps) => {
   };
 
   return (
-    <div className="my-5 flex flex-col gap-3 rounded-md border px-4 py-3 shadow-[0px_4px_6px_1px_rgba(0,0,0,0.1)] sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:p-6 md:gap-5">
+    <div className="my-5 flex min-w-[320px] flex-col gap-3 rounded-md border bg-white px-4 py-3 shadow-lg sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:p-6 sm:shadow-xl md:gap-5">
       <div className="flex flex-col gap-4">
         <div className="text-[rgb(164,164,164)]">
           {fromNow(dateTime)} 이용완료

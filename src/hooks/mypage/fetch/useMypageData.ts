@@ -24,15 +24,14 @@ export const useMypagePlans = (
   apiUrl: string,
   status: string,
   page: number,
-  enabled: boolean,
+  tab: boolean,
 ) => {
   // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   return useQuery({
-    queryKey: ['planList', status, page],
+    queryKey: ['planList', status, page, tab],
     queryFn: () => fetchMypagePlans(apiUrl),
     //   enabled: isLoggedIn, // (로그인 상태일 때만 실행)
     staleTime: 100 * 1000, // 10초
-    enabled,
   });
 };
 
@@ -41,15 +40,16 @@ export const useMypageMeetings = (
   apiUrl: string,
   status: string,
   page: number,
-  enabled: boolean,
+  // enabled: boolean,
+  tab: boolean,
 ) => {
   // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   return useQuery({
-    queryKey: ['meetingList', status, page],
+    queryKey: ['meetingList', status, page, tab],
     queryFn: () => fetchMypageMeetings(apiUrl),
     //   enabled: isLoggedIn, // (로그인 상태일 때만 실행)
     staleTime: 100 * 1000, // 10초
-    enabled,
+    // enabled,
   });
 };
 
@@ -57,13 +57,14 @@ export const useMypageMeetings = (
 export const useMypageReviews = (
   apiUrl: string,
   page: number,
-  enabled: boolean,
+  // enabled: boolean,
+  tab: boolean,
 ) => {
   return useQuery({
-    queryKey: ['reviewedList', page],
+    queryKey: ['reviewedList', page, tab],
     queryFn: () => fetchMypageReviews(apiUrl),
     staleTime: 100 * 1000, // 10초
-    enabled,
+    // enabled,
   });
 };
 
@@ -71,13 +72,14 @@ export const useMypageReviews = (
 export const useMypageReviewables = (
   apiUrl: string,
   page: number,
-  enabled: boolean,
+  // enabled: boolean,
+  tab: boolean,
 ) => {
   return useQuery({
-    queryKey: ['reviewableList', page],
+    queryKey: ['reviewableList', page, tab],
     queryFn: () => fetchMypageReviewables(apiUrl),
     staleTime: 100 * 1000, // 10초
-    enabled,
+    // enabled,
   });
 };
 

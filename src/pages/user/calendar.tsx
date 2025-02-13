@@ -1,12 +1,10 @@
-import React, { useCallback, useState } from 'react';
+import React, { lazy, Suspense, useCallback, useState } from 'react';
 import {
   getDateInfo,
   getFilteredSchedulesByMonth,
   getFirstAndLastDayOfMonth,
 } from '@/utils/dateUtils';
-import ScheduleTitle from '@/components/mypage/calendar/schedule/ScheduleTitle';
-import ScheduleList from '@/components/mypage/calendar/schedule/ScheduleList';
-import MyPlanCalendar from '@/components/mypage/calendar/MyPlanCalendar';
+
 import { useMyPlanCalendar } from '@/hooks/mypage/fetch/useMypageData';
 import MypageLayout from '@/components/mypage/MypageLayout';
 import Button from '@/components/shared/Button';
@@ -14,6 +12,16 @@ import { useRouter } from 'next/router';
 
 type ValuePiece = Date | null;
 export type Value = ValuePiece | [ValuePiece, ValuePiece];
+
+const MyPlanCalendar = lazy(
+  () => import('@/components/mypage/calendar/MyPlanCalendar'),
+);
+const ScheduleTitle = lazy(
+  () => import('@/components/mypage/calendar/schedule/ScheduleTitle'),
+);
+const ScheduleList = lazy(
+  () => import('@/components/mypage/calendar/schedule/ScheduleList'),
+);
 
 export default function CalendarPage() {
   const today = new Date();
@@ -32,11 +40,10 @@ export default function CalendarPage() {
     currentDate.month,
   );
 
-  const { data, isLoading, error } = useMyPlanCalendar(startDate, endDate);
+  const { data, isFetching, error } = useMyPlanCalendar(startDate, endDate);
 
-  if (isLoading) return <div>달력 로딩 중...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  if (!data) return <div>일정이 없습니다!</div>;
+  if (!data) return;
 
   const myCalendarPlanData = data?.data.planList;
 
@@ -74,18 +81,24 @@ export default function CalendarPage() {
     <MypageLayout headerProps="이달의 일정">
       <div className="flex w-full min-w-[335px] flex-col items-center gap-4 p-4 lg:flex-row lg:items-start lg:justify-center lg:gap-7">
         {/* 달력 부분 */}
-        <section className="h-[360px] max-h-[540px] w-full max-w-[520px] place-items-center rounded-2xl p-5 shadow-md md:h-[540px] lg:h-[640px]">
-          <MyPlanCalendar
-            selectedDate={selectedDate}
-            handleDateChange={handleDateChange}
-            currentDate={currentDate}
-            filteredSchedulesInThisMonth={renderPlanList}
-            heartsPlan={heartsPlan}
-          />
-        </section>
+        {!isFetching && (
+          <section className="h-[360px] max-h-[540px] w-full max-w-[520px] place-items-center rounded-2xl bg-white p-5 shadow-md md:h-[540px] lg:h-[640px]">
+            <Suspense
+              fallback={<div className="h-full w-full">Loading 달력...</div>}
+            >
+              <MyPlanCalendar
+                selectedDate={selectedDate}
+                handleDateChange={handleDateChange}
+                currentDate={currentDate}
+                filteredSchedulesInThisMonth={renderPlanList}
+                heartsPlan={heartsPlan}
+              />
+            </Suspense>
+          </section>
+        )}
 
         {/* 일정 리스트 부분 */}
-        <section className="w-full max-w-[520px] rounded-2xl border px-5 pb-5 lg:h-[540px] lg:overflow-y-auto">
+        <section className="w-full max-w-[520px] rounded-2xl border bg-white px-5 pb-5 lg:h-[540px] lg:overflow-y-auto">
           <div>
             {/* sticky 요소 적용 */}
             <div className="sticky top-0 z-10 bg-white py-4">
@@ -95,9 +108,11 @@ export default function CalendarPage() {
               />
             </div>
 
-            {renderPlanList && renderPlanList.length > 0 ? (
+            {!isFetching && renderPlanList && renderPlanList.length > 0 ? (
               renderPlanList.map((plan) => (
-                <ScheduleList key={plan.planId} renderPlanListData={plan} />
+                <Suspense fallback={<div>Loading 일정정...</div>}>
+                  <ScheduleList key={plan.planId} renderPlanListData={plan} />
+                </Suspense>
               ))
             ) : (
               <div className="ml-1 mt-4 flex justify-between text-sm text-gray-600">
