@@ -40,7 +40,7 @@ export default function MyPage() {
           <Button
             text="탈퇴하기"
             variant={'text'}
-            className="py-1 hover:text-red-600"
+            className="py-1 text-gray-500 hover:text-red-600"
             onClick={() => {
               alert('준비 중인 기능입니다!');
             }}
@@ -49,7 +49,7 @@ export default function MyPage() {
           <Button
             text="로그아웃"
             variant={'text'}
-            className="py-1 underline"
+            className="py-1 text-gray-500 underline hover:text-black"
             onClick={() => {
               alert('준비 중인 기능입니다!');
             }}
