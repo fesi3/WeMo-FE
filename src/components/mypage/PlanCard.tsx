@@ -9,6 +9,7 @@ import MeetingTime from '../shared/badges/MeetingTime';
 import DistrictBadge from '../shared/badges/DistrictBadge';
 import { useLeavePlanMutation } from '@/hooks/mypage/mutation/useLeaveMutation';
 import { useDeletePlanMutation } from '@/hooks/mypage/mutation/useDeleteMutation';
+import { useEffect } from 'react';
 
 interface PlanCardProps {
   planData: PlanData;
@@ -29,6 +30,10 @@ const PlanCard = ({ planData }: PlanCardProps) => {
   } = planData;
 
   const router = useRouter();
+
+  useEffect(() => {
+    router.prefetch(`/plans/${planId}`);
+  }, [planId, router]);
 
   const leavePlanMutation = useLeavePlanMutation();
   const deletePlanMutation = useDeletePlanMutation();
@@ -111,7 +116,7 @@ const PlanCard = ({ planData }: PlanCardProps) => {
             {/* 제목 */}
             <div
               onClick={handleDetailPage}
-              className="cursor-pointer text-lg font-semibold"
+              className="cursor-pointer text-lg font-semibold hover:underline"
             >
               {planName}
             </div>
