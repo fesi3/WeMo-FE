@@ -20,7 +20,7 @@ export function useDeletePlanMutation() {
       await queryClient.invalidateQueries({
         queryKey: ['planList', 'created', 1],
       });
-      // showToast('success', '내가 만든 일정이 삭제되었습니다');
+      showToast('success', '내가 만든 일정이 삭제되었습니다');
     },
 
     onError: (error) => {
@@ -42,7 +42,7 @@ export function useDeleteMeetingMutation() {
       await queryClient.invalidateQueries({
         queryKey: ['meetingList', 'created', 1],
       });
-      // showToast('success', '내가 만든 모임을 삭제하었습니다.');
+      showToast('success', '내가 만든 모임을 삭제하었습니다.');
     },
 
     // onError: (error) => {
@@ -78,7 +78,7 @@ export function useDeleteReviewMutation() {
       await queryClient.invalidateQueries({
         queryKey: ['reviewedList', 1],
       });
-      // showToast('success', '내가 만든 모임을 삭제하었습니다.');
+      showToast('success', '내가 만든 모임을 삭제하었습니다.');
     },
 
     onError: (error: unknown) => {

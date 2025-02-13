@@ -4,6 +4,7 @@ import MyPageTab from './MyPageTab';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import Pagination from './Pagination';
+import Sidebar from './Sidebar';
 
 interface BaseMypageLayoutProps {
   children: ReactNode;
@@ -48,32 +49,34 @@ export default function MypageLayout({
   if (!isLoggedIn) return;
 
   return (
-    <div className="flex h-full flex-col">
-      {/* <Header title={headerProps} /> */}
+    <div className="flex h-full flex-col md:flex-row">
+      <Sidebar />
 
-      {/* 활성화된 탭이 있는 경우에만 MyPageTab 렌더링 */}
-      {activeTab && onTabChange && tabsTitle && (
-        <MyPageTab
-          activeTab={activeTab}
-          onTabChange={onTabChange}
-          tabsTitle={tabsTitle}
-        />
-      )}
-
-      <main className="flex flex-col items-center justify-center px-10 py-4">
-        {children}
-      </main>
-
-      {/* 페이지네이션을 하단에 배치 */}
-      {activeTab && (
-        <div className="mt-auto">
-          <Pagination
-            page={page}
-            totalPage={totalPage}
-            onPageChange={onPageChange}
+      <div className="flex flex-1 flex-col">
+        {/* 활성화된 탭이 있는 경우에만 MyPageTab 렌더링 */}
+        {activeTab && onTabChange && tabsTitle && (
+          <MyPageTab
+            activeTab={activeTab}
+            onTabChange={onTabChange}
+            tabsTitle={tabsTitle}
           />
-        </div>
-      )}
+        )}
+
+        <main className="flex h-full flex-1 items-center justify-center px-10 py-4">
+          {children}
+        </main>
+
+        {/* 페이지네이션을 하단에 배치 */}
+        {activeTab && (
+          <div className="mt-auto">
+            <Pagination
+              page={page}
+              totalPage={totalPage}
+              onPageChange={onPageChange}
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -18,7 +18,7 @@ export function useLeavePlanMutation() {
       await queryClient.invalidateQueries({
         queryKey: ['planList', 'joined', 1],
       });
-      // showToast('success', '일정이 취소되었습니다');
+      showToast('success', '일정이 취소되었습니다');
     },
     // 삭제 요청 실패 시 실행
     // onError: (error) => {
@@ -56,7 +56,7 @@ export function useLeaveMeetingMutation() {
       await queryClient.invalidateQueries({
         queryKey: ['meetingList', 'joined', 1],
       });
-      // showToast('success', '모임에서 탈퇴되었습니다.');
+      showToast('success', '모임에서 탈퇴되었습니다.');
     },
 
     onError: (error: unknown) => {

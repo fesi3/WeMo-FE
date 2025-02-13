@@ -19,7 +19,8 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
   >({});
 
   const handleImageClick = (images: string[]) => {
-    setSelectedImages(images);
+    const uniqueImages = Array.from(new Set(images)); // 중복 제거
+    setSelectedImages(uniqueImages);
     handleOpen();
   };
 
@@ -66,21 +67,21 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
                       : [],
                   )
                 } // 이미지 클릭 시 모달 열기
-                className="relative mb-4 aspect-[5/3] w-full cursor-pointer rounded-md"
+                className="relative h-48 w-full overflow-hidden rounded-md"
               >
                 <img
                   src={imageSrc}
                   alt={review.planName}
-                  className="object-cover"
+                  className="h-full w-full object-cover"
                 />
               </div>
               <div className="w-full flex-1">
-                <div className="flex flex-col md:flex-row md:justify-between">
+                <div className="mt-4 flex flex-col gap-2">
                   <h2 className="text-base font-semibold text-gray-800">
                     {review.planName}
                   </h2>
 
-                  <div className="mt-2 flex items-center justify-between md:mt-0">
+                  <div className="mt-2 flex w-full items-center justify-between">
                     <div>{review.nickname}</div>
                     <div className="flex items-center">
                       <HeartRating rating={review.score} maxRating={5} />
