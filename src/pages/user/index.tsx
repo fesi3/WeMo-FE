@@ -17,7 +17,7 @@ export default function MyPage() {
 
   return (
     <MypageLayout headerProps="마이페이지">
-      <div className="flex flex-col gap-4 md:gap-7">
+      <div className="flex flex-col gap-4 rounded-lg p-4 md:gap-7">
         {!isFetching && userData ? (
           <>
             <section>
@@ -33,7 +33,7 @@ export default function MyPage() {
             </section>
           </>
         ) : (
-          <p>데이터가 존재하지 않습니다...</p>
+          <p>Loading...</p>
         )}
       </div>
     </MypageLayout>
