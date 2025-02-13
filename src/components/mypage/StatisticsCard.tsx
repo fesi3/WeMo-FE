@@ -8,8 +8,8 @@ interface UserProps {
 const StatisticsCard = ({ user }: UserProps) => {
   const { joinedPlanCount, likedPlanCount, writtenReviewCount } = user;
   const statistics = [
-    { text: '나의 일정', value: joinedPlanCount, href: '/user/plan' },
-    { text: '찜한 모임', value: likedPlanCount, href: '/saved-gathering' },
+    { text: '이용 예정', value: joinedPlanCount, href: '/user/plan' },
+    { text: '찜한 일정', value: likedPlanCount, href: '/saved-gathering' },
     { text: '작성 리뷰', value: writtenReviewCount, href: '/user/review' },
   ];
 
