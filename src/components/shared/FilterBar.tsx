@@ -46,7 +46,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
   };
 
   return (
-    <div className="flex gap-4">
+    <div className="mt-4 flex gap-4">
       {/* 지역 드롭다운 */}
       <RegionDropdown
         selectedRegion={filters.region}
