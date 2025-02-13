@@ -9,7 +9,7 @@ const menuItems = [
   { href: '/user/plan', label: '나의 일정' },
   { href: '/user/meeting', label: '나의 모임' },
   { href: '/user/review', label: '나의 리뷰' },
-  { href: '/saved-gathering', label: '찜한 모임' },
+  { href: '/user/saved-gathering', label: '찜한 일정' },
   { href: '/user/calendar', label: '이달의 일정' },
 ];
 
