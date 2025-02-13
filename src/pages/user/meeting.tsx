@@ -26,7 +26,7 @@ export default function MyMeeting() {
     API_PATHS.MYPAGE.GET_JOINED_MEETINGS(page),
     'joined',
     page,
-    activeTab === 'tabLeft',
+    activeTab,
   );
 
   // 내가 만든 모임 데이터 가져오기 (useMeetings)
@@ -38,7 +38,7 @@ export default function MyMeeting() {
     API_PATHS.MYPAGE.GET_CREATED_MEETINGS(page),
     'created',
     page,
-    activeTab === 'tabRight',
+    activeTab,
   );
 
   // 로딩 및 에러 처리
@@ -64,7 +64,6 @@ export default function MyMeeting() {
 
   return (
     <MypageLayout
-      headerProps="모임 페이지"
       activeTab={activeTab}
       onTabChange={setActiveTab}
       tabsTitle={[

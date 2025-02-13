@@ -24,7 +24,7 @@ export default function MyPlan() {
     API_PATHS.MYPAGE.GET_JOINED_PLANS(page),
     'joined',
     page,
-    activeTab === 'tabLeft',
+    activeTab,
   );
 
   // 내가 만든 일정
@@ -36,7 +36,7 @@ export default function MyPlan() {
     API_PATHS.MYPAGE.GET_CREATED_PLANS(page),
     'created',
     page,
-    activeTab === 'tabRight',
+    activeTab,
   );
 
   const planData =
@@ -61,7 +61,6 @@ export default function MyPlan() {
 
   return (
     <MypageLayout
-      headerProps="일정 페이지"
       activeTab={activeTab}
       onTabChange={setActiveTab}
       tabsTitle={[
