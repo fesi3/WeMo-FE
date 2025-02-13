@@ -39,13 +39,14 @@ const Card = ({ meeting }: { meeting: Meeting }) => {
           </div>
         </div>
         {meeting.meetingImagePath && (
-          <div className="relative ml-4 aspect-[5/3] h-auto w-40 overflow-hidden rounded-lg object-cover">
+          <div className="relative ml-4 aspect-[5/3] h-auto w-40 overflow-hidden rounded-lg">
             <Image
               src={meeting.meetingImagePath}
               alt="Meeting"
               width={200}
               height={120}
-              className="rounded-lg"
+              className="rounded-lg object-cover"
+              sizes="(max-width: 640px) 100px, (max-width: 1024px) 150px, 200px"
             />
           </div>
         )}

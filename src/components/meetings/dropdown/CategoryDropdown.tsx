@@ -27,8 +27,7 @@ const CategoryDropdown = ({
       options={categories}
       selectedOption={selectedCategory}
       onSelect={onChange}
-      placeholder="카테고리"
-      className="w-40"
+      className="mt-1"
     />
   );
 };

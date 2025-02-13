@@ -4,7 +4,7 @@ import useToggle from '@/hooks/useToggle';
 import EditMeetingForm from './EditMeetingForm';
 import { PlusIcon } from '@heroicons/react/20/solid';
 
-export default function EditMeetingButton() {
+export default function CreateMeetingButton() {
   const { handleClose, handleOpen, toggleValue } = useToggle();
   return (
     <>

@@ -1,4 +1,5 @@
 import { UserData } from '@/types/mypageType';
+import Link from 'next/link';
 
 interface UserProps {
   user: UserData; // 부모에서 null 처리로 변경
@@ -6,11 +7,10 @@ interface UserProps {
 
 const StatisticsCard = ({ user }: UserProps) => {
   const { joinedPlanCount, likedPlanCount, writtenReviewCount } = user;
-
   const statistics = [
-    { text: '나의 일정', value: joinedPlanCount },
-    { text: '나의 모임', value: likedPlanCount },
-    { text: '작성 리뷰', value: writtenReviewCount, hasNotification: true },
+    { text: '나의 일정', value: joinedPlanCount, href: '/user/plan' },
+    { text: '찜한 모임', value: likedPlanCount, href: '/saved-gathering' },
+    { text: '작성 리뷰', value: writtenReviewCount, href: '/user/review' },
   ];
 
   return (
@@ -18,16 +18,15 @@ const StatisticsCard = ({ user }: UserProps) => {
       {/* 하단 통계 부분 */}
       <div className="flex items-center justify-center gap-2">
         {statistics.map((stat, index) => (
-          <div
-            key={index}
-            className="border-rgba(0,0,0,0.01) relative flex h-[76px] w-[107px] flex-col items-start rounded-md border p-3"
-          >
-            <p className="text-sm text-gray-500">{stat.text}</p>
-            {stat.hasNotification && (
-              <span className="absolute right-[15px] top-[6px] h-1.5 w-1.5 rounded-full bg-red-500"></span>
-            )}
-            <p className="text-xl font-semibold">{stat.value}</p>
-          </div>
+          <Link href={stat.href}>
+            <div
+              key={index}
+              className="border-rgba(0,0,0,0.01) relative flex h-[76px] w-[107px] flex-col items-start rounded-md border p-3"
+            >
+              <p className="text-sm text-gray-500">{stat.text}</p>
+              <p className="text-xl font-semibold">{stat.value}</p>
+            </div>
+          </Link>
         ))}
       </div>
     </div>

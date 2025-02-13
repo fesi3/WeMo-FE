@@ -1,5 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import Greeting from '../Greeting';
+import CreateMeetingButton from '../editMeeting/CreateMeetingButton';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 
 //추후 UI컴포넌트와 기능 로직 분리리
 type TabItem = {
@@ -61,6 +65,8 @@ export default function Tabs({
     }
   };
 
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+
   useEffect(() => {
     const currentIndex = tabs.findIndex((t) => t.category === selectedTab);
     const currentTab = tabRefs.current[currentIndex];
@@ -109,7 +115,14 @@ export default function Tabs({
           />
         </div>
       </div>
-
+      {/* 탭이 변경돼도 애니메이션적용되지 않는 컴포넌트 */}
+      <Greeting />
+      {/* 로그인 상태일 때만 모임 만들기 버튼 표시 */}
+      {isLoggedIn && (
+        <div className="fixed bottom-20 right-5 z-10">
+          <CreateMeetingButton />
+        </div>
+      )}
       {/* 탭 콘텐츠 */}
       <div className="min-h-[150px]">
         <AnimatePresence mode="wait">

@@ -24,6 +24,7 @@ import { attendPlan, leavePlan } from '@/api/plan';
 import LikePlanButton from './LikePlanButton';
 import usePlanLikeMutation from '@/hooks/usePlanLikeMutation';
 import PlanAttendButton from './PlanAttendButton';
+import { useState } from 'react';
 
 interface PlanDetailMainProps {
   id: number;
@@ -31,15 +32,17 @@ interface PlanDetailMainProps {
 
 export default function PlanDetailMain({ id }: PlanDetailMainProps) {
   const router = useRouter();
-
+  const [isLoadingJoin, setIsLoadingJoin] = useState(false); // mutate로 리팩토링
   const { data, isLoading, refetch } = usePlanDetailQuery(id);
   const planData = data?.data;
   const auth = useSelector((state: RootState) => state.auth);
-  const { mutate } = usePlanLikeMutation({
+  const { mutate, isPending: isPendingLike } = usePlanLikeMutation({
     planId: id,
     isLiked: planData?.isLiked || false,
   });
   const onClickJoinPlan = async () => {
+    if (isLoadingJoin) return;
+    setIsLoadingJoin(true);
     if (!auth.isLoggedIn) {
       router.push('/login');
       return;
@@ -52,10 +55,12 @@ export default function PlanDetailMain({ id }: PlanDetailMainProps) {
         await leavePlan(id);
       }
     } finally {
-      refetch();
+      await refetch();
+      setIsLoadingJoin(false);
     }
   };
   const onClickLike = () => {
+    if (isPendingLike) return;
     if (auth === null || !auth.isLoggedIn) {
       router.push('/login');
     }
@@ -111,7 +116,7 @@ export default function PlanDetailMain({ id }: PlanDetailMainProps) {
                   participants={planData.participants}
                 />
                 <div className="flex w-full justify-between text-xs text-[#374151]">
-                  <span>{`최소 인원 5명`}</span>
+                  <span>{`최소 인원 3명`}</span>
                   <span>{`최대 인원 ${planData.capacity}명`}</span>
                 </div>
               </div>
@@ -124,6 +129,7 @@ export default function PlanDetailMain({ id }: PlanDetailMainProps) {
                 isOpened={planData.isOpened}
                 isHost={auth.user?.email === planData.email}
                 onClick={onClickJoinPlan}
+                isLoading={isLoadingJoin}
               />
             </div>
           </div>
