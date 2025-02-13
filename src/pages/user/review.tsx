@@ -25,11 +25,7 @@ export default function MyReview() {
     data: reviewed,
     isFetching: reviewDataLoading,
     error: reviewDataError,
-  } = useMypageReviews(
-    API_PATHS.MYPAGE.GET_MY_REVIEWS(page),
-    page,
-    activeTab === 'tabLeft',
-  );
+  } = useMypageReviews(API_PATHS.MYPAGE.GET_MY_REVIEWS(page), page, activeTab);
   const {
     data: reviewable,
     isFetching: reviewableDataLoading,
@@ -37,7 +33,7 @@ export default function MyReview() {
   } = useMypageReviewables(
     API_PATHS.MYPAGE.GET_AVAILABLE_REVIEWS(page),
     page,
-    activeTab === 'tabRight',
+    activeTab,
   );
 
   //로딩 및 에러 처리
@@ -60,7 +56,6 @@ export default function MyReview() {
 
   return (
     <MypageLayout
-      headerProps="리뷰 페이지"
       activeTab={activeTab}
       onTabChange={setActiveTab}
       tabsTitle={[
