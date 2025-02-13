@@ -18,6 +18,9 @@ const ProfileCard = ({ user }: UserProps) => {
           size={'small'}
           variant={'text'}
           className="order-3 self-end text-[#808080] sm:order-1"
+          onClick={() => {
+            alert('준비 중인 기능입니다!');
+          }}
         >
           프로필 편집 &gt;
         </Button>
