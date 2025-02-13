@@ -126,7 +126,6 @@ export default function PlanDetailMain({ id }: PlanDetailMainProps) {
               <PlanAttendButton
                 isFulled={planData.isFulled}
                 isJoined={planData.isJoined}
-                isOpened={planData.isOpened}
                 isHost={auth.user?.email === planData.email}
                 onClick={onClickJoinPlan}
                 isLoading={isLoadingJoin}
