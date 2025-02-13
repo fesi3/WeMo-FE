@@ -16,7 +16,7 @@ export const fetchLightningMeetups = async (
       params: {
         latitude: lat,
         longitude: lng,
-        radius: 1,
+        radius: 3,
         size,
         lightningTypeId: type ?? undefined, // 필터가 없으면 undefined 처리
         lightningTimeId: time ?? undefined,
