@@ -2,29 +2,25 @@ import Link from 'next/link';
 import arrow from '@/assets/icons/arrow.png';
 import Image from 'next/image';
 
-interface IndexNavProps {
-  nickname: string;
-}
-
-const IndexNav = ({ nickname }: IndexNavProps) => {
+const IndexNav = () => {
   const listItem = [
     {
       id: 1,
       icon: '📆',
       title: '나의 일정',
-      link: `/user/${nickname}/plan`,
+      link: `/user/plan`,
     },
     {
       id: 2,
       icon: '💑',
       title: '나의 모임',
-      link: `/user/${nickname}/meeting`,
+      link: `/user/meeting`,
     },
     {
       id: 3,
       icon: '⭐',
       title: '나의 리뷰',
-      link: `/user/${nickname}/review`,
+      link: `/user/review`,
     },
     {
       id: 4,
@@ -36,7 +32,7 @@ const IndexNav = ({ nickname }: IndexNavProps) => {
 
   return (
     <>
-      <Link href={`/user/${nickname}/calendar`}>
+      <Link href={`/user/calendar`}>
         <div className="-70 flex justify-between bg-yellow-200 px-4 py-2">
           <div className="hover:cursor flex-1 text-sm font-semibold hover:underline">
             {'캘린더에서 내 일정 확인하기'}

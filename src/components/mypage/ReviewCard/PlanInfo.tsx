@@ -20,7 +20,7 @@ const PlanInfo = ({
   //   };
 
   return (
-    <div className="rounded-lg py-3 hover:bg-gray-100">
+    <div className="rounded-lg hover:bg-gray-100">
       {/* 일정 정보 */}
       <div
         className="flex gap-4 p-2"

@@ -12,7 +12,7 @@ import { twMerge } from 'tailwind-merge';
 // 상위 컴포넌트로 부터 유저 정보 응답을 내려받아 라우팅 합니다.
 function GNBFooter() {
   const router = useRouter();
-  const { isLoggedIn, user } = useSelector((state: RootState) => state.auth);
+  const { isLoggedIn } = useSelector((state: RootState) => state.auth);
   const [isVisible, setIsVisible] = useState(true); // Tracks visibility
   const [lastScrollY, setLastScrollY] = useState(0); // Tracks last scroll position
 
@@ -52,7 +52,7 @@ function GNBFooter() {
             ))}
             <GNBItem
               name={isLoggedIn ? '마이페이지' : '로그인'}
-              path={isLoggedIn ? `/user/${user?.nickname}` : '/start'}
+              path={isLoggedIn ? `/user` : '/start'}
             />
           </ul>
         </footer>

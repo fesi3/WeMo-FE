@@ -5,6 +5,7 @@ import OwnerButton from './OwnerButton';
 import { MeetingData } from '@/types/mypageType';
 import { useLeaveMeetingMutation } from '@/hooks/mypage/mutation/useLeaveMutation';
 import { useDeleteMeetingMutation } from '@/hooks/mypage/mutation/useDeleteMutation';
+import { useEffect } from 'react';
 
 export interface MeetingProps {
   meetingData: MeetingData;
@@ -22,6 +23,10 @@ const MeetingCard = ({ meetingData }: MeetingProps) => {
 
   const imageSrc = meetingImagePath || meetingImg; // 서버에서 받아온 데이터가 없을 시 기본 이미지로 대체
   const router = useRouter();
+
+  useEffect(() => {
+    router.prefetch(`/meetings/${meetingId}`);
+  }, [meetingId, router]);
 
   const leaveMeetingMutation = useLeaveMeetingMutation();
   const deleteMeetingMutation = useDeleteMeetingMutation();
@@ -52,7 +57,7 @@ const MeetingCard = ({ meetingData }: MeetingProps) => {
   };
 
   return (
-    <div className="flex w-[320px] flex-col items-center rounded-md bg-gray-100">
+    <div className="flex w-[320px] flex-col items-center rounded-md bg-white shadow-lg sm:shadow-xl">
       <div
         onClick={handleDetailPage}
         className="relative mb-1 h-[170px] w-full cursor-pointer overflow-hidden"
@@ -79,7 +84,7 @@ const MeetingCard = ({ meetingData }: MeetingProps) => {
           {' '}
           <div
             onClick={handleDetailPage}
-            className="my-1 text-lg font-semibold"
+            className="cursor my-1 text-lg font-semibold hover:underline"
           >
             {meetingName}
           </div>
