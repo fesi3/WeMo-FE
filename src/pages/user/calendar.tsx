@@ -13,7 +13,6 @@ import { useRouter } from 'next/router';
 type ValuePiece = Date | null;
 export type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-// Lazy load ProfileCard, StatisticsCard, and IndexNav components
 const MyPlanCalendar = lazy(
   () => import('@/components/mypage/calendar/MyPlanCalendar'),
 );
@@ -83,11 +82,9 @@ export default function CalendarPage() {
       <div className="flex w-full min-w-[335px] flex-col items-center gap-4 p-4 lg:flex-row lg:items-start lg:justify-center lg:gap-7">
         {/* 달력 부분 */}
         {!isFetching && (
-          <section className="h-[360px] max-h-[540px] w-full max-w-[520px] place-items-center rounded-2xl p-5 shadow-md md:h-[540px] lg:h-[640px]">
+          <section className="h-[360px] max-h-[540px] w-full max-w-[520px] place-items-center rounded-2xl bg-white p-5 shadow-md md:h-[540px] lg:h-[640px]">
             <Suspense
-              fallback={
-                <div className="h-full w-full bg-gray-200">Loading 달력...</div>
-              }
+              fallback={<div className="h-full w-full">Loading 달력...</div>}
             >
               <MyPlanCalendar
                 selectedDate={selectedDate}
@@ -101,7 +98,7 @@ export default function CalendarPage() {
         )}
 
         {/* 일정 리스트 부분 */}
-        <section className="w-full max-w-[520px] rounded-2xl border px-5 pb-5 lg:h-[540px] lg:overflow-y-auto">
+        <section className="w-full max-w-[520px] rounded-2xl border bg-white px-5 pb-5 lg:h-[540px] lg:overflow-y-auto">
           <div>
             {/* sticky 요소 적용 */}
             <div className="sticky top-0 z-10 bg-white py-4">
