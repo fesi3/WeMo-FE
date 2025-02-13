@@ -63,6 +63,24 @@ const PlanCard = ({ planData }: PlanCardProps) => {
 
   const currentStatus = participants < 3 ? 'pending' : 'available';
 
+  //[2회차] 걷기 운동모임 - 회차,  planname 분리
+
+  const regex = /^\[(\d+회차)\]\s*(.+)$/;
+  const match = planName?.match(regex);
+
+  let round = '';
+  let title = '';
+
+  if (match) {
+    // 회차가 있는 경우
+    round = match[1]; // 예: '2회차'
+    title = match[2]; // 예: '걷기 운동 모임'
+  } else {
+    // 회차가 없는 경우
+    round = ''; // 회차가 없으면 빈 문자열
+    title = planName; // planName 전체가 제목
+  }
+
   return (
     <div className="relative mb-4 flex min-w-[320px] max-w-[800px] flex-col rounded-2xl border border-gray-200 bg-white shadow-lg sm:flex-row sm:items-center sm:gap-3 sm:shadow-xl md:gap-0">
       {/* 반투명 오버레이 */}
@@ -88,10 +106,10 @@ const PlanCard = ({ planData }: PlanCardProps) => {
           className="rounded-t-md object-cover p-0 md:rounded-l-2xl md:rounded-tr-none md:object-fill"
         />
 
-        {/* 삭제 */}
-        {/* <button className="absolute right-3 top-3 cursor-pointer  hover:bg-gray-300">
-          <Image src={moreBtn} alt="My Image" className="z-10" />
-        </button> */}
+        {/* 회차차 */}
+        <div className="absolute left-3 top-2 cursor-pointer rounded-md bg-white px-2">
+          {round}
+        </div>
       </div>
 
       {/* 카드 내용 */}
@@ -113,12 +131,12 @@ const PlanCard = ({ planData }: PlanCardProps) => {
 
         <div className="flex">
           <div className="flex flex-1 flex-col gap-1 p-2 md:mt-3">
-            {/* 제목 */}
+            {/* 제목 180px 넘어가면 ...으로 표시 */}
             <div
               onClick={handleDetailPage}
-              className="cursor-pointer text-lg font-semibold hover:underline"
+              className="w-[180px] cursor-pointer truncate text-lg font-semibold hover:underline"
             >
-              {planName}
+              {title}
             </div>
 
             {/* 카테고리 */}
