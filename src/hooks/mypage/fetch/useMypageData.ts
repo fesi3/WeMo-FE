@@ -24,7 +24,7 @@ export const useMypagePlans = (
   apiUrl: string,
   status: string,
   page: number,
-  tab: boolean,
+  tab: string,
 ) => {
   // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   return useQuery({
@@ -32,6 +32,7 @@ export const useMypagePlans = (
     queryFn: () => fetchMypagePlans(apiUrl),
     //   enabled: isLoggedIn, // (로그인 상태일 때만 실행)
     staleTime: 100 * 1000, // 10초
+    refetchOnMount: 'always', // 페이지 이동 시 최신 데이터 가져오기
   });
 };
 
@@ -41,7 +42,7 @@ export const useMypageMeetings = (
   status: string,
   page: number,
   // enabled: boolean,
-  tab: boolean,
+  tab: string,
 ) => {
   // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   return useQuery({
@@ -58,7 +59,7 @@ export const useMypageReviews = (
   apiUrl: string,
   page: number,
   // enabled: boolean,
-  tab: boolean,
+  tab: string,
 ) => {
   return useQuery({
     queryKey: ['reviewedList', page, tab],
@@ -73,7 +74,7 @@ export const useMypageReviewables = (
   apiUrl: string,
   page: number,
   // enabled: boolean,
-  tab: boolean,
+  tab: string,
 ) => {
   return useQuery({
     queryKey: ['reviewableList', page, tab],

@@ -16,7 +16,7 @@ export default function MyPage() {
   // if (!userData) return <div>No Data...</div>;
 
   return (
-    <MypageLayout headerProps="마이페이지">
+    <MypageLayout>
       <div className="flex flex-col gap-4 rounded-lg p-4 md:gap-7">
         {!isFetching && userData ? (
           <>
