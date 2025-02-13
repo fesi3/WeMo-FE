@@ -1,5 +1,5 @@
 import React from 'react';
-//import Greeting from '@/components/plans/Greeting';
+import Greeting from '@/components/plans/Greeting';
 import SubCategoryFilter from '@/components/plans/SubCategoryFilter';
 //import PlanFilter from '@/components/plans/PlanFilter';
 import RenderCommonContent from '@/components/plans/RenderCommonContent';
@@ -54,7 +54,7 @@ const RenderTabContent: React.FC<RenderTabContentProps> = ({
   return (
     <div className="md:w-full lg:w-full">
       {/* Greeting */}
-      {/* <Greeting /> */}
+      <Greeting />
       {/* SubCategoryFilter */}
       {category === '달램핏' && (
         <div
