@@ -1,6 +1,7 @@
 import { UserData } from '@/types/mypageType';
 import Image from 'next/image';
 import Button from '@/components/shared/Button';
+import profile_default from '@/assets/images/default_profile.png';
 
 interface UserProps {
   user: UserData;
@@ -8,6 +9,7 @@ interface UserProps {
 
 const ProfileCard = ({ user }: UserProps) => {
   const { nickname, profileImagePath, companyName } = user;
+  console.log(profileImagePath); //나중에 바꾸기
 
   return (
     <div className="flex flex-col justify-center gap-3">
@@ -26,7 +28,7 @@ const ProfileCard = ({ user }: UserProps) => {
         </Button>
         <div className="relative order-1 flex h-[30px] w-[30px] items-center justify-center rounded-full bg-gray-200 sm:order-2 sm:h-[108px] sm:w-[108px] sm:p-3">
           <Image
-            src={profileImagePath}
+            src={profile_default}
             alt="profile"
             fill
             className="rounded-full object-cover"

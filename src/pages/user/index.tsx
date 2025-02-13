@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { useMypageUserInfo } from '@/hooks/mypage/fetch/useMypageData';
 import MypageLayout from '@/components/mypage/MypageLayout';
 import IndexNav from '@/components/mypage/IndexNav';
+import Button from '@/components/shared/Button';
 
 // Lazy load ProfileCard, StatisticsCard, and IndexNav components
 const ProfileCard = lazy(() => import('@/components/mypage/ProfileCard'));
@@ -28,13 +29,32 @@ export default function MyPage() {
             <section>
               <StatisticsCard user={userData} />
             </section>
-            <section className="mt-3">
+            <section className="mb-6 mt-3">
               <IndexNav />
             </section>
           </>
         ) : (
           <p>Loading...</p>
         )}
+        <div className="mt-auto flex items-center justify-center gap-3">
+          <Button
+            text="탈퇴하기"
+            variant={'text'}
+            className="py-1 text-gray-500 hover:text-red-600"
+            onClick={() => {
+              alert('준비 중인 기능입니다!');
+            }}
+          />
+          {'|'}
+          <Button
+            text="로그아웃"
+            variant={'text'}
+            className="py-1 text-gray-500 underline hover:text-black"
+            onClick={() => {
+              alert('준비 중인 기능입니다!');
+            }}
+          />
+        </div>
       </div>
     </MypageLayout>
   );
