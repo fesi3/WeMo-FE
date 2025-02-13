@@ -110,7 +110,7 @@ export default function CalendarPage() {
 
             {!isFetching && renderPlanList && renderPlanList.length > 0 ? (
               renderPlanList.map((plan) => (
-                <Suspense fallback={<div>Loading 일정정...</div>}>
+                <Suspense fallback={<div>Loading 일정...</div>}>
                   <ScheduleList key={plan.planId} renderPlanListData={plan} />
                 </Suspense>
               ))
