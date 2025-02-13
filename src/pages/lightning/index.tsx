@@ -41,7 +41,7 @@ const LightningPage = () => {
   } = useLightningMeetups(mapCenter.lat, mapCenter.lng, 10, filters);
 
   return (
-    <HydrationBoundary>
+    <HydrationBoundary state={dehydrate(new QueryClient())}>
       <div>
         <LightningFilter onUpdateFilters={handleUpdateFilters} />
         <LightningMap
