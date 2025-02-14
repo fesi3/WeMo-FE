@@ -55,6 +55,14 @@ const Card: React.FC<PlanData> = ({
         {/* <div className="absolute bottom-2 right-2">
           <LikeButton planId={planId} initialIsLiked={isLiked} />
         </div> */}
+        {/* 개설 확정 여부 */}
+        <div className="absolute bottom-2 right-2">
+          {isOpened ? (
+            <span className="whitespace-nowrap rounded-lg border border-primary-10 bg-white px-2 py-1 text-xs font-semibold text-primary-10">
+              개설 확정
+            </span>
+          ) : null}
+        </div>
 
         {/* 마감 뱃지 */}
         <div className="absolute bottom-2 left-2">
@@ -81,14 +89,6 @@ const Card: React.FC<PlanData> = ({
         <div className="mb-2 flex items-center gap-4">
           {/* 일정 제목 */}
           <h2 className="mb-1 text-xl font-bold text-black">{planName}</h2>
-          {/* 개설 확정 여부 */}
-          <div className="text-xs">
-            {isOpened ? (
-              <span className="rounded-lg border border-primary-10 px-2 py-1 text-xs font-semibold text-primary-10">
-                개설 확정
-              </span>
-            ) : null}
-          </div>
         </div>
 
         <div className="mb-2 flex items-center gap-2">

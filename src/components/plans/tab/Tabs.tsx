@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import Greeting from '../Greeting';
+//import Greeting from '../Greeting';
 import CreateMeetingButton from '../editMeeting/CreateMeetingButton';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
@@ -116,7 +116,7 @@ export default function Tabs({
         </div>
       </div>
       {/* 탭이 변경돼도 애니메이션적용되지 않는 컴포넌트 */}
-      <Greeting />
+      {/* <Greeting /> */}
       {/* 로그인 상태일 때만 모임 만들기 버튼 표시 */}
       {isLoggedIn && (
         <div className="fixed bottom-20 right-5 z-10">

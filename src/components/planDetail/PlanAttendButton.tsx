@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import Button from '../shared/Button';
 
 interface PlanAttendButtonProps {
-  isOpened: boolean;
   isFulled: boolean;
   isJoined: boolean;
   isHost: boolean;
@@ -11,7 +10,6 @@ interface PlanAttendButtonProps {
 }
 
 export default function PlanAttendButton({
-  isOpened,
   isFulled,
   isJoined,
   isHost,
@@ -19,14 +17,14 @@ export default function PlanAttendButton({
   onClick,
 }: PlanAttendButtonProps) {
   const buttonText = useMemo(() => {
-    if (isFulled || isOpened) {
+    if (isFulled) {
       return '일정이 마감되었습니다.';
     }
     if (!isJoined) {
       return '일정 참여하기';
     }
     return '일정 참여 취소하기';
-  }, [isFulled, isOpened, isJoined]);
+  }, [isFulled, isJoined]);
   return (
     <>
       {!isHost && (
