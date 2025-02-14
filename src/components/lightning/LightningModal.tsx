@@ -100,7 +100,7 @@ const LightningModal = ({ onClose }: LightningModalProps) => {
       requestBody.lightningCapacity < 2 ||
       requestBody.lightningCapacity > 50
     ) {
-      alert('모임 정원은 최소 2명, 최대 50명까지 가능합니다.');
+      alert('모임 정원은 최소 2명, 최대 10명까지 가능합니다.');
       return;
     }
 
