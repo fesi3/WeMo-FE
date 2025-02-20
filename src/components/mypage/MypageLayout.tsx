@@ -8,7 +8,7 @@ import Sidebar from './Sidebar';
 
 interface BaseMypageLayoutProps {
   children: ReactNode;
-  headerProps: string;
+  headerProps?: string;
 }
 
 // Tab 있는 경우
