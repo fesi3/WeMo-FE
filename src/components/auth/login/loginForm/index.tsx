@@ -14,6 +14,7 @@ const InputWithMessage = withError(Input);
 
 function LoginForm(props: LoginFormProps) {
   const { handleSubmit, handleChange, errors } = props;
+  // 테스트
   const { email: emailError, password: passwordError } = errors;
   return (
     <form className="flex flex-col gap-6 p-[10px]">
