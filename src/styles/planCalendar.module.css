@@ -10,21 +10,22 @@
   padding: 10px;
   border-radius: 6px;
   transition: background-color 0.1s ease-in-out;
-
 }
 
 .tile:hover {
-  background: #f3f4f6; 
+  background: #f3f4f6;
+  color: black;
 }
 
 /* 오늘 날짜짜 */
 .tileToday {
-  background: #fef3c7; 
+  background: #fef3c7;
   font-weight: bold;
   border-radius: 50%;
 }
 
 .tileActive {
+  color: black;
   border: 1px solid rgba(0, 182, 173, 0.6); /* 60% opacity of #00B6AD */
   border-radius: 10px;
   background-color: rgba(0, 182, 173, 0.1); /* 10% opacity of #00B6AD */

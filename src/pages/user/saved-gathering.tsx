@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import Image from 'next/image';
 import image from '@/assets/images/like-page-heart.png';
+import MypageLayout from '@/components/mypage/MypageLayout';
 
 const SavedGatheringPage = () => {
   const [plans, setPlans] = useState<PlanData[]>([]);
@@ -96,7 +97,7 @@ const SavedGatheringPage = () => {
   }
 
   return (
-    <div>
+    <MypageLayout>
       <Header title="찜한 일정" />
       <div className="mx-auto max-w-7xl px-4 py-4">
         {plans.length === 0 && !isLoading ? (
@@ -123,7 +124,7 @@ const SavedGatheringPage = () => {
       </div>
       {error && <p>{error}</p>}
       <div ref={loaderRef} />
-    </div>
+    </MypageLayout>
   );
 };
 
