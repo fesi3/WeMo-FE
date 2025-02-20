@@ -41,7 +41,7 @@ const LightningPage = () => {
   } = useLightningMeetups(mapCenter.lat, mapCenter.lng, 10, filters);
 
   return (
-    <HydrationBoundary>
+    <HydrationBoundary state={dehydrate(new QueryClient())}>
       <div>
         <LightningFilter onUpdateFilters={handleUpdateFilters} />
         <LightningMap
@@ -63,7 +63,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   try {
     const { data } = await axiosInstance.get(
-      `/api/lightnings?latitude=${initialCoordinate.lat}&longitude=${initialCoordinate.lng}&radius=1&size=10`,
+      `/api/lightnings?latitude=${initialCoordinate.lat}&longitude=${initialCoordinate.lng}&radius=3&size=10`,
     );
 
     console.log('SSR에서 받은 데이터:', data);

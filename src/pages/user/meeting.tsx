@@ -4,7 +4,6 @@ import NoData from '@/components/mypage/NoData';
 import MypageLayout from '@/components/mypage/MypageLayout';
 import { useMypageMeetings } from '@/hooks/mypage/fetch/useMypageData';
 import { API_PATHS } from '@/constants/apiPath';
-import CreateMeetingButton from '@/components/plans/editMeeting/CreateMeetingButton';
 
 const MeetingCard = lazy(() => import('@/components/mypage/MeetingCard'));
 
@@ -26,7 +25,7 @@ export default function MyMeeting() {
     API_PATHS.MYPAGE.GET_JOINED_MEETINGS(page),
     'joined',
     page,
-    activeTab,
+    activeTab === 'tabLeft',
   );
 
   // 내가 만든 모임 데이터 가져오기 (useMeetings)
@@ -38,7 +37,7 @@ export default function MyMeeting() {
     API_PATHS.MYPAGE.GET_CREATED_MEETINGS(page),
     'created',
     page,
-    activeTab,
+    activeTab === 'tabRight',
   );
 
   // 로딩 및 에러 처리
@@ -64,6 +63,7 @@ export default function MyMeeting() {
 
   return (
     <MypageLayout
+      headerProps="모임 페이지"
       activeTab={activeTab}
       onTabChange={setActiveTab}
       tabsTitle={[
@@ -94,11 +94,11 @@ export default function MyMeeting() {
                   <MeetingCard key={index} meetingData={meet} />
                 ))
               ) : (
-                <div className="flex flex-col items-center justify-center gap-5">
-                  {' '}
-                  <NoData comment="모임이" text="모임 구경하기" />
-                  <CreateMeetingButton />
-                </div>
+                <NoData
+                  comment="모임이"
+                  toPage="/user/1"
+                  text="모임 구경하기"
+                />
               )
             ) : (
               // 로딩 중일 때는 로딩 표시

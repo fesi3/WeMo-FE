@@ -8,6 +8,7 @@ import Sidebar from './Sidebar';
 
 interface BaseMypageLayoutProps {
   children: ReactNode;
+  headerProps: string;
 }
 
 // Tab 있는 경우
@@ -34,6 +35,7 @@ type MypageLayoutProps = MypageLayoutWithTab | MypageLayoutWithoutTab;
 
 export default function MypageLayout({
   children,
+  // headerProps,
   activeTab,
   onTabChange,
   tabsTitle,
@@ -59,14 +61,13 @@ export default function MypageLayout({
             tabsTitle={tabsTitle}
           />
         )}
-
-        <main className="flex h-full flex-1 items-start justify-center px-10 py-4">
+        <main className="flex h-full flex-1 items-center justify-center px-10 py-4">
           {children}
         </main>
 
         {/* 페이지네이션을 하단에 배치 */}
         {activeTab && (
-          <div className="mb-[30px] mt-auto">
+          <div className="mt-auto">
             <Pagination
               page={page}
               totalPage={totalPage}
