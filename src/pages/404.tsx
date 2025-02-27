@@ -1,4 +1,4 @@
-import Button from '@/components/shared/Button';
+import Button from '@/shared/Button';
 import Link from 'next/link';
 import React from 'react';
 

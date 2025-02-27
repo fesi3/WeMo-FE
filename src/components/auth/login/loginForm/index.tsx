@@ -1,6 +1,6 @@
-import Button from '@/components/shared/Button';
-import Input from '@/components/shared/input';
-import withError from '@/components/shared/input/HOC/withError';
+import Button from '@/shared/Button';
+import Input from '@/shared/input';
+import withError from '@/shared/input/HOC/withError';
 import { LoginFormTypes } from '../../type';
 
 interface LoginFormProps {
