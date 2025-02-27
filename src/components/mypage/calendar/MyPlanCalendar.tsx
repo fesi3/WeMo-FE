@@ -2,7 +2,7 @@ import { CalendarPlanData } from '@/types/mypageType';
 import React from 'react';
 import Calendar from 'react-calendar';
 import styles from '@/styles/planCalendar.module.css';
-import { Value } from '@/pages/user/calendar';
+import { Value } from '@/pages/app/user/calendar';
 
 interface CalendarComponentProps {
   selectedDate: Value;
