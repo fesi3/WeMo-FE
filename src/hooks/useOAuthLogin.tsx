@@ -13,7 +13,7 @@ function useOAuthLogin(platform: string) {
   const router = useRouter();
   const isFetched = useRef(false); // ✅ invalidateQueries로 인한 리렌더링 -> 재요청 보내는 것 방지를 위한 함수
 
-  const authCode = searchParams.get('code'); // 리다이렉트 페이지 쿼리 스트링에는 구글서버에서 보내주는 authcode가 담겨져있습니다.
+  const authCode = searchParams?.get('code'); // 리다이렉트 페이지 쿼리 스트링에는 구글서버에서 보내주는 authcode가 담겨져있습니다.
 
   const fetchAuthCode = async () => {
     try {

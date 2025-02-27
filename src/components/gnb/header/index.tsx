@@ -24,7 +24,7 @@ import useHeaderHeight from '@/hooks/useHeaderHeight';
 function GNBHeader() {
   const { toggleValue, handleOpen, handleClose } = useToggle();
   const searchParams = useSearchParams();
-  const searchKeyword = searchParams.get('q');
+  const searchKeyword = searchParams?.get('q');
   const encodedSearchKeyWord: string = searchKeyword
     ? encodeURIComponent(searchKeyword)
     : '';
@@ -113,7 +113,7 @@ function GNBHeader() {
             className="flex h-screen flex-col gap-[38px] px-[30px] pb-[119px] pt-28 md:px-[65px] md:pt-[188px] lg:max-w-none lg:items-center"
           >
             <SearchContents
-              searchKeyword={searchKeyword}
+              searchKeyword={encodedSearchKeyWord}
               handleSearchInputChange={handleSearchInputChange}
               handleClose={handleClose}
             />

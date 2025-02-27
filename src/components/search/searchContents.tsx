@@ -5,7 +5,7 @@ import SearchResultCardList from './searchResultCardList';
 
 interface SearchContentsProps {
   handleSearchInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  searchKeyword: string | null;
+  searchKeyword: string;
   handleClose: () => void;
 }
 
