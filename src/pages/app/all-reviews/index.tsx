@@ -1,6 +1,6 @@
 import Tabs from '@/components/plans/tab/Tabs';
 import { GetStaticProps } from 'next';
-import { Review } from '@/types/reviewType';
+import { Review } from '@/shared/types/reviewType';
 
 import ReviewContainer from '@/components/all-reviews/ReviewContainer';
 import {

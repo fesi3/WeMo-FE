@@ -1,5 +1,5 @@
 import buttonGoogle from '@/assets/images/btnW_google.png';
-import { GOOGLE_AUTH_URL } from '@/constants/oAuth';
+import { GOOGLE_AUTH_URL } from '@/shared/constants/oAuth';
 import Image from 'next/image';
 import Link from 'next/link';
 

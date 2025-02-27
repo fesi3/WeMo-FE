@@ -1,5 +1,9 @@
-import { RootState } from '@/redux/store';
-import { addToast, removeToast, removeFirstToast } from '@/redux/toastReducers';
+import { RootState } from '@/shared/lib/redux/store';
+import {
+  addToast,
+  removeToast,
+  removeFirstToast,
+} from '@/shared/lib/redux/toastReducers';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 

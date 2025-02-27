@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Dropdown from '@/components/shared/dropdown/DropDown';
-import { RegionOption, SubRegionOption } from '@/types/reviewType';
+import { RegionOption, SubRegionOption } from '@/shared/types/reviewType';
 //추후 데이터 형식 응답데이터와 동일하게 리펙토링 필요
 
 interface RawProvince {

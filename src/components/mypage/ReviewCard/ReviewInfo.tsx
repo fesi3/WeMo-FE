@@ -1,6 +1,6 @@
 import Button from '@/components/shared/Button';
 import Image from 'next/image';
-import { scoreRender } from '@/utils/scoreRender';
+import { scoreRender } from '@/shared/utils/scoreRender';
 import { useDeleteReviewMutation } from '@/hooks/mypage/mutation/useDeleteMutation';
 
 interface ReviewInfoProps {

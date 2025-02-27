@@ -1,11 +1,11 @@
 import { shallowEqual, useSelector } from 'react-redux';
-import { RootState } from '@/redux/store';
+import { RootState } from '@/shared/lib/redux/store';
 import { twMerge } from 'tailwind-merge';
 import { createPortal } from 'react-dom';
 import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { XMarkIcon } from '@heroicons/react/20/solid';
-import { closeToast } from '@/utils/handleToast';
+import { closeToast } from '@/shared/utils/handleToast';
 
 export default function ToastContainer() {
   const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);

@@ -1,6 +1,6 @@
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { fetchLightningMeetups } from '@/api/fetchMeetups';
-import { LightningMeetup } from '@/types/lightningType';
+import { LightningMeetup } from '@/shared/types/lightningType';
 
 interface Filters {
   type: number | null; // 모임 유형 (1: 밥약, 2: 운동, 3: 카풀)

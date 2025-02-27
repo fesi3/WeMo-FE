@@ -1,7 +1,7 @@
 import Button from '@/components/shared/Button';
 import Modal from '@/components/shared/modals/Modal';
-import { Coordinate } from '@/types/mapType';
-import { addressToCoordinate } from '@/utils/addressToCoordinate';
+import { Coordinate } from '@/shared/types/mapType';
+import { addressToCoordinate } from '@/shared/utils/addressToCoordinate';
 import { Address, useDaumPostcodePopup } from 'react-daum-postcode';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import MarkerIcon from '@/assets/icons/location_marker.svg';

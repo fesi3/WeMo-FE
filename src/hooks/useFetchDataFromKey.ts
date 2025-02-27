@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import fetchData from '@/api/fetchData';
-import { RootState } from '@/redux/store';
+import { RootState } from '@/shared/lib/redux/store';
 import axios from 'axios';
 
 // 로그인 상태를 확인하고

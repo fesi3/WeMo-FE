@@ -1,4 +1,4 @@
-import { PlanDataWithCategory } from '@/types/plans';
+import { PlanDataWithCategory } from '@/shared/types/plans';
 import SearchResultCard from './searchResultCard';
 
 interface SearchResultCardListProps {

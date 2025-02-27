@@ -1,5 +1,5 @@
 import buttonKakao from '@/assets/images/btnY_kakao.png';
-import { KAKAO_AUTH_URL } from '@/constants/oAuth';
+import { KAKAO_AUTH_URL } from '@/shared/constants/oAuth';
 import Image from 'next/image';
 import Link from 'next/link';
 

@@ -6,7 +6,7 @@ import MeetingDate from '../../shared/badges/MeetingDate';
 import MeetingTime from '../../shared/badges/MeetingTime';
 import DistrictBadge from '@/components/shared/badges/DistrictBadge';
 import LikeButton from '../LikeButton';
-import { PlanData } from '@/types/plans';
+import { PlanData } from '@/shared/types/plans';
 
 const Card: React.FC<PlanData> = ({
   planId,

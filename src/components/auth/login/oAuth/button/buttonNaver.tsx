@@ -1,5 +1,5 @@
 import buttonNaver from '@/assets/images/btnG_naver.png';
-import { NAVER_AUTH_URL } from '@/constants/oAuth';
+import { NAVER_AUTH_URL } from '@/shared/constants/oAuth';
 import Image from 'next/image';
 import Link from 'next/link';
 

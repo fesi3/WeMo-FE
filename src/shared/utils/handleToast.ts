@@ -1,5 +1,9 @@
-import store from '@/redux/store'; // 스토어 직접 가져오기
-import { addToast, removeToast, removeFirstToast } from '@/redux/toastReducers';
+import store from '@/shared/lib/redux/store'; // 스토어 직접 가져오기
+import {
+  addToast,
+  removeToast,
+  removeFirstToast,
+} from '@/shared/lib/redux/toastReducers';
 import { v4 as uuidv4 } from 'uuid';
 
 type ShowToastStatus = 'success' | 'error' | 'info';

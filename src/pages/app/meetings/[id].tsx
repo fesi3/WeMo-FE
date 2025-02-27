@@ -1,7 +1,7 @@
 import { fetchMeetingDetailSSR } from '@/api/ssr/meetings';
 import MeetingDetailMain from '@/components/meetingDetail/MeetingDetailMain';
 import Header from '@/components/shared/layout/Header';
-import { QUERY_KEY } from '@/constants/queryKey';
+import { QUERY_KEY } from '@/shared/constants/queryKey';
 import {
   dehydrate,
   DehydratedState,

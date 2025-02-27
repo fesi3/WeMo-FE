@@ -3,7 +3,7 @@ import { lazy, Suspense, useEffect, useState } from 'react';
 import NoData from '@/components/mypage/NoData';
 import MypageLayout from '@/components/mypage/MypageLayout';
 import { useMypageMeetings } from '@/hooks/mypage/fetch/useMypageData';
-import { API_PATHS } from '@/constants/apiPath';
+import { API_PATHS } from '@/shared/constants/apiPath';
 import CreateMeetingButton from '@/components/plans/editMeeting/CreateMeetingButton';
 
 const MeetingCard = lazy(() => import('@/components/mypage/MeetingCard'));

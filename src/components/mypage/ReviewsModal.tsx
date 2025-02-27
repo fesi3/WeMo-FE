@@ -5,7 +5,7 @@ import useCropper from '@/hooks/useCropper';
 import FileInput from '@/components/shared/FileInput';
 import HeartRating from '@/components/shared/HeartRating';
 import Button from '@/components/shared/Button';
-import { ReviewFormValues } from '@/types/reviewType';
+import { ReviewFormValues } from '@/shared/types/reviewType';
 import { getImageUrls } from '@/api/images';
 import { createReview } from '@/api/createReview';
 

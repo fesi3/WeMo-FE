@@ -1,7 +1,7 @@
 import React from 'react';
 import RegionDropdown from '@/components/shared/dropdown/RegionDropdown';
 import SortDropdown from './dropdown/SortDropdown';
-import { RegionOption, SubRegionOption } from '@/types/reviewType';
+import { RegionOption, SubRegionOption } from '@/shared/types/reviewType';
 
 interface FilterState {
   region: RegionOption | null;

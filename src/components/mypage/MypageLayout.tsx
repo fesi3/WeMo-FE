@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 // import Header from '../shared/layout/Header';
 import MyPageTab from './MyPageTab';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/store';
+import { RootState } from '@/shared/lib/redux/store';
 import Pagination from './Pagination';
 import Sidebar from '../../widgets/Sidebar';
 

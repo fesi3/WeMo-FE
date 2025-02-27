@@ -7,9 +7,9 @@ import {
   ReviewableDataResponse,
   ReviewDataResponse,
   UserDataResponse,
-} from '@/types/mypageType';
-import { API_PATHS } from '@/constants/apiPath';
-import instance from '@/utils/axios';
+} from '@/shared/types/mypageType';
+import { API_PATHS } from '@/shared/constants/apiPath';
+import instance from '@/shared/utils/axios';
 
 // 인덱스(유저 정보 가져오기) API
 export const fetchMypageUserInfo = async () => {

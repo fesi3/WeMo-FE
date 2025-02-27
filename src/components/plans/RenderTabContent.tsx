@@ -3,9 +3,9 @@ import Greeting from '@/components/plans/Greeting';
 import SubCategoryFilter from '@/components/plans/SubCategoryFilter';
 //import PlanFilter from '@/components/plans/PlanFilter';
 import RenderCommonContent from '@/components/plans/RenderCommonContent';
-import { PlanDataWithCategory } from '@/types/plans';
-import { RegionOption, SubRegionOption } from '@/types/reviewType';
-import { SortOption } from '@/types/reviewType';
+import { PlanDataWithCategory } from '@/shared/types/plans';
+import { RegionOption, SubRegionOption } from '@/shared/types/reviewType';
+import { SortOption } from '@/shared/types/reviewType';
 import { motion, AnimatePresence } from 'motion/react';
 import useHeaderHeight from '@/hooks/useHeaderHeight';
 

@@ -1,7 +1,7 @@
-import { CalendarPlanData } from '@/types/mypageType';
+import { CalendarPlanData } from '@/shared/types/mypageType';
 import React from 'react';
 import Image from 'next/image';
-import { planCardTime } from '@/utils/dateUtils';
+import { planCardTime } from '@/shared/utils/dateUtils';
 import Link from 'next/link';
 
 interface ScheduleListProps {

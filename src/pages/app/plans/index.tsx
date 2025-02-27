@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import type { NextPage, GetServerSideProps } from 'next';
 //import axios from 'axios';
 //import instance from '@/utils/axios';
-import { ssrInstance } from '@/utils/axiosSsr';
-import { SortOption } from '@/types/reviewType';
+import { ssrInstance } from '@/shared/utils/axiosSsr';
+import { SortOption } from '@/shared/types/reviewType';
 import { useCursorInfiniteScroll } from '@/hooks/useCursorInfiniteScrollPlans';
-import { PlanDataWithCategory, PlanListResponse } from '@/types/plans';
-import { RegionOption, SubRegionOption } from '@/types/reviewType';
+import { PlanDataWithCategory, PlanListResponse } from '@/shared/types/plans';
+import { RegionOption, SubRegionOption } from '@/shared/types/reviewType';
 import Tabs from '@/components/plans/tab/Tabs';
 import RenderTabContent from '@/components/plans/RenderTabContent';
 

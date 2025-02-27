@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CroppedImageType } from '@/types/cropperType';
+import { CroppedImageType } from '@/shared/types/cropperType';
 
 /**
  *

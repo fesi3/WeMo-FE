@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { fetchMeetings } from '@/api/fetchMeetings';
-import { FetchMeetingsResponse } from '@/types/api/meetingList';
+import { FetchMeetingsResponse } from '@/shared/types/api/meetingList';
 
 interface UseMeetingsParams {
   sort: string;

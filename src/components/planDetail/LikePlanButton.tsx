@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import { twMerge } from 'tailwind-merge';
 import HeartIcon from '@/assets/icons/emptyHeart.svg';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/store';
+import { RootState } from '@/shared/lib/redux/store';
 import { useRouter } from 'next/router';
 
 interface LikePlanButtonProps {

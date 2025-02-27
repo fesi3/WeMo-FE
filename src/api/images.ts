@@ -1,7 +1,7 @@
-import { API_PATHS } from '@/constants/apiPath';
+import { API_PATHS } from '@/shared/constants/apiPath';
 import axios from 'axios';
-import instance from '../utils/axios';
-import { extractPathFromPresignedUrl } from '@/utils/extractPathFromPresignedUrl';
+import instance from '../shared/utils/axios';
+import { extractPathFromPresignedUrl } from '@/shared/utils/extractPathFromPresignedUrl';
 
 interface PresignedUrl {
   presignedUrl: string[];

@@ -3,7 +3,7 @@ import { lazy, Suspense, useEffect, useState } from 'react';
 // import ReviewableCard from '@/components/mypage/ReviewableCard';
 import NoData from '@/components/mypage/NoData';
 import MypageLayout from '@/components/mypage/MypageLayout';
-import { API_PATHS } from '@/constants/apiPath';
+import { API_PATHS } from '@/shared/constants/apiPath';
 import {
   useMypageReviewables,
   useMypageReviews,

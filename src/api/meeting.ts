@@ -1,14 +1,14 @@
-import { API_PATHS } from '@/constants/apiPath';
+import { API_PATHS } from '@/shared/constants/apiPath';
 import {
   MeetingDetailResponse,
   CreateMeetingRequestBody,
   CreateMeetingResponse,
-} from '@/types/api/meeting';
-import instance from '../utils/axios';
+} from '@/shared/types/api/meeting';
+import instance from '../shared/utils/axios';
 import { AxiosRequestConfig, isAxiosError } from 'axios';
-import { ApiErrorResponse, ApiResponse } from '@/types/api/apiResponse';
-import { showToast } from '@/utils/handleToast';
-import TOAST_MESSAGE from '@/constants/toastMessage';
+import { ApiErrorResponse, ApiResponse } from '@/shared/types/api/apiResponse';
+import { showToast } from '@/shared/utils/handleToast';
+import TOAST_MESSAGE from '@/shared/constants/toastMessage';
 
 export const createMeeting = async (requestBody: CreateMeetingRequestBody) => {
   try {

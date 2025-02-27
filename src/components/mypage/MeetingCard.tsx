@@ -2,7 +2,7 @@ import Image from 'next/image';
 import meetingImg from '@/assets/images/Rectangle 6188.png';
 import { useRouter } from 'next/router';
 import OwnerButton from './OwnerButton';
-import { MeetingData } from '@/types/mypageType';
+import { MeetingData } from '@/shared/types/mypageType';
 import { useLeaveMeetingMutation } from '@/hooks/mypage/mutation/useLeaveMutation';
 import { useDeleteMeetingMutation } from '@/hooks/mypage/mutation/useDeleteMutation';
 import { useEffect } from 'react';

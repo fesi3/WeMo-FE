@@ -1,8 +1,13 @@
-import instance from '@/utils/axios';
+import instance from '@/shared/utils/axios';
 import { useQuery } from '@tanstack/react-query';
-import { API_PATHS } from '@/constants/apiPath';
+import { API_PATHS } from '@/shared/constants/apiPath';
 import { useDispatch } from 'react-redux';
-import { clearUser, login, logout, setUser } from '@/redux/authReducers';
+import {
+  clearUser,
+  login,
+  logout,
+  setUser,
+} from '@/shared/lib/redux/authReducers';
 import { useEffect } from 'react';
 const {
   AUTH: { USER_INFO },

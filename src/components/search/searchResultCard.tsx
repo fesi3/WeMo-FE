@@ -2,7 +2,7 @@ import Image from 'next/image';
 import MemberIcon from '@/assets/icons/member.svg';
 import defaultImage from '@/assets/images/default-image.png';
 import { useRouter } from 'next/router';
-import { PlanDataWithCategory } from '@/types/plans';
+import { PlanDataWithCategory } from '@/shared/types/plans';
 
 type SearchResultCardTypes = Pick<
   PlanDataWithCategory,

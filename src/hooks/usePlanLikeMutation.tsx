@@ -1,6 +1,6 @@
 import { likePlan, unLikePlan } from '@/api/plan';
-import { QUERY_KEY } from '@/constants/queryKey';
-import { PlanDetailResponse } from '@/types/api/plan';
+import { QUERY_KEY } from '@/shared/constants/queryKey';
+import { PlanDetailResponse } from '@/shared/types/api/plan';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface usePlanLikeMutationParams {

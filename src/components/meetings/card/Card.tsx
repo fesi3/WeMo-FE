@@ -4,7 +4,7 @@ import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import CategoryBadge from '@/components/shared/badges/CategoryBadge';
-import { Meeting } from '@/types/api/meetingList';
+import { Meeting } from '@/shared/types/api/meetingList';
 
 const MAX_DISPLAY_PLANS = 4;
 
