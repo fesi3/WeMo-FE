@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
-import Input from '../shared/input';
+import Input from '@/shared/input';
 import { PlanListResponse } from '@/types/plans';
 import SearchResultCardList from './searchResultCardList';
 
