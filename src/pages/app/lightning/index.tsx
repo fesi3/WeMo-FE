@@ -9,7 +9,7 @@ import {
   dehydrate,
 } from '@tanstack/react-query';
 import { useLightningMeetups } from '@/hooks/useLightningMeetups';
-import axiosInstance from '@/utils/axios';
+import axiosInstance from '@/shared/utils/axios';
 import { GetServerSideProps } from 'next';
 
 const INITIAL_COORDINATE = { lat: 37.5664056, lng: 126.9778222 };

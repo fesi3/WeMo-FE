@@ -1,11 +1,15 @@
 import { useEffect, useRef, useCallback } from 'react';
 //import axios from 'axios';
-import instance from '@/utils/axios';
+import instance from '@/shared/utils/axios';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/store';
-import { RegionOption, SortOption, SubRegionOption } from '@/types/reviewType';
-import { PlanDataWithCategory } from '@/types/plans';
-import { getCategoryId } from '@/utils/categoryUtils';
+import { RootState } from '@/shared/lib/redux/store';
+import {
+  RegionOption,
+  SortOption,
+  SubRegionOption,
+} from '@/shared/types/reviewType';
+import { PlanDataWithCategory } from '@/shared/types/plans';
+import { getCategoryId } from '@/shared/utils/categoryUtils';
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 

@@ -1,5 +1,5 @@
-import axiosInstance from '@/utils/axios';
-import { API_PATHS } from '@/constants/apiPath';
+import axiosInstance from '@/shared/utils/axios';
+import { API_PATHS } from '@/shared/constants/apiPath';
 
 interface CreateReviewRequestBody {
   score: number;

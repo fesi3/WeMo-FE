@@ -1,7 +1,7 @@
 import axios, { isAxiosError } from 'axios';
-import { API_PATHS } from '@/constants/apiPath';
-import store from '@/redux/store';
-import { logout } from '@/redux/authReducers';
+import { API_PATHS } from '@/shared/constants/apiPath';
+import store from '@/shared/lib/redux/store';
+import { logout } from '@/shared/lib/redux/authReducers';
 
 const {
   AUTH: { REFRESH_TOKEN, SIGNOUT },

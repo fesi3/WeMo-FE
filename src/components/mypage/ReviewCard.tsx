@@ -1,4 +1,4 @@
-import { ReviewData } from '@/types/mypageType';
+import { ReviewData } from '@/shared/types/mypageType';
 import PlanInfo from './ReviewCard/PlanInfo';
 import Link from 'next/link';
 import ReviewInfo from './ReviewCard/ReviewInfo';

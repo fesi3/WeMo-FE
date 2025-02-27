@@ -1,4 +1,4 @@
-import { User } from '@/types/api/plan';
+import { User } from '@/shared/types/api/plan';
 import Avatar from '../shared/avatar/Avatar';
 
 interface AvatarListProps {

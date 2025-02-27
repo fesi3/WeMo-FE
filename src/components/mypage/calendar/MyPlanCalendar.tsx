@@ -1,4 +1,4 @@
-import { CalendarPlanData } from '@/types/mypageType';
+import { CalendarPlanData } from '@/shared/types/mypageType';
 import React from 'react';
 import Calendar from 'react-calendar';
 import styles from '@/styles/planCalendar.module.css';

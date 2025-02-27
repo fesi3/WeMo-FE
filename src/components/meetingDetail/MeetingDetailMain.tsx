@@ -11,11 +11,11 @@ import {
 } from '@heroicons/react/20/solid';
 import PlanCardListInMeeting from './ui/PlanCardListInMeeting';
 import ReviewListInMeeting from './ui/ReviewInMeeting';
-import { formatAverage } from '@/utils/formatRating';
+import { formatAverage } from '@/shared/utils/formatRating';
 import { useRouter } from 'next/router';
 import useMeetingDetailQuery from '@/hooks/useMeetingDetailQuery';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/store';
+import { RootState } from '@/shared/lib/redux/store';
 import MeetingDetailFooter from './MeetingDetailFooter';
 import useJoinMeetingMutation from '@/hooks/useJoinMeetingMutation';
 

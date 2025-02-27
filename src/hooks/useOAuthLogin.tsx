@@ -1,8 +1,8 @@
-import instance from '@/utils/axios';
+import instance from '@/shared/utils/axios';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
-import { login } from '@/redux/authReducers';
+import { login } from '@/shared/lib/redux/authReducers';
 import { useQueryClient } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 

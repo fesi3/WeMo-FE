@@ -1,4 +1,4 @@
-import { UserData } from '@/types/mypageType';
+import { UserData } from '@/shared/types/mypageType';
 import Image from 'next/image';
 import Button from '@/components/shared/Button';
 import profile_default from '@/assets/images/default_profile.png';

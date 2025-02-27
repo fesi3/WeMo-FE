@@ -1,5 +1,5 @@
-import { PlanDataWithCategory } from '@/types/plans';
-import { RegionOption, SubRegionOption } from '@/types/reviewType';
+import { PlanDataWithCategory } from '@/shared/types/plans';
+import { RegionOption, SubRegionOption } from '@/shared/types/reviewType';
 
 interface FilterArgs {
   plans: PlanDataWithCategory[];

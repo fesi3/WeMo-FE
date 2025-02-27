@@ -2,7 +2,7 @@ import Image from 'next/image';
 import ProgressIndicator from './Indicator';
 import { useRouter } from 'next/router';
 import OwnerButton from './OwnerButton';
-import { PlanData } from '@/types/mypageType';
+import { PlanData } from '@/shared/types/mypageType';
 import Button from '@/components/shared/Button';
 import MeetingDate from '../shared/badges/MeetingDate';
 import MeetingTime from '../shared/badges/MeetingTime';

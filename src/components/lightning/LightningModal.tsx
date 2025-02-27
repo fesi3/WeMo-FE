@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import useAddressSearch from '@/hooks/useAddressSearch';
-import axiosInstance from '@/utils/axios';
+import axiosInstance from '@/shared/utils/axios';
 import Button from '@/components/shared/Button';
 import { useEffect } from 'react';
 

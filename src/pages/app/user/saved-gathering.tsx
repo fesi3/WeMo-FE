@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import instance from '@/utils/axios'; // ✅ axios instance 사용
-import { PlanData } from '@/types/plans';
+import instance from '@/shared/utils/axios'; // ✅ axios instance 사용
+import { PlanData } from '@/shared/types/plans';
 import { usePageInfiniteScroll } from '@/hooks/usePageInfiniteScroll';
 import CardList from '@/components/plans/card/CardList';
 import Button from '@/components/shared/Button';
 import Header from '@/components/shared/layout/Header';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/store';
+import { RootState } from '@/shared/lib/redux/store';
 import Image from 'next/image';
 import image from '@/assets/images/like-page-heart.png';
 import MypageLayout from '@/components/mypage/MypageLayout';

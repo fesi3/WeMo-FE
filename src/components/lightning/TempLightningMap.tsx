@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
-import { LightningMeetup } from '@/types/lightningType';
+import { LightningMeetup } from '@/shared/types/lightningType';
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 import useKakaoLoader from '@/hooks/useKakaoLoader';
 

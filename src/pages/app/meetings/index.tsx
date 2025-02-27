@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { GetServerSideProps } from 'next';
 //import instance from '@/utils/axios';
-import ssrInstance from '@/utils/axios';
+import ssrInstance from '@/shared/utils/axios';
 //import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 //import { InfiniteData } from '@tanstack/react-query';
 import Header from '@/components/shared/layout/Header';
@@ -17,7 +17,7 @@ import CategoryDropdown, {
 import { useInfiniteScroll } from '@/hooks/useScrollObserver';
 import { useMeetings } from '@/hooks/useMeetingsQuery';
 import { InfiniteData } from '@tanstack/react-query';
-import { FetchMeetingsResponse, Meeting } from '@/types/api/meetingList';
+import { FetchMeetingsResponse, Meeting } from '@/shared/types/api/meetingList';
 
 interface MeetingsPageProps {
   initialMeetings: Meeting[];

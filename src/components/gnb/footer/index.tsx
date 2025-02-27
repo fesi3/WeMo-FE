@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { hideGnbFooterRoutes, menuItems } from '@/constants/gnb';
+import { hideGnbFooterRoutes, menuItems } from '@/shared/constants/gnb';
 import GNBItem from '../item';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/store';
+import { RootState } from '@/shared/lib/redux/store';
 import { twMerge } from 'tailwind-merge';
 
 // GNB 레이아웃 컴포넌트에서 렌더링 되는 footer 컴포넌트입니다.

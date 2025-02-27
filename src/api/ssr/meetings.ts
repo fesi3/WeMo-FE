@@ -1,6 +1,6 @@
-import { API_PATHS } from '@/constants/apiPath';
-import { PlanDetailResponse } from '@/types/api/plan';
-import { ssrInstance } from '@/utils/axiosSsr';
+import { API_PATHS } from '@/shared/constants/apiPath';
+import { PlanDetailResponse } from '@/shared/types/api/plan';
+import { ssrInstance } from '@/shared/utils/axiosSsr';
 import axios from 'axios';
 
 export const fetchMeetingDetailSSR = async (

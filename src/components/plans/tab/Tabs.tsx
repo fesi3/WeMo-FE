@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 //import Greeting from '../Greeting';
 import CreateMeetingButton from '../editMeeting/CreateMeetingButton';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/store';
+import { RootState } from '@/shared/lib/redux/store';
 
 //추후 UI컴포넌트와 기능 로직 분리리
 type TabItem = {

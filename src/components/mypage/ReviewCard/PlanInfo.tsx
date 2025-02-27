@@ -1,5 +1,5 @@
 import Image, { StaticImageData } from 'next/image';
-import { formatTime } from '@/utils/dateUtils';
+import { formatTime } from '@/shared/utils/dateUtils';
 
 interface PlanInfoProps {
   planName: string;

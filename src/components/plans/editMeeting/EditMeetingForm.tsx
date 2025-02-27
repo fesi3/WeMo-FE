@@ -5,7 +5,7 @@ import useCropper from '@/hooks/useCropper';
 import FileInput from '../../shared/FileInput';
 import CategoryRadioInput from '@/components/plans/editMeeting/CategoryRadioInput';
 import { getImageUrls } from '@/api/images';
-import { CreateMeetingRequestBody } from '@/types/api/meeting';
+import { CreateMeetingRequestBody } from '@/shared/types/api/meeting';
 import { createMeeting } from '@/api/meeting';
 import ErrorWrapper from '@/components/shared/ErrorWrapper';
 import { useRouter } from 'next/router';

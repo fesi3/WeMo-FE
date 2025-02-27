@@ -1,7 +1,7 @@
 import useKakaoLoader from '@/hooks/useKakaoLoader';
 import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 import AddressSearchModal from '../AddressSearchModal';
-import { Coordinate } from '@/types/mapType';
+import { Coordinate } from '@/shared/types/mapType';
 import MarkerIcon from '@/assets/icons/location_marker.svg';
 interface AddressInputProps<T extends FieldValues> {
   register: UseFormRegister<T>;

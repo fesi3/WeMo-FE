@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Address, useDaumPostcodePopup } from 'react-daum-postcode';
-import { addressToCoordinate } from '@/utils/addressToCoordinate';
+import { addressToCoordinate } from '@/shared/utils/addressToCoordinate';
 
 // 초기 좌표 (서울 시청)
 const INITIAL_COORDINATE = { lat: 37.5664056, lng: 126.9778222 };

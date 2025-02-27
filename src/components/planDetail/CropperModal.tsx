@@ -1,4 +1,4 @@
-import getCroppedImg from '@/utils/getCroppedImage';
+import getCroppedImg from '@/shared/utils/getCroppedImage';
 import { useCallback, useState } from 'react';
 import Cropper from 'react-easy-crop';
 import Button from '../shared/Button';

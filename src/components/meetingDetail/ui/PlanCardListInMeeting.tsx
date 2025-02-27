@@ -1,6 +1,6 @@
 import DateBadge from '@/components/shared/DateBadge';
 import ProgressBar from '@/components/shared/ProgressBar';
-import { PlanInMeeting } from '@/types/api/meeting';
+import { PlanInMeeting } from '@/shared/types/api/meeting';
 import { UserIcon } from '@heroicons/react/20/solid';
 import dayjs from 'dayjs';
 import Image from 'next/image';

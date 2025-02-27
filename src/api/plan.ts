@@ -1,13 +1,13 @@
-import { API_PATHS } from '@/constants/apiPath';
+import { API_PATHS } from '@/shared/constants/apiPath';
 import {
   CreatePlanRequestBody,
   CreatePlanResponse,
   PlanDetailResponse,
-} from '@/types/api/plan';
-import instance from '../utils/axios';
-import { ApiResponse } from '@/types/api/apiResponse';
-import { showToast } from '@/utils/handleToast';
-import TOAST_MESSAGE from '@/constants/toastMessage';
+} from '@/shared/types/api/plan';
+import instance from '../shared/utils/axios';
+import { ApiResponse } from '@/shared/types/api/apiResponse';
+import { showToast } from '@/shared/utils/handleToast';
+import TOAST_MESSAGE from '@/shared/constants/toastMessage';
 import { AxiosRequestConfig } from 'axios';
 
 interface PostPlanParams {

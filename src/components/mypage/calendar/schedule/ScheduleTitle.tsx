@@ -1,6 +1,6 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import { getDateInfo } from '@/utils/dateUtils';
+import { getDateInfo } from '@/shared/utils/dateUtils';
 
 interface ScheduleTitleProps {
   selectedDate: Date | null;

@@ -1,4 +1,4 @@
-import { UserData } from '@/types/mypageType';
+import { UserData } from '@/shared/types/mypageType';
 import Link from 'next/link';
 
 interface UserProps {

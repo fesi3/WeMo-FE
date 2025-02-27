@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@/components/shared/Button';
-import { RootState } from '@/redux/store';
+import { RootState } from '@/shared/lib/redux/store';
 import { useSelector } from 'react-redux';
 
 interface OwnerButtonProps {

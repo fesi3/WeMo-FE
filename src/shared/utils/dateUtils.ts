@@ -3,7 +3,7 @@
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
-import { CalendarPlanData } from '@/types/mypageType';
+import { CalendarPlanData } from '@/shared/types/mypageType';
 
 dayjs.extend(relativeTime);
 dayjs.locale('ko');

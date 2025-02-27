@@ -1,7 +1,7 @@
 import { fetchPlanDetailSSR } from '@/api/ssr/plans';
 import PlanDetailMain from '@/components/planDetail/PlanDetailMain';
 import Header from '@/components/shared/layout/Header';
-import { QUERY_KEY } from '@/constants/queryKey';
+import { QUERY_KEY } from '@/shared/constants/queryKey';
 
 import {
   dehydrate,

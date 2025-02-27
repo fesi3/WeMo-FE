@@ -1,6 +1,6 @@
 import fetchReviews from '@/api/reviews';
-import axiosInstance from '@/utils/axios';
-import { FilterState } from '@/types/reviewType';
+import axiosInstance from '@/shared/utils/axios';
+import { FilterState } from '@/shared/types/reviewType';
 
 jest.mock('@/utils/axios'); // axiosInstance를 목 함수로 만들어줍니다.
 

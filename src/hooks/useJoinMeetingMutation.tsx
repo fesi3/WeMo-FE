@@ -1,6 +1,6 @@
 import { joinMeeting, leaveMeeting } from '@/api/meeting';
-import { QUERY_KEY } from '@/constants/queryKey';
-import { MeetingDetailResponse } from '@/types/api/meeting';
+import { QUERY_KEY } from '@/shared/constants/queryKey';
+import { MeetingDetailResponse } from '@/shared/types/api/meeting';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface useJoinMeetingParams {

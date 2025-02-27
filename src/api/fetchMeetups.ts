@@ -1,5 +1,5 @@
-import axiosInstance from '@/utils/axios';
-import { LightningMeetup } from '@/types/lightningType';
+import axiosInstance from '@/shared/utils/axios';
+import { LightningMeetup } from '@/shared/types/lightningType';
 
 // 번개팟 목록을 가져오는 API 함수
 export const fetchLightningMeetups = async (

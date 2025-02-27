@@ -1,4 +1,4 @@
-import { API_PATHS } from '@/constants/apiPath';
+import { API_PATHS } from '@/shared/constants/apiPath';
 import axios, { AxiosHeaders } from 'axios';
 
 export const ssrInstance = (cookie?: string) => {

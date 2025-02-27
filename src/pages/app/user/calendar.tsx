@@ -3,7 +3,7 @@ import {
   getDateInfo,
   getFilteredSchedulesByMonth,
   getFirstAndLastDayOfMonth,
-} from '@/utils/dateUtils';
+} from '@/shared/utils/dateUtils';
 
 import { useMyPlanCalendar } from '@/hooks/mypage/fetch/useMypageData';
 import MypageLayout from '@/components/mypage/MypageLayout';

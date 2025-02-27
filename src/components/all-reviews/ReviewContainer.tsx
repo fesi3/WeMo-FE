@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useReviews } from '@/hooks/useReviews';
 import FilterBar from '@/components/shared/FilterBar';
 import ReviewList from '@/components/all-reviews/ReviewList';
-import { FilterState } from '@/types/reviewType';
+import { FilterState } from '@/shared/types/reviewType';
 import Loader from './Loader';
 
 const ReviewContainer = ({ category }: { category: string }) => {

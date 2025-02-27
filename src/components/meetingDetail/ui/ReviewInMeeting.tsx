@@ -1,6 +1,6 @@
 import Avatar from '@/components/shared/avatar/Avatar';
 import HeartRating from '@/components/shared/HeartRating';
-import type { ReviewInMeeting } from '@/types/api/meeting';
+import type { ReviewInMeeting } from '@/shared/types/api/meeting';
 
 interface ReviewListInMeetingProps {
   review: ReviewInMeeting;
