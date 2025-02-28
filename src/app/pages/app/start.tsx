@@ -1,12 +1,12 @@
 import React from 'react';
-import Button from '@/components/shared/Button';
+import Button from '@/shared/Button';
 import Link from 'next/link';
 import LoginBanner from '@/components/auth/login/loginBanner';
 import ButtonGoogle from '@/components/auth/login/oAuth/button/buttonGoogle';
 import ButtonKakao from '@/components/auth/login/oAuth/button/buttonKakao';
 import ButtonNaver from '@/components/auth/login/oAuth/button/buttonNaver';
 
-const StartPage = () => {
+export const StartPage = () => {
   return (
     <div className="flex h-screen flex-col items-center justify-center bg-white">
       <div className="mb-16">
@@ -40,5 +40,3 @@ const StartPage = () => {
     </div>
   );
 };
-
-export default StartPage;

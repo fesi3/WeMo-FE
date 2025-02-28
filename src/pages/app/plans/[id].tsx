@@ -1,57 +1,9 @@
-import { fetchPlanDetailSSR } from '@/api/ssr/plans';
-import PlanDetailMain from '@/components/planDetail/PlanDetailMain';
-import Header from '@/components/shared/layout/Header';
-import { QUERY_KEY } from '@/shared/constants/queryKey';
+export { PlanDetailPage as default } from '@/app/pages/app/plans/[id]';
 
-import {
-  dehydrate,
-  DehydratedState,
-  HydrationBoundary,
-  QueryClient,
-} from '@tanstack/react-query';
-import { GetServerSideProps } from 'next';
-import { useRouter } from 'next/router';
+// 기존 export default를 export로 변경했습니다.
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.query;
-  //쿠키를 추출해 SSR전용 패치함수에 전달합니다.
-  const cookie = context.req.headers.cookie || '';
-  const queryClient = new QueryClient();
-  const idNum = parseInt(id as string);
-  await queryClient.prefetchQuery({
-    queryKey: QUERY_KEY.planDetail(idNum),
-    queryFn: () => fetchPlanDetailSSR(idNum, cookie),
-  });
+// 변경한 이유는 pages 폴더 내부에서 re-export 시키기 위해서 입니다.
 
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-      idNum,
-    },
-  };
-};
+// export default는 re-export가 불가능해 개별적으로 export가 가능한 named export로 변경했습니다.
 
-interface PlanDetailPageProps {
-  dehydratedState: DehydratedState;
-  idNum: number;
-}
-
-export default function PlanDetailPage({
-  dehydratedState,
-  idNum,
-}: PlanDetailPageProps) {
-  const router = useRouter();
-  return (
-    <HydrationBoundary state={dehydratedState}>
-      <Header
-        title="일정 상세"
-        onClickBack={() => {
-          router.push('/plans');
-        }}
-      />
-      <div className="mx-auto min-h-screen max-w-screen-md">
-        <PlanDetailMain id={idNum} />
-      </div>
-    </HydrationBoundary>
-  );
-}
+// 이 파일에서는 app 폴더에 위치한 파일을 re-export 하여 export default 하고 있습니다.
