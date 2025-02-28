@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import NoData from '@/entities/mypage/NoData';
 import MypageLayout from '@/entities/mypage/MypageLayout';
-import { useMypagePlans } from '@/hooks/mypage/fetch/useMypageData';
+import { useMypagePlans } from '@/shared/hooks/mypage/fetch/useMypageData';
 import { API_PATHS } from '@/shared/constants/apiPath';
 
 const PlanCard = lazy(() => import('@/entities/mypage/PlanCard'));

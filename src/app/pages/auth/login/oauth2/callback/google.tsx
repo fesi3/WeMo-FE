@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import useOAuthLogin from '@/hooks/useOAuthLogin';
+import useOAuthLogin from '@/shared/hooks/useOAuthLogin';
 import logoWithColor from '@/assets/images/logo-with-color.png';
 import { motion } from 'motion/react';
 

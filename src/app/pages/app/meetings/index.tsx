@@ -14,8 +14,8 @@ import CategoryDropdown, {
 } from '@/entities/meeting/meetings/dropdown/CategoryDropdown';
 //import { fetchMeetings } from '@/api/fetchMeetings';
 //import { FetchMeetingsResponse, Meeting } from '@/types/api/meetingList';
-import { useInfiniteScroll } from '@/hooks/useScrollObserver';
-import { useMeetings } from '@/hooks/useMeetingsQuery';
+import { useInfiniteScroll } from '@/shared/hooks/useScrollObserver';
+import { useMeetings } from '@/shared/hooks/useMeetingsQuery';
 import { InfiniteData } from '@tanstack/react-query';
 import { FetchMeetingsResponse, Meeting } from '@/shared/types/api/meetingList';
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import useToggle from '@/hooks/useToggle';
-import useCropper from '@/hooks/useCropper';
+import useToggle from '@/shared/hooks/useToggle';
+import useCropper from '@/shared/hooks/useCropper';
 import FileInput from '@/components/shared/FileInput';
 import HeartRating from '@/components/shared/HeartRating';
 import Button from '@/components/shared/Button';

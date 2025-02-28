@@ -7,8 +7,8 @@ import Button from '@/components/shared/Button';
 import MeetingDate from '../shared/badges/MeetingDate';
 import MeetingTime from '../shared/badges/MeetingTime';
 import DistrictBadge from '../shared/badges/DistrictBadge';
-import { useLeavePlanMutation } from '@/hooks/mypage/mutation/useLeaveMutation';
-import { useDeletePlanMutation } from '@/hooks/mypage/mutation/useDeleteMutation';
+import { useLeavePlanMutation } from '@/shared/hooks/mypage/mutation/useLeaveMutation';
+import { useDeletePlanMutation } from '@/shared/hooks/mypage/mutation/useDeleteMutation';
 import { useEffect } from 'react';
 
 interface PlanCardProps {

@@ -7,7 +7,7 @@ import { PlanDataWithCategory } from '@/shared/types/plans';
 import { RegionOption, SubRegionOption } from '@/shared/types/reviewType';
 import { SortOption } from '@/shared/types/reviewType';
 import { motion, AnimatePresence } from 'motion/react';
-import useHeaderHeight from '@/hooks/useHeaderHeight';
+import useHeaderHeight from '@/shared/hooks/useHeaderHeight';
 
 const fadeVariants = {
   hidden: { opacity: 0 },

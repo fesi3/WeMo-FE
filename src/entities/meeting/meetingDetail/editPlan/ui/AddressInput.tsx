@@ -1,4 +1,4 @@
-import useKakaoLoader from '@/hooks/useKakaoLoader';
+import useKakaoLoader from '@/shared/hooks/useKakaoLoader';
 import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 import AddressSearchModal from '../AddressSearchModal';
 import { Coordinate } from '@/shared/types/mapType';

@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { useMypageUserInfo } from '@/hooks/mypage/fetch/useMypageData';
+import { useMypageUserInfo } from '@/shared/hooks/mypage/fetch/useMypageData';
 import MypageLayout from '@/entities/mypage/MypageLayout';
 import IndexNav from '@/entities/mypage/IndexNav';
 import Button from '@/shared/Button';

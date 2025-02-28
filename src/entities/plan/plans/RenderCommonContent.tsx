@@ -8,7 +8,7 @@ import SortDropdown from '../shared/dropdown/SortDropdown';
 import { SortOption } from '@/shared/types/reviewType';
 import { PlanDataWithCategory } from '@/shared/types/plans';
 import { RegionOption, SubRegionOption } from '@/shared/types/reviewType';
-import useHeaderHeight from '@/hooks/useHeaderHeight';
+import useHeaderHeight from '@/shared/hooks/useHeaderHeight';
 
 interface RenderCommonContentProps {
   plans: PlanDataWithCategory[];

@@ -1,5 +1,5 @@
 import SignupForm from '@/features/auth/signup/signupForm';
-import useSignupForm from '@/hooks/useSignupForm';
+import useSignupForm from '@/shared/hooks/useSignupForm';
 import Header from '@/widgets/Header';
 
 export function Register() {

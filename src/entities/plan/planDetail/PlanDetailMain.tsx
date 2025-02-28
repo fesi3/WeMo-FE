@@ -19,10 +19,10 @@ import { useRouter } from 'next/router';
 import { formatAverage } from '@/shared/utils/formatRating';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/shared/lib/redux/store';
-import usePlanDetailQuery from '@/hooks/usePlanDetailQuery';
+import usePlanDetailQuery from '@/shared/hooks/usePlanDetailQuery';
 import { attendPlan, leavePlan } from '@/api/plan';
 import LikePlanButton from './LikePlanButton';
-import usePlanLikeMutation from '@/hooks/usePlanLikeMutation';
+import usePlanLikeMutation from '@/shared/hooks/usePlanLikeMutation';
 import PlanAttendButton from './PlanAttendButton';
 import { useState } from 'react';
 

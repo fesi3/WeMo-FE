@@ -1,5 +1,5 @@
 import Modal from '@/components/shared/modals/Modal';
-import useToggle from '@/hooks/useToggle';
+import useToggle from '@/shared/hooks/useToggle';
 import EditPlanForm from './EditPlanForm';
 import Button from '@/components/shared/Button';
 

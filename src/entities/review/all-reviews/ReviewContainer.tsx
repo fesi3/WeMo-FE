@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useReviews } from '@/hooks/useReviews';
+import { useReviews } from '@/shared/hooks/useReviews';
 import FilterBar from '@/shared/FilterBar';
 import ReviewList from '@/entities/review/all-reviews/ReviewList';
 import { FilterState } from '@/shared/types/reviewType';

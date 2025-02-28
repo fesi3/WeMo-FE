@@ -5,7 +5,7 @@ import {
   getFirstAndLastDayOfMonth,
 } from '@/shared/utils/dateUtils';
 
-import { useMyPlanCalendar } from '@/hooks/mypage/fetch/useMypageData';
+import { useMyPlanCalendar } from '@/shared/hooks/mypage/fetch/useMypageData';
 import MypageLayout from '@/entities/mypage/MypageLayout';
 import Button from '@/shared/Button';
 import { useRouter } from 'next/router';

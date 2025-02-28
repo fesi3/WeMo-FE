@@ -7,7 +7,7 @@ import { API_PATHS } from '@/shared/constants/apiPath';
 import {
   useMypageReviewables,
   useMypageReviews,
-} from '@/hooks/mypage/fetch/useMypageData';
+} from '@/shared/hooks/mypage/fetch/useMypageData';
 
 const ReviewCard = lazy(() => import('@/entities/mypage/ReviewCard'));
 const ReviewableCard = lazy(() => import('@/entities/mypage/ReviewableCard'));

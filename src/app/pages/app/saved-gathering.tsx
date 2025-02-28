@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import instance from '@/shared/utils/axios'; // ✅ axios instance 사용
 import { PlanData } from '@/shared/types/plans';
-import { usePageInfiniteScroll } from '@/hooks/usePageInfiniteScroll';
+import { usePageInfiniteScroll } from '@/shared/hooks/usePageInfiniteScroll';
 import CardList from '@/entities/plan/plans/card/CardList';
 import Button from '@/shared/Button';
 import Header from '@/widgets/Header';

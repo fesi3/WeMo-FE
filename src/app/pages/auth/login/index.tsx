@@ -1,6 +1,6 @@
 import LoginBanner from '@/features/auth/login/loginBanner';
 import LoginForm from '@/features/auth/login/loginForm';
-import useLoginForm from '@/hooks/useLoginForm';
+import useLoginForm from '@/shared/hooks/useLoginForm';
 import FindInfo from '@/features/auth/login/findInfo';
 
 export function Login() {

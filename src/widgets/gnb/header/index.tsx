@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { hideGnbHeaderRoutes } from '@/shared/constants/gnb';
 import Search from '@/features/search';
 import SearchModal from '@/features/search/searchModal';
-import useToggle from '@/hooks/useToggle';
+import useToggle from '@/shared/hooks/useToggle';
 import SearchContents from '@/features/search/searchContents';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
@@ -15,7 +15,7 @@ import { API_PATHS } from '@/shared/constants/apiPath';
 import axiosInstance from '@/shared/utils/axios';
 import { PlanListData, PlanListResponse } from '@/shared/types/plans';
 import { debounce } from 'lodash';
-import useHeaderHeight from '@/hooks/useHeaderHeight';
+import useHeaderHeight from '@/shared/hooks/useHeaderHeight';
 
 // GNB 레이아웃 컴포넌트에서 렌더링 되는 header 컴포넌트입니다.
 // 페이지마다 출력이 달라 path를 조회해 조건부 렌더링 합니다.
