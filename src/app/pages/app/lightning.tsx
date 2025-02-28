@@ -14,7 +14,7 @@ import { GetServerSideProps } from 'next';
 
 const INITIAL_COORDINATE = { lat: 37.5664056, lng: 126.9778222 };
 
-const LightningPage = () => {
+export const LightningPage = () => {
   const [filters, setFilters] = useState<{
     type: number | null;
     time: number | null;
@@ -89,5 +89,3 @@ export const getServerSideProps: GetServerSideProps = async () => {
     return { props: { dehydratedState: dehydrate(queryClient) } };
   }
 };
-
-export default LightningPage;

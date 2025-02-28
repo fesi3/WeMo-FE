@@ -3,14 +3,14 @@ import instance from '@/shared/utils/axios'; // ✅ axios instance 사용
 import { PlanData } from '@/shared/types/plans';
 import { usePageInfiniteScroll } from '@/hooks/usePageInfiniteScroll';
 import CardList from '@/components/plans/card/CardList';
-import Button from '@/components/shared/Button';
-import Header from '@/components/shared/layout/Header';
+import Button from '@/shared/Button';
+import Header from '@/widgets/Header';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/shared/lib/redux/store';
 import Image from 'next/image';
 import image from '@/assets/images/like-page-heart.png';
 
-const SavedGatheringPage = () => {
+export const SavedGatheringPage = () => {
   const [plans, setPlans] = useState<PlanData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -126,5 +126,3 @@ const SavedGatheringPage = () => {
     </div>
   );
 };
-
-export default SavedGatheringPage;

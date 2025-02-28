@@ -18,7 +18,7 @@ interface ReviewPageProps {
   dehydratedState: DehydratedState;
 }
 
-const ReviewPage = ({ dehydratedState }: ReviewPageProps) => {
+export const ReviewPage = ({ dehydratedState }: ReviewPageProps) => {
   return (
     <HydrationBoundary state={dehydratedState}>
       <div className="mx-auto max-w-7xl px-4 py-2">
@@ -51,5 +51,3 @@ export const getStaticProps: GetStaticProps = async () => {
     revalidate: 60,
   };
 };
-
-export default ReviewPage;

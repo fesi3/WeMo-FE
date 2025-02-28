@@ -1,52 +1,9 @@
-import { fetchMeetingDetailSSR } from '@/api/ssr/meetings';
-import MeetingDetailMain from '@/components/meetingDetail/MeetingDetailMain';
-import Header from '@/components/shared/layout/Header';
-import { QUERY_KEY } from '@/shared/constants/queryKey';
-import {
-  dehydrate,
-  DehydratedState,
-  HydrationBoundary,
-  QueryClient,
-} from '@tanstack/react-query';
-import { GetServerSideProps } from 'next';
-import { useRouter } from 'next/router';
+export { MeetingDetailPage as default } from '@/app/pages/app/meetings/[id]';
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.query;
-  const cookie = context.req.headers.cookie || '';
-  const queryClient = new QueryClient();
-  const idNum = parseInt(id as string);
-  await queryClient.prefetchQuery({
-    queryKey: QUERY_KEY.meetingDetail(idNum),
-    queryFn: () => fetchMeetingDetailSSR(idNum, cookie),
-  });
+// 기존 export default를 export로 변경했습니다.
 
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-};
+// 변경한 이유는 pages 폴더 내부에서 re-export 시키기 위해서 입니다.
 
-interface MeetingDetailPageProps {
-  dehydratedState: DehydratedState;
-}
+// export default는 re-export가 불가능해 개별적으로 export가 가능한 named export로 변경했습니다.
 
-export default function MeetingDetailPage({
-  dehydratedState,
-}: MeetingDetailPageProps) {
-  const router = useRouter();
-  return (
-    <HydrationBoundary state={dehydratedState}>
-      <Header
-        title="모임 상세"
-        onClickBack={() => {
-          router.push('/meetings');
-        }}
-      />
-      <div className="mx-auto max-w-screen-md">
-        <MeetingDetailMain />
-      </div>
-    </HydrationBoundary>
-  );
-}
+// 이 파일에서는 app 폴더에 위치한 파일을 re-export 하여 export default 하고 있습니다.

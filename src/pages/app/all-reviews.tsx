@@ -1,4 +1,4 @@
-export { MyMeeting as default } from '@/app/pages/app/user/meeting';
+export { ReviewPage as default } from '@/app/pages/app/all-reviews';
 
 // 기존 export default를 export로 변경했습니다.
 
