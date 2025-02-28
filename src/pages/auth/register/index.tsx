@@ -1,25 +1,9 @@
-import SignupForm from '@/components/auth/signup/signupForm';
-import useSignupForm from '@/hooks/useSignupForm';
+export { Register as default } from '@/app/pages/auth/register';
 
-import Header from '@/components/shared/layout/Header';
+// 기존 export default를 export로 변경했습니다.
 
-function Signup() {
-  const { signupFormValue, handleChange, handleSubmit, errors } =
-    useSignupForm();
+// 변경한 이유는 pages 폴더 내부에서 re-export 시키기 위해서 입니다.
 
-  return (
-    <>
-      <Header title="회원목록" />
-      <div className="mt-[22.5px] flex w-full justify-center md:mt-[80px]">
-        <SignupForm
-          signupFormValue={signupFormValue}
-          handleSubmit={handleSubmit}
-          handleChange={handleChange}
-          errors={errors}
-        />
-      </div>
-    </>
-  );
-}
+// export default는 re-export가 불가능해 개별적으로 export가 가능한 named export로 변경했습니다.
 
-export default Signup;
+// 이 파일에서는 app 폴더에 위치한 파일을 re-export 하여 export default 하고 있습니다.

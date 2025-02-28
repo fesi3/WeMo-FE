@@ -5,7 +5,7 @@ import useOAuthLogin from '@/hooks/useOAuthLogin';
 
 // oAuth 로그인 버튼을 누르면 리다이렉트되는 페이지
 // url에서 authorization code를 받아 서버에 전달한다.
-function NaverSocialLoginRedirect() {
+export function NaverSocialLoginRedirect() {
   useOAuthLogin('naver');
 
   return (
@@ -25,5 +25,3 @@ function NaverSocialLoginRedirect() {
     </div>
   );
 }
-
-export default NaverSocialLoginRedirect;
