@@ -6,7 +6,7 @@ import { splitAddress } from '@/shared/utils/splitAddress';
 import Image from 'next/image';
 import DateBadge from '@/components/shared/DateBadge';
 import AvatarList from './AvatarList';
-import IconWithCount from '../meetingDetail/ui/IconWithCount';
+import IconWithCount from '../../meeting/meetingDetail/ui/IconWithCount';
 import {
   EyeIcon,
   HeartIcon,

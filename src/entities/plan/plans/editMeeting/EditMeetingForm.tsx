@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import useToggle from '@/hooks/useToggle';
 import useCropper from '@/hooks/useCropper';
 import FileInput from '../../shared/FileInput';
-import CategoryRadioInput from '@/components/plans/editMeeting/CategoryRadioInput';
+import CategoryRadioInput from '@/entities/plan/plans/editMeeting/CategoryRadioInput';
 import { getImageUrls } from '@/api/images';
 import { CreateMeetingRequestBody } from '@/shared/types/api/meeting';
 import { createMeeting } from '@/api/meeting';

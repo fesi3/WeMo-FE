@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import LightningMap from '@/components/lightning/TempLightningMap';
-import LightningList from '@/components/lightning/LightningList';
-import LightningFilter from '@/components/lightning/LightningFilter';
-import LightningCreateContainer from '@/components/lightning/LightningCreateContainer';
+import LightningMap from '@/entities/lightning/TempLightningMap';
+import LightningList from '@/entities/lightning/LightningList';
+import LightningFilter from '@/entities/lightning/LightningFilter';
+import LightningCreateContainer from '@/entities/lightning/LightningCreateContainer';
 import {
   HydrationBoundary,
   QueryClient,

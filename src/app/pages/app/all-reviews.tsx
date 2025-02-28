@@ -1,8 +1,8 @@
-import Tabs from '@/components/plans/tab/Tabs';
+import Tabs from '@/entities/plan/plans/tab/Tabs';
 import { GetStaticProps } from 'next';
 import { Review } from '@/shared/types/reviewType';
 
-import ReviewContainer from '@/components/all-reviews/ReviewContainer';
+import ReviewContainer from '@/entities/review/all-reviews/ReviewContainer';
 import {
   dehydrate,
   DehydratedState,

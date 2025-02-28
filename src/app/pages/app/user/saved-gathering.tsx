@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import instance from '@/shared/utils/axios'; // ✅ axios instance 사용
 import { PlanData } from '@/shared/types/plans';
 import { usePageInfiniteScroll } from '@/hooks/usePageInfiniteScroll';
-import CardList from '@/components/plans/card/CardList';
+import CardList from '@/entities/plan/plans/card/CardList';
 import Button from '@/shared/Button';
 import Header from '@/widgets/Header';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/shared/lib/redux/store';
 import Image from 'next/image';
 import image from '@/assets/images/like-page-heart.png';
-import MypageLayout from '@/components/mypage/MypageLayout';
+import MypageLayout from '@/entities/mypage/MypageLayout';
 
 export const SavedGatheringPage = () => {
   const [plans, setPlans] = useState<PlanData[]>([]);

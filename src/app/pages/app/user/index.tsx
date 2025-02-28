@@ -1,12 +1,12 @@
 import { lazy, Suspense } from 'react';
 import { useMypageUserInfo } from '@/hooks/mypage/fetch/useMypageData';
-import MypageLayout from '@/components/mypage/MypageLayout';
-import IndexNav from '@/components/mypage/IndexNav';
+import MypageLayout from '@/entities/mypage/MypageLayout';
+import IndexNav from '@/entities/mypage/IndexNav';
 import Button from '@/shared/Button';
 
 // Lazy load ProfileCard, StatisticsCard, and IndexNav components
-const ProfileCard = lazy(() => import('@/components/mypage/ProfileCard'));
-const StatisticsCard = lazy(() => import('@/components/mypage/StatisticsCard'));
+const ProfileCard = lazy(() => import('@/entities/mypage/ProfileCard'));
+const StatisticsCard = lazy(() => import('@/entities/mypage/StatisticsCard'));
 
 export function MyPage() {
   const { data, isFetching, error } = useMypageUserInfo();

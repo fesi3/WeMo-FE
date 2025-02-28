@@ -5,13 +5,13 @@ import ssrInstance from '@/shared/utils/axios';
 //import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 //import { InfiniteData } from '@tanstack/react-query';
 import Header from '@/widgets/Header';
-import CardList from '@/components/meetings/card/CardList';
+import CardList from '@/entities/meeting/meetings/card/CardList';
 import MeetingsSortDropdown, {
   meetingsortOptions,
-} from '@/components/meetings/MeetingsSortDropdown';
+} from '@/entities/meeting/meetings/MeetingsSortDropdown';
 import CategoryDropdown, {
   categories,
-} from '@/components/meetings/dropdown/CategoryDropdown';
+} from '@/entities/meeting/meetings/dropdown/CategoryDropdown';
 //import { fetchMeetings } from '@/api/fetchMeetings';
 //import { FetchMeetingsResponse, Meeting } from '@/types/api/meetingList';
 import { useInfiniteScroll } from '@/hooks/useScrollObserver';

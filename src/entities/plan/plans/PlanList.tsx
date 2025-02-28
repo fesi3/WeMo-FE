@@ -1,5 +1,5 @@
 import React from 'react';
-import CardList from '@/components/plans/card/CardList';
+import CardList from '@/entities/plan/plans/card/CardList';
 import { PlanDataWithCategory } from '@/shared/types/plans';
 import { RegionOption, SubRegionOption } from '@/shared/types/reviewType';
 import dayjs from 'dayjs';

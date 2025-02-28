@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useReviews } from '@/hooks/useReviews';
 import FilterBar from '@/shared/FilterBar';
-import ReviewList from '@/components/all-reviews/ReviewList';
+import ReviewList from '@/entities/review/all-reviews/ReviewList';
 import { FilterState } from '@/shared/types/reviewType';
 import Loader from './Loader';
 

@@ -1,16 +1,16 @@
 // import ReviewCard from '@/components/mypage/ReviewCard';
 import { lazy, Suspense, useEffect, useState } from 'react';
 // import ReviewableCard from '@/components/mypage/ReviewableCard';
-import NoData from '@/components/mypage/NoData';
-import MypageLayout from '@/components/mypage/MypageLayout';
+import NoData from '@/entities/mypage/NoData';
+import MypageLayout from '@/entities/mypage/MypageLayout';
 import { API_PATHS } from '@/shared/constants/apiPath';
 import {
   useMypageReviewables,
   useMypageReviews,
 } from '@/hooks/mypage/fetch/useMypageData';
 
-const ReviewCard = lazy(() => import('@/components/mypage/ReviewCard'));
-const ReviewableCard = lazy(() => import('@/components/mypage/ReviewableCard'));
+const ReviewCard = lazy(() => import('@/entities/mypage/ReviewCard'));
+const ReviewableCard = lazy(() => import('@/entities/mypage/ReviewableCard'));
 
 export function MyReview() {
   const [activeTab, setActiveTab] = useState<'tabLeft' | 'tabRight'>('tabLeft');

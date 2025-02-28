@@ -1,5 +1,5 @@
 import { fetchPlanDetailSSR } from '@/shared/api/ssr/plans';
-import PlanDetailMain from '@/components/planDetail/PlanDetailMain';
+import PlanDetailMain from '@/entities/plan/planDetail/PlanDetailMain';
 import Header from '@/widgets/Header';
 import { QUERY_KEY } from '@/shared/constants/queryKey';
 

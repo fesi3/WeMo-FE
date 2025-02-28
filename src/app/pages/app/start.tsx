@@ -1,10 +1,10 @@
 import React from 'react';
 import Button from '@/shared/Button';
 import Link from 'next/link';
-import LoginBanner from '@/components/auth/login/loginBanner';
-import ButtonGoogle from '@/components/auth/login/oAuth/button/buttonGoogle';
-import ButtonKakao from '@/components/auth/login/oAuth/button/buttonKakao';
-import ButtonNaver from '@/components/auth/login/oAuth/button/buttonNaver';
+import LoginBanner from '@/features/auth/login/loginBanner';
+import ButtonGoogle from '@/features/auth/login/oAuth/button/buttonGoogle';
+import ButtonKakao from '@/features/auth/login/oAuth/button/buttonKakao';
+import ButtonNaver from '@/features/auth/login/oAuth/button/buttonNaver';
 
 export const StartPage = () => {
   return (
