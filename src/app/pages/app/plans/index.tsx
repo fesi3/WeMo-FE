@@ -7,8 +7,8 @@ import { SortOption } from '@/shared/types/reviewType';
 import { useCursorInfiniteScroll } from '@/hooks/useCursorInfiniteScrollPlans';
 import { PlanDataWithCategory, PlanListResponse } from '@/shared/types/plans';
 import { RegionOption, SubRegionOption } from '@/shared/types/reviewType';
-import Tabs from '@/components/plans/tab/Tabs';
-import RenderTabContent from '@/components/plans/RenderTabContent';
+import Tabs from '@/entities/plan/plans/tab/Tabs';
+import RenderTabContent from '@/entities/plan/plans/RenderTabContent';
 
 //const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 

@@ -1,8 +1,8 @@
 import React from 'react';
-import Greeting from '@/components/plans/Greeting';
-import SubCategoryFilter from '@/components/plans/SubCategoryFilter';
+import Greeting from '@/entities/plan/plans/Greeting';
+import SubCategoryFilter from '@/entities/plan/plans/SubCategoryFilter';
 //import PlanFilter from '@/components/plans/PlanFilter';
-import RenderCommonContent from '@/components/plans/RenderCommonContent';
+import RenderCommonContent from '@/entities/plan/plans/RenderCommonContent';
 import { PlanDataWithCategory } from '@/shared/types/plans';
 import { RegionOption, SubRegionOption } from '@/shared/types/reviewType';
 import { SortOption } from '@/shared/types/reviewType';

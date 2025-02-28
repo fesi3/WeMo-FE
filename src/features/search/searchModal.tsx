@@ -1,8 +1,8 @@
 import { PropsWithChildren, useEffect } from 'react';
-import ModalPortal from '@/components/shared/modals/ModalPortal';
-import ModalBackDrop from '@/components/shared/modals/ModalBackDrop';
+import ModalPortal from '@/shared/modals/ModalPortal';
+import ModalBackDrop from '@/shared/modals/ModalBackDrop';
 import CloseIcon from '@/assets/icons/close.svg';
-import { ModalProps } from '@/components/shared/modals/Modal';
+import { ModalProps } from '@/shared/modals/Modal';
 import { twMerge } from 'tailwind-merge';
 import { useRouter } from 'next/router';
 

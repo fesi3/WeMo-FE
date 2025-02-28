@@ -6,7 +6,7 @@ import {
 } from '@/shared/utils/dateUtils';
 
 import { useMyPlanCalendar } from '@/hooks/mypage/fetch/useMypageData';
-import MypageLayout from '@/components/mypage/MypageLayout';
+import MypageLayout from '@/entities/mypage/MypageLayout';
 import Button from '@/shared/Button';
 import { useRouter } from 'next/router';
 
@@ -14,13 +14,13 @@ type ValuePiece = Date | null;
 export type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 const MyPlanCalendar = lazy(
-  () => import('@/components/mypage/calendar/MyPlanCalendar'),
+  () => import('@/entities/mypage/calendar/MyPlanCalendar'),
 );
 const ScheduleTitle = lazy(
-  () => import('@/components/mypage/calendar/schedule/ScheduleTitle'),
+  () => import('@/entities/mypage/calendar/schedule/ScheduleTitle'),
 );
 const ScheduleList = lazy(
-  () => import('@/components/mypage/calendar/schedule/ScheduleList'),
+  () => import('@/entities/mypage/calendar/schedule/ScheduleList'),
 );
 
 export function CalendarPage() {

@@ -1,5 +1,5 @@
 import { fetchMeetingDetailSSR } from '@/shared/api/ssr/meetings';
-import MeetingDetailMain from '@/components/meetingDetail/MeetingDetailMain';
+import MeetingDetailMain from '@/entities/meeting/meetingDetail/MeetingDetailMain';
 import Header from '@/widgets/Header';
 import { QUERY_KEY } from '@/shared/constants/queryKey';
 import {
