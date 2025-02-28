@@ -1,6 +1,6 @@
 import LightningCreateButton from './LightningCreateButton';
 import LightningModal from './LightningModal';
-import useToggle from '@/hooks/useToggle';
+import useToggle from '@/shared/hooks/useToggle';
 import Modal from '@/components/shared/modals/Modal';
 
 const LightningCreateContainer = () => {

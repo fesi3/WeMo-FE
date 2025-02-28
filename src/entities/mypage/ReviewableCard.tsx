@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { fromNow } from '@/shared/utils/dateUtils';
 import { ReviewPlanData } from '@/shared/types/mypageType';
 import Button from '@/components/shared/Button';
-import useToggle from '@/hooks/useToggle';
+import useToggle from '@/shared/hooks/useToggle';
 import { useState } from 'react';
 import Modal from '../shared/modals/Modal';
 import ReviewModal from './ReviewsModal';

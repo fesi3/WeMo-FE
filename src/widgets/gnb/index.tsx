@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react';
 import { Noto_Sans_KR } from 'next/font/google';
 import GNBHeader from '@/widgets/gnb/header';
 import GNBFooter from '@/widgets/gnb/footer';
-import useAuth from '@/hooks/useAuth';
+import useAuth from '@/shared/hooks/useAuth';
 
 const noto = Noto_Sans_KR({
   subsets: ['latin'],

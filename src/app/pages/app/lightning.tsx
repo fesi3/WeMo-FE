@@ -8,7 +8,7 @@ import {
   QueryClient,
   dehydrate,
 } from '@tanstack/react-query';
-import { useLightningMeetups } from '@/hooks/useLightningMeetups';
+import { useLightningMeetups } from '@/shared/hooks/useLightningMeetups';
 import axiosInstance from '@/shared/utils/axios';
 import { GetServerSideProps } from 'next';
 

@@ -1,6 +1,6 @@
 import FileInput from '@/components/shared/FileInput';
-import useCropper from '@/hooks/useCropper';
-import useToggle from '@/hooks/useToggle';
+import useCropper from '@/shared/hooks/useCropper';
+import useToggle from '@/shared/hooks/useToggle';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import DatePickInput from './ui/DatePickInput';

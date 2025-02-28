@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import useToggle from '@/hooks/useToggle';
-import useCropper from '@/hooks/useCropper';
+import useToggle from '@/shared/hooks/useToggle';
+import useCropper from '@/shared/hooks/useCropper';
 import FileInput from '../../shared/FileInput';
 import CategoryRadioInput from '@/entities/plan/plans/editMeeting/CategoryRadioInput';
 import { getImageUrls } from '@/api/images';

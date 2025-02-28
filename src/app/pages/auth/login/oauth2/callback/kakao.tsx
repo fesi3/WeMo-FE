@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import logoWithColor from '@/assets/images/logo-with-color.png';
-import useOAuthLogin from '@/hooks/useOAuthLogin';
+import useOAuthLogin from '@/shared/hooks/useOAuthLogin';
 import { motion } from 'motion/react';
 
 // oAuth 로그인 버튼을 누르면 리다이렉트되는 페이지

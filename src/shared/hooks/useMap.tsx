@@ -1,5 +1,5 @@
 import { addressToCoordinate } from '@/shared/utils/addressToCoordinate';
-import useKakaoLoader from '@/hooks/useKakaoLoader';
+import useKakaoLoader from './useKakaoLoader';
 import { useEffect, useState } from 'react';
 import { Address, useDaumPostcodePopup } from 'react-daum-postcode';
 import { coordinateToAddress } from '@/shared/utils/coordinateToAddress';

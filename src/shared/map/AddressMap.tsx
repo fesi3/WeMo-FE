@@ -1,4 +1,4 @@
-import useKakaoLoader from '@/hooks/useKakaoLoader';
+import useKakaoLoader from '@/shared/hooks/useKakaoLoader';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
 interface AddressMapProps {

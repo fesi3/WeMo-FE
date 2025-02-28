@@ -13,11 +13,11 @@ import PlanCardListInMeeting from './ui/PlanCardListInMeeting';
 import ReviewListInMeeting from './ui/ReviewInMeeting';
 import { formatAverage } from '@/shared/utils/formatRating';
 import { useRouter } from 'next/router';
-import useMeetingDetailQuery from '@/hooks/useMeetingDetailQuery';
+import useMeetingDetailQuery from '@/shared/hooks/useMeetingDetailQuery';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/shared/lib/redux/store';
 import MeetingDetailFooter from './MeetingDetailFooter';
-import useJoinMeetingMutation from '@/hooks/useJoinMeetingMutation';
+import useJoinMeetingMutation from '@/shared/hooks/useJoinMeetingMutation';
 
 export default function MeetingDetailMain() {
   const router = useRouter();

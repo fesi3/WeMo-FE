@@ -2,7 +2,7 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import NoData from '@/entities/mypage/NoData';
 import MypageLayout from '@/entities/mypage/MypageLayout';
-import { useMypageMeetings } from '@/hooks/mypage/fetch/useMypageData';
+import { useMypageMeetings } from '@/shared/hooks/mypage/fetch/useMypageData';
 import { API_PATHS } from '@/shared/constants/apiPath';
 import CreateMeetingButton from '@/entities/plan/plans/editMeeting/CreateMeetingButton';
 
