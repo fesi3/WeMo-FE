@@ -1,5 +1,5 @@
 import React from 'react';
-import RegionDropdown from '@/components/shared/dropdown/RegionDropdown';
+import RegionDropdown from './dropdown/RegionDropdown';
 import SortDropdown from './dropdown/SortDropdown';
 import { RegionOption, SubRegionOption } from '@/shared/types/reviewType';
 
