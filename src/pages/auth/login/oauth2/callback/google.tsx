@@ -1,4 +1,4 @@
-export { Login as default } from '@/app/pages/auth/login';
+export { GoogleSocialLoginRedirect as default } from '@/app/pages/auth/login/oauth2/callback/google';
 
 // 기존 export default를 export로 변경했습니다.
 

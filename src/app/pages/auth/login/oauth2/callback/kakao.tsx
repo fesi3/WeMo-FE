@@ -1,12 +1,12 @@
 import Image from 'next/image';
-import useOAuthLogin from '@/hooks/useOAuthLogin';
 import logoWithColor from '@/assets/images/logo-with-color.png';
+import useOAuthLogin from '@/hooks/useOAuthLogin';
 import { motion } from 'motion/react';
 
 // oAuth 로그인 버튼을 누르면 리다이렉트되는 페이지
 // url에서 autherization code를 받아 서버에 전달한다.
-function GoogleSocialLoginRedirect() {
-  useOAuthLogin('google');
+export function KakaoSocialLoginRedirect() {
+  useOAuthLogin('kakao');
 
   return (
     <div className="flex h-screen w-full items-center justify-center text-3xl font-extrabold">
@@ -25,5 +25,3 @@ function GoogleSocialLoginRedirect() {
     </div>
   );
 }
-
-export default GoogleSocialLoginRedirect;
