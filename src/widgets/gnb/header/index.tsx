@@ -91,7 +91,7 @@ function GNBHeader() {
           <header className="fixed top-0 z-10 flex w-full items-center bg-white py-3 shadow-sm">
             <div className="mx-9 flex w-full items-center">
               {/* 로고 */}
-              <Link href={'/plans'} className="my-auto">
+              <Link href={'/app/plans'} className="my-auto">
                 <Image width={70} height={0} src={logo} alt="wemo-gnb-logo" />
               </Link>
               {/* 검색바 */}

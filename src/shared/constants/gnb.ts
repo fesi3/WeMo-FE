@@ -26,7 +26,7 @@ export const menuItems = [
 ];
 
 export const hideGnbFooterRoutes = [
-  '/auth/signup',
+  '/auth/register',
   '/auth/login',
   '/app/start',
   '/auth/login/oauth2/callback/kakao',

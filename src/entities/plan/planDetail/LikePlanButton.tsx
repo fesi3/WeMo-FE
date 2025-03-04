@@ -19,7 +19,7 @@ export default function LikePlanButton({
   return (
     <div className="relative w-[30px]">
       <motion.button
-        onClick={isLoggedIn ? onClick : () => router.push('/start')}
+        onClick={isLoggedIn ? onClick : () => router.push('/app/start')}
         key={isLiked ? 'active' : 'inactive'}
         initial={{ scale: 1 }}
         animate={{ scale: [1, 1.3, 1] }}
