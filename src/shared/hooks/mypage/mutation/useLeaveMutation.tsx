@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { leaveJoinedMeeting, leaveJoinedPlan } from '@/api/modifyMypage';
+import { leaveJoinedMeeting, leaveJoinedPlan } from '@/shared/api/modifyMypage';
 import { showToast } from '@/shared/utils/handleToast';
 import axios from 'axios';
 

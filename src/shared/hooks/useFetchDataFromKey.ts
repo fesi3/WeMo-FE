@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import fetchData from '@/api/fetchData';
+import fetchData from '@/shared/api/fetchData';
 import { RootState } from '@/shared/lib/redux/store';
 import axios from 'axios';
 

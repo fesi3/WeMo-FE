@@ -1,10 +1,10 @@
-import Carousel from '@/components/shared/Carousel';
-import ProgressBar from '@/components/shared/ProgressBar';
+import Carousel from '@/shared/Carousel';
+import ProgressBar from '@/shared/ProgressBar';
 import dayjs from 'dayjs';
-import AddressMap from '@/components/shared/map/AddressMap';
+import AddressMap from '@/shared/map/AddressMap';
 import { splitAddress } from '@/shared/utils/splitAddress';
 import Image from 'next/image';
-import DateBadge from '@/components/shared/DateBadge';
+import DateBadge from '@/shared/DateBadge';
 import AvatarList from './AvatarList';
 import IconWithCount from '../../meeting/meetingDetail/ui/IconWithCount';
 import {
@@ -14,13 +14,13 @@ import {
   StarIcon,
   UserIcon,
 } from '@heroicons/react/20/solid';
-import ArrowLeft from '@/assets/icons/arrow-left.svg';
+import ArrowLeft from '@/shared/assets/icons/arrow-left.svg';
 import { useRouter } from 'next/router';
 import { formatAverage } from '@/shared/utils/formatRating';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/shared/lib/redux/store';
 import usePlanDetailQuery from '@/shared/hooks/usePlanDetailQuery';
-import { attendPlan, leavePlan } from '@/api/plan';
+import { attendPlan, leavePlan } from '@/shared/api/plan';
 import LikePlanButton from './LikePlanButton';
 import usePlanLikeMutation from '@/shared/hooks/usePlanLikeMutation';
 import PlanAttendButton from './PlanAttendButton';

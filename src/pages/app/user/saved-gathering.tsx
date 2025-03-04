@@ -8,7 +8,7 @@ import Header from '@/widgets/Header';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/shared/lib/redux/store';
 import Image from 'next/image';
-import image from '@/assets/images/like-page-heart.png';
+import image from '@/shared/assets/images/like-page-heart.png';
 import MypageLayout from '@/entities/mypage/MypageLayout';
 
 export const SavedGatheringPage = () => {

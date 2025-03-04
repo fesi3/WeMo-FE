@@ -1,4 +1,4 @@
-import { fetchPlanDetail } from '@/api/plan';
+import { fetchPlanDetail } from '@/shared/api/plan';
 import { QUERY_KEY } from '@/shared/constants/queryKey';
 import { useQuery } from '@tanstack/react-query';
 

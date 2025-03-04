@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '@/components/shared/Button';
+import Button from '@/shared/Button';
 import { RootState } from '@/shared/lib/redux/store';
 import { useSelector } from 'react-redux';
 

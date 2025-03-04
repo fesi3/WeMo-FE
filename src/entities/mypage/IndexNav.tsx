@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import arrow from '@/assets/icons/arrow.png';
+import arrow from '@/shared/assets/icons/arrow.png';
 import Image from 'next/image';
 
 const IndexNav = () => {

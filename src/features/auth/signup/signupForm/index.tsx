@@ -1,8 +1,8 @@
-import Input, { InputProps } from '@/components/shared/input';
-import withLabel from '@/components/shared/input/HOC/withLabel';
-import Button from '@/components/shared/Button';
+import Input, { InputProps } from '@/shared/input';
+import withLabel from '@/shared/input/HOC/withLabel';
+import Button from '@/shared/Button';
 import { SignupFormTypes } from '../../type';
-import withError from '@/components/shared/input/HOC/withError';
+import withError from '@/shared/input/HOC/withError';
 
 interface SignupFormProps {
   handleSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;

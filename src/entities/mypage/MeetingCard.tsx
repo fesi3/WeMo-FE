@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import meetingImg from '@/assets/images/Rectangle 6188.png';
+import meetingImg from '@/shared/assets/images/Rectangle 6188.png';
 import { useRouter } from 'next/router';
 import OwnerButton from './OwnerButton';
 import { MeetingData } from '@/shared/types/mypageType';

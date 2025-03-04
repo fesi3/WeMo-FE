@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import HeartRating from '@/components/shared/HeartRating';
-import ReviewImageModal from '@/entities/review/all-reviews/ReviewImageModal';
+import HeartRating from '@/shared/HeartRating';
+import ReviewImageModal from './ReviewImageModal';
 import { Review } from '../../../shared/types/reviewType';
 import useToggle from '@/shared/hooks/useToggle';
-import defaultImage from '@/assets/images/study.png'; // 기본 이미지 임포트
+import defaultImage from '@/shared/assets/images/study.png'; // 기본 이미지 임포트
 
 interface ReviewListProps {
   reviews: Review[];

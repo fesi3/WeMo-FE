@@ -3,7 +3,7 @@ import {
   deleteCreatedMeeting,
   deleteCreatedPlan,
   deleteReview,
-} from '@/api/modifyMypage';
+} from '@/shared/api/modifyMypage';
 import { showToast } from '@/shared/utils/handleToast';
 import axios from 'axios';
 
