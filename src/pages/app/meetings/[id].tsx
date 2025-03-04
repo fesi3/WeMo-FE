@@ -9,7 +9,7 @@ export function MeetingDetail() {
       <Header
         title="모임 상세"
         onClickBack={() => {
-          router.push('/meetings');
+          router.push('/app/meetings');
         }}
       />
       <div className="mx-auto max-w-screen-md">

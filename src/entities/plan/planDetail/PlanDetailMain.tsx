@@ -44,7 +44,7 @@ export default function PlanDetailMain({ id }: PlanDetailMainProps) {
     if (isLoadingJoin) return;
     setIsLoadingJoin(true);
     if (!auth.isLoggedIn) {
-      router.push('/login');
+      router.push('/auth/login');
       return;
     }
     //mutation으로 리팩토링링
@@ -62,7 +62,7 @@ export default function PlanDetailMain({ id }: PlanDetailMainProps) {
   const onClickLike = () => {
     if (isPendingLike) return;
     if (auth === null || !auth.isLoggedIn) {
-      router.push('/login');
+      router.push('/auth/login');
     }
     mutate();
   };
@@ -152,7 +152,9 @@ export default function PlanDetailMain({ id }: PlanDetailMainProps) {
                   <button
                     className="p-2"
                     onClick={() =>
-                      router.push(`/meetings/${planData.meetingInfo.meetingId}`)
+                      router.push(
+                        `/app/meetings/${planData.meetingInfo.meetingId}`,
+                      )
                     }
                   >
                     <ArrowLeft className="rotate-180" />
