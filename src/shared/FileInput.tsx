@@ -1,8 +1,8 @@
 import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
-import CropperModal from '../planDetail/CropperModal';
+import CropperModal from '@/entities/plan/planDetail/CropperModal';
 import Modal from './modals/Modal';
 import { CroppedImageType } from '@/shared/types/cropperType';
-import CameraIcon from '@/assets/icons/camera.svg';
+import CameraIcon from '@/shared/assets/icons/camera.svg';
 import { XMarkIcon } from '@heroicons/react/20/solid';
 
 /**

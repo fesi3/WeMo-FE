@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import logo from '@/assets/images/title.png';
+import logo from '@/shared/assets/images/title.png';
 import GNBItem from '../item';
 import { useRouter } from 'next/router';
 import { hideGnbHeaderRoutes } from '@/shared/constants/gnb';

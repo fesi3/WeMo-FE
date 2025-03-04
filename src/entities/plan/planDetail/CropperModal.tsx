@@ -1,7 +1,7 @@
 import getCroppedImg from '@/shared/utils/getCroppedImage';
 import { useCallback, useState } from 'react';
 import Cropper from 'react-easy-crop';
-import Button from '../shared/Button';
+import Button from '@/shared/Button';
 
 interface CropperModalProps {
   imageSrc: string;
