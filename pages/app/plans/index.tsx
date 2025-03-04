@@ -1,4 +1,4 @@
-export { Home as default } from '@/app/pages/app/plans';
+export { Home as default } from '@/pages/app/plans';
 
 // 기존 export default를 export로 변경했습니다.
 

@@ -1,4 +1,4 @@
-export { PlanDetailPage as default } from '@/app/pages/app/plans/[id]';
+export { PlanDetailPage as default } from '@/pages/app/plans/[id]';
 
 // 기존 export default를 export로 변경했습니다.
 
