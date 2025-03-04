@@ -1,7 +1,7 @@
 import React from 'react';
-import Modal from '../../../components/shared/modals/Modal';
+import Modal from '../modals/Modal';
 import CalendarPicker from './CalendarPicker';
-import useToggle from '../../../hooks/useToggle';
+import useToggle from '../hooks/useToggle';
 import dayjs from 'dayjs';
 
 interface DateModalProps {

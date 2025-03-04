@@ -3,8 +3,8 @@ import instance from '@/shared/utils/axios';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/shared/lib/redux/store';
 import { showToast } from '@/shared/utils/handleToast';
-import HeartIcon from '@/assets/icons/heart.svg';
-import EmptyHeartIcon from '@/assets/icons/emptyHeart.svg';
+import HeartIcon from '@/shared/assets/icons/heart.svg';
+import EmptyHeartIcon from '@/shared/assets/icons/emptyHeart.svg';
 
 type LikeButtonProps = {
   planId: string;

@@ -4,7 +4,7 @@ import React from 'react';
 import PlanFilter from './PlanFilter';
 //import CreateMeetingButton from './editMeeting/CreateMeetingButton';
 import PlanList from './PlanList';
-import SortDropdown from '../shared/dropdown/SortDropdown';
+import SortDropdown from '@/shared/dropdown/SortDropdown';
 import { SortOption } from '@/shared/types/reviewType';
 import { PlanDataWithCategory } from '@/shared/types/plans';
 import { RegionOption, SubRegionOption } from '@/shared/types/reviewType';

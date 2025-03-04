@@ -1,5 +1,5 @@
 import React from 'react';
-import Dropdown from '@/components/shared/dropdown/DropDown';
+import Dropdown from './DropDown';
 import { AdjustmentsVerticalIcon } from '@heroicons/react/20/solid';
 
 interface SortOption {

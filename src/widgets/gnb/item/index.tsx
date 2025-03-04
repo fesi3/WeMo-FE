@@ -1,13 +1,13 @@
 import { useRouter } from 'next/router';
 import { twMerge } from 'tailwind-merge';
 import { useMemo } from 'react';
-import HomeIcon from '@/assets/icons/GNB_home.svg';
-import AllReviewsIcon from '@/assets/icons/GNB_review.svg';
-import EyeIcon from '@/assets/icons/eye.svg';
-import ThunderIcon from '@/assets/icons/GNB_thunder.svg';
-import ProfileIcon from '@/assets/icons/GNB_profile.svg';
-import SearchIcon from '@/assets/icons/GNB_search.svg';
-import BellIcon from '@/assets/icons/GNB_bell.svg';
+import HomeIcon from '@/shared/assets/icons/GNB_home.svg';
+import AllReviewsIcon from '@/shared/assets/icons/GNB_review.svg';
+import EyeIcon from '@/shared/assets/icons/eye.svg';
+import ThunderIcon from '@/shared/assets/icons/GNB_thunder.svg';
+import ProfileIcon from '@/shared/assets/icons/GNB_profile.svg';
+import SearchIcon from '@/shared/assets/icons/GNB_search.svg';
+import BellIcon from '@/shared/assets/icons/GNB_bell.svg';
 import LinkWrapper from '../wrapper';
 
 interface GNBItemProps {

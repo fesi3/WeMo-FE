@@ -4,7 +4,7 @@ import { Analytics } from '@vercel/analytics/react';
 import Head from 'next/head';
 import GNB from '@/widgets/gnb';
 import Provider from '@/app/providers';
-import '@/styles/globals.css';
+import './styles/globals.css';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
