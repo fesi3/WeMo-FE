@@ -18,7 +18,7 @@ export default function PlanCardListInMeeting({
       {planList.slice(0, 2).map((plan) => (
         <button
           onClick={() => {
-            router.push(`/plans/${plan.planId}`);
+            router.push(`/app/plans/${plan.planId}`);
           }}
           key={plan.planId}
           className="flex w-1/2 flex-col gap-2 rounded-md border border-black-sub border-opacity-30 p-2"

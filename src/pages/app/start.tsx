@@ -13,7 +13,7 @@ export const StartPage = () => {
         <LoginBanner />
       </div>
       <div className="mb-4">
-        <Link href={'/plans'}>
+        <Link href={'/app/plans'}>
           <Button
             text={'비회원으로 시작하기'}
             size={'large'}
