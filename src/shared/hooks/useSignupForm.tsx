@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-escape */
 import { useCallback, useState } from 'react';
 import debounce from 'lodash/debounce';
-import { SignupFormTypes } from '@/features/auth/type';
+import { RegisterFormTypes } from '@/features/auth/type';
 import { useMutation } from '@tanstack/react-query';
 import fetchData from '@/shared/api/fetchData';
 import { useRouter } from 'next/router';
@@ -39,7 +39,7 @@ function useSignupForm() {
   } = API_PATHS;
 
   const signupMutation = useMutation<
-    SignupFormTypes,
+    RegisterFormTypes,
     AxiosError<{ message: string }>
   >({
     mutationFn: () =>
@@ -50,7 +50,7 @@ function useSignupForm() {
       }),
     onSuccess: () => {
       alert('회원가입이 완료되었습니다!');
-      router.push('/login');
+      router.push('/auth/login');
     },
     onError: (error) => {
       alert(error.response?.data.message);

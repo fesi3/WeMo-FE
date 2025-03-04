@@ -53,7 +53,7 @@ const MeetingCard = ({ meetingData }: MeetingProps) => {
 
   // 페이지 이동
   const handleDetailPage = () => {
-    router.push(`/meetings/${meetingId}`);
+    router.push(`/app/meetings/${meetingId}`);
   };
 
   return (
