@@ -1,9 +1,39 @@
-export { MeetingDetailPage as default } from '@/pages/app/meetings/[id]';
+import { fetchMeetingDetailSSR } from '@/shared/api/ssr/meetings';
+import { QUERY_KEY } from '@/shared/constants/queryKey';
+import { GetServerSideProps } from 'next';
+import { MeetingDetail } from '@/pages/app/meetings/[id]';
+import {
+  dehydrate,
+  DehydratedState,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
+interface MeetingDetailProps {
+  dehydratedState: DehydratedState;
+}
+export default function MeetingDetailPage({
+  dehydratedState,
+}: MeetingDetailProps) {
+  return (
+    <HydrationBoundary state={dehydratedState}>
+      <MeetingDetail />
+    </HydrationBoundary>
+  );
+}
 
-// 기존 export default를 export로 변경했습니다.
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { id } = context.query;
+  const cookie = context.req.headers.cookie || '';
+  const queryClient = new QueryClient();
+  const idNum = parseInt(id as string);
+  await queryClient.prefetchQuery({
+    queryKey: QUERY_KEY.meetingDetail(idNum),
+    queryFn: () => fetchMeetingDetailSSR(idNum, cookie),
+  });
 
-// 변경한 이유는 pages 폴더 내부에서 re-export 시키기 위해서 입니다.
-
-// export default는 re-export가 불가능해 개별적으로 export가 가능한 named export로 변경했습니다.
-
-// 이 파일에서는 app 폴더에 위치한 파일을 re-export 하여 export default 하고 있습니다.
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
