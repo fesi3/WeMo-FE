@@ -1,7 +1,7 @@
 import LightningCreateButton from './LightningCreateButton';
 import LightningModal from './LightningModal';
 import useToggle from '@/shared/hooks/useToggle';
-import Modal from '@/components/shared/modals/Modal';
+import Modal from '@/shared/modals/Modal';
 
 const LightningCreateContainer = () => {
   const { toggleValue: isModalOpen, handleOpen, handleClose } = useToggle();

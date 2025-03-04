@@ -1,10 +1,10 @@
-import Button from '@/components/shared/Button';
-import Modal from '@/components/shared/modals/Modal';
+import Button from '@/shared/Button';
+import Modal from '@/shared/modals/Modal';
 import { Coordinate } from '@/shared/types/mapType';
 import { addressToCoordinate } from '@/shared/utils/addressToCoordinate';
 import { Address, useDaumPostcodePopup } from 'react-daum-postcode';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import MarkerIcon from '@/assets/icons/location_marker.svg';
+import MarkerIcon from '@/shared/assets/icons/location_marker.svg';
 interface AddressSearchModalProps {
   closeMap: () => void;
   isOpenMap: boolean;
