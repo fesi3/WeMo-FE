@@ -1,27 +1,9 @@
-import Image from 'next/image';
-import { motion } from 'framer-motion';
-import logoWithColor from '@/shared/assets/images/logo-with-color.png';
-import useOAuthLogin from '@/shared/hooks/useOAuthLogin';
+export { NaverSocialLoginRedirect as default } from '@/app/pages/auth/login/oauth2/callback/naver';
 
-// oAuth 로그인 버튼을 누르면 리다이렉트되는 페이지
-// url에서 authorization code를 받아 서버에 전달한다.
-export function NaverSocialLoginRedirect() {
-  useOAuthLogin('naver');
+// 기존 export default를 export로 변경했습니다.
 
-  return (
-    <div className="flex h-screen w-full items-center justify-center text-3xl font-extrabold">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-      >
-        <Image
-          width={234}
-          height={177}
-          src={logoWithColor}
-          alt="logo-with-color"
-        />
-      </motion.div>
-    </div>
-  );
-}
+// 변경한 이유는 pages 폴더 내부에서 re-export 시키기 위해서 입니다.
+
+// export default는 re-export가 불가능해 개별적으로 export가 가능한 named export로 변경했습니다.
+
+// 이 파일에서는 app 폴더에 위치한 파일을 re-export 하여 export default 하고 있습니다.

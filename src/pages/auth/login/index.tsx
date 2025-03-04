@@ -1,21 +1,9 @@
-import LoginBanner from '@/features/auth/login/loginBanner';
-import LoginForm from '@/features/auth/login/loginForm';
-import useLoginForm from '@/shared/hooks/useLoginForm';
-import FindInfo from '@/features/auth/login/findInfo';
+export { Login as default } from '@/app/pages/auth/login';
 
-export function Login() {
-  const { loginFormValue, handleChange, handleSubmit, errors } = useLoginForm();
+// 기존 export default를 export로 변경했습니다.
 
-  return (
-    <div className="flex h-screen flex-col items-center justify-center">
-      <LoginBanner description={'당신의 관심이 만나는 순간'} />
-      <LoginForm
-        handleSubmit={handleSubmit}
-        handleChange={handleChange}
-        loginFormValue={loginFormValue}
-        errors={errors}
-      />
-      <FindInfo />
-    </div>
-  );
-}
+// 변경한 이유는 pages 폴더 내부에서 re-export 시키기 위해서 입니다.
+
+// export default는 re-export가 불가능해 개별적으로 export가 가능한 named export로 변경했습니다.
+
+// 이 파일에서는 app 폴더에 위치한 파일을 re-export 하여 export default 하고 있습니다.

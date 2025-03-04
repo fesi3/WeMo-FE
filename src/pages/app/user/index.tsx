@@ -1,61 +1,9 @@
-import { lazy, Suspense } from 'react';
-import { useMypageUserInfo } from '@/shared/hooks/mypage/fetch/useMypageData';
-import MypageLayout from '@/entities/mypage/MypageLayout';
-import IndexNav from '@/entities/mypage/IndexNav';
-import Button from '@/shared/Button';
+export { MyPage as default } from '@/app/pages/app/user';
 
-// Lazy load ProfileCard, StatisticsCard, and IndexNav components
-const ProfileCard = lazy(() => import('@/entities/mypage/ProfileCard'));
-const StatisticsCard = lazy(() => import('@/entities/mypage/StatisticsCard'));
+// 기존 export default를 export로 변경했습니다.
 
-export function MyPage() {
-  const { data, isFetching, error } = useMypageUserInfo();
-  const userData = data?.data;
+// 변경한 이유는 pages 폴더 내부에서 re-export 시키기 위해서 입니다.
 
-  // if (isFetching) return <div>Loading...</div>;
-  if (error) return <div>[Error!!] {error.message}</div>;
-  // if (!userData) return <div>No Data...</div>;
+// export default는 re-export가 불가능해 개별적으로 export가 가능한 named export로 변경했습니다.
 
-  return (
-    <MypageLayout>
-      <div className="flex flex-col gap-4 rounded-lg p-4 md:gap-7">
-        {!isFetching && userData ? (
-          <>
-            <section>
-              <Suspense fallback={<div>Loading Profile...</div>}>
-                <ProfileCard user={userData} />
-              </Suspense>
-            </section>
-            <section>
-              <StatisticsCard user={userData} />
-            </section>
-            <section className="mb-6 mt-3">
-              <IndexNav />
-            </section>
-          </>
-        ) : (
-          <p>Loading...</p>
-        )}
-        <div className="mt-auto flex items-center justify-center gap-3">
-          <Button
-            text="탈퇴하기"
-            variant={'text'}
-            className="py-1 text-gray-500 hover:text-red-600"
-            onClick={() => {
-              alert('준비 중인 기능입니다!');
-            }}
-          />
-          {'|'}
-          <Button
-            text="로그아웃"
-            variant={'text'}
-            className="py-1 text-gray-500 underline hover:text-black"
-            onClick={() => {
-              alert('준비 중인 기능입니다!');
-            }}
-          />
-        </div>
-      </div>
-    </MypageLayout>
-  );
-}
+// 이 파일에서는 app 폴더에 위치한 파일을 re-export 하여 export default 하고 있습니다.
