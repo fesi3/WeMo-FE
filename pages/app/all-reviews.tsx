@@ -1,4 +1,4 @@
-export { ReviewPage as default } from '@/app/pages/app/all-reviews';
+export { ReviewPage as default } from '@/pages/app/all-reviews';
 
 // 기존 export default를 export로 변경했습니다.
 
