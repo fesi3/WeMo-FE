@@ -20,7 +20,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/',
-        destination: 'app/plans',
+        destination: 'app',
         permanent: true,
       },
     ];

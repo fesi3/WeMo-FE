@@ -1,6 +1,7 @@
-import Avatar from '../shared/avatar/Avatar';
-import Carousel from '../shared/Carousel';
-import DateBadge from '../shared/DateBadge';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import Avatar from '@/shared/avatar/Avatar';
+import Carousel from '@/shared/Carousel';
+import DateBadge from '@/shared/DateBadge';
 import SectionContainer from './layout/SectionContainer';
 import IconWithCount from './ui/IconWithCount';
 import MemberList from './ui/MemberList';
@@ -93,7 +94,7 @@ export default function MeetingDetailMain() {
         </SectionContainer>
         <SectionContainer onClickViewMore={() => {}} title="리뷰 목록">
           <div className="flex flex-col gap-5">
-            {meetingData.reviewList.map((review) => (
+            {meetingData.reviewList.map((review: any) => (
               <ReviewListInMeeting key={review.createdAt} review={review} />
             ))}
           </div>
