@@ -46,7 +46,7 @@ export function PlanDetailPage({
       <Header
         title="일정 상세"
         onClickBack={() => {
-          router.push('/plans');
+          router.push('/app/plans');
         }}
       />
       <div className="mx-auto min-h-screen max-w-screen-md">
