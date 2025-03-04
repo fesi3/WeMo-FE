@@ -14,7 +14,7 @@ function InternalServerError() {
         {'문제가 발생했습니다. 잠시 후에 다시 시도해주세요. '} <br />
       </p>
 
-      <Link href={'/plans'}>
+      <Link href={'/app/plans'}>
         <Button text="Back to Homepage" className="px-6 py-2" />
       </Link>
     </div>

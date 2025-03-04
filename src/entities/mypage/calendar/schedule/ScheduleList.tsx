@@ -23,7 +23,7 @@ const ScheduleList = ({ renderPlanListData }: ScheduleListProps) => {
   const time = planCardTime(dateTime);
   return (
     <ul className="mt-2">
-      <Link href={`/plans/${planId}`}>
+      <Link href={`/app/plans/${planId}`}>
         <li
           className={`flex flex-1 items-center justify-between rounded-lg border p-3 ${isCompleted ? 'bg-gray-200 opacity-70' : 'bg-white'}`}
         >
