@@ -36,7 +36,7 @@ export default function MeetingDetailMain() {
     if (auth.isLoggedIn) {
       mutate();
     } else {
-      router.push('/start');
+      router.push('/app/start');
     }
   };
 
