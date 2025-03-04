@@ -1,23 +1,23 @@
 import Input, { InputProps } from '@/shared/input';
 import withLabel from '@/shared/input/HOC/withLabel';
 import Button from '@/shared/Button';
-import { SignupFormTypes } from '../../type';
+import { RegisterFormTypes } from '../../type';
 import withError from '@/shared/input/HOC/withError';
 
-interface SignupFormProps {
+interface RegisterFormProps {
   handleSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  signupFormValue: SignupFormTypes;
+  registerFormValue: RegisterFormTypes;
   errors: { [key: string]: string | null };
 }
 
 const InputWithMessage = withError<InputProps>(Input);
 const InputWithLabel = withLabel(InputWithMessage);
 
-function SignupForm(props: SignupFormProps) {
-  const { handleSubmit, handleChange, signupFormValue, errors } = props;
+function RegisterForm(props: RegisterFormProps) {
+  const { handleSubmit, handleChange, registerFormValue, errors } = props;
   const { nickname, companyName, email, password, passwordCheck } =
-    signupFormValue;
+    registerFormValue;
   const {
     nickname: nicknameError,
     companyName: companyNameError,
@@ -99,4 +99,4 @@ function SignupForm(props: SignupFormProps) {
   );
 }
 
-export default SignupForm;
+export default RegisterForm;
