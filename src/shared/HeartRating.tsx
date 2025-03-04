@@ -1,6 +1,6 @@
 import React from 'react';
-import YellowStar from '../../../src/assets/icons/yellowStar.svg';
-import EmptyStar from '../../../src/assets/icons/emptyStar.svg';
+import YellowStar from '@/shared/assets/icons/yellowStar.svg';
+import EmptyStar from '@/shared/assets/icons/emptyStar.svg';
 
 interface HeartRatingProps {
   rating: number; // 현재 평점

@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import debounce from 'lodash/debounce';
 import { SignupFormTypes } from '@/features/auth/type';
 import { useMutation } from '@tanstack/react-query';
-import fetchData from '@/api/fetchData';
+import fetchData from '@/shared/api/fetchData';
 import { useRouter } from 'next/router';
 import { API_PATHS } from '@/shared/constants/apiPath';
 import { AxiosError } from 'axios';

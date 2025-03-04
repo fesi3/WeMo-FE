@@ -1,5 +1,5 @@
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import { fetchLightningMeetups } from '@/api/fetchMeetups';
+import { fetchLightningMeetups } from '@/shared/api/fetchMeetups';
 import { LightningMeetup } from '@/shared/types/lightningType';
 
 interface Filters {

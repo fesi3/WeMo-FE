@@ -1,6 +1,6 @@
 import React from 'react';
-import Modal from '@/components/shared/modals/Modal'; // Modal 컴포넌트
-import Carousel from '@/components/shared/Carousel'; // Carousel 컴포넌트
+import Modal from '@/shared/modals/Modal';
+import Carousel from '@/shared/Carousel';
 
 interface ReviewImageModalProps {
   isOpen: boolean;

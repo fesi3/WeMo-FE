@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import logoWithColor from '@/assets/images/logo-with-color.png';
+import logoWithColor from '@/shared/assets/images/logo-with-color.png';
 import { twMerge } from 'tailwind-merge';
 
 function LoginBanner({ description }: { description?: string }) {

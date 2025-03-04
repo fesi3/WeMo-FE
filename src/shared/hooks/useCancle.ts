@@ -1,4 +1,4 @@
-import fetchData from '@/api/fetchData';
+import fetchData from '@/shared/api/fetchData';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 

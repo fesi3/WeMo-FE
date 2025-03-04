@@ -1,4 +1,4 @@
-import ArrowLeft from '@/assets/icons/arrow-left.svg';
+import ArrowLeft from '@/shared/assets/icons/arrow-left.svg';
 import { useRouter } from 'next/router';
 
 interface HeaderProps {

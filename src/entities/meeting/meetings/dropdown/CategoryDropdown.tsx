@@ -1,5 +1,5 @@
 import React from 'react';
-import Dropdown from '@/components/shared/dropdown/DropDown';
+import Dropdown from '@/shared/dropdown/DropDown';
 
 export const categories = [
   { id: 0, name: '전체' },

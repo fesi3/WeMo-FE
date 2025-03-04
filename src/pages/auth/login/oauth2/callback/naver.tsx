@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import logoWithColor from '@/assets/images/logo-with-color.png';
+import logoWithColor from '@/shared/assets/images/logo-with-color.png';
 import useOAuthLogin from '@/shared/hooks/useOAuthLogin';
 
 // oAuth 로그인 버튼을 누르면 리다이렉트되는 페이지

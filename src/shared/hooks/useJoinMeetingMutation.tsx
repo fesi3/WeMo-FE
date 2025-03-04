@@ -1,4 +1,4 @@
-import { joinMeeting, leaveMeeting } from '@/api/meeting';
+import { joinMeeting, leaveMeeting } from '@/shared/api/meeting';
 import { QUERY_KEY } from '@/shared/constants/queryKey';
 import { MeetingDetailResponse } from '@/shared/types/api/meeting';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
