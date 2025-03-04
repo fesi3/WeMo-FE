@@ -1,4 +1,4 @@
-export interface SignupFormTypes {
+export interface RegisterFormTypes {
   nickname: string;
   companyName: string;
   email: string;
