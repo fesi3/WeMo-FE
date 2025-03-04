@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import { GetServerSideProps } from 'next';
 //import instance from '@/utils/axios';
-import ssrInstance from '@/shared/utils/axios';
 //import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 //import { InfiniteData } from '@tanstack/react-query';
 import Header from '@/widgets/Header';
@@ -19,15 +17,12 @@ import { useMeetings } from '@/shared/hooks/useMeetingsQuery';
 import { InfiniteData } from '@tanstack/react-query';
 import { FetchMeetingsResponse, Meeting } from '@/shared/types/api/meetingList';
 
-interface MeetingsPageProps {
+interface MeetingsProps {
   initialMeetings: Meeting[];
   nextCursor: number | null;
 }
 
-export const MeetingsPage = ({
-  initialMeetings,
-  nextCursor,
-}: MeetingsPageProps) => {
+export const Meetings = ({ initialMeetings, nextCursor }: MeetingsProps) => {
   // 정렬 및 카테고리 상태
   const [selectedSort, setSelectedSort] = useState(meetingsortOptions[0].value);
   const [selectedCategory, setSelectedCategory] = useState<number | undefined>(
@@ -111,24 +106,4 @@ export const MeetingsPage = ({
       </div>
     </div>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  try {
-    const response = await ssrInstance.get('/api/meetings', {
-      params: {
-        size: 10,
-      },
-      withCredentials: false,
-    });
-    return {
-      props: {
-        initialMeetings: response.data.data.meetingList,
-        nextCursor: response.data.data.nextCursor || null,
-      },
-    };
-  } catch (error) {
-    console.error('모임 목록 불러오기 실패', error);
-    return { props: { initialMeetings: [], nextCursor: null } };
-  }
 };
