@@ -1,7 +1,7 @@
 import { CalendarPlanData } from '@/shared/types/mypageType';
 import React from 'react';
 import Calendar from 'react-calendar';
-import { Value } from '@/pages/app/user/calendar';
+import { Value } from '@/app/pages/app/user/calendar';
 import styles from './planCalendar.module.css';
 
 interface CalendarComponentProps {
