@@ -1,9 +1,53 @@
-export { ReviewPage as default } from '@/app/pages/app/all-reviews';
+import Tabs from '@/entities/plan/plans/tab/Tabs';
+import { GetStaticProps } from 'next';
+import { Review } from '@/shared/types/reviewType';
 
-// 기존 export default를 export로 변경했습니다.
+import ReviewContainer from '@/entities/review/all-reviews/ReviewContainer';
+import {
+  dehydrate,
+  DehydratedState,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
+import fetchReviews from '@/shared/api/reviews';
 
-// 변경한 이유는 pages 폴더 내부에서 re-export 시키기 위해서 입니다.
+const CATEGORIES = [{ category: '달램핏' }, { category: '워케이션' }];
+const DEFAULT_CATEGORY = CATEGORIES[0].category;
 
-// export default는 re-export가 불가능해 개별적으로 export가 가능한 named export로 변경했습니다.
+interface ReviewPageProps {
+  dehydratedState: DehydratedState;
+}
 
-// 이 파일에서는 app 폴더에 위치한 파일을 re-export 하여 export default 하고 있습니다.
+export const ReviewPage = ({ dehydratedState }: ReviewPageProps) => {
+  return (
+    <HydrationBoundary state={dehydratedState}>
+      <div className="mx-auto max-w-7xl px-4 py-2">
+        <Tabs
+          tabs={CATEGORIES}
+          defaultTab={DEFAULT_CATEGORY}
+          renderContent={(category) => <ReviewContainer category={category} />}
+        />
+      </div>
+    </HydrationBoundary>
+  );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const queryClient = new QueryClient();
+  const category = '달램핏';
+  const filters = { region: null, subRegion: null, date: null, sort: null };
+  await queryClient.prefetchInfiniteQuery({
+    queryKey: ['reviews', category, filters],
+    queryFn: ({ pageParam = 1 }) => fetchReviews(category, filters, pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage: { reviews: Review[]; nextPage?: number }) =>
+      lastPage.nextPage ?? null,
+  });
+
+  const dehydratedState = dehydrate(queryClient);
+
+  return {
+    props: JSON.parse(JSON.stringify({ dehydratedState })),
+    revalidate: 60,
+  };
+};

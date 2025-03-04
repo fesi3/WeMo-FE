@@ -1,9 +1,91 @@
-export { LightningPage as default } from '@/app/pages/app/lightning';
+import { useState } from 'react';
+import LightningMap from '@/entities/lightning/TempLightningMap';
+import LightningList from '@/entities/lightning/LightningList';
+import LightningFilter from '@/entities/lightning/LightningFilter';
+import LightningCreateContainer from '@/entities/lightning/LightningCreateContainer';
+import {
+  HydrationBoundary,
+  QueryClient,
+  dehydrate,
+} from '@tanstack/react-query';
+import { useLightningMeetups } from '@/shared/hooks/useLightningMeetups';
+import axiosInstance from '@/shared/utils/axios';
+import { GetServerSideProps } from 'next';
 
-// 기존 export default를 export로 변경했습니다.
+const INITIAL_COORDINATE = { lat: 37.5664056, lng: 126.9778222 };
 
-// 변경한 이유는 pages 폴더 내부에서 re-export 시키기 위해서 입니다.
+export const LightningPage = () => {
+  const [filters, setFilters] = useState<{
+    type: number | null;
+    time: number | null;
+  }>({
+    type: null,
+    time: null,
+  });
 
-// export default는 re-export가 불가능해 개별적으로 export가 가능한 named export로 변경했습니다.
+  const handleUpdateFilters = (
+    newFilters: Partial<{ type: number | null; time: number | null }>,
+  ) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      ...newFilters,
+    }));
+  };
 
-// 이 파일에서는 app 폴더에 위치한 파일을 re-export 하여 export default 하고 있습니다.
+  const [mapCenter, setMapCenter] = useState(INITIAL_COORDINATE);
+
+  const {
+    data: meetups,
+    isFetching,
+    refetch,
+  } = useLightningMeetups(mapCenter.lat, mapCenter.lng, 10, filters);
+
+  return (
+    <HydrationBoundary state={dehydrate(new QueryClient())}>
+      <div>
+        <LightningFilter onUpdateFilters={handleUpdateFilters} />
+        <LightningMap
+          meetups={meetups || []}
+          mapCenter={mapCenter}
+          setMapCenter={setMapCenter}
+          refetchMeetups={refetch}
+        />
+        <LightningList meetups={meetups || []} isFetching={isFetching} />
+        <LightningCreateContainer />
+      </div>
+    </HydrationBoundary>
+  );
+};
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const queryClient = new QueryClient();
+  const initialCoordinate = { lat: 37.5664056, lng: 126.9778222 };
+
+  try {
+    const { data } = await axiosInstance.get(
+      `/api/lightnings?latitude=${initialCoordinate.lat}&longitude=${initialCoordinate.lng}&radius=3&size=10`,
+    );
+
+    console.log('SSR에서 받은 데이터:', data);
+
+    await queryClient.prefetchQuery({
+      queryKey: [
+        'lightningMeetups',
+        initialCoordinate.lat,
+        initialCoordinate.lng,
+        10,
+        {},
+      ],
+      queryFn: () => Promise.resolve(data.data.lightningList || []),
+    });
+
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
+    };
+  } catch (error) {
+    console.error('API 요청 실패:', error);
+    return { props: { dehydratedState: dehydrate(queryClient) } };
+  }
+};
