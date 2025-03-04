@@ -1,9 +1,52 @@
-export { Home as default } from '@/pages/app/plans';
+import { Home } from '@/pages/app/plans';
+import type { GetServerSideProps } from 'next';
+import { ssrInstance } from '@/shared/utils/axiosSsr';
+import { PlanDataWithCategory, PlanListResponse } from '@/shared/types/plans';
 
-// 기존 export default를 export로 변경했습니다.
+interface HomeProps {
+  initialPlans: PlanDataWithCategory[];
+  initialCursor: number | null;
+}
 
-// 변경한 이유는 pages 폴더 내부에서 re-export 시키기 위해서 입니다.
+export default function HomePage(props: HomeProps) {
+  return (
+    <Home
+      initialPlans={props.initialPlans}
+      initialCursor={props.initialCursor}
+    />
+  );
+}
 
-// export default는 re-export가 불가능해 개별적으로 export가 가능한 named export로 변경했습니다.
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  try {
+    const cookie = req.headers.cookie || '';
+    const isLoggedIn = !!cookie.includes('accessToken');
 
-// 이 파일에서는 app 폴더에 위치한 파일을 re-export 하여 export default 하고 있습니다.
+    const res = await ssrInstance(cookie).get<PlanListResponse>(
+      `/api/plans?size=10&sort=default`,
+      {
+        headers: isLoggedIn ? { Cookie: cookie } : {},
+        withCredentials: isLoggedIn,
+      },
+    );
+
+    const data = res.data;
+    const initialPlans: PlanDataWithCategory[] = data.data.planList.map(
+      (item) => ({ ...item }),
+    );
+    const nextCursor = data.data.nextCursor;
+    return {
+      props: {
+        initialPlans,
+        initialCursor: nextCursor !== undefined ? nextCursor : null,
+      },
+    };
+  } catch (error) {
+    console.error('초기 데이터 로딩 실패:', error);
+    return {
+      props: {
+        initialPlans: [],
+      },
+    };
+  }
+};
