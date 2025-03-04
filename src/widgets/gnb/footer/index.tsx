@@ -52,7 +52,7 @@ function GNBFooter() {
             ))}
             <GNBItem
               name={isLoggedIn ? '마이페이지' : '로그인'}
-              path={isLoggedIn ? `/user` : '/start'}
+              path={isLoggedIn ? `/app/user` : '/app/start'}
             />
           </ul>
         </footer>
