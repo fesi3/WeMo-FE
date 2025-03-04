@@ -1,9 +1,42 @@
-export { StartPage as default } from '@/app/pages/app/start';
+import React from 'react';
+import Button from '@/shared/Button';
+import Link from 'next/link';
+import LoginBanner from '@/features/auth/login/loginBanner';
+import ButtonGoogle from '@/features/auth/login/oAuth/button/buttonGoogle';
+import ButtonKakao from '@/features/auth/login/oAuth/button/buttonKakao';
+import ButtonNaver from '@/features/auth/login/oAuth/button/buttonNaver';
 
-// 기존 export default를 export로 변경했습니다.
-
-// 변경한 이유는 pages 폴더 내부에서 re-export 시키기 위해서 입니다.
-
-// export default는 re-export가 불가능해 개별적으로 export가 가능한 named export로 변경했습니다.
-
-// 이 파일에서는 app 폴더에 위치한 파일을 re-export 하여 export default 하고 있습니다.
+export const StartPage = () => {
+  return (
+    <div className="flex h-screen flex-col items-center justify-center bg-white">
+      <div className="mb-16">
+        <LoginBanner />
+      </div>
+      <div className="mb-4">
+        <Link href={'/app/plans'}>
+          <Button
+            text={'비회원으로 시작하기'}
+            size={'large'}
+            variant={'outline'}
+            width={324}
+            height={42}
+          />
+        </Link>
+      </div>
+      <Link href={'/signup'}>
+        <Button text={'회원가입'} size={'large'} width={320} height={42} />
+      </Link>
+      <div className="mb-[22px] mt-[39px] flex items-center justify-center text-center">
+        <p className="font-base mr-2 text-[#6C6C6C]">{'이미 가입하셨나요?'}</p>
+        <Link href={'/login'}>
+          <span className="text-[#6C6C6C] underline">{'로그인하기'}</span>
+        </Link>
+      </div>
+      <div className="flex gap-[23px]">
+        <ButtonGoogle />
+        <ButtonKakao />
+        <ButtonNaver />
+      </div>
+    </div>
+  );
+};
