@@ -9,7 +9,7 @@ import AddressInput from './ui/AddressInput';
 import { coordinateToAddress } from '@/shared/utils/coordinateToAddress';
 import { INITIAL_POSITION } from '@/shared/constants/address';
 import { Coordinate } from '@/shared/types/mapType';
-import { createPlan } from '@/shared/api/plan';
+import { createPlan } from '@/features/update-plan/api/plan';
 import { useRouter } from 'next/router';
 import { getImageUrls } from '@/shared/api/images';
 import { CreatePlanRequestBody } from '@/shared/types/api/plan';
