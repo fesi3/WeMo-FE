@@ -1,4 +1,4 @@
-import { fetchMeetingDetail } from '@/shared/api/meeting';
+import { fetchMeetingDetail } from '@/features/update-meeting/api/meeting';
 import { QUERY_KEY } from '@/shared/constants/queryKey';
 import { useQuery } from '@tanstack/react-query';
 

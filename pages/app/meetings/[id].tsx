@@ -1,4 +1,4 @@
-import { fetchMeetingDetailSSR } from '@/shared/api/ssr/meetings';
+import { fetchMeetingDetailSSR } from './ssr/meetings';
 import { QUERY_KEY } from '@/shared/constants/queryKey';
 import { GetServerSideProps } from 'next';
 import { MeetingDetail } from '@/pages/app/meetings/[id]';

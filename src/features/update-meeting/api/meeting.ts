@@ -4,7 +4,7 @@ import {
   CreateMeetingRequestBody,
   CreateMeetingResponse,
 } from '@/shared/types/api/meeting';
-import instance from '../utils/axios';
+import instance from '../../../shared/utils/axios';
 import { AxiosRequestConfig, isAxiosError } from 'axios';
 import { ApiErrorResponse, ApiResponse } from '@/shared/types/api/apiResponse';
 import { showToast } from '@/shared/utils/handleToast';

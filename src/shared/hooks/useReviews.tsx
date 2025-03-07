@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import fetchReviews from '@/shared/api/reviews';
+import fetchReviews from '@/entities/review/api/reviews';
 import { FilterState } from '@/shared/types/reviewType';
 
 export const useReviews = (category: string, filters: FilterState) => {

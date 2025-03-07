@@ -6,7 +6,7 @@ import FileInput from '@/shared/FileInput';
 import CategoryRadioInput from '@/entities/plan/plans/editMeeting/CategoryRadioInput';
 import { getImageUrls } from '@/shared/api/images';
 import { CreateMeetingRequestBody } from '@/shared/types/api/meeting';
-import { createMeeting } from '@/shared/api/meeting';
+import { createMeeting } from '@/features/update-meeting/api/meeting';
 import ErrorWrapper from '@/shared/ErrorWrapper';
 import { useRouter } from 'next/router';
 import Button from '@/shared/Button';
