@@ -8,7 +8,7 @@ import ThunderIcon from '@/shared/assets/icons/GNB_thunder.svg';
 import ProfileIcon from '@/shared/assets/icons/GNB_profile.svg';
 import SearchIcon from '@/shared/assets/icons/GNB_search.svg';
 import BellIcon from '@/shared/assets/icons/GNB_bell.svg';
-import LinkWrapper from '../wrapper';
+import LinkWrapper from './wrapper';
 
 interface GNBItemProps {
   name: string;
