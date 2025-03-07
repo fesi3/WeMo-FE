@@ -7,7 +7,7 @@ import { useState } from 'react';
 import Modal from '@/shared/modals/Modal';
 import ReviewModal from './ReviewsModal';
 import { extractPathFromPresignedUrl } from '@/shared/utils/extractPathFromPresignedUrl';
-import { createReview } from '@/shared/api/createReview';
+import { createReview } from '@/features/update-review/api/createReview';
 
 interface reviewableProps {
   reviewable: ReviewPlanData;

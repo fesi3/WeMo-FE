@@ -7,7 +7,7 @@ import HeartRating from '@/shared/HeartRating';
 import Button from '@/shared/Button';
 import { ReviewFormValues } from '@/shared/types/reviewType';
 import { getImageUrls } from '@/shared/api/images';
-import { createReview } from '@/shared/api/createReview';
+import { createReview } from '@/features/update-review/api/createReview';
 
 export interface ReviewModalProps {
   mode: 'create' | 'edit';
