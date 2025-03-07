@@ -1,6 +1,6 @@
 import React from 'react';
-import Modal from '../../../shared/modals/Modal';
-import CalendarPicker from '../../../shared/calendar/CalendarPicker';
+import Modal from '../../../shared/components/modals/Modal';
+import CalendarPicker from '../../../shared/components/calendar/CalendarPicker';
 import useToggle from '../../../shared/hooks/useToggle';
 import dayjs from 'dayjs';
 

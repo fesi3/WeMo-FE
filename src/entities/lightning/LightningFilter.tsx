@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FunnelIcon } from '@heroicons/react/20/solid';
-import Dropdown from '@/shared/dropdown/DropDown';
+import Dropdown from '@/shared/components/dropdown/DropDown';
 
 const categories = [
   { id: 1, name: '밥친구' },

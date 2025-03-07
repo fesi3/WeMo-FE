@@ -1,5 +1,5 @@
 import { User } from '@/shared/types/api/plan';
-import Avatar from '@/shared/avatar/Avatar';
+import Avatar from '@/shared/components/avatar/Avatar';
 
 interface AvatarListProps {
   users: User[];

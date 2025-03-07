@@ -1,8 +1,8 @@
-import Input, { InputProps } from '@/shared/input';
-import withLabel from '@/shared/input/HOC/withLabel';
-import Button from '@/shared/Button';
+import Input, { InputProps } from '@/shared/components/input';
+import withLabel from '@/shared/components/input/HOC/withLabel';
+import Button from '@/shared/components/Button';
 import { RegisterFormTypes } from '../../type';
-import withError from '@/shared/input/HOC/withError';
+import withError from '@/shared/components/input/HOC/withError';
 
 interface RegisterFormProps {
   handleSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;

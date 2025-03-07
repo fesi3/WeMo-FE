@@ -1,4 +1,4 @@
-import Button from '@/shared/Button';
+import Button from '@/shared/components/Button';
 import EditPlanButton from './editPlan/EditPlanButton';
 interface MeetingDetailFooterProps {
   isHost: boolean;

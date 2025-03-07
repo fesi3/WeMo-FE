@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import HeartRating from '@/shared/HeartRating';
+import HeartRating from '@/shared/components/HeartRating';
 import ReviewImageModal from './ReviewImageModal';
 import { Review } from '../../../shared/types/reviewType';
 import useToggle from '@/shared/hooks/useToggle';

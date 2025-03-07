@@ -1,6 +1,6 @@
 import React from 'react';
-import Modal from '@/shared/modals/Modal';
-import Carousel from '@/shared/Carousel';
+import Modal from '@/shared/components/modals/Modal';
+import Carousel from '@/shared/components/Carousel';
 
 interface ReviewImageModalProps {
   isOpen: boolean;
