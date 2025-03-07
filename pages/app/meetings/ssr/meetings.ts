@@ -3,7 +3,7 @@ import { PlanDetailResponse } from '@/shared/types/api/plan';
 import { ssrInstance } from '@/shared/utils/axiosSsr';
 import axios from 'axios';
 
-export const fetchMeetingDetailSSR = async (
+const fetchMeetingDetailSSR = async (
   meetingId: number,
   cookie?: string,
 ) => {
@@ -21,3 +21,5 @@ export const fetchMeetingDetailSSR = async (
     throw error;
   }
 };
+
+export default fetchMeetingDetailSSR;

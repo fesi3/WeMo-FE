@@ -3,7 +3,7 @@ import { PlanDetailResponse } from '@/shared/types/api/plan';
 import { ssrInstance } from '@/shared/utils/axiosSsr';
 import axios from 'axios';
 
-export const fetchPlanDetailSSR = async (planId: number, cookie?: string) => {
+const fetchPlanDetailSSR = async (planId: number, cookie?: string) => {
   //SSR 전용 instance에 쿠키를 전달하여 생성합니다.
   const newInstance = ssrInstance(cookie);
   if (isNaN(planId)) return;
@@ -20,3 +20,5 @@ export const fetchPlanDetailSSR = async (planId: number, cookie?: string) => {
     throw error;
   }
 };
+
+export default fetchPlanDetailSSR;
