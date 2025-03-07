@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import image from '@/shared/assets/images/no_review.png';
-import Button from '@/shared/Button';
+import Button from '@/shared/components/Button';
 import { useRouter } from 'next/router';
 
 type NoDataProps = {

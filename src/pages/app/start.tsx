@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '@/shared/Button';
+import Button from '@/shared/components/Button';
 import Link from 'next/link';
 import LoginBanner from '@/features/auth/login/loginBanner';
 import ButtonGoogle from '@/features/auth/login/oAuth/button/buttonGoogle';

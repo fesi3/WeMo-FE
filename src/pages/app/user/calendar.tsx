@@ -7,7 +7,7 @@ import {
 
 import { useMyPlanCalendar } from '@/shared/hooks/mypage/fetch/useMypageData';
 import MypageLayout from '@/entities/mypage/MypageLayout';
-import Button from '@/shared/Button';
+import Button from '@/shared/components/Button';
 import { useRouter } from 'next/router';
 
 type ValuePiece = Date | null;

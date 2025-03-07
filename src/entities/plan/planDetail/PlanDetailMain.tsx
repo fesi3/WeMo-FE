@@ -1,10 +1,10 @@
-import Carousel from '@/shared/Carousel';
-import ProgressBar from '@/shared/ProgressBar';
+import Carousel from '@/shared/components/Carousel';
+import ProgressBar from '@/shared/components/ProgressBar';
 import dayjs from 'dayjs';
-import AddressMap from '@/shared/map/AddressMap';
+import AddressMap from '@/entities/plan/planDetail/AddressMap';
 import { splitAddress } from '@/shared/utils/splitAddress';
 import Image from 'next/image';
-import DateBadge from '@/shared/DateBadge';
+import DateBadge from '@/shared/components/badges/DateBadge';
 import AvatarList from './AvatarList';
 import IconWithCount from '../../meeting/meetingDetail/ui/IconWithCount';
 import {
@@ -20,7 +20,7 @@ import { formatAverage } from '@/shared/utils/formatRating';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/shared/lib/redux/store';
 import usePlanDetailQuery from '@/shared/hooks/usePlanDetailQuery';
-import { attendPlan, leavePlan } from '@/shared/api/plan';
+import { attendPlan, leavePlan } from '@/features/update-plan/api/plan';
 import LikePlanButton from './LikePlanButton';
 import usePlanLikeMutation from '@/shared/hooks/usePlanLikeMutation';
 import PlanAttendButton from './PlanAttendButton';

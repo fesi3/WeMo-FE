@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import Button from '@/shared/Button';
+import Button from '@/shared/components/Button';
 
 interface PlanAttendButtonProps {
   isFulled: boolean;

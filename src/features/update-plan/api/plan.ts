@@ -4,7 +4,7 @@ import {
   CreatePlanResponse,
   PlanDetailResponse,
 } from '@/shared/types/api/plan';
-import instance from '../utils/axios';
+import instance from '@/shared/utils/axios';
 import { ApiResponse } from '@/shared/types/api/apiResponse';
 import { showToast } from '@/shared/utils/handleToast';
 import TOAST_MESSAGE from '@/shared/constants/toastMessage';

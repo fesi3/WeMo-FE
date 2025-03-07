@@ -1,4 +1,4 @@
-import Button from '@/shared/Button';
+import Button from '@/shared/components/Button';
 import Image from 'next/image';
 import { scoreRender } from '@/shared/utils/scoreRender';
 import { useDeleteReviewMutation } from '@/shared/hooks/mypage/mutation/useDeleteMutation';

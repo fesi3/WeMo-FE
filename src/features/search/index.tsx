@@ -1,5 +1,5 @@
 import GNBItem from '../../widgets/GNB/ui/GNB-item';
-import Input from '@/shared/input';
+import Input from '@/shared/components/input';
 
 interface SearchProps {
   handleSearchBarClick: () => void;

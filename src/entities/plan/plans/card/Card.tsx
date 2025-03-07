@@ -2,9 +2,9 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import DeadlineBadge from './DeadlinBadge';
-import MeetingDate from '@/shared/badges/MeetingDate';
-import MeetingTime from '@/shared/badges/MeetingTime';
-import DistrictBadge from '@/shared/badges/DistrictBadge';
+import MeetingDate from '@/shared/components/badges/MeetingDate';
+import MeetingTime from '@/shared/components/badges/MeetingTime';
+import DistrictBadge from '@/shared/components/badges/DistrictBadge';
 import LikeButton from '../LikeButton';
 import { PlanData } from '@/shared/types/plans';
 

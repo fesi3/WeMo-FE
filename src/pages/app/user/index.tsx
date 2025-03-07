@@ -2,7 +2,7 @@ import { lazy, Suspense } from 'react';
 import { useMypageUserInfo } from '@/shared/hooks/mypage/fetch/useMypageData';
 import MypageLayout from '@/entities/mypage/MypageLayout';
 import IndexNav from '@/entities/mypage/IndexNav';
-import Button from '@/shared/Button';
+import Button from '@/shared/components/Button';
 
 // Lazy load ProfileCard, StatisticsCard, and IndexNav components
 const ProfileCard = lazy(() => import('@/entities/mypage/ProfileCard'));

@@ -1,5 +1,5 @@
 import React from 'react';
-import SortDropdown from '@/shared/dropdown/SortDropdown';
+import SortDropdown from '@/shared/components/dropdown/SortDropdown';
 
 export const meetingsortOptions = [
   { id: 1, name: '최신순', value: 'default' },

@@ -1,5 +1,5 @@
-import Button from '@/shared/Button';
-import Modal from '@/shared/modals/Modal';
+import Button from '@/shared/components/Button';
+import Modal from '@/shared/components/modals/Modal';
 import { Coordinate } from '@/shared/types/mapType';
 import { addressToCoordinate } from '@/shared/utils/addressToCoordinate';
 import { Address, useDaumPostcodePopup } from 'react-daum-postcode';
