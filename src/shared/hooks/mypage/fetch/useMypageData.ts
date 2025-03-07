@@ -5,7 +5,7 @@ import {
   fetchMypageReviews,
   fetchMypageUserInfo,
   fetchMyPlanCalendar,
-} from '@/shared/api/fetchMypage';
+} from '@/entities/mypage/api/fetchMypage';
 import { useQuery } from '@tanstack/react-query';
 
 // 마이페이지 사용자 데이터를 가져오는 커스텀 훅
