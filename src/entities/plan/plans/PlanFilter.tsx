@@ -1,5 +1,5 @@
 import React from 'react';
-import DateModal from '@/shared/calendar/DateModal';
+import DateModal from '@/entities/plan/plans/DateModal';
 import RegionDropdown from '@/shared/dropdown/RegionDropdown';
 import { RegionOption, SubRegionOption } from '@/shared/types/reviewType';
 
