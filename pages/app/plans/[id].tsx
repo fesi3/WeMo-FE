@@ -1,5 +1,5 @@
 import { PlanDetail } from '@/pages/app/plans/[id]';
-import { fetchPlanDetailSSR } from './ssr/plans';
+import fetchPlanDetailSSR from './ssr/plans';
 import { QUERY_KEY } from '@/shared/constants/queryKey';
 import {
   dehydrate,
