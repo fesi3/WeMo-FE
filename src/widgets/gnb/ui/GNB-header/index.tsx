@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import logo from '@/shared/assets/images/title.png';
-import GNBItem from '../GNB_item';
+import GNBItem from '../GNB-item';
 import { useRouter } from 'next/router';
 import { hideGnbHeaderRoutes } from '@/shared/constants/gnb';
 import Search from '@/features/search';

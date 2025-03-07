@@ -1,4 +1,4 @@
-import GNBItem from '../../widgets/GNB/ui/GNB_item';
+import GNBItem from '../../widgets/GNB/ui/GNB-item';
 import Input from '@/shared/input';
 
 interface SearchProps {
