@@ -1,4 +1,4 @@
-export { Register as default } from '@/pages/auth/register';
+export { Login as default } from '@/pages/login';
 
 // 기존 export default를 export로 변경했습니다.
 
