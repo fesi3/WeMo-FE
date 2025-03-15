@@ -27,7 +27,7 @@ export const useCancle = async ({
       console.log('서버로부터 받은 에러 데이터', error.response.data);
       if (error.response.status === 400) {
         alert('400.로그인이 필요합니다!');
-        router.push('/auth/login');
+        router.push('/login');
         return;
       } else {
         alert('[error] 서버와 통신 오류 발생.');

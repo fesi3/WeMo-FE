@@ -50,7 +50,7 @@ function useSignupForm() {
       }),
     onSuccess: () => {
       alert('회원가입이 완료되었습니다!');
-      router.push('/auth/login');
+      router.push('/login');
     },
     onError: (error) => {
       alert(error.response?.data.message);

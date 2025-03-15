@@ -26,18 +26,18 @@ export const menuItems = [
 ];
 
 export const hideGnbFooterRoutes = [
-  '/auth/register',
-  '/auth/login',
+  '/register',
+  '/login',
   '/app/start',
-  '/auth/login/oauth2/callback/kakao',
-  '/auth/login/oauth2/callback/google',
-  '/auth/login/oauth2/callback/naver',
+  '/login/oauth2/callback/kakao',
+  '/login/oauth2/callback/google',
+  '/login/oauth2/callback/naver',
 ];
 
 export const hideGnbHeaderRoutes = [
-  '/auth/login',
-  '/auth/start',
-  '/auth/login/oauth2/callback/kakao',
-  '/auth/login/oauth2/callback/google',
-  '/auth/login/oauth2/callback/naver',
+  '/login',
+  '/start',
+  '/login/oauth2/callback/kakao',
+  '/login/oauth2/callback/google',
+  '/login/oauth2/callback/naver',
 ];
