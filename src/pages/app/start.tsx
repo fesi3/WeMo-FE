@@ -23,12 +23,12 @@ export const StartPage = () => {
           />
         </Link>
       </div>
-      <Link href={'/auth/register'}>
+      <Link href={'/register'}>
         <Button text={'회원가입'} size={'large'} width={320} height={42} />
       </Link>
       <div className="mb-[22px] mt-[39px] flex items-center justify-center text-center">
         <p className="font-base mr-2 text-[#6C6C6C]">{'이미 가입하셨나요?'}</p>
-        <Link href={'/auth/login'}>
+        <Link href={'/login'}>
           <span className="text-[#6C6C6C] underline">{'로그인하기'}</span>
         </Link>
       </div>
