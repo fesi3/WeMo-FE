@@ -1,19 +1,7 @@
 /* eslint-disable no-useless-escape */
 import { useCallback, useState } from 'react';
 import debounce from 'lodash/debounce';
-import { useMutation } from '@tanstack/react-query';
-import { LoginFormTypes } from '@/features/auth/model/type';
-import fetchData from '@/shared/api/fetchData';
-import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
-import { useQueryClient } from '@tanstack/react-query';
-import { login } from '@/shared/lib/redux/authReducers';
-import { API_PATHS } from '@/shared/constants/apiPath';
-import { AxiosError } from 'axios';
-const {
-  AUTH: { SIGNIN },
-} = API_PATHS;
-
+import useLoginMutaion from '@/features/auth/api/login.mutation';
 interface LoginFormType {
   email: string;
   password: string;
@@ -22,9 +10,6 @@ interface LoginFormType {
 type loginErrorType = Record<keyof LoginFormType, string | null>;
 
 function useLoginForm() {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const queryClient = useQueryClient();
   const [loginFormValue, setLoginFormValue] = useState<LoginFormType>({
     email: '',
     password: '',
@@ -78,39 +63,6 @@ function useLoginForm() {
     }
   };
 
-  const loginMutation = useMutation<
-    LoginFormTypes,
-    AxiosError<{ message: string }>
-  >({
-    mutationFn: () =>
-      fetchData({
-        param: SIGNIN,
-        method: 'post',
-        requestData: loginFormValue,
-      }),
-    onSuccess: () => {
-      // 로그인이 성공하면 로그인 여부를 상태 업데이트 및 쿼리 invalidate
-      // (invalidate 안해주면 요청 GNB 렌더링 되도 요청 안보냄)
-      dispatch(login());
-      queryClient.invalidateQueries({ queryKey: ['auth'] });
-      router.replace('/plans');
-    },
-    onError: (error) => {
-      console.error(error);
-      if (error.response?.data.message === '비밀번호가 일치하지 않습니다.') {
-        setErrors((prev) => ({
-          ...prev,
-          password: error.response?.data.message || null,
-        }));
-      } else {
-        setErrors((prev) => ({
-          ...prev,
-          email: error.response?.data.message || null,
-        }));
-      }
-    },
-  });
-
   // 디바운스된 유효성 검사 함수
   const debouncedValidate = useCallback(
     debounce((name: string, currentValues: LoginFormType) => {
@@ -134,13 +86,14 @@ function useLoginForm() {
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     // 폼 검증 실행
+    const loginMutation = useLoginMutaion();
     const isValid = validateForm();
     // 폼이 유효하면 mutation 호출
     if (isValid) {
       loginMutation.mutate();
     }
   };
-  return { loginFormValue, handleChange, handleSubmit, errors };
+  return { loginFormValue, handleChange, handleSubmit, errors, setErrors };
 }
 
 export default useLoginForm;
