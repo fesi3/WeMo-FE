@@ -1,4 +1,4 @@
-import SignupForm from '@/features/auth/register/registerForm';
+import SignupForm from '@/features/auth/ui/registerForm';
 import useSignupForm from '@/shared/hooks/useSignupForm';
 import Header from '@/widgets/Header';
 

@@ -1,7 +1,6 @@
 import Button from '@/shared/components/Button';
-import Input from '@/shared/components/input';
-import withError from '@/shared/components/input/HOC/withError';
-import { LoginFormTypes } from '../../type';
+import { LoginFormTypes } from '../model/type';
+import InputWithMessage from '@/shared/components/input/inputWithError';
 
 interface LoginFormProps {
   handleSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -9,8 +8,6 @@ interface LoginFormProps {
   loginFormValue: LoginFormTypes;
   errors: { [key: string]: string | null };
 }
-
-const InputWithMessage = withError(Input);
 
 function LoginForm(props: LoginFormProps) {
   const { handleSubmit, handleChange, errors } = props;

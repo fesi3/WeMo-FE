@@ -1,8 +1,7 @@
-import Input, { InputProps } from '@/shared/components/input';
-import withLabel from '@/shared/components/input/HOC/withLabel';
 import Button from '@/shared/components/Button';
-import { RegisterFormTypes } from '../../type';
-import withError from '@/shared/components/input/HOC/withError';
+import { RegisterFormTypes } from '../model/type';
+import InputWithLabel from '@/shared/components/input/inputWithLabel';
+import InputWithMessage from '@/shared/components/input/inputWithError';
 
 interface RegisterFormProps {
   handleSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -10,9 +9,6 @@ interface RegisterFormProps {
   registerFormValue: RegisterFormTypes;
   errors: { [key: string]: string | null };
 }
-
-const InputWithMessage = withError<InputProps>(Input);
-const InputWithLabel = withLabel(InputWithMessage);
 
 function RegisterForm(props: RegisterFormProps) {
   const { handleSubmit, handleChange, registerFormValue, errors } = props;
