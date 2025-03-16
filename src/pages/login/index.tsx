@@ -1,7 +1,7 @@
-import LoginBanner from '@/features/auth/login/loginBanner';
-import LoginForm from '@/features/auth/login/loginForm';
+import LoginBanner from '@/pages/login/ui/loginBanner';
+import LoginForm from '@/features/auth/ui/loginForm';
 import useLoginForm from '@/shared/hooks/useLoginForm';
-import FindInfo from '@/features/auth/login/findInfo';
+import FindInfo from '@/pages/login/ui/findInfo';
 
 export function Login() {
   const { loginFormValue, handleChange, handleSubmit, errors } = useLoginForm();

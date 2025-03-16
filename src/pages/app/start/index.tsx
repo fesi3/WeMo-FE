@@ -1,10 +1,16 @@
 import React from 'react';
 import Button from '@/shared/components/Button';
 import Link from 'next/link';
-import LoginBanner from '@/features/auth/login/loginBanner';
-import ButtonGoogle from '@/features/auth/login/oAuth/button/buttonGoogle';
-import ButtonKakao from '@/features/auth/login/oAuth/button/buttonKakao';
-import ButtonNaver from '@/features/auth/login/oAuth/button/buttonNaver';
+import LoginBanner from '@/pages/login/ui/loginBanner';
+import buttonGoogleImage from '@/shared/assets/images/btnW_google.png';
+import buttonKakaoImage from '@/shared/assets/images/btnY_kakao.png';
+import buttonNaverImage from '@/shared/assets/images/btnG_naver.png';
+import {
+  GOOGLE_AUTH_URL,
+  NAVER_AUTH_URL,
+  KAKAO_AUTH_URL,
+} from '@/shared/constants/oAuth';
+import SocialLoginButton from './ui/button';
 
 export const StartPage = () => {
   return (
@@ -33,9 +39,18 @@ export const StartPage = () => {
         </Link>
       </div>
       <div className="flex gap-[23px]">
-        <ButtonGoogle />
-        <ButtonKakao />
-        <ButtonNaver />
+        <SocialLoginButton
+          authURL={GOOGLE_AUTH_URL}
+          buttonImage={buttonGoogleImage}
+        />
+        <SocialLoginButton
+          authURL={KAKAO_AUTH_URL}
+          buttonImage={buttonKakaoImage}
+        />
+        <SocialLoginButton
+          authURL={NAVER_AUTH_URL}
+          buttonImage={buttonNaverImage}
+        />
       </div>
     </div>
   );

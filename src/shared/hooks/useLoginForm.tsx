@@ -2,7 +2,7 @@
 import { useCallback, useState } from 'react';
 import debounce from 'lodash/debounce';
 import { useMutation } from '@tanstack/react-query';
-import { LoginFormTypes } from '@/features/auth/type';
+import { LoginFormTypes } from '@/features/auth/model/type';
 import fetchData from '@/shared/api/fetchData';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
