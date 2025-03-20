@@ -36,7 +36,6 @@ function useLoginValidation() {
   };
 
   const validateForm = (currentLoginFormValue: LoginFormTypes) => {
-    console.log(currentLoginFormValue, '---currentLoginFormValue---');
     const newErrors: loginErrorType = {
       email: null,
       password: null,

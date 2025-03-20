@@ -1,23 +1,24 @@
 /* eslint-disable no-useless-escape */
 import { useCallback, useState } from 'react';
 import debounce from 'lodash/debounce';
+import { REGISTER_ERROR_MESSAGE } from './message';
 
 interface RegisterFormType {
-  email: string;
-  nickname: string;
-  companyName: string;
-  password: string;
-  passwordCheck: string;
+  email: string | null;
+  nickname: string | null;
+  companyName: string | null;
+  password: string | null;
+  passwordCheck: string | null;
 }
 type RegisterErrorType = Record<keyof RegisterFormType, string | null>;
 
 function useRegisterFormValidation() {
   const [registerFormValue, setRegisterFormValue] = useState<RegisterFormType>({
-    email: '',
-    nickname: '',
-    companyName: '',
-    password: '',
-    passwordCheck: '',
+    email: null,
+    nickname: null,
+    companyName: null,
+    password: null,
+    passwordCheck: null,
   });
   const [errors, setErrors] = useState<RegisterErrorType>({
     nickname: null,
@@ -42,50 +43,50 @@ function useRegisterFormValidation() {
     switch (name) {
       case 'nickname':
         if (!currentNicknameValue) {
-          errorMessage = '닉네임을 작성해주세요.';
+          errorMessage = REGISTER_ERROR_MESSAGE.NICKNAME_EMPTY;
         } else if (
-          currentNicknameValue.length < 2 ||
-          currentNicknameValue.length > 20
+          currentNicknameValue.length <= 2 ||
+          currentNicknameValue.length >= 20
         ) {
-          errorMessage = '닉네임은 최소 2자, 최대 20자 이어야 합니다.';
+          errorMessage = REGISTER_ERROR_MESSAGE.NICKNAME_CONDITION;
         }
         break;
       case 'companyName':
         if (!currentCompanyNameValue) {
-          errorMessage = '회사명을 작성해주세요.';
+          errorMessage = REGISTER_ERROR_MESSAGE.COMPANY_EMPTY;
         }
         break;
       case 'email':
         if (!currentEmailValue) {
-          errorMessage = '이메일을 작성해주세요.';
+          errorMessage = REGISTER_ERROR_MESSAGE.EMAIL_EMPTY;
         } else if (
           !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(currentEmailValue)
         ) {
-          errorMessage = '이메일 형식이 아닙니다.';
+          errorMessage = REGISTER_ERROR_MESSAGE.EMAIL_FORM;
         }
         break;
       case 'password':
         if (!currentPasswordValue) {
-          errorMessage = '비밀번호를 작성해주세요.';
+          errorMessage = REGISTER_ERROR_MESSAGE.PASSWORD_EMPTY;
         } else if (
           !/(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])/g.test(
             currentPasswordValue,
           )
         ) {
-          errorMessage = '문자, 숫자, 특수기호를 하나 이상 포함해야 합니다.';
-        } else if (currentPasswordValue.length < 8) {
-          errorMessage = '비밀번호는 8자리 이상 이어야 합니다.';
+          errorMessage = REGISTER_ERROR_MESSAGE.PASSWORD_CONDITION;
+        } else if (currentPasswordValue.length <= 8) {
+          errorMessage = REGISTER_ERROR_MESSAGE.PASSWORD_LENGTH;
         }
         break;
       case 'passwordCheck':
         if (!currentPasswordCheckValue) {
-          errorMessage = '비밀번호를 작성해주세요.';
+          errorMessage = REGISTER_ERROR_MESSAGE.PASSWORD_EMPTY;
         } else if (currentPasswordCheckValue !== formValues.password) {
-          errorMessage = '비밀번호가 일치하지 않습니다.';
+          errorMessage = REGISTER_ERROR_MESSAGE.PASSWORD_INCORRECT;
         }
         break;
       default:
-        errorMessage = '';
+        errorMessage = null;
         break;
     }
     return errorMessage;
@@ -102,39 +103,42 @@ function useRegisterFormValidation() {
 
     // 닉네임 검사
     if (!registerFormValue.nickname) {
-      newErrors.nickname = '닉네임을 작성해주세요.';
-    } else if (registerFormValue.nickname.length < 2) {
-      newErrors.nickname = '닉네임은 최소 2자 이상이어야 합니다.';
+      newErrors.nickname = REGISTER_ERROR_MESSAGE.NICKNAME_EMPTY;
+    } else if (
+      registerFormValue.nickname.length <= 2 ||
+      registerFormValue.nickname.length >= 20
+    ) {
+      newErrors.nickname = REGISTER_ERROR_MESSAGE.NICKNAME_CONDITION;
     }
 
     // 회사명 검사
     if (!registerFormValue.companyName) {
-      newErrors.companyName = '회사명을 작성해주세요.';
+      newErrors.companyName = REGISTER_ERROR_MESSAGE.COMPANY_EMPTY;
     }
 
     // 이메일 검사
     if (!registerFormValue.email) {
-      newErrors.email = '이메일을 작성해주세요.';
+      newErrors.email = REGISTER_ERROR_MESSAGE.EMAIL_EMPTY;
     } else if (
       !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(registerFormValue.email)
     ) {
-      newErrors.email = '이메일 형식이 아닙니다.';
+      newErrors.email = REGISTER_ERROR_MESSAGE.EMAIL_FORM;
     }
 
     // 비밀번호 검사
     if (!registerFormValue.password) {
-      newErrors.password = '비밀번호를 작성해주세요.';
-    } else if (registerFormValue.password.length < 8) {
-      newErrors.password = '비밀번호는 최소 8자 이상이어야 합니다.';
+      newErrors.password = REGISTER_ERROR_MESSAGE.PASSWORD_EMPTY;
+    } else if (registerFormValue.password.length <= 8) {
+      newErrors.password = REGISTER_ERROR_MESSAGE.PASSWORD_LENGTH;
     } else if (!/(?=.*[a-zA-Z])(?=.*[0-9])/.test(registerFormValue.password)) {
-      newErrors.password = '비밀번호는 영문 + 숫자 조합이어야 합니다.';
+      newErrors.password = REGISTER_ERROR_MESSAGE.PASSWORD_CONDITION;
     }
 
     // 비밀번호 확인 검사
     if (!registerFormValue.passwordCheck) {
-      newErrors.passwordCheck = '비밀번호 확인을 작성해주세요.';
+      newErrors.passwordCheck = REGISTER_ERROR_MESSAGE.PASSWORD_CHECK_EMPTY;
     } else if (registerFormValue.password !== registerFormValue.passwordCheck) {
-      newErrors.passwordCheck = '비밀번호가 일치하지 않습니다.';
+      newErrors.passwordCheck = REGISTER_ERROR_MESSAGE.PASSWORD_INCORRECT;
     }
 
     // 오류가 있으면 상태 업데이트 후 false 반환
@@ -169,7 +173,7 @@ function useRegisterFormValidation() {
     setRegisterFormValue((prev) => {
       const newValues = { ...prev, [name]: value };
 
-      debouncedValidate(name, newValues); // ✅ Pass latest form values
+      debouncedValidate(name, newValues);
       return newValues;
     });
   };
