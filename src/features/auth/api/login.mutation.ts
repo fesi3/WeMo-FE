@@ -6,18 +6,25 @@ import { useDispatch } from 'react-redux';
 import { LoginFormTypes } from '@/features/auth/model/type';
 import fetchData from '@/shared/api/fetchData';
 import { API_PATHS } from '@/shared/constants/apiPath';
-import useLoginForm from '@/features/auth/model/login.validation';
+import useLoginValidation, {
+  loginErrorType,
+} from '@/features/auth/model/login.validation';
 import { login } from '@/shared/lib/redux/authReducers';
+import { Dispatch, SetStateAction } from 'react';
 
 const {
   AUTH: { SIGNIN },
 } = API_PATHS;
 
-function useLoginMutaion() {
+interface useLoginMutaionProps {
+  setErrors: Dispatch<SetStateAction<loginErrorType>>;
+}
+
+function useLoginMutaion({ setErrors }: useLoginMutaionProps) {
   const router = useRouter();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const { loginFormValue, setErrors } = useLoginForm();
+  const { loginFormValue } = useLoginValidation();
 
   return useMutation<LoginFormTypes, AxiosError<{ message: string }>>({
     mutationFn: () =>
