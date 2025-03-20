@@ -62,7 +62,7 @@ instance.interceptors.response.use(
         } finally {
           store.dispatch(logout()); // 유저 정보 초기화
           alert('세션이 만료되었습니다. 다시 로그인 해주세요.');
-          window.location.href = '/start';
+          window.location.href = '/app/start';
         }
 
         return Promise.reject(refreshError);

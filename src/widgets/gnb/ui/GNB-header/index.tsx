@@ -1,20 +1,21 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import logo from '@/shared/assets/images/title.png';
-import GNBItem from '../GNB-item';
-import { useRouter } from 'next/router';
-import { hideGnbHeaderRoutes } from '@/shared/constants/gnb';
-import Search from '@/features/search';
-import SearchModal from '@/features/search/searchModal';
-import useToggle from '@/shared/hooks/useToggle';
-import SearchContents from '@/features/search/searchContents';
-import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
+import { debounce } from 'lodash';
+
+import GNBItem from '../GNB-item';
+import Search from '@/features/search';
+import SearchModal from '@/features/search/searchModal';
+import SearchContents from '@/features/search/searchContents';
+import logo from '@/shared/assets/images/title.png';
+import { hideGnbHeaderRoutes } from '@/shared/constants/gnb';
+import useToggle from '@/shared/hooks/useToggle';
 import { API_PATHS } from '@/shared/constants/apiPath';
 import axiosInstance from '@/shared/utils/axios';
 import { PlanListData, PlanListResponse } from '@/shared/types/plans';
-import { debounce } from 'lodash';
 import useHeaderHeight from '@/shared/hooks/useHeaderHeight';
 
 // GNB 레이아웃 컴포넌트에서 렌더링 되는 header 컴포넌트입니다.

@@ -35,8 +35,9 @@ export const hideGnbFooterRoutes = [
 ];
 
 export const hideGnbHeaderRoutes = [
-  '/login',
   '/start',
+  '/login',
+  '/register',
   '/login/oauth2/callback/kakao',
   '/login/oauth2/callback/google',
   '/login/oauth2/callback/naver',
