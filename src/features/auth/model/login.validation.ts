@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-escape */
 import { useCallback, useState } from 'react';
 import debounce from 'lodash/debounce';
-import useLoginMutaion from '@/features/auth/api/login.mutation';
+
 interface LoginFormType {
   email: string;
   password: string;
@@ -9,7 +9,7 @@ interface LoginFormType {
 
 type loginErrorType = Record<keyof LoginFormType, string | null>;
 
-function useLoginForm() {
+function useLoginValidation() {
   const [loginFormValue, setLoginFormValue] = useState<LoginFormType>({
     email: '',
     password: '',
@@ -78,22 +78,12 @@ function useLoginForm() {
     setLoginFormValue((prev) => {
       const newValues = { ...prev, [name]: value };
 
-      debouncedValidate(name, newValues); // ✅ Pass latest form values
+      debouncedValidate(name, newValues);
       return newValues;
     });
   };
 
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    // 폼 검증 실행
-    const loginMutation = useLoginMutaion();
-    const isValid = validateForm();
-    // 폼이 유효하면 mutation 호출
-    if (isValid) {
-      loginMutation.mutate();
-    }
-  };
-  return { loginFormValue, handleChange, handleSubmit, errors, setErrors };
+  return { loginFormValue, validateForm, handleChange, errors, setErrors };
 }
 
-export default useLoginForm;
+export default useLoginValidation;

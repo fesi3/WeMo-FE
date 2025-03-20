@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { LoginFormTypes } from '@/features/auth/model/type';
 import fetchData from '@/shared/api/fetchData';
 import { API_PATHS } from '@/shared/constants/apiPath';
-import useLoginForm from '@/shared/hooks/useLoginForm';
+import useLoginForm from '@/features/auth/model/login.validation';
 import { login } from '@/shared/lib/redux/authReducers';
 
 const {

@@ -1,16 +1,11 @@
+import useLoginValidation from '@/features/auth/model/login.validation';
+import useLogin from '@/features/auth/api/login';
 import Button from '@/shared/components/Button';
-import { LoginFormTypes } from '../model/type';
 import InputWithMessage from '@/shared/components/input/inputWithError';
 
-interface LoginFormProps {
-  handleSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  loginFormValue: LoginFormTypes;
-  errors: { [key: string]: string | null };
-}
-
-function LoginForm(props: LoginFormProps) {
-  const { handleSubmit, handleChange, errors } = props;
+function LoginForm() {
+  const { handleChange, errors } = useLoginValidation();
+  const { handleSubmit } = useLogin();
   const { email: emailError, password: passwordError } = errors;
   return (
     <form className="flex flex-col gap-6 p-[10px]">
