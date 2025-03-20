@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-escape */
 import { useCallback, useState } from 'react';
 import debounce from 'lodash/debounce';
-import { RegisterFormTypes } from '@/features/register/model/type';
+import { RegisterFormTypes } from '@/features/auth/model/type';
 import { useMutation } from '@tanstack/react-query';
 import fetchData from '@/shared/api/fetchData';
 import { useRouter } from 'next/router';
