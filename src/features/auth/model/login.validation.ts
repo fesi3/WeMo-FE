@@ -1,58 +1,56 @@
-/* eslint-disable no-useless-escape */
 import { useCallback, useState } from 'react';
 import debounce from 'lodash/debounce';
 
-interface LoginFormType {
-  email: string;
-  password: string;
-}
+import { EMAIL_REGEXP } from './regExp';
+import { LOGIN_ERROR_MESSAGE } from './message';
+import { LoginFormTypes } from './type';
 
-type loginErrorType = Record<keyof LoginFormType, string | null>;
+export type loginErrorType = Record<keyof LoginFormTypes, string | null>;
 
 function useLoginValidation() {
-  const [loginFormValue, setLoginFormValue] = useState<LoginFormType>({
-    email: '',
-    password: '',
+  const [loginFormValue, setLoginFormValue] = useState<LoginFormTypes>({
+    email: null,
+    password: null,
   });
   const [errors, setErrors] = useState<loginErrorType>({
     email: null,
     password: null,
   });
 
-  const validateField = (name: string, formValues: LoginFormType) => {
+  const validateField = (name: string, formValues: LoginFormTypes) => {
     const { email: currentEmailValue, password: currentPasswordValue } =
       formValues;
-    let errorMessage = '';
+    let errorMessage = null;
     if (name === 'email') {
       if (!currentEmailValue) {
-        errorMessage = '이메일을 작성해주세요.';
-      } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(currentEmailValue)) {
-        errorMessage = '이메일 형식이 아닙니다.';
+        errorMessage = LOGIN_ERROR_MESSAGE.EMAIL_EMPTY;
+      } else if (!EMAIL_REGEXP.test(currentEmailValue)) {
+        errorMessage = LOGIN_ERROR_MESSAGE.EMAIL_FORM;
       }
     } else if (name === 'password') {
       if (!currentPasswordValue) {
-        errorMessage = '비밀번호를 작성해주세요.';
+        errorMessage = LOGIN_ERROR_MESSAGE.PASSWORD_EMPTY;
       }
     }
     return errorMessage;
   };
 
-  const validateForm = () => {
+  const validateForm = (currentLoginFormValue: LoginFormTypes) => {
+    console.log(currentLoginFormValue, '---currentLoginFormValue---');
     const newErrors: loginErrorType = {
       email: null,
       password: null,
     };
-
-    if (!loginFormValue.email) {
-      newErrors.email = '이메일을 작성해주세요.';
-    } else if (
-      !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(loginFormValue.email)
-    ) {
-      newErrors.email = '이메일 형식이 아닙니다.';
+    // 이메일 관련 오류
+    if (!currentLoginFormValue.email) {
+      newErrors.email = LOGIN_ERROR_MESSAGE.EMAIL_EMPTY;
+    } else if (!EMAIL_REGEXP.test(currentLoginFormValue.email)) {
+      newErrors.email = LOGIN_ERROR_MESSAGE.EMAIL_FORM;
     }
 
-    if (!loginFormValue.password) {
-      newErrors.password = '비밀번호를 작성해주세요.';
+    // 비밀번호 관련 오류
+    if (!currentLoginFormValue.password) {
+      newErrors.password = LOGIN_ERROR_MESSAGE.PASSWORD_EMPTY;
     }
 
     if (newErrors.email || newErrors.password) {
@@ -65,7 +63,7 @@ function useLoginValidation() {
 
   // 디바운스된 유효성 검사 함수
   const debouncedValidate = useCallback(
-    debounce((name: string, currentValues: LoginFormType) => {
+    debounce((name: string, currentValues: LoginFormTypes) => {
       const error = validateField(name, currentValues);
       setErrors((prev) => ({ ...prev, [name]: error }));
     }, 300),
@@ -77,7 +75,6 @@ function useLoginValidation() {
 
     setLoginFormValue((prev) => {
       const newValues = { ...prev, [name]: value };
-
       debouncedValidate(name, newValues);
       return newValues;
     });

@@ -4,11 +4,16 @@ import Button from '@/shared/components/Button';
 import InputWithMessage from '@/shared/components/input/inputWithError';
 
 function LoginForm() {
-  const { handleChange, errors } = useLoginValidation();
-  const { handleSubmit } = useLogin();
+  const {
+    handleChange,
+    loginFormValue: currentLoginFormValue,
+    errors,
+    setErrors,
+  } = useLoginValidation();
   const { email: emailError, password: passwordError } = errors;
+  const { handleSubmit } = useLogin({ currentLoginFormValue, setErrors });
   return (
-    <form className="flex flex-col gap-6 p-[10px]">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-6 p-[10px]">
       <div className="flex w-[320px] flex-col gap-5">
         <InputWithMessage
           id="email"
@@ -30,7 +35,6 @@ function LoginForm() {
       <Button
         text={'로그인'}
         size={'large'}
-        onClick={handleSubmit}
         width={320}
         height={42}
         disabled={emailError || passwordError ? true : false}
