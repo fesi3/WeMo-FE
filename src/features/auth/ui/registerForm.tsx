@@ -1,19 +1,18 @@
+import useRegisterFormValidation from '../model/register.validation';
+import useRegister from '../api/register';
 import Button from '@/shared/components/Button';
-import { RegisterFormTypes } from '../model/type';
 import InputWithLabel from '@/shared/components/input/inputWithLabel';
 import InputWithMessage from '@/shared/components/input/inputWithError';
 
-interface RegisterFormProps {
-  handleSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  registerFormValue: RegisterFormTypes;
-  errors: { [key: string]: string | null };
-}
+function RegisterForm() {
+  const { registerFormValue, handleChange, errors } =
+    useRegisterFormValidation();
 
-function RegisterForm(props: RegisterFormProps) {
-  const { handleSubmit, handleChange, registerFormValue, errors } = props;
+  const { handleSubmit } = useRegister();
+
   const { nickname, companyName, email, password, passwordCheck } =
     registerFormValue;
+
   const {
     nickname: nicknameError,
     companyName: companyNameError,
@@ -21,6 +20,7 @@ function RegisterForm(props: RegisterFormProps) {
     password: passwordError,
     passwordCheck: passwordCheckError,
   } = errors;
+
   return (
     <form className="flex w-[324px] flex-col gap-[42.5px]">
       <div className="flex flex-col gap-6">

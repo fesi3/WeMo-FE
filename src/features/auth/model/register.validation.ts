@@ -1,31 +1,25 @@
 /* eslint-disable no-useless-escape */
 import { useCallback, useState } from 'react';
 import debounce from 'lodash/debounce';
-import { RegisterFormTypes } from '@/features/auth/model/type';
-import { useMutation } from '@tanstack/react-query';
-import fetchData from '@/shared/api/fetchData';
-import { useRouter } from 'next/router';
-import { API_PATHS } from '@/shared/constants/apiPath';
-import { AxiosError } from 'axios';
 
-interface SignupFormType {
+interface RegisterFormType {
   email: string;
   nickname: string;
   companyName: string;
   password: string;
   passwordCheck: string;
 }
-type SignupErrorType = Record<keyof SignupFormType, string | null>;
+type RegisterErrorType = Record<keyof RegisterFormType, string | null>;
 
-function useSignupForm() {
-  const [signupFormValue, setSignupFormValue] = useState<SignupFormType>({
+function useRegisterFormValidation() {
+  const [registerFormValue, setRegisterFormValue] = useState<RegisterFormType>({
     email: '',
     nickname: '',
     companyName: '',
     password: '',
     passwordCheck: '',
   });
-  const [errors, setErrors] = useState<SignupErrorType>({
+  const [errors, setErrors] = useState<RegisterErrorType>({
     nickname: null,
     companyName: null,
     email: null,
@@ -33,31 +27,10 @@ function useSignupForm() {
     passwordCheck: null,
   });
 
-  const router = useRouter();
-  const {
-    AUTH: { SIGNUP },
-  } = API_PATHS;
-
-  const signupMutation = useMutation<
-    RegisterFormTypes,
-    AxiosError<{ message: string }>
-  >({
-    mutationFn: () =>
-      fetchData({
-        param: SIGNUP,
-        method: 'post',
-        requestData: signupFormValue,
-      }),
-    onSuccess: () => {
-      alert('회원가입이 완료되었습니다!');
-      router.push('/login');
-    },
-    onError: (error) => {
-      alert(error.response?.data.message);
-    },
-  });
-
-  const validateField = (name: string, formValues: SignupFormType) => {
+  const validateRegisterField = (
+    name: string,
+    formValues: RegisterFormType,
+  ) => {
     let errorMessage;
     const {
       nickname: currentNicknameValue,
@@ -118,8 +91,8 @@ function useSignupForm() {
     return errorMessage;
   };
 
-  const validateForm = () => {
-    const newErrors: SignupErrorType = {
+  const validateRegisterForm = () => {
+    const newErrors: RegisterErrorType = {
       nickname: null,
       companyName: null,
       email: null,
@@ -128,39 +101,39 @@ function useSignupForm() {
     };
 
     // 닉네임 검사
-    if (!signupFormValue.nickname) {
+    if (!registerFormValue.nickname) {
       newErrors.nickname = '닉네임을 작성해주세요.';
-    } else if (signupFormValue.nickname.length < 2) {
+    } else if (registerFormValue.nickname.length < 2) {
       newErrors.nickname = '닉네임은 최소 2자 이상이어야 합니다.';
     }
 
     // 회사명 검사
-    if (!signupFormValue.companyName) {
+    if (!registerFormValue.companyName) {
       newErrors.companyName = '회사명을 작성해주세요.';
     }
 
     // 이메일 검사
-    if (!signupFormValue.email) {
+    if (!registerFormValue.email) {
       newErrors.email = '이메일을 작성해주세요.';
     } else if (
-      !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(signupFormValue.email)
+      !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(registerFormValue.email)
     ) {
       newErrors.email = '이메일 형식이 아닙니다.';
     }
 
     // 비밀번호 검사
-    if (!signupFormValue.password) {
+    if (!registerFormValue.password) {
       newErrors.password = '비밀번호를 작성해주세요.';
-    } else if (signupFormValue.password.length < 8) {
+    } else if (registerFormValue.password.length < 8) {
       newErrors.password = '비밀번호는 최소 8자 이상이어야 합니다.';
-    } else if (!/(?=.*[a-zA-Z])(?=.*[0-9])/.test(signupFormValue.password)) {
+    } else if (!/(?=.*[a-zA-Z])(?=.*[0-9])/.test(registerFormValue.password)) {
       newErrors.password = '비밀번호는 영문 + 숫자 조합이어야 합니다.';
     }
 
     // 비밀번호 확인 검사
-    if (!signupFormValue.passwordCheck) {
+    if (!registerFormValue.passwordCheck) {
       newErrors.passwordCheck = '비밀번호 확인을 작성해주세요.';
-    } else if (signupFormValue.password !== signupFormValue.passwordCheck) {
+    } else if (registerFormValue.password !== registerFormValue.passwordCheck) {
       newErrors.passwordCheck = '비밀번호가 일치하지 않습니다.';
     }
 
@@ -183,7 +156,7 @@ function useSignupForm() {
   // 디바운스된 유효성 검사 함수
   const debouncedValidate = useCallback(
     debounce((name: string, currentValues) => {
-      const error = validateField(name, currentValues);
+      const error = validateRegisterField(name, currentValues);
       setErrors((prev) => ({ ...prev, [name]: error }));
     }, 300),
     [],
@@ -193,7 +166,7 @@ function useSignupForm() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id: name, value } = e.target;
 
-    setSignupFormValue((prev) => {
+    setRegisterFormValue((prev) => {
       const newValues = { ...prev, [name]: value };
 
       debouncedValidate(name, newValues); // ✅ Pass latest form values
@@ -201,19 +174,7 @@ function useSignupForm() {
     });
   };
 
-  // 폼 제출 함수
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    // 폼 검증 실행
-    const isValid = validateForm();
-
-    // 폼이 유효하면 mutation 호출
-    if (isValid) {
-      signupMutation.mutate();
-    }
-  };
-
-  return { signupFormValue, handleChange, handleSubmit, errors };
+  return { registerFormValue, handleChange, validateRegisterForm, errors };
 }
 
-export default useSignupForm;
+export default useRegisterFormValidation;
