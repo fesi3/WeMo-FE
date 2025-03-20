@@ -5,13 +5,9 @@ import InputWithLabel from '@/shared/components/input/inputWithLabel';
 import InputWithMessage from '@/shared/components/input/inputWithError';
 
 function RegisterForm() {
-  const { registerFormValue, handleChange, errors } =
-    useRegisterFormValidation();
+  const { handleChange, errors } = useRegisterFormValidation();
 
   const { handleSubmit } = useRegister();
-
-  const { nickname, companyName, email, password, passwordCheck } =
-    registerFormValue;
 
   const {
     nickname: nicknameError,
@@ -30,7 +26,6 @@ function RegisterForm() {
           placeholder={'이름을 입력해 주세요.'}
           labelClassName="label"
           onChange={handleChange}
-          value={nickname}
           error={nicknameError}
         />
         <InputWithLabel
@@ -39,7 +34,6 @@ function RegisterForm() {
           labelName={'회사명'}
           labelClassName="label"
           onChange={handleChange}
-          value={companyName}
           error={companyNameError}
         />
         <InputWithLabel
@@ -49,7 +43,6 @@ function RegisterForm() {
           labelName={'이메일 주소'}
           labelClassName="label"
           onChange={handleChange}
-          value={email}
           error={emailError}
         />
         <div className="flex flex-col gap-6">
@@ -60,7 +53,6 @@ function RegisterForm() {
             labelName={'비밀번호'}
             labelClassName="label"
             onChange={handleChange}
-            value={password}
             error={passwordError}
           />
           <InputWithMessage
@@ -70,7 +62,6 @@ function RegisterForm() {
             aria-label={'passwordCheck'}
             placeholder={'비밀번호를 다시 입력해 주세요.'}
             onChange={handleChange}
-            value={passwordCheck}
             error={passwordCheckError}
           />
         </div>
