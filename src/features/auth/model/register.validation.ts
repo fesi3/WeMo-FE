@@ -2,6 +2,7 @@
 import { useCallback, useState } from 'react';
 import debounce from 'lodash/debounce';
 import { REGISTER_ERROR_MESSAGE } from './message';
+import { EMAIL_REGEXP } from './regExp';
 
 interface RegisterFormType {
   email: string | null;
@@ -59,9 +60,7 @@ function useRegisterFormValidation() {
       case 'email':
         if (!currentEmailValue) {
           errorMessage = REGISTER_ERROR_MESSAGE.EMAIL_EMPTY;
-        } else if (
-          !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(currentEmailValue)
-        ) {
+        } else if (!EMAIL_REGEXP.test(currentEmailValue)) {
           errorMessage = REGISTER_ERROR_MESSAGE.EMAIL_FORM;
         }
         break;
