@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
 import { Noto_Sans_KR } from 'next/font/google';
-import GNBHeader from './ui/GNB-header';
-import GNBFooter from './ui/GNB-footer';
+import GNBHeader from '@/widgets/GNB/ui/GNB-header';
+import GNBFooter from '@/widgets/GNB/ui/GNB-footer';
 import useAuth from '@/shared/hooks/useAuth';
 
 const noto = Noto_Sans_KR({
