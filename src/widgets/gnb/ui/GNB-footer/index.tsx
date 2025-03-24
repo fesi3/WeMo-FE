@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { hideGnbFooterRoutes, menuItems } from '@/shared/constants/gnb';
-import GNBItem from '../GNB-item';
+import GNBItem from '@/widgets/GNB/ui/GNB-item';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/shared/lib/redux/store';
