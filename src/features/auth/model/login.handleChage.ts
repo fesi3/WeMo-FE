@@ -8,7 +8,9 @@ interface useLoginHandleChangeProps {
   setErrors: Dispatch<SetStateAction<loginErrorType>>;
   setLoginFormValue: Dispatch<SetStateAction<LoginFormTypes>>;
 }
-
+// 로그인 폼 이메일과 비밀번호 입력창 handleChange 함수
+// setLoginFormValue - 로그인 폼 상태 업데이트
+// setErrors - 로그인 실패 에러 메세지 업데이트
 function useLoginHandleChange({
   setErrors,
   setLoginFormValue,
