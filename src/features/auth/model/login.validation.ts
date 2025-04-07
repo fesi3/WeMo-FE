@@ -1,5 +1,4 @@
-import { useCallback, useState } from 'react';
-import debounce from 'lodash/debounce';
+import { useState } from 'react';
 
 import { EMAIL_REGEXP } from './regExp';
 import { LOGIN_ERROR_MESSAGE } from './message';
@@ -8,10 +7,6 @@ import { LoginFormTypes } from './type';
 export type loginErrorType = Record<keyof LoginFormTypes, string | null>;
 
 function useLoginValidation() {
-  const [loginFormValue, setLoginFormValue] = useState<LoginFormTypes>({
-    email: null,
-    password: null,
-  });
   const [errors, setErrors] = useState<loginErrorType>({
     email: null,
     password: null,
@@ -60,26 +55,7 @@ function useLoginValidation() {
     }
   };
 
-  // 디바운스된 유효성 검사 함수
-  const debouncedValidate = useCallback(
-    debounce((name: string, currentValues: LoginFormTypes) => {
-      const error = validateField(name, currentValues);
-      setErrors((prev) => ({ ...prev, [name]: error }));
-    }, 300),
-    [],
-  );
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id: name, value } = e.target;
-
-    setLoginFormValue((prev) => {
-      const newValues = { ...prev, [name]: value };
-      debouncedValidate(name, newValues);
-      return newValues;
-    });
-  };
-
-  return { loginFormValue, validateForm, handleChange, errors, setErrors };
+  return { validateForm, validateField, errors, setErrors };
 }
 
 export default useLoginValidation;

@@ -1,30 +1,28 @@
 import { AxiosError } from 'axios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { Dispatch, SetStateAction } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { LoginFormTypes } from '@/features/auth/model/type';
 import fetchData from '@/shared/api/fetchData';
 import { API_PATHS } from '@/shared/constants/apiPath';
-import useLoginValidation, {
-  loginErrorType,
-} from '@/features/auth/model/login.validation';
+import { loginErrorType } from '@/features/auth/model/login.validation';
 import { login } from '@/shared/lib/redux/authReducers';
-import { Dispatch, SetStateAction } from 'react';
 
 const {
   AUTH: { SIGNIN },
 } = API_PATHS;
 
 interface useLoginMutaionProps {
+  loginFormValue: LoginFormTypes;
   setErrors: Dispatch<SetStateAction<loginErrorType>>;
 }
 
-function useLoginMutaion({ setErrors }: useLoginMutaionProps) {
+function useLoginMutaion({ loginFormValue, setErrors }: useLoginMutaionProps) {
   const router = useRouter();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const { loginFormValue } = useLoginValidation();
 
   return useMutation<LoginFormTypes, AxiosError<{ message: string }>>({
     mutationFn: () =>
