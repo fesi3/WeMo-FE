@@ -14,7 +14,7 @@ export function MyPage() {
   console.log(error);
 
   if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error.response.data.message}</div>;
+  if (error) return <div>{error.response?.data.message}</div>;
   if (!userData) return <div>No Data...</div>;
 
   return (
