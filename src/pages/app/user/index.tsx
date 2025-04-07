@@ -11,7 +11,6 @@ const StatisticsCard = lazy(() => import('@/entities/mypage/StatisticsCard'));
 export function MyPage() {
   const { response, isLoading, error } = useAuth();
   const userData = response?.data;
-  console.log(error);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.response?.data.message}</div>;

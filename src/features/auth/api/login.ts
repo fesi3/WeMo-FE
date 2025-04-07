@@ -4,17 +4,16 @@ import { LoginFormTypes } from '../model/type';
 import useLoginMutaion from './login.mutation';
 
 interface useLoginProps {
-  currentLoginFormValue: LoginFormTypes;
   setErrors: Dispatch<SetStateAction<loginErrorType>>;
+  loginFormValue: LoginFormTypes;
 }
 
-function useLogin({ currentLoginFormValue, setErrors }: useLoginProps) {
+function useLogin({ setErrors, loginFormValue }: useLoginProps) {
   const { validateForm } = useLoginValidation();
-  const loginMutation = useLoginMutaion({ setErrors });
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const loginMutation = useLoginMutaion({ loginFormValue, setErrors });
+  const handleSubmit = async (loginFormValue: LoginFormTypes) => {
     // 폼 검증 실행
-    const isValid = validateForm(currentLoginFormValue);
+    const isValid = validateForm(loginFormValue);
     // 폼이 유효하면 mutation 호출
     if (isValid) {
       loginMutation.mutate();

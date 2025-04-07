@@ -1,19 +1,34 @@
+import { useState } from 'react';
+
 import useLoginValidation from '@/features/auth/model/login.validation';
 import useLogin from '@/features/auth/api/login';
 import Button from '@/shared/components/Button';
 import InputWithMessage from '@/shared/components/input/inputWithError';
+import { LoginFormTypes } from '../model/type';
+import useLoginHandleChange from '../model/login.handleChage';
+
+export type loginErrorType = Record<keyof LoginFormTypes, string | null>;
 
 function LoginForm() {
-  const {
-    handleChange,
-    loginFormValue: currentLoginFormValue,
-    errors,
+  const [loginFormValue, setLoginFormValue] = useState<LoginFormTypes>({
+    email: null,
+    password: null,
+  });
+  const { errors, setErrors } = useLoginValidation();
+  const { handleChange } = useLoginHandleChange({
+    setLoginFormValue,
     setErrors,
-  } = useLoginValidation();
+  });
+  const { handleSubmit } = useLogin({ loginFormValue, setErrors });
   const { email: emailError, password: passwordError } = errors;
-  const { handleSubmit } = useLogin({ currentLoginFormValue, setErrors });
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-6 p-[10px]">
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSubmit(loginFormValue);
+      }}
+      className="flex flex-col gap-6 p-[10px]"
+    >
       <div className="flex w-[320px] flex-col gap-5">
         <InputWithMessage
           id="email"
