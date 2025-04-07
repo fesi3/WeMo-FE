@@ -120,7 +120,7 @@ function GNBHeader() {
         className="flex h-screen flex-col gap-[38px] px-[30px] pb-[119px] pt-28 md:px-[65px] md:pt-[188px] lg:max-w-none lg:items-center"
       >
         <SearchContents
-          searchKeyword={encodedSearchKeyWord}
+          searchKeyword={searchKeyword}
           handleSearchInputChange={handleSearchInputChange}
           handleClose={handleClose}
         />

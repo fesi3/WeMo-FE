@@ -51,7 +51,6 @@ function GNBFooter() {
         {menuItems.map((item) => (
           <GNBItem key={item.key} name={item.name} path={item.path} />
         ))}
-        <GNBItem name={'마이페이지'} path={`/app/user`} />
         <GNBItem
           name={isLoggedIn ? '마이페이지' : '로그인'}
           path={isLoggedIn ? `/app/user` : '/app/start'}
