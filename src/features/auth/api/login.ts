@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 import useLoginValidation, { loginErrorType } from '../model/login.validation';
 import { LoginFormTypes } from '../model/type';
 import useLoginMutaion from './login.mutation';
+import { LOGIN_ERROR_MESSAGE } from '../model/message';
 
 interface useLoginProps {
   setErrors: Dispatch<SetStateAction<loginErrorType>>;
@@ -16,11 +17,20 @@ function useLogin({ setErrors, loginFormValue }: useLoginProps) {
   const { validateForm } = useLoginValidation();
   const loginMutation = useLoginMutaion({ loginFormValue, setErrors });
   const handleSubmit = async (loginFormValue: LoginFormTypes) => {
-    // 폼 검증 실행
-    const isValid = validateForm(loginFormValue);
-    // 폼이 유효하면 mutation 호출
-    if (isValid) {
-      loginMutation.mutate();
+    const { email, password } = loginFormValue;
+    // 입력창이 모두 빈칸일 때, 에러 메세지 업데이트
+    if (!email && !password) {
+      setErrors({
+        ['email']: LOGIN_ERROR_MESSAGE.EMAIL_EMPTY,
+        ['password']: LOGIN_ERROR_MESSAGE.PASSWORD_EMPTY,
+      });
+    } else {
+      // 폼 검증 실행
+      const isValid = validateForm(loginFormValue);
+      // 폼이 유효하면 mutation 호출
+      if (isValid) {
+        loginMutation.mutate();
+      }
     }
   };
 
