@@ -86,10 +86,10 @@ function GNBHeader() {
   //useHeaderHeight 훅을 사용하여 header 컴포넌트의 높이를 측정합니다다
 
   return (
-    <div ref={headerRef} className="flex max-h-full w-full flex-col">
+    <header ref={headerRef} className="flex max-h-full w-full flex-col">
       {showGnbHeader || (
         <>
-          <header className="fixed top-0 z-10 flex w-full items-center bg-white py-3 shadow-sm">
+          <div className="fixed top-0 z-10 flex w-full items-center bg-white py-3 shadow-sm">
             <div className="mx-9 flex w-full items-center">
               {/* 로고 */}
               <Link href={'/app/plans'} className="my-auto">
@@ -102,7 +102,7 @@ function GNBHeader() {
                 <GNBItem name={'알림'} isHeader isRouteDisabled />
               </div>
             </div>
-          </header>
+          </div>
 
           {/* 헤더 공간 확보 */}
           <div className="invisible h-14" />
@@ -121,7 +121,7 @@ function GNBHeader() {
           </SearchModal>
         </>
       )}
-    </div>
+    </header>
   );
 }
 

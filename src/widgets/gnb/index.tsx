@@ -11,11 +11,11 @@ const noto = Noto_Sans_KR({
 function GNB({ children }: PropsWithChildren) {
   useAuth();
   return (
-    <main className={noto.className}>
+    <>
       <GNBHeader />
-      {children}
+      <main className={noto.className}>{children}</main>
       <GNBFooter />
-    </main>
+    </>
   );
 }
 

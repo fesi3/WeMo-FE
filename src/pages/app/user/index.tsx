@@ -3,6 +3,7 @@ import MypageLayout from '@/entities/mypage/MypageLayout';
 import IndexNav from '@/entities/mypage/IndexNav';
 import Button from '@/shared/components/Button';
 import useAuth from '@/shared/hooks/useAuth';
+import ErroPage from '@/../pages/500';
 
 // Lazy load ProfileCard, StatisticsCard, and IndexNav components
 const ProfileCard = lazy(() => import('@/entities/mypage/ProfileCard'));
@@ -13,7 +14,8 @@ export function MyPage() {
   const userData = response?.data;
 
   if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error.response?.data.message}</div>;
+  if (error)
+    return <ErroPage errorCode="400" errorMessage="다시 로그인 해주세요." />;
   if (!userData) return <div>No Data...</div>;
 
   return (
