@@ -25,17 +25,8 @@ export const menuItems = [
   },
 ];
 
-export const hideGnbFooterRoutes = [
-  '/register',
-  '/login',
+export const hideGnbPathNames = [
   '/app/start',
-  '/login/oauth2/callback/kakao',
-  '/login/oauth2/callback/google',
-  '/login/oauth2/callback/naver',
-];
-
-export const hideGnbHeaderRoutes = [
-  '/start',
   '/login',
   '/register',
   '/login/oauth2/callback/kakao',

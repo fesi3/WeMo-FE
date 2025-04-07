@@ -36,8 +36,8 @@ const Loader = ({
 
   if (!hasNextPage)
     return (
-      <p className="mt-5 text-center text-gray-700">
-        더 이상 리뷰가 없어요 ㅠㅠ
+      <p className="m-6 text-center text-gray-700">
+        {'모든 리뷰를 불러왔어요!'}
       </p>
     );
   if (isLoading) return <p className="text-center text-gray-700">로딩 중...</p>;
