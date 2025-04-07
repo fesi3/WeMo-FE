@@ -26,6 +26,7 @@ function SearchResultCard({
     // [프롭스 드릴링] - 리덕스를 활용한 모달 전역 상태관리 필요
     <div
       onClick={() => {
+        router.replace(router.pathname);
         router.push(`/app/plans/${planId}`);
         handleClose();
       }}
