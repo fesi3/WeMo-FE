@@ -57,9 +57,9 @@ function GNBFooter() {
               path={isLoggedIn ? `/app/user` : '/app/start'}
             />
           </ul>
+          <div className="h-[50px] md:hidden"></div>
         </footer>
       )}
-      <div className="h-[50px] md:hidden"></div>
     </>
   );
 }
