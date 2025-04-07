@@ -6,6 +6,8 @@ import { LoginFormTypes } from './type';
 
 export type loginErrorType = Record<keyof LoginFormTypes, string | null>;
 
+// 로그인 폼의 유효성 검사를 통해 에러 메세지를 반환하는 함수 입니다.
+// 로그인 폼의 에러 메세지를 상태로 관리합니다.
 function useLoginValidation() {
   const [errors, setErrors] = useState<loginErrorType>({
     email: null,
