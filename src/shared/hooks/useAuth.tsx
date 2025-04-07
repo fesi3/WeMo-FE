@@ -24,6 +24,7 @@ function useAuth() {
   const {
     isSuccess,
     isLoading,
+    error,
     data: response,
   } = useQuery({
     queryKey: ['auth'],
@@ -45,7 +46,7 @@ function useAuth() {
     }
   }, [response, isLoading, isSuccess]);
 
-  return { response, isLoading };
+  return { response, isLoading, error };
 }
 
 export default useAuth;
