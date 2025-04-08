@@ -1,13 +1,33 @@
-import useRegisterFormValidation from '../model/register.validation';
-import useRegister from '../api/register';
+import { useState } from 'react';
+
 import Button from '@/shared/components/Button';
 import InputWithLabel from '@/shared/components/input/inputWithLabel';
 import InputWithMessage from '@/shared/components/input/inputWithError';
+import useRegisterFormValidation from '../model/register.validation';
+import useRegister from '../api/register';
+import useRegisterHandleChange from '../model/register.handleChange';
+export interface RegisterFormType {
+  email: string | null;
+  nickname: string | null;
+  companyName: string | null;
+  password: string | null;
+  passwordCheck: string | null;
+}
 
 function RegisterForm() {
-  const { handleChange, errors } = useRegisterFormValidation();
-
-  const { handleSubmit } = useRegister();
+  const [registerFormValue, setRegisterFormValue] = useState<RegisterFormType>({
+    email: null,
+    nickname: null,
+    companyName: null,
+    password: null,
+    passwordCheck: null,
+  });
+  const { errors, setErrors } = useRegisterFormValidation();
+  const { handleChange } = useRegisterHandleChange({
+    setRegisterFormValue,
+    setErrors,
+  });
+  const { handleSubmit } = useRegister({ registerFormValue, setErrors });
 
   const {
     nickname: nicknameError,
@@ -18,7 +38,13 @@ function RegisterForm() {
   } = errors;
 
   return (
-    <form className="flex w-[324px] flex-col gap-[42.5px]">
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSubmit(registerFormValue);
+      }}
+      className="flex w-[324px] flex-col gap-[42.5px]"
+    >
       <div className="flex flex-col gap-6">
         <InputWithLabel
           id={'nickname'}
@@ -69,7 +95,6 @@ function RegisterForm() {
       <Button
         text={'회원가입'}
         size={'large'}
-        onClick={handleSubmit}
         width={324}
         height={42}
         disabled={
