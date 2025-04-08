@@ -1,7 +1,6 @@
-/* eslint-disable no-useless-escape */
 import { useState } from 'react';
 import { REGISTER_ERROR_MESSAGE } from './message';
-import { EMAIL_REGEXP } from './regExp';
+import { EMAIL_REGEXP, PASSWORD_REGEXP } from './regExp';
 import { RegisterFormType } from '../ui/registerForm';
 
 export type RegisterErrorType = Record<keyof RegisterFormType, string | null>;
@@ -53,11 +52,7 @@ function useRegisterFormValidation() {
       case 'password':
         if (!currentPasswordValue) {
           errorMessage = REGISTER_ERROR_MESSAGE.PASSWORD_EMPTY;
-        } else if (
-          !/(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])/g.test(
-            currentPasswordValue,
-          )
-        ) {
+        } else if (!PASSWORD_REGEXP.test(currentPasswordValue)) {
           errorMessage = REGISTER_ERROR_MESSAGE.PASSWORD_CONDITION;
         } else if (currentPasswordValue.length <= 8) {
           errorMessage = REGISTER_ERROR_MESSAGE.PASSWORD_LENGTH;
@@ -112,7 +107,7 @@ function useRegisterFormValidation() {
     // 이메일 검사
     if (!currentEmailValue) {
       newErrors.email = REGISTER_ERROR_MESSAGE.EMAIL_EMPTY;
-    } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(currentEmailValue)) {
+    } else if (!EMAIL_REGEXP.test(currentEmailValue)) {
       newErrors.email = REGISTER_ERROR_MESSAGE.EMAIL_FORM;
     }
 
@@ -121,7 +116,7 @@ function useRegisterFormValidation() {
       newErrors.password = REGISTER_ERROR_MESSAGE.PASSWORD_EMPTY;
     } else if (currentPasswordValue.length <= 8) {
       newErrors.password = REGISTER_ERROR_MESSAGE.PASSWORD_LENGTH;
-    } else if (!/(?=.*[a-zA-Z])(?=.*[0-9])/.test(currentPasswordValue)) {
+    } else if (!PASSWORD_REGEXP.test(currentPasswordValue)) {
       newErrors.password = REGISTER_ERROR_MESSAGE.PASSWORD_CONDITION;
     }
 

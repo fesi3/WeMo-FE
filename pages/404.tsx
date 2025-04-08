@@ -1,6 +1,6 @@
-import Button from '@/shared/components/Button';
 import Link from 'next/link';
 import React from 'react';
+import Button from '@/shared/components/Button';
 
 function NotFound() {
   return (
