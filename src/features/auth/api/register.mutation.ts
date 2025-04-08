@@ -1,21 +1,29 @@
 import { useMutation } from '@tanstack/react-query';
+import { Dispatch, SetStateAction } from 'react';
 import { useRouter } from 'next/router';
 import { AxiosError } from 'axios';
 
-import { RegisterFormTypes } from '@/features/auth/model/type';
 import { API_PATHS } from '@/shared/constants/apiPath';
 import fetchData from '@/shared/api/fetchData';
-import useSignupFormValidation from '@/features/auth/model/register.validation';
+import { RegisterErrorType } from '../model/register.validation';
+import { RegisterFormType } from '../ui/registerForm';
 
 const {
   AUTH: { SIGNUP },
 } = API_PATHS;
 
-function useRegisterMutation() {
-  const { registerFormValue } = useSignupFormValidation();
+interface useRegisterMutation {
+  registerFormValue: RegisterFormType;
+  setErrors: Dispatch<SetStateAction<RegisterErrorType>>;
+}
+
+function useRegisterMutation({
+  registerFormValue,
+  setErrors,
+}: useRegisterMutation) {
   const router = useRouter();
 
-  return useMutation<RegisterFormTypes, AxiosError<{ message: string }>>({
+  return useMutation<RegisterFormType, AxiosError<{ message: string }>>({
     mutationFn: () =>
       fetchData({
         param: SIGNUP,
@@ -24,10 +32,17 @@ function useRegisterMutation() {
       }),
     onSuccess: () => {
       alert('회원가입이 완료되었습니다!');
-      router.push('/login');
+      router.push('/app/login');
     },
     onError: (error) => {
-      alert(error.response?.data.message);
+      const errorMessage = error.response?.data.message;
+      // alert(errorMessage);
+      const field = errorMessage?.includes('비밀번호') ? 'password' : 'email';
+
+      setErrors((prev) => ({
+        ...prev,
+        [field]: errorMessage || null,
+      }));
     },
   });
 }
