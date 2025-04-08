@@ -7,6 +7,7 @@ import { API_PATHS } from '@/shared/constants/apiPath';
 import fetchData from '@/shared/api/fetchData';
 import { RegisterErrorType } from '../model/register.validation';
 import { RegisterFormType } from '../ui/registerForm';
+import { fieldKeywordMap } from '../model/fieldKeywordMap';
 
 const {
   AUTH: { SIGNUP },
@@ -32,17 +33,22 @@ function useRegisterMutation({
       }),
     onSuccess: () => {
       alert('회원가입이 완료되었습니다!');
-      router.push('/app/login');
+      router.push('/login');
     },
     onError: (error) => {
       const errorMessage = error.response?.data.message;
-      // alert(errorMessage);
-      const field = errorMessage?.includes('비밀번호') ? 'password' : 'email';
+      const errorField = fieldKeywordMap.find((keywordArray) => {
+        const [keyword] = keywordArray;
+        return errorMessage?.includes(keyword);
+      });
 
-      setErrors((prev) => ({
-        ...prev,
-        [field]: errorMessage || null,
-      }));
+      if (errorField) {
+        const [, errorKeyword] = errorField;
+        setErrors((prev) => ({
+          ...prev,
+          [errorKeyword]: errorMessage || null,
+        }));
+      }
     },
   });
 }
