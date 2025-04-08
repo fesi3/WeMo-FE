@@ -1,9 +1,9 @@
+import { Dispatch, SetStateAction } from 'react';
 import useSignupFormValidation, {
   RegisterErrorType,
 } from '@/features/auth/model/register.validation';
 import useRegisterMutation from './register.mutation';
 import { RegisterFormType } from '../ui/registerForm';
-import { Dispatch, SetStateAction } from 'react';
 import { REGISTER_ERROR_MESSAGE } from '../model/message';
 
 interface useRegisterProps {

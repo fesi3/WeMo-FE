@@ -1,10 +1,10 @@
-import { PropsWithChildren } from 'react';
 import { Noto_Sans_KR } from 'next/font/google';
+import { useRouter } from 'next/router';
+import { PropsWithChildren } from 'react';
+import { twMerge } from 'tailwind-merge';
 import GNBHeader from '@/widgets/GNB/ui/GNB-header';
 import GNBFooter from '@/widgets/GNB/ui/GNB-footer';
 import useAuth from '@/shared/hooks/useAuth';
-import { twMerge } from 'tailwind-merge';
-import { useRouter } from 'next/router';
 import { hideGnbPathNames } from '@/shared/constants/gnb';
 
 const noto = Noto_Sans_KR({
