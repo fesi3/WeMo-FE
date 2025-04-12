@@ -5,6 +5,7 @@ import useSignupFormValidation, {
 import useRegisterMutation from './register.mutation';
 import { RegisterFormType } from '../ui/registerForm';
 import { REGISTER_ERROR_MESSAGE } from '../model/message';
+import { resetFocusFlag } from '@/shared/lib/HOC/withError';
 
 interface useRegisterProps {
   registerFormValue: RegisterFormType;
@@ -36,6 +37,7 @@ function useRegister({ registerFormValue, setErrors }: useRegisterProps) {
 
       // 폼이 유효하면 mutation 호출
       if (isValid) {
+        resetFocusFlag(); // 포커스 초기화
         registerMutation.mutate();
       }
     }

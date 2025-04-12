@@ -22,20 +22,13 @@ function RegisterForm() {
     password: null,
     passwordCheck: null,
   });
+
   const { errors, setErrors } = useRegisterFormValidation();
   const { handleChange } = useRegisterHandleChange({
     setRegisterFormValue,
     setErrors,
   });
   const { handleSubmit } = useRegister({ registerFormValue, setErrors });
-
-  const {
-    nickname: nicknameError,
-    companyName: companyNameError,
-    email: emailError,
-    password: passwordError,
-    passwordCheck: passwordCheckError,
-  } = errors;
 
   return (
     <form
@@ -52,7 +45,8 @@ function RegisterForm() {
           placeholder={'이름을 입력해 주세요.'}
           labelClassName="label"
           onChange={handleChange}
-          error={nicknameError}
+          error={errors.nickname}
+          autoFocus
         />
         <InputWithLabel
           id={'companyName'}
@@ -60,7 +54,7 @@ function RegisterForm() {
           labelName={'회사명'}
           labelClassName="label"
           onChange={handleChange}
-          error={companyNameError}
+          error={errors.companyName}
         />
         <InputWithLabel
           type={'email'}
@@ -69,7 +63,7 @@ function RegisterForm() {
           labelName={'이메일 주소'}
           labelClassName="label"
           onChange={handleChange}
-          error={emailError}
+          error={errors.email}
         />
         <div className="flex flex-col gap-6">
           <InputWithLabel
@@ -79,7 +73,7 @@ function RegisterForm() {
             labelName={'비밀번호'}
             labelClassName="label"
             onChange={handleChange}
-            error={passwordError}
+            error={errors.password}
           />
           <InputWithMessage
             type={'password'}
@@ -88,7 +82,7 @@ function RegisterForm() {
             aria-label={'passwordCheck'}
             placeholder={'비밀번호를 다시 입력해 주세요.'}
             onChange={handleChange}
-            error={passwordCheckError}
+            error={errors.passwordCheck}
           />
         </div>
       </div>
@@ -97,15 +91,7 @@ function RegisterForm() {
         size={'large'}
         width={324}
         height={42}
-        disabled={
-          nicknameError ||
-          companyNameError ||
-          emailError ||
-          passwordError ||
-          passwordCheckError
-            ? true
-            : false
-        }
+        disabled={Object.values(errors).some((error) => (error ? true : false))}
       />
     </form>
   );
