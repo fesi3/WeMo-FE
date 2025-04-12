@@ -17,17 +17,21 @@ function LoginForm() {
     email: null,
     password: null,
   });
+
   // 유효성 검사를 통해 errors를 반환
   // handleChange과 handleSubmit 함수에 setErrors 함수를 props로 전달해 각 함수 실행 시, error가 발생하면 setError를 할 수 있도록 설계.
   const { errors, setErrors } = useLoginValidation();
+
   // 이메일과 비밀번호 입력창의 이벤트 핸들러 함수
   const { handleChange } = useLoginHandleChange({
     setLoginFormValue,
     setErrors,
   });
+
   // 폼 제출 핸들러 함수
   const { handleSubmit } = useLogin({ loginFormValue, setErrors });
   const { email: emailError, password: passwordError } = errors;
+
   return (
     <form
       onSubmit={(e) => {
@@ -41,7 +45,6 @@ function LoginForm() {
           id="email"
           placeholder="이메일을 입력해주세요."
           onChange={handleChange}
-          inputClassName="border"
           error={emailError}
           autoFocus
         />
@@ -50,7 +53,6 @@ function LoginForm() {
           type="password"
           placeholder="비밀번호를 입력해주세요."
           onChange={handleChange}
-          inputClassName="border"
           error={passwordError}
         />
       </div>

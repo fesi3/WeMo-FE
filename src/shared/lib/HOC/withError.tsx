@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { motion } from 'framer-motion';
 
@@ -8,9 +8,21 @@ interface WithErrorProps {
   inputClassName?: string;
 }
 
+// 모듈 파일은 한 번만 로드되어 hasFocused 변수는 고유한 메모리 주소를 갖는다.
+// 따라서, 새롭게 생성되는 withError 컴포넌트라도 이 변수를 참조하여 포커스 상태를 관리할 수 있다.
+let hasFocused = false;
+
 function withError<T extends object>(WrappedComponent: React.ComponentType<T>) {
   return (props: WithErrorProps & T) => {
     const { error, inputClassName, ...rest } = props;
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+      if (error && inputRef.current && !hasFocused) {
+        inputRef.current.focus();
+        hasFocused = true; // 첫 번째 포커싱 후 막음
+      }
+    }, [error]);
 
     return (
       <motion.div
@@ -21,10 +33,13 @@ function withError<T extends object>(WrappedComponent: React.ComponentType<T>) {
         {/* Wrapped Input */}
         <WrappedComponent
           {...(rest as T)}
+          ref={inputRef}
           className={twMerge(
             inputClassName,
             `rounded`,
-            error ? 'border-red-400 focus:ring-red-400' : 'border-gray-300',
+            error
+              ? 'border border-red-400 focus:ring-red-400'
+              : 'border-gray-300',
           )}
         />
 
@@ -43,5 +58,9 @@ function withError<T extends object>(WrappedComponent: React.ComponentType<T>) {
     );
   };
 }
+
+export const resetFocusFlag = () => {
+  hasFocused = false;
+};
 
 export default withError;
