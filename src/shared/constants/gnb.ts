@@ -4,29 +4,29 @@ import GNBThunderIcon from '@/shared/assets/icons/GNB_thunder.svg';
 import GNBProfileIcon from '@/shared/assets/icons/GNB_profile.svg';
 
 export const menuItems = [
-  { name: '홈', key: 1, path: '/app/plans', icon: GNBHomeIcon },
+  { name: '홈', key: 1, path: '/plans', icon: GNBHomeIcon },
   {
     name: '모든 리뷰',
     key: 2,
-    path: '/app/all-reviews',
+    path: '/all-reviews',
     icon: GNBReviewIcon,
   },
   {
     name: '번개팟',
     key: 3,
-    path: '/app/lightning',
+    path: '/lightning',
     icon: GNBThunderIcon,
   },
   {
     name: '모임 찾기',
     key: 4,
-    path: '/app/meetings',
+    path: '/meetings',
     icon: GNBProfileIcon,
   },
 ];
 
 export const hideGnbPathNames = [
-  '/app/start',
+  '/start',
   '/login',
   '/register',
   '/login/oauth2/callback/kakao',

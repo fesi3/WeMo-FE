@@ -22,7 +22,7 @@ function NotFound() {
         <span className="opacity-40">{'이랍니다.'}</span>
       </p>
 
-      <Link href={'/app/plans'}>
+      <Link href={'/plans'}>
         <Button text="홈으로 돌아가기" className="px-6 py-2" />
       </Link>
     </div>

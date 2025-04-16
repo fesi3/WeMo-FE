@@ -19,7 +19,7 @@ const Card = ({ meeting }: { meeting: Meeting }) => {
   const displayedPlans = meeting.planList.slice(0, maxItems);
   const router = useRouter();
   const handleClick = () => {
-    router.push(`/app/meetings/${meeting.meetingId}`);
+    router.push(`/meetings/${meeting.meetingId}`);
   };
 
   return (

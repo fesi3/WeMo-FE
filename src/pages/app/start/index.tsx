@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '@/shared/components/Button';
 import Link from 'next/link';
-import LoginBanner from '@/pages/login/ui/loginBanner';
+import LoginBanner from '@/pages/auth/login/ui/loginBanner';
 import buttonGoogleImage from '@/shared/assets/images/btnW_google.png';
 import buttonKakaoImage from '@/shared/assets/images/btnY_kakao.png';
 import buttonNaverImage from '@/shared/assets/images/btnG_naver.png';
@@ -19,7 +19,7 @@ export const StartPage = () => {
         <LoginBanner />
       </div>
       <div className="mb-4">
-        <Link href={'/app/plans'}>
+        <Link href={'/plans'}>
           <Button
             text={'비회원으로 시작하기'}
             size={'large'}

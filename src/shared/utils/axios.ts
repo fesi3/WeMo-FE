@@ -27,7 +27,7 @@ instance.interceptors.response.use(
 
     // Case 1: 액세스 토큰 expired (401)
     if (error.response?.status === 401 && !originalRequest._retry) {
-      if (window.location.pathname === '/app/start') {
+      if (window.location.pathname === '/start') {
         return Promise.reject(error); // /start 페이지에서는 실행하지 않음
       }
       if (isRefreshing) {
@@ -62,7 +62,7 @@ instance.interceptors.response.use(
         } finally {
           store.dispatch(logout()); // 유저 정보 초기화
           alert('세션이 만료되었습니다. 다시 로그인 해주세요.');
-          window.location.href = '/app/start';
+          window.location.href = '/start';
         }
 
         return Promise.reject(refreshError);

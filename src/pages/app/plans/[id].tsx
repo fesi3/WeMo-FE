@@ -13,7 +13,7 @@ export function PlanDetail({ idNum }: PlanDetailProps) {
       <Header
         title="일정 상세"
         onClickBack={() => {
-          router.push('/app/plans');
+          router.push('/plans');
         }}
       />
       <div className="mx-auto min-h-screen max-w-screen-md">

@@ -5,12 +5,12 @@ import { useRouter } from 'next/router';
 import Button from '../shared/components/Button';
 
 const menuItems = [
-  { href: '/app/user', label: 'My Home' },
-  { href: '/app/user/plan', label: '나의 일정' },
-  { href: '/app/user/meeting', label: '나의 모임' },
-  { href: '/app/user/review', label: '나의 리뷰' },
-  { href: '/app/user/saved-gathering', label: '찜한 일정' },
-  { href: '/app/user/calendar', label: '이달의 일정' },
+  { href: '/user', label: 'My Home' },
+  { href: '/user/plan', label: '나의 일정' },
+  { href: '/user/meeting', label: '나의 모임' },
+  { href: '/user/review', label: '나의 리뷰' },
+  { href: '/user/saved-gathering', label: '찜한 일정' },
+  { href: '/user/calendar', label: '이달의 일정' },
 ];
 
 const Sidebar = React.memo(() => {

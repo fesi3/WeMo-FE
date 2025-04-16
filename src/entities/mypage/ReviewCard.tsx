@@ -24,7 +24,7 @@ const ReviewCard = ({ reviewed }: ReviewProps) => {
   return (
     <div className="my-5 flex flex-col gap-4 rounded-xl border bg-white p-3 shadow-lg sm:shadow-xl">
       {/* 일정 정보 */}
-      <Link href={`/app/plans/${planId}`}>
+      <Link href={`/plans/${planId}`}>
         <PlanInfo
           planName={planName}
           dateTime={dateTime}

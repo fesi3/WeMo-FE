@@ -73,8 +73,8 @@ export function CalendarPage() {
   const router = useRouter();
 
   const planViewClick = () => {
-    router.prefetch('/app/plans');
-    router.push('/app/plans');
+    router.prefetch('/plans');
+    router.push('/plans');
   };
 
   return (

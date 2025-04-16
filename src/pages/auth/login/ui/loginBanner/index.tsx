@@ -11,7 +11,7 @@ function LoginBanner({ description }: { description?: string }) {
         'flex flex-col items-center gap-6',
       )}
     >
-      <Link href={'/app/plans'}>
+      <Link href={'/plans'}>
         <div className="flex flex-col items-center">
           <Image
             width={'235'}

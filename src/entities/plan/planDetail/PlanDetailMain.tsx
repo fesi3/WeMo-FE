@@ -152,9 +152,7 @@ export default function PlanDetailMain({ id }: PlanDetailMainProps) {
                   <button
                     className="p-2"
                     onClick={() =>
-                      router.push(
-                        `/app/meetings/${planData.meetingInfo.meetingId}`,
-                      )
+                      router.push(`/meetings/${planData.meetingInfo.meetingId}`)
                     }
                   >
                     <ArrowLeft className="rotate-180" />

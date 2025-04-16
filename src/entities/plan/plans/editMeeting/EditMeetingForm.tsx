@@ -69,7 +69,7 @@ export default function EditMeetingForm({
         return;
       }
       const newMeetingId = response.data.meetingId;
-      await router.push(`/app/meetings/${newMeetingId}`);
+      await router.push(`/meetings/${newMeetingId}`);
       handleCloseThisModal();
     } finally {
       setIsSubmitting(false);
