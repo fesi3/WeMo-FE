@@ -1,4 +1,4 @@
-export { NaverSocialLoginRedirect as default } from '@/pages/login/oauth2/callback/naver';
+export { NaverSocialLoginRedirect as default } from '@/pages/auth/login/oauth2/callback/naver';
 
 // 기존 export default를 export로 변경했습니다.
 

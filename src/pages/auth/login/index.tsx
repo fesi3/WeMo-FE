@@ -1,6 +1,6 @@
-import LoginBanner from '@/pages/login/ui/loginBanner';
+import LoginBanner from '@/pages/auth/login/ui/loginBanner';
 import LoginForm from '@/features/auth/ui/loginForm';
-import FindInfo from '@/pages/login/ui/findInfo';
+import FindInfo from '@/pages/auth/login/ui/findInfo';
 
 export function Login() {
   return (
