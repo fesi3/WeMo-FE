@@ -32,7 +32,7 @@ const PlanCard = ({ planData }: PlanCardProps) => {
   const router = useRouter();
 
   useEffect(() => {
-    router.prefetch(`/app/plans/${planId}`);
+    router.prefetch(`/plans/${planId}`);
   }, [planId, router]);
 
   const leavePlanMutation = useLeavePlanMutation();
@@ -58,7 +58,7 @@ const PlanCard = ({ planData }: PlanCardProps) => {
 
   // 페이지 이동
   const handleDetailPage = () => {
-    router.push(`/app/plans/${planId}`);
+    router.push(`/plans/${planId}`);
   };
 
   const currentStatus = participants < 3 ? 'pending' : 'available';

@@ -8,31 +8,31 @@ const IndexNav = () => {
       id: 1,
       icon: '📆',
       title: '나의 일정',
-      link: `/app/user/plan`,
+      link: `/user/plan`,
     },
     {
       id: 2,
       icon: '💑',
       title: '나의 모임',
-      link: `/app/user/meeting`,
+      link: `/user/meeting`,
     },
     {
       id: 3,
       icon: '⭐',
       title: '나의 리뷰',
-      link: `/app/user/review`,
+      link: `/user/review`,
     },
     {
       id: 4,
       icon: '♥️',
       title: '찜한 모임',
-      link: `/app/saved-gathering`,
+      link: `/saved-gathering`,
     },
   ];
 
   return (
     <>
-      <Link href={`/app/user/calendar`}>
+      <Link href={`/user/calendar`}>
         <div className="-70 flex justify-between bg-yellow-200 px-4 py-2">
           <div className="hover:cursor flex-1 text-sm font-semibold hover:underline">
             {'캘린더에서 내 일정 확인하기'}

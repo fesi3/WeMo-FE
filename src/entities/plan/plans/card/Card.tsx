@@ -25,7 +25,7 @@ const Card: React.FC<PlanData> = ({
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/app/plans/${planId}`);
+    router.push(`/plans/${planId}`);
   };
 
   return (

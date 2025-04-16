@@ -27,7 +27,7 @@ function SearchResultCard({
     <div
       onClick={() => {
         router.replace(router.pathname);
-        router.push(`/app/plans/${planId}`);
+        router.push(`/plans/${planId}`);
         handleClose();
       }}
       className="h-[140px] w-full max-w-[446px] rounded-lg bg-primary-100 px-[10px] py-[26.5px]"

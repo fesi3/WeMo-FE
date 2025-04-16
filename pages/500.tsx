@@ -19,7 +19,7 @@ function ErroPage({errorCode = '500', errorMessage = '서버에러'}: ErroPagePr
         {'문제가 발생했습니다. 잠시 후에 다시 시도해주세요. '} <br />
       </p>
 
-      <Link href={'/app/plans'}>
+      <Link href={'/plans'}>
         <Button text="홈페이지 바로가기" className="px-6 py-2" />
       </Link>
     </div>
