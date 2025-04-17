@@ -1,7 +1,7 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import useAddressSearch from '@/shared/hooks/useAddressSearch';
 import axiosInstance from '@/shared/utils/axios';
-import Button from '@/shared/Button';
+import Button from '@/shared/components/Button';
 import { useEffect } from 'react';
 
 interface LightningMeetupFormValues {

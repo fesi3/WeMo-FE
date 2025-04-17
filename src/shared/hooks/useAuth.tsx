@@ -1,14 +1,20 @@
-import instance from '@/shared/utils/axios';
-import { useQuery } from '@tanstack/react-query';
-import { API_PATHS } from '@/shared/constants/apiPath';
+import { useEffect } from 'react';
+import { AxiosError } from 'axios';
 import { useDispatch } from 'react-redux';
+
+import { useQuery } from '@tanstack/react-query';
+import instance from '@/shared/utils/axios';
+import { API_PATHS } from '@/shared/constants/apiPath';
 import {
   clearUser,
   login,
   logout,
   setUser,
 } from '@/shared/lib/redux/authReducers';
-import { useEffect } from 'react';
+
+import { UserDataResponse } from '../types/mypageType';
+import { ErrorResponse } from '../api/axiosError';
+
 const {
   AUTH: { USER_INFO },
 } = API_PATHS;
@@ -24,8 +30,9 @@ function useAuth() {
   const {
     isSuccess,
     isLoading,
+    error,
     data: response,
-  } = useQuery({
+  } = useQuery<UserDataResponse, AxiosError<ErrorResponse, unknown>>({
     queryKey: ['auth'],
     queryFn: fetchUserInfo,
     retry: false,
@@ -45,7 +52,7 @@ function useAuth() {
     }
   }, [response, isLoading, isSuccess]);
 
-  return { response, isLoading };
+  return { response, isLoading, error };
 }
 
 export default useAuth;

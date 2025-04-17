@@ -1,5 +1,5 @@
-import DateBadge from '@/shared/DateBadge';
-import ProgressBar from '@/shared/ProgressBar';
+import DateBadge from '@/shared/components/badges/DateBadge';
+import ProgressBar from '@/shared/components/ProgressBar';
 import { PlanInMeeting } from '@/shared/types/api/meeting';
 import { UserIcon } from '@heroicons/react/20/solid';
 import dayjs from 'dayjs';
@@ -18,7 +18,7 @@ export default function PlanCardListInMeeting({
       {planList.slice(0, 2).map((plan) => (
         <button
           onClick={() => {
-            router.push(`/app/plans/${plan.planId}`);
+            router.push(`/plans/${plan.planId}`);
           }}
           key={plan.planId}
           className="flex w-1/2 flex-col gap-2 rounded-md border border-black-sub border-opacity-30 p-2"

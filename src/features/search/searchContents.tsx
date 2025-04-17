@@ -1,11 +1,11 @@
 import { useQueryClient } from '@tanstack/react-query';
-import Input from '@/shared/input';
+import Input from '@/shared/components/input';
 import { PlanListResponse } from '@/shared/types/plans';
 import SearchResultCardList from './searchResultCardList';
 
 interface SearchContentsProps {
   handleSearchInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  searchKeyword: string;
+  searchKeyword?: string | null;
   handleClose: () => void;
 }
 

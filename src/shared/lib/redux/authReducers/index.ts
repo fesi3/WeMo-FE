@@ -1,4 +1,5 @@
-import { UserData, AuthState } from '../type';
+import { UserData } from '@/shared/types/mypageType';
+import { AuthState } from '../type';
 // 액션 타입
 const SET_USER = 'SET_USER';
 const CLEAR_USER = 'CLEAR_USER';

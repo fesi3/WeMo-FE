@@ -3,7 +3,7 @@ import { UserGroupIcon } from '@heroicons/react/20/solid';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import dayjs from 'dayjs';
 import Image from 'next/image';
-import CategoryBadge from '@/shared/badges/CategoryBadge';
+import CategoryBadge from '@/shared/components/badges/CategoryBadge';
 import { Meeting } from '@/shared/types/api/meetingList';
 
 const MAX_DISPLAY_PLANS = 4;
@@ -19,7 +19,7 @@ const Card = ({ meeting }: { meeting: Meeting }) => {
   const displayedPlans = meeting.planList.slice(0, maxItems);
   const router = useRouter();
   const handleClick = () => {
-    router.push(`/app/meetings/${meeting.meetingId}`);
+    router.push(`/meetings/${meeting.meetingId}`);
   };
 
   return (

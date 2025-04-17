@@ -1,5 +1,5 @@
-import Button from '@/shared/Button';
-import Modal from '@/shared/modals/Modal';
+import Button from '@/shared/components/Button';
+import Modal from '@/shared/components/modals/Modal';
 import useToggle from '@/shared/hooks/useToggle';
 import EditMeetingForm from './EditMeetingForm';
 import { PlusIcon } from '@heroicons/react/20/solid';

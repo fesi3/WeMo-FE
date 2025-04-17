@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import useToggle from '@/shared/hooks/useToggle';
 import useCropper from '@/shared/hooks/useCropper';
-import FileInput from '@/shared/FileInput';
+import FileInput from '@/shared/components/FileInput';
 import CategoryRadioInput from '@/entities/plan/plans/editMeeting/CategoryRadioInput';
 import { getImageUrls } from '@/shared/api/images';
 import { CreateMeetingRequestBody } from '@/shared/types/api/meeting';
-import { createMeeting } from '@/shared/api/meeting';
-import ErrorWrapper from '@/shared/ErrorWrapper';
+import { createMeeting } from '@/features/update-meeting/api/meeting';
+import ErrorWrapper from '@/shared/components/ErrorWrapper';
 import { useRouter } from 'next/router';
-import Button from '@/shared/Button';
+import Button from '@/shared/components/Button';
 
 interface FormValues {
   meetingName: string;
@@ -69,7 +69,7 @@ export default function EditMeetingForm({
         return;
       }
       const newMeetingId = response.data.meetingId;
-      await router.push(`/app/meetings/${newMeetingId}`);
+      await router.push(`/meetings/${newMeetingId}`);
       handleCloseThisModal();
     } finally {
       setIsSubmitting(false);

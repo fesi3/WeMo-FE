@@ -1,5 +1,5 @@
-import ArrowLeft from '@/shared/assets/icons/arrow-left.svg';
 import { useRouter } from 'next/router';
+import ArrowLeft from '@/shared/assets/icons/arrow-left.svg';
 
 interface HeaderProps {
   title: string;
@@ -26,7 +26,6 @@ export default function Header({ title, onClickBack }: HeaderProps) {
         </button>
         <span className="mx-auto">{title}</span>
       </div>
-      <div className="h-12 md:h-0" />
     </>
   );
 }

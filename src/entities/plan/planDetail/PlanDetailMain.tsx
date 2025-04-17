@@ -1,10 +1,10 @@
-import Carousel from '@/shared/Carousel';
-import ProgressBar from '@/shared/ProgressBar';
+import Carousel from '@/shared/components/Carousel';
+import ProgressBar from '@/shared/components/ProgressBar';
 import dayjs from 'dayjs';
-import AddressMap from '@/shared/map/AddressMap';
+import AddressMap from '@/entities/plan/planDetail/AddressMap';
 import { splitAddress } from '@/shared/utils/splitAddress';
 import Image from 'next/image';
-import DateBadge from '@/shared/DateBadge';
+import DateBadge from '@/shared/components/badges/DateBadge';
 import AvatarList from './AvatarList';
 import IconWithCount from '../../meeting/meetingDetail/ui/IconWithCount';
 import {
@@ -20,7 +20,7 @@ import { formatAverage } from '@/shared/utils/formatRating';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/shared/lib/redux/store';
 import usePlanDetailQuery from '@/shared/hooks/usePlanDetailQuery';
-import { attendPlan, leavePlan } from '@/shared/api/plan';
+import { attendPlan, leavePlan } from '@/features/update-plan/api/plan';
 import LikePlanButton from './LikePlanButton';
 import usePlanLikeMutation from '@/shared/hooks/usePlanLikeMutation';
 import PlanAttendButton from './PlanAttendButton';
@@ -44,7 +44,7 @@ export default function PlanDetailMain({ id }: PlanDetailMainProps) {
     if (isLoadingJoin) return;
     setIsLoadingJoin(true);
     if (!auth.isLoggedIn) {
-      router.push('/auth/login');
+      router.push('/login');
       return;
     }
     //mutation으로 리팩토링링
@@ -62,7 +62,7 @@ export default function PlanDetailMain({ id }: PlanDetailMainProps) {
   const onClickLike = () => {
     if (isPendingLike) return;
     if (auth === null || !auth.isLoggedIn) {
-      router.push('/auth/login');
+      router.push('/login');
     }
     mutate();
   };
@@ -152,9 +152,7 @@ export default function PlanDetailMain({ id }: PlanDetailMainProps) {
                   <button
                     className="p-2"
                     onClick={() =>
-                      router.push(
-                        `/app/meetings/${planData.meetingInfo.meetingId}`,
-                      )
+                      router.push(`/meetings/${planData.meetingInfo.meetingId}`)
                     }
                   >
                     <ArrowLeft className="rotate-180" />

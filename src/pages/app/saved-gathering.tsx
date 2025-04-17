@@ -3,7 +3,7 @@ import instance from '@/shared/utils/axios'; // ✅ axios instance 사용
 import { PlanData } from '@/shared/types/plans';
 import { usePageInfiniteScroll } from '@/shared/hooks/usePageInfiniteScroll';
 import CardList from '@/entities/plan/plans/card/CardList';
-import Button from '@/shared/Button';
+import Button from '@/shared/components/Button';
 import Header from '@/widgets/Header';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/shared/lib/redux/store';

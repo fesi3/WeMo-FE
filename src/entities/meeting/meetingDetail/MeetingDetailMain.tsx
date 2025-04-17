@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Avatar from '@/shared/avatar/Avatar';
-import Carousel from '@/shared/Carousel';
-import DateBadge from '@/shared/DateBadge';
+import Avatar from '@/shared/components/avatar/Avatar';
+import Carousel from '@/shared/components/Carousel';
+import DateBadge from '@/shared/components/badges/DateBadge';
 import SectionContainer from './layout/SectionContainer';
 import IconWithCount from './ui/IconWithCount';
 import MemberList from './ui/MemberList';
@@ -36,7 +36,7 @@ export default function MeetingDetailMain() {
     if (auth.isLoggedIn) {
       mutate();
     } else {
-      router.push('/app/start');
+      router.push('/start');
     }
   };
 

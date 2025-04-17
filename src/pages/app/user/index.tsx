@@ -1,25 +1,27 @@
 import { lazy, Suspense } from 'react';
-import { useMypageUserInfo } from '@/shared/hooks/mypage/fetch/useMypageData';
 import MypageLayout from '@/entities/mypage/MypageLayout';
 import IndexNav from '@/entities/mypage/IndexNav';
-import Button from '@/shared/Button';
+import Button from '@/shared/components/Button';
+import useAuth from '@/shared/hooks/useAuth';
+import ErroPage from '@/../pages/500';
 
 // Lazy load ProfileCard, StatisticsCard, and IndexNav components
 const ProfileCard = lazy(() => import('@/entities/mypage/ProfileCard'));
 const StatisticsCard = lazy(() => import('@/entities/mypage/StatisticsCard'));
 
 export function MyPage() {
-  const { data, isFetching, error } = useMypageUserInfo();
-  const userData = data?.data;
+  const { response, isLoading, error } = useAuth();
+  const userData = response?.data;
 
-  // if (isFetching) return <div>Loading...</div>;
-  if (error) return <div>[Error!!] {error.message}</div>;
-  // if (!userData) return <div>No Data...</div>;
+  if (isLoading) return <div>Loading...</div>;
+  if (error)
+    return <ErroPage errorCode="400" errorMessage="다시 로그인 해주세요." />;
+  if (!userData) return <div>No Data...</div>;
 
   return (
     <MypageLayout>
       <div className="flex flex-col gap-4 rounded-lg p-4 md:gap-7">
-        {!isFetching && userData ? (
+        {!isLoading && userData ? (
           <>
             <section>
               <Suspense fallback={<div>Loading Profile...</div>}>

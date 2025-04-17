@@ -1,7 +1,7 @@
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import MemberIcon from '@/shared/assets/icons/member.svg';
 import defaultImage from '@/shared/assets/images/default-image.png';
-import { useRouter } from 'next/router';
 import { PlanDataWithCategory } from '@/shared/types/plans';
 
 type SearchResultCardTypes = Pick<
@@ -26,7 +26,8 @@ function SearchResultCard({
     // [프롭스 드릴링] - 리덕스를 활용한 모달 전역 상태관리 필요
     <div
       onClick={() => {
-        router.push(`/app/plans/${planId}`);
+        router.replace(router.pathname);
+        router.push(`/plans/${planId}`);
         handleClose();
       }}
       className="h-[140px] w-full max-w-[446px] rounded-lg bg-primary-100 px-[10px] py-[26.5px]"

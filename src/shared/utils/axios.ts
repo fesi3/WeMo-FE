@@ -27,7 +27,7 @@ instance.interceptors.response.use(
 
     // Case 1: 액세스 토큰 expired (401)
     if (error.response?.status === 401 && !originalRequest._retry) {
-      if (window.location.pathname === '/app/start') {
+      if (window.location.pathname === '/start') {
         return Promise.reject(error); // /start 페이지에서는 실행하지 않음
       }
       if (isRefreshing) {

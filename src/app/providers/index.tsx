@@ -1,8 +1,8 @@
 import { PropsWithChildren } from 'react';
 
+import ToastContainer from '@/shared/components/toast/ToastContainer';
 import ReduxProvider from './ReduxProvider';
 import ReactQueryProvider from './ReactQueryProvider';
-import ToastContainer from '@/shared/toast/ToastContainer';
 
 export default function Provider({ children }: PropsWithChildren) {
   return (

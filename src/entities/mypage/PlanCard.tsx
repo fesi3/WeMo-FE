@@ -3,10 +3,10 @@ import ProgressIndicator from './Indicator';
 import { useRouter } from 'next/router';
 import OwnerButton from './OwnerButton';
 import { PlanData } from '@/shared/types/mypageType';
-import Button from '@/shared/Button';
-import MeetingDate from '@/shared/badges/MeetingDate';
-import MeetingTime from '@/shared/badges/MeetingTime';
-import DistrictBadge from '@/shared/badges/DistrictBadge';
+import Button from '@/shared/components/Button';
+import MeetingDate from '@/shared/components/badges/MeetingDate';
+import MeetingTime from '@/shared/components/badges/MeetingTime';
+import DistrictBadge from '@/shared/components/badges/DistrictBadge';
 import { useLeavePlanMutation } from '@/shared/hooks/mypage/mutation/useLeaveMutation';
 import { useDeletePlanMutation } from '@/shared/hooks/mypage/mutation/useDeleteMutation';
 import { useEffect } from 'react';
@@ -32,7 +32,7 @@ const PlanCard = ({ planData }: PlanCardProps) => {
   const router = useRouter();
 
   useEffect(() => {
-    router.prefetch(`/app/plans/${planId}`);
+    router.prefetch(`/plans/${planId}`);
   }, [planId, router]);
 
   const leavePlanMutation = useLeavePlanMutation();
@@ -58,7 +58,7 @@ const PlanCard = ({ planData }: PlanCardProps) => {
 
   // 페이지 이동
   const handleDetailPage = () => {
-    router.push(`/app/plans/${planId}`);
+    router.push(`/plans/${planId}`);
   };
 
   const currentStatus = participants < 3 ? 'pending' : 'available';

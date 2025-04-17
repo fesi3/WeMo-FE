@@ -4,40 +4,32 @@ import GNBThunderIcon from '@/shared/assets/icons/GNB_thunder.svg';
 import GNBProfileIcon from '@/shared/assets/icons/GNB_profile.svg';
 
 export const menuItems = [
-  { name: '홈', key: 1, path: '/app/plans', icon: GNBHomeIcon },
+  { name: '홈', key: 1, path: '/plans', icon: GNBHomeIcon },
   {
     name: '모든 리뷰',
     key: 2,
-    path: '/app/all-reviews',
+    path: '/all-reviews',
     icon: GNBReviewIcon,
   },
   {
     name: '번개팟',
     key: 3,
-    path: '/app/lightning',
+    path: '/lightning',
     icon: GNBThunderIcon,
   },
   {
     name: '모임 찾기',
     key: 4,
-    path: '/app/meetings',
+    path: '/meetings',
     icon: GNBProfileIcon,
   },
 ];
 
-export const hideGnbFooterRoutes = [
-  '/auth/signup',
-  '/auth/login',
-  '/app/start',
-  '/auth/login/oauth2/callback/kakao',
-  '/auth/login/oauth2/callback/google',
-  '/auth/login/oauth2/callback/naver',
-];
-
-export const hideGnbHeaderRoutes = [
-  '/auth/login',
-  '/auth/start',
-  '/auth/login/oauth2/callback/kakao',
-  '/auth/login/oauth2/callback/google',
-  '/auth/login/oauth2/callback/naver',
+export const hideGnbPathNames = [
+  '/start',
+  '/login',
+  '/register',
+  '/login/oauth2/callback/kakao',
+  '/login/oauth2/callback/google',
+  '/login/oauth2/callback/naver',
 ];

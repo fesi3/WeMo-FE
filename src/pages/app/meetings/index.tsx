@@ -101,7 +101,7 @@ export const Meetings = ({ initialMeetings, nextCursor }: MeetingsProps) => {
         />
       </div>
       <CardList meetings={meetings} />
-      <div ref={loaderRef} className="flex h-10 items-center justify-center">
+      <div ref={loaderRef} className="flex h-12 items-center justify-center">
         {isFetchingNextPage && <span>Loading...</span>}
       </div>
     </div>

@@ -1,8 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
-
 import { useRouter } from 'next/router';
-import Button from '../shared/Button';
+
+import Button from '../shared/components/Button';
 
 const menuItems = [
   { href: '/user', label: 'My Home' },

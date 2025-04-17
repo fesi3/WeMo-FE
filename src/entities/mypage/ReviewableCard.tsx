@@ -1,13 +1,13 @@
 import Image from 'next/image';
 import { fromNow } from '@/shared/utils/dateUtils';
 import { ReviewPlanData } from '@/shared/types/mypageType';
-import Button from '@/shared/Button';
+import Button from '@/shared/components/Button';
 import useToggle from '@/shared/hooks/useToggle';
 import { useState } from 'react';
-import Modal from '@/shared/modals/Modal';
+import Modal from '@/shared/components/modals/Modal';
 import ReviewModal from './ReviewsModal';
 import { extractPathFromPresignedUrl } from '@/shared/utils/extractPathFromPresignedUrl';
-import { createReview } from '@/shared/api/createReview';
+import { createReview } from '@/features/update-review/api/createReview';
 
 interface reviewableProps {
   reviewable: ReviewPlanData;

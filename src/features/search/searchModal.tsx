@@ -1,10 +1,10 @@
 import { PropsWithChildren, useEffect } from 'react';
-import ModalPortal from '@/shared/modals/ModalPortal';
-import ModalBackDrop from '@/shared/modals/ModalBackDrop';
-import CloseIcon from '@/shared/assets/icons/close.svg';
-import { ModalProps } from '@/shared/modals/Modal';
 import { twMerge } from 'tailwind-merge';
 import { useRouter } from 'next/router';
+import ModalPortal from '@/shared/components/modals/ModalPortal';
+import ModalBackDrop from '@/shared/components/modals/ModalBackDrop';
+import CloseIcon from '@/shared/assets/icons/close.svg';
+import { ModalProps } from '@/shared/components/modals/Modal';
 
 //useToggle hook에서 isOpen과 handleClose를 연결해 주세요
 function SearchModal({

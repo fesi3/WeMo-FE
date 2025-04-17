@@ -1,7 +1,7 @@
 import Image from 'next/image';
+import { motion } from 'motion/react';
 import logoWithColor from '@/shared/assets/images/logo-with-color.png';
 import useOAuthLogin from '@/shared/hooks/useOAuthLogin';
-import { motion } from 'motion/react';
 
 // oAuth 로그인 버튼을 누르면 리다이렉트되는 페이지
 // url에서 autherization code를 받아 서버에 전달한다.

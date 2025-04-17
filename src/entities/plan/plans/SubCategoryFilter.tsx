@@ -1,6 +1,6 @@
 import React from 'react';
 //import { motion, AnimatePresence } from 'motion/react';
-import Button from '@/shared/Button';
+import Button from '@/shared/components/Button';
 
 interface SubCategoryFilterProps {
   selectedSubCategory: string | null;

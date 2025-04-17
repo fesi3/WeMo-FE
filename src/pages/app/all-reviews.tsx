@@ -9,7 +9,7 @@ import {
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
-import fetchReviews from '@/shared/api/reviews';
+import fetchReviews from '@/entities/review/api/reviews';
 
 const CATEGORIES = [{ category: '달램핏' }, { category: '워케이션' }];
 const DEFAULT_CATEGORY = CATEGORIES[0].category;

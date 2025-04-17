@@ -1,7 +1,7 @@
-import Modal from '@/shared/modals/Modal';
+import Modal from '@/shared/components/modals/Modal';
 import useToggle from '@/shared/hooks/useToggle';
 import EditPlanForm from './EditPlanForm';
-import Button from '@/shared/Button';
+import Button from '@/shared/components/Button';
 
 export default function EditPlanButton() {
   const { toggleValue, handleOpen, handleClose } = useToggle();

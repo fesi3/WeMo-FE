@@ -5,11 +5,11 @@ import {
   UseFormRegister,
 } from 'react-hook-form';
 
-import CalendarPicker from '@/shared/calendar/CalendarPicker';
-import Modal from '@/shared/modals/Modal';
+import CalendarPicker from '@/shared/components/calendar/CalendarPicker';
+import Modal from '@/shared/components/modals/Modal';
 import { CalendarDaysIcon } from '@heroicons/react/20/solid';
-import Button from '@/shared/Button';
-import ErrorWrapper from '@/shared/ErrorWrapper';
+import Button from '@/shared/components/Button';
+import ErrorWrapper from '@/shared/components/ErrorWrapper';
 
 interface DatePickInputProps<T extends FieldValues> {
   register: UseFormRegister<T>;

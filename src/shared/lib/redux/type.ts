@@ -1,14 +1,4 @@
-export interface UserData {
-  companyName: string;
-  createdAt: string;
-  email: string;
-  joinedPlanCount: number;
-  likedPlanCount: number;
-  loginType: string;
-  nickname: string;
-  profileImagePath: string;
-  writtenReviewCount: number;
-}
+import { UserData } from '@/shared/types/mypageType';
 
 export interface AuthState {
   isLoggedIn: boolean;

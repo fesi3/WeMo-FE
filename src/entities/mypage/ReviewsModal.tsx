@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import useToggle from '@/shared/hooks/useToggle';
 import useCropper from '@/shared/hooks/useCropper';
-import FileInput from '@/shared/FileInput';
-import HeartRating from '@/shared/HeartRating';
-import Button from '@/shared/Button';
+import FileInput from '@/shared/components/FileInput';
+import HeartRating from '@/shared/components/HeartRating';
+import Button from '@/shared/components/Button';
 import { ReviewFormValues } from '@/shared/types/reviewType';
 import { getImageUrls } from '@/shared/api/images';
-import { createReview } from '@/shared/api/createReview';
+import { createReview } from '@/features/update-review/api/createReview';
 
 export interface ReviewModalProps {
   mode: 'create' | 'edit';
