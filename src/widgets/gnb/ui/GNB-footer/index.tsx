@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { hideGnbPathNames, menuItems } from '@/shared/constants/gnb';
-import GNBItem from '@/widgets/GNB/ui/GNB-item';
+import GNBItem from '@/widgets/gnb/ui/GNB-item';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/shared/lib/redux/store';
 import { twMerge } from 'tailwind-merge';
