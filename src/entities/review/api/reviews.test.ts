@@ -1,4 +1,4 @@
-import fetchReviews from '@/api/reviews';
+import fetchReviews from './reviews';
 import axiosInstance from '@/shared/utils/axios';
 import { FilterState } from '@/shared/types/reviewType';
 
