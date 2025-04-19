@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { useSearchParams } from 'next/navigation';
 import { debounce } from 'lodash';
 
-import GNBItem from '@/widgets/GNB/ui/GNB-item';
+import GNBItem from '@/widgets/gnb/ui/GNB-item';
 import Search from '@/features/search';
 import SearchModal from '@/features/search/searchModal';
 import SearchContents from '@/features/search/searchContents';

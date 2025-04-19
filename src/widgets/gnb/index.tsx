@@ -2,8 +2,8 @@ import { Noto_Sans_KR } from 'next/font/google';
 import { useRouter } from 'next/router';
 import { PropsWithChildren } from 'react';
 import { twMerge } from 'tailwind-merge';
-import GNBHeader from '@/widgets/GNB/ui/GNB-header';
-import GNBFooter from '@/widgets/GNB/ui/GNB-footer';
+import GNBHeader from '@/widgets/gnb/ui/GNB-header';
+import GNBFooter from '@/widgets/gnb/ui/GNB-footer';
 import useAuth from '@/shared/hooks/useAuth';
 import { hideGnbPathNames } from '@/shared/constants/gnb';
 
