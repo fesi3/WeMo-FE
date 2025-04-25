@@ -64,7 +64,6 @@ export const Home = ({ initialPlans, initialCursor }: HomeProps) => {
   // 탭 변경 시 카테고리 업데이트
   useEffect(() => {
     setSelectedCategory(activeTab);
-    setCursor(undefined);
     setSelectedSort(null);
   }, [activeTab]);
 
@@ -72,7 +71,6 @@ export const Home = ({ initialPlans, initialCursor }: HomeProps) => {
   useEffect(() => {
     if (selectedSort) {
       setPlans([]);
-      setCursor(undefined);
       setIsFetching(false);
     }
   }, [selectedSort]);
