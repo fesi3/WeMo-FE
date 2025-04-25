@@ -1,6 +1,7 @@
 import { PlanListResponse } from '@/shared/types/plans';
 import csrInstance from '@/shared/utils/axios';
 import { ssrInstance } from '@/shared/utils/axiosSsr';
+import { API_PATHS } from '@/shared/constants/apiPath';
 
 export interface getPlansProps {
   cookie?: string;
@@ -20,8 +21,10 @@ async function getPlans({
   const instance =
     typeof window === 'undefined' ? ssrInstance(cookie) : csrInstance;
 
+  const queryParams = `size=10${sortParam ? `&sortParam=${sortParam}` : ''}${categoryParam ? `&categoryId=${categoryParam}` : ''}${cursorParam ? `&cursor=${cursorParam}` : ''}`;
+
   const res = await instance.get<PlanListResponse>(
-    `/api/plans?size=10${sortParam ? `&sortParam=${sortParam}` : ''}${categoryParam ? `&categoryId=${categoryParam}` : ''}${cursorParam ? `&cursor=${cursorParam}` : ''}`,
+    API_PATHS.PLAN.GET_ALL(queryParams),
     {
       headers: isLoggedIn ? { Cookie: cookie } : {},
       withCredentials: isLoggedIn,
