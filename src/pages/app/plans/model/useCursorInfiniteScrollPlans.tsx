@@ -50,7 +50,7 @@ export const useCursorInfiniteScroll = ({
     async (entries: IntersectionObserverEntry[]) => {
       const target = entries[0];
 
-      if (target.isIntersecting && !isFetching && cursor !== null) {
+      if (target.isIntersecting && !isFetching && cursor) {
         // 이미 요청한 cursor인지 확인하여 중복 요청 방지
         if (requestedCursors.current.has(cursor)) return;
 
@@ -115,6 +115,7 @@ export const useCursorInfiniteScroll = ({
     const observer = new IntersectionObserver(handleObserver, {
       threshold: 0.1,
     });
+
     observerRef.current = observer;
     if (loaderRef.current) {
       observer.observe(loaderRef.current);

@@ -21,7 +21,7 @@ async function getPlans({
     typeof window === 'undefined' ? ssrInstance(cookie) : csrInstance;
 
   const res = await instance.get<PlanListResponse>(
-    `/api/plans?size=10&sort=${sortParam}&categoryId=${categoryParam}&cursor=${cursorParam}`,
+    `/api/plans?size=10${sortParam ? `&sortParam=${sortParam}` : ''}${categoryParam ? `&categoryId=${categoryParam}` : ''}${cursorParam ? `&cursor=${cursorParam}` : ''}`,
     {
       headers: isLoggedIn ? { Cookie: cookie } : {},
       withCredentials: isLoggedIn,
