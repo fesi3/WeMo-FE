@@ -21,15 +21,16 @@ async function getPlans({
   const instance =
     typeof window === 'undefined' ? ssrInstance(cookie) : csrInstance;
 
-  const queryParams = `size=10${sortParam ? `&sortParam=${sortParam}` : ''}${categoryParam ? `&categoryId=${categoryParam}` : ''}${cursorParam ? `&cursor=${cursorParam}` : ''}`;
-
-  const res = await instance.get<PlanListResponse>(
-    API_PATHS.PLAN.GET_ALL(queryParams),
-    {
-      headers: isLoggedIn ? { Cookie: cookie } : {},
-      withCredentials: isLoggedIn,
+  const res = await instance.get<PlanListResponse>(API_PATHS.PLAN.GET_ALL, {
+    headers: isLoggedIn ? { Cookie: cookie } : {},
+    withCredentials: isLoggedIn,
+    params: {
+      size: 10,
+      ...(cursorParam && { cursor: cursorParam }),
+      ...(categoryParam && { categoryId: categoryParam }),
+      ...(sortParam && { sort: sortParam }),
     },
-  );
+  });
 
   const data = res.data;
 

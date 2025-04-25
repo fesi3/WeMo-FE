@@ -16,6 +16,16 @@ export const Home = () => {
     select: (data) => data.data,
   });
 
+  // const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  //   useInfiniteQuery({
+  //     queryKey: ['plans'],
+  //     queryFn: ({ pageParam = undefined }) =>
+  //       getPlans({ cursorParam: pageParam }),
+  //     initialPageParam: undefined, // 보통 cursor 기반은 undefined로 시작
+  //     getNextPageParam: (lastPage) => lastPage.data.nextCursor,
+  //   });
+
+  // console.log(data, '--dataa--');
   // 일정 데이터 상태관리
   const [plans, setPlans] = useState<PlanDataWithCategory[]>(
     () => data?.planList ?? [],
