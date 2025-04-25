@@ -1,7 +1,6 @@
 import { useEffect, useRef, useCallback } from 'react';
-//import axios from 'axios';
-import instance from '@/shared/utils/axios';
 import { useSelector } from 'react-redux';
+
 import { RootState } from '@/shared/lib/redux/store';
 import {
   RegionOption,
@@ -10,8 +9,7 @@ import {
 } from '@/shared/types/reviewType';
 import { PlanDataWithCategory } from '@/shared/types/plans';
 import { getCategoryId } from '@/shared/utils/categoryUtils';
-
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+import getPlans from '../api/getPlans';
 
 interface UseCursorInfiniteScrollProps {
   cursor: number | null | undefined;
@@ -60,34 +58,27 @@ export const useCursorInfiniteScroll = ({
         requestedCursors.current.add(cursor); // 요청한 cursor 저장
 
         try {
+          const sortParam = selectedSort ? `${selectedSort.value}` : '';
           const categoryParam = getCategoryId(selectedCategory || '');
-          const sortParam = selectedSort ? `&sort=${selectedSort.value}` : '';
-          let url = `${baseURL}/api/plans?size=10&categoryId=${categoryParam}${sortParam}`;
+          const cursorParam = cursor ? `${cursor}` : '';
 
-          if (cursor !== undefined) {
-            url += `&cursor=${cursor}`;
-          }
+          const { data: planData } = await getPlans({
+            isLoggedIn,
+            sortParam,
+            categoryParam,
+            cursorParam,
+          });
 
-          let res;
-          if (isLoggedIn) {
-            // 회원이면 쿠키 포함 요청
-            res = await instance.get(url);
-          } else {
-            // 비회원이면 쿠키 없이 요청
-            res = await instance.get(url, { withCredentials: false });
-          }
-
-          const newData = res.data;
-          const formatted = newData.data.planList as PlanDataWithCategory[];
+          const formatted = planData.planList as PlanDataWithCategory[];
           onDataFetched(formatted);
 
-          if (newData.data.nextCursor === null || formatted.length === 0) {
+          if (planData.nextCursor === null || formatted.length === 0) {
             setCursor(null);
             if (observerRef.current) {
               observerRef.current.disconnect();
             }
           } else {
-            setCursor(newData.data.nextCursor);
+            setCursor(planData.nextCursor);
           }
         } catch (error) {
           console.error('추가 데이터 로딩 실패:', error);
@@ -134,7 +125,7 @@ export const useCursorInfiniteScroll = ({
         observerRef.current.disconnect();
       }
     };
-  }, [handleObserver, cursor, selectedCategory]);
+  }, [handleObserver, selectedCategory]);
 
   /**
    * 정렬 필터 변경 시 requestedCursors 초기화

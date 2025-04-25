@@ -1,43 +1,50 @@
 import React, { useState, useEffect } from 'react';
 
 import { SortOption } from '@/shared/types/reviewType';
-import { useCursorInfiniteScroll } from '@/shared/hooks/useCursorInfiniteScrollPlans';
+import { useCursorInfiniteScroll } from './model/useCursorInfiniteScrollPlans';
 import { PlanDataWithCategory } from '@/shared/types/plans';
 import { RegionOption, SubRegionOption } from '@/shared/types/reviewType';
 import Tabs from '@/entities/plan/plans/tab/Tabs';
 import RenderTabContent from '@/entities/plan/plans/RenderTabContent';
+import { useQuery } from '@tanstack/react-query';
+import getPlans from './api/getPlans';
 
-interface HomeProps {
-  initialPlans: PlanDataWithCategory[];
-  initialCursor: number | null;
-}
+export const Home = () => {
+  const { data } = useQuery({
+    queryKey: ['plans'],
+    queryFn: () => getPlans({}),
+    select: (data) => data.data,
+  });
 
-export const Home = ({ initialPlans, initialCursor }: HomeProps) => {
-  //상태관리
-  const [plans, setPlans] = useState<PlanDataWithCategory[]>(initialPlans);
+  // 일정 데이터 상태관리
+  const [plans, setPlans] = useState<PlanDataWithCategory[]>(
+    () => data?.planList ?? [],
+  );
   const [cursor, setCursor] = useState<number | null | undefined>(
-    initialCursor,
+    () => data?.nextCursor,
   );
   const [isFetching, setIsFetching] = useState<boolean>(false);
 
-  // 필터 상태 관리
+  //탭 상태 관리 (달램핏, 워케이션)
+  const tabs = [{ category: '달램핏' }, { category: '워케이션' }];
+  const [activeTab, setActiveTab] = useState<string>('달램핏');
+  const [selectedCategory, setSelectedCategory] = useState<string>('달램핏');
+
+  // 서브 카테고리 상태(전체, 오피스스트레칭, 마인드풀니스)
+  const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(
+    null,
+  );
+
+  // 필터 상태 관리(날짜, 시/도, 구/시)
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedRegion, setSelectedRegion] = useState<RegionOption | null>(
     null,
   );
   const [selectedSubRegion, setSelectedSubRegion] =
     useState<SubRegionOption | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string>('달램핏');
-  const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(
-    null,
-  );
 
-  // 정렬 상태
+  // 정렬 상태 (최신순, 마감임박순)
   const [selectedSort, setSelectedSort] = useState<SortOption | null>(null);
-
-  //탭 상태 관리
-  const tabs = [{ category: '달램핏' }, { category: '워케이션' }];
-  const [activeTab, setActiveTab] = useState<string>('달램핏');
 
   //무한 스크롤 커스텀 훅
   const { loaderRef } = useCursorInfiniteScroll({
@@ -61,10 +68,16 @@ export const Home = ({ initialPlans, initialCursor }: HomeProps) => {
     },
   });
 
+  // 주의: data가 undefined인 경우도 있을 수 있으므로 방어 코드 필요
+  useEffect(() => {
+    if (data?.planList) {
+      setPlans(data.planList);
+    }
+  }, [data]);
+
   // 탭 변경 시 카테고리 업데이트
   useEffect(() => {
     setSelectedCategory(activeTab);
-    setCursor(undefined);
     setSelectedSort(null);
   }, [activeTab]);
 
@@ -72,7 +85,6 @@ export const Home = ({ initialPlans, initialCursor }: HomeProps) => {
   useEffect(() => {
     if (selectedSort) {
       setPlans([]);
-      setCursor(undefined);
       setIsFetching(false);
     }
   }, [selectedSort]);
