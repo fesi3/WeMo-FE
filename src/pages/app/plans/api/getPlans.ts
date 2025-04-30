@@ -8,7 +8,7 @@ export interface getPlansProps {
   isLoggedIn?: boolean;
   sortParam?: string;
   categoryParam?: number;
-  cursorParam?: string;
+  pageParam?: number;
 }
 
 async function getPlans({
@@ -16,7 +16,7 @@ async function getPlans({
   isLoggedIn = false,
   sortParam = '',
   categoryParam = 1,
-  cursorParam = '',
+  pageParam: cursorParam = 0,
 }: getPlansProps) {
   const instance =
     typeof window === 'undefined' ? ssrInstance(cookie) : csrInstance;
@@ -31,6 +31,7 @@ async function getPlans({
       ...(sortParam && { sort: sortParam }),
     },
   });
+  console.log(res, '--res---');
 
   const data = res.data;
 

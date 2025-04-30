@@ -1,5 +1,6 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { RootState } from '@/shared/lib/redux/store';
 import {
@@ -7,32 +8,23 @@ import {
   SortOption,
   SubRegionOption,
 } from '@/shared/types/reviewType';
-import { PlanDataWithCategory } from '@/shared/types/plans';
 import { getCategoryId } from '@/shared/utils/categoryUtils';
+import { PlanListResponse } from '@/shared/types/plans';
 import getPlans from '../api/getPlans';
+import { planInfiniteQueryResponseType } from './type';
 
 interface UseCursorInfiniteScrollProps {
-  cursor: number | null | undefined;
-  setCursor: (cursor: number | null | undefined) => void;
-  isFetching: boolean;
-  setIsFetching: (fetching: boolean) => void;
   selectedCategory: string | null;
   selectedSubCategory: string | null;
   selectedRegion: RegionOption | null;
   selectedSubRegion: SubRegionOption | null;
   selectedSort: SortOption | null;
-  onDataFetched: (newData: PlanDataWithCategory[]) => void;
 }
 
 export const useCursorInfiniteScroll = ({
-  cursor,
-  setCursor,
-  isFetching,
-  setIsFetching,
   selectedCategory,
   selectedSubCategory,
   selectedSort,
-  onDataFetched,
 }: UseCursorInfiniteScrollProps) => {
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   const loaderRef = useRef<HTMLDivElement | null>(null);
@@ -41,70 +33,53 @@ export const useCursorInfiniteScroll = ({
   // 요청한 cursor를 저장하여 중복 요청 방지
   const requestedCursors = useRef(new Set<number | null | undefined>());
 
+  const sortParam = selectedSort ? `${selectedSort.value}` : '';
+  const categoryParam = getCategoryId(selectedCategory || '');
+
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery<
+      PlanListResponse,
+      Error,
+      planInfiniteQueryResponseType,
+      (string | { sortParam: string; categoryParam: number })[],
+      number
+    >({
+      queryKey: ['plans', { sortParam, categoryParam }],
+      queryFn: ({ pageParam }) =>
+        getPlans({
+          pageParam,
+          sortParam,
+          categoryParam,
+          isLoggedIn,
+        }),
+      initialPageParam: 0,
+      getNextPageParam: (lastPage) => lastPage.data.nextCursor ?? null,
+    });
+
   /**
    * IntersectionObserver 콜백 함수
    * - isFetching이 true이면 중복 요청 방지
    * - requestedCursors를 이용해 이미 요청한 cursor인지 확인
    */
-  const handleObserver = useCallback(
-    async (entries: IntersectionObserverEntry[]) => {
-      const target = entries[0];
 
-      if (target.isIntersecting && !isFetching && cursor) {
-        // 이미 요청한 cursor인지 확인하여 중복 요청 방지
-        if (requestedCursors.current.has(cursor)) return;
+  const handleObserver = async (entries: IntersectionObserverEntry[]) => {
+    const target = entries[0];
 
-        setIsFetching(true);
-        requestedCursors.current.add(cursor); // 요청한 cursor 저장
-
-        try {
-          const sortParam = selectedSort ? `${selectedSort.value}` : '';
-          const categoryParam = getCategoryId(selectedCategory || '');
-          const cursorParam = cursor ? `${cursor}` : '';
-
-          const { data: planData } = await getPlans({
-            isLoggedIn,
-            sortParam,
-            categoryParam,
-            cursorParam,
-          });
-
-          const formatted = planData.planList as PlanDataWithCategory[];
-          onDataFetched(formatted);
-
-          if (planData.nextCursor === null || formatted.length === 0) {
-            setCursor(null);
-            if (observerRef.current) {
-              observerRef.current.disconnect();
-            }
-          } else {
-            setCursor(planData.nextCursor);
-          }
-        } catch (error) {
-          console.error('추가 데이터 로딩 실패:', error);
-        } finally {
-          setIsFetching(false);
-        }
+    if (target.isIntersecting && !isFetchingNextPage && hasNextPage) {
+      try {
+        fetchNextPage();
+      } catch (error) {
+        console.error('추가 데이터 로딩 실패:', error);
       }
-    },
-    [
-      cursor,
-      isFetching,
-      selectedCategory,
-      selectedSort,
-      setCursor,
-      setIsFetching,
-      onDataFetched,
-      isLoggedIn,
-    ],
-  );
+    }
+  };
 
   /**
    * IntersectionObserver 등록 및 해제
    */
   useEffect(() => {
     if (!selectedCategory) return;
-    if (cursor === null) {
+    if (!hasNextPage) {
       if (observerRef.current) {
         observerRef.current.disconnect();
         observerRef.current = null;
@@ -113,7 +88,7 @@ export const useCursorInfiniteScroll = ({
     }
 
     const observer = new IntersectionObserver(handleObserver, {
-      threshold: 0.1,
+      threshold: 1.0,
     });
 
     observerRef.current = observer;
@@ -126,7 +101,7 @@ export const useCursorInfiniteScroll = ({
         observerRef.current.disconnect();
       }
     };
-  }, [handleObserver, selectedCategory]);
+  }, [hasNextPage, handleObserver, selectedCategory]);
 
   /**
    * 정렬 필터 변경 시 requestedCursors 초기화
@@ -146,5 +121,5 @@ export const useCursorInfiniteScroll = ({
     }
   }, [selectedCategory, selectedSubCategory]);
 
-  return { loaderRef };
+  return { loaderRef, data, isFetchingNextPage, hasNextPage };
 };

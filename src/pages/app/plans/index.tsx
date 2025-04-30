@@ -1,40 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
 import { SortOption } from '@/shared/types/reviewType';
-import { useCursorInfiniteScroll } from './model/useCursorInfiniteScrollPlans';
-import { PlanDataWithCategory } from '@/shared/types/plans';
 import { RegionOption, SubRegionOption } from '@/shared/types/reviewType';
 import Tabs from '@/entities/plan/plans/tab/Tabs';
 import RenderTabContent from '@/entities/plan/plans/RenderTabContent';
-import { useQuery } from '@tanstack/react-query';
-import getPlans from './api/getPlans';
+import { useCursorInfiniteScroll } from './model/useCursorInfiniteScrollPlans';
+import { PlanListResponse } from '@/shared/types/plans';
 
 export const Home = () => {
-  const { data } = useQuery({
-    queryKey: ['plans'],
-    queryFn: () => getPlans({}),
-    select: (data) => data.data,
-  });
-
-  // const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-  //   useInfiniteQuery({
-  //     queryKey: ['plans'],
-  //     queryFn: ({ pageParam = undefined }) =>
-  //       getPlans({ cursorParam: pageParam }),
-  //     initialPageParam: undefined, // 보통 cursor 기반은 undefined로 시작
-  //     getNextPageParam: (lastPage) => lastPage.data.nextCursor,
-  //   });
-
-  // console.log(data, '--dataa--');
-  // 일정 데이터 상태관리
-  const [plans, setPlans] = useState<PlanDataWithCategory[]>(
-    () => data?.planList ?? [],
-  );
-  const [cursor, setCursor] = useState<number | null | undefined>(
-    () => data?.nextCursor,
-  );
-  const [isFetching, setIsFetching] = useState<boolean>(false);
-
   //탭 상태 관리 (달램핏, 워케이션)
   const tabs = [{ category: '달램핏' }, { category: '워케이션' }];
   const [activeTab, setActiveTab] = useState<string>('달램핏');
@@ -57,33 +30,14 @@ export const Home = () => {
   const [selectedSort, setSelectedSort] = useState<SortOption | null>(null);
 
   //무한 스크롤 커스텀 훅
-  const { loaderRef } = useCursorInfiniteScroll({
-    cursor,
-    setCursor,
-    isFetching,
-    setIsFetching,
-    selectedCategory,
-    selectedSubCategory,
-    selectedRegion,
-    selectedSubRegion,
-    selectedSort,
-    onDataFetched: (newData) => {
-      setPlans((prev) => {
-        const filtered = newData.filter(
-          (newItem) =>
-            !prev.some((oldItem) => oldItem.planId === newItem.planId),
-        );
-        return [...prev, ...filtered];
-      });
-    },
-  });
-
-  // 주의: data가 undefined인 경우도 있을 수 있으므로 방어 코드 필요
-  useEffect(() => {
-    if (data?.planList) {
-      setPlans(data.planList);
-    }
-  }, [data]);
+  const { loaderRef, data, isFetchingNextPage, hasNextPage } =
+    useCursorInfiniteScroll({
+      selectedCategory,
+      selectedSubCategory,
+      selectedRegion,
+      selectedSubRegion,
+      selectedSort,
+    });
 
   // 탭 변경 시 카테고리 업데이트
   useEffect(() => {
@@ -91,13 +45,8 @@ export const Home = () => {
     setSelectedSort(null);
   }, [activeTab]);
 
-  // 정렬이 바뀔 때 새 목록 불러오기기
-  useEffect(() => {
-    if (selectedSort) {
-      setPlans([]);
-      setIsFetching(false);
-    }
-  }, [selectedSort]);
+  const plans =
+    data?.pages.flatMap((page: PlanListResponse) => page.data.planList) ?? [];
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-4">
@@ -107,8 +56,6 @@ export const Home = () => {
         defaultTab="달램핏"
         onTabChange={(category) => {
           setActiveTab(category);
-          setCursor(undefined);
-          setIsFetching(false);
         }}
         renderContent={(category) => (
           <div className="mt-4">
@@ -132,6 +79,8 @@ export const Home = () => {
         )}
       />
       <div ref={loaderRef} className="h-12"></div>
+      {isFetchingNextPage && <span>불러오는 중...</span>}
+      {!hasNextPage && <span>모두 불러왔습니다!</span>}
     </div>
   );
 };
