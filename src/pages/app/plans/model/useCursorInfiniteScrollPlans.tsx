@@ -49,7 +49,15 @@ export const useCursorInfiniteScroll = ({
           isLoggedIn,
         }),
       initialPageParam: null,
-      getNextPageParam: (lastPage) => lastPage.data.nextCursor ?? null,
+      getNextPageParam: (lastPage) => {
+        if (lastPage.data.nextCursor === null) {
+          if (observerRef.current) {
+            observerRef.current.disconnect();
+          }
+        }
+
+        return lastPage.data.nextCursor ?? null;
+      },
     });
 
   /**
