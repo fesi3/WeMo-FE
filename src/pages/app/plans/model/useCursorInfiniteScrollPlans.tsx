@@ -23,15 +23,11 @@ interface UseCursorInfiniteScrollProps {
 
 export const useCursorInfiniteScroll = ({
   selectedCategory,
-  selectedSubCategory,
   selectedSort,
 }: UseCursorInfiniteScrollProps) => {
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   const loaderRef = useRef<HTMLDivElement | null>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
-
-  // 요청한 cursor를 저장하여 중복 요청 방지
-  const requestedCursors = useRef(new Set<number | null | undefined>());
 
   const sortParam = selectedSort ? `${selectedSort.value}` : '';
   const categoryParam = getCategoryId(selectedCategory || '');
@@ -79,6 +75,7 @@ export const useCursorInfiniteScroll = ({
    */
   useEffect(() => {
     if (!selectedCategory) return;
+
     if (!hasNextPage) {
       if (observerRef.current) {
         observerRef.current.disconnect();
@@ -102,24 +99,6 @@ export const useCursorInfiniteScroll = ({
       }
     };
   }, [hasNextPage, handleObserver, selectedCategory]);
-
-  /**
-   * 정렬 필터 변경 시 requestedCursors 초기화
-   */
-  useEffect(() => {
-    if (selectedSort) {
-      requestedCursors.current.clear();
-    }
-  }, [selectedSort]);
-
-  /**
-   * 카테고리 변경 시 requestedCursors 초기화
-   */
-  useEffect(() => {
-    if (selectedCategory || selectedSubCategory) {
-      requestedCursors.current.clear();
-    }
-  }, [selectedCategory, selectedSubCategory]);
 
   return { loaderRef, data, isFetchingNextPage, hasNextPage };
 };
