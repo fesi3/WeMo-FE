@@ -27,9 +27,20 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     const isLoggedIn = !!cookie.includes('accessToken');
     const queryClient = new QueryClient();
 
-    await queryClient.prefetchQuery({
-      queryKey: ['plans'],
-      queryFn: () => getPlans({ cookie, isLoggedIn }),
+    const [sortParam, categoryParam] = ['', 1];
+
+    await queryClient.prefetchInfiniteQuery({
+      queryKey: ['plans', { sortParam, categoryParam }],
+      queryFn: ({ pageParam }) => {
+        return getPlans({
+          sortParam,
+          categoryParam,
+          cookie,
+          isLoggedIn,
+          pageParam,
+        });
+      },
+      initialPageParam: null,
     });
 
     return {

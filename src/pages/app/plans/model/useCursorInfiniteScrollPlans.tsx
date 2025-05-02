@@ -42,7 +42,7 @@ export const useCursorInfiniteScroll = ({
       Error,
       planInfiniteQueryResponseType,
       (string | { sortParam: string; categoryParam: number })[],
-      number
+      number | null
     >({
       queryKey: ['plans', { sortParam, categoryParam }],
       queryFn: ({ pageParam }) =>
@@ -52,7 +52,7 @@ export const useCursorInfiniteScroll = ({
           categoryParam,
           isLoggedIn,
         }),
-      initialPageParam: 0,
+      initialPageParam: null,
       getNextPageParam: (lastPage) => lastPage.data.nextCursor ?? null,
     });
 
