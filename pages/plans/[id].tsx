@@ -1,5 +1,5 @@
 import { PlanDetail } from '@/pages/app/plans/[id]';
-import fetchPlanDetailSSR from './ssr/plans';
+import getPlanDetailSSR from './api/getPlanDetailSSR';
 import { QUERY_KEY } from '@/shared/constants/queryKey';
 import {
   dehydrate,
@@ -32,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const idNum = parseInt(id as string);
   await queryClient.prefetchQuery({
     queryKey: QUERY_KEY.planDetail(idNum),
-    queryFn: () => fetchPlanDetailSSR(idNum, cookie),
+    queryFn: () => getPlanDetailSSR(idNum, cookie),
   });
 
   return {

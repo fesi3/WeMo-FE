@@ -1,19 +1,23 @@
-import { Home } from '@/pages/app/plans';
 import type { GetServerSideProps } from 'next';
-import { ssrInstance } from '@/shared/utils/axiosSsr';
-import { PlanDataWithCategory, PlanListResponse } from '@/shared/types/plans';
+import {
+  dehydrate,
+  DehydratedState,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
+
+import { Home } from '@/pages/app/plans';
+import getPlans from '@/pages/app/plans/api/getPlans';
 
 interface HomeProps {
-  initialPlans: PlanDataWithCategory[];
-  initialCursor: number | null;
+  dehydratedState: DehydratedState;
 }
 
-export default function HomePage(props: HomeProps) {
+export default function HomePage({ dehydratedState }: HomeProps) {
   return (
-    <Home
-      initialPlans={props.initialPlans}
-      initialCursor={props.initialCursor}
-    />
+    <HydrationBoundary state={dehydratedState}>
+      <Home />
+    </HydrationBoundary>
   );
 }
 
@@ -21,24 +25,27 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   try {
     const cookie = req.headers.cookie || '';
     const isLoggedIn = !!cookie.includes('accessToken');
+    const queryClient = new QueryClient();
 
-    const res = await ssrInstance(cookie).get<PlanListResponse>(
-      `/api/plans?size=10&sort=default`,
-      {
-        headers: isLoggedIn ? { Cookie: cookie } : {},
-        withCredentials: isLoggedIn,
+    const [sortParam, categoryParam] = ['', 1];
+
+    await queryClient.prefetchInfiniteQuery({
+      queryKey: ['plans', { sortParam, categoryParam }],
+      queryFn: ({ pageParam }) => {
+        return getPlans({
+          sortParam,
+          categoryParam,
+          cookie,
+          isLoggedIn,
+          pageParam,
+        });
       },
-    );
+      initialPageParam: null,
+    });
 
-    const data = res.data;
-    const initialPlans: PlanDataWithCategory[] = data.data.planList.map(
-      (item) => ({ ...item }),
-    );
-    const nextCursor = data.data.nextCursor;
     return {
       props: {
-        initialPlans,
-        initialCursor: nextCursor !== undefined ? nextCursor : null,
+        dehydratedState: dehydrate(queryClient),
       },
     };
   } catch (error) {
