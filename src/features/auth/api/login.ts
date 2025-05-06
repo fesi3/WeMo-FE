@@ -33,7 +33,9 @@ function useLogin({ setErrors, loginFormValue }: useLoginProps) {
     }
   };
 
-  return { handleSubmit };
+  const { status: requestStatus } = loginMutation;
+
+  return { handleSubmit, requestStatus };
 }
 
 export default useLogin;

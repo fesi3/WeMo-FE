@@ -3,7 +3,7 @@ import { useState } from 'react';
 import useLoginValidation from '@/features/auth/model/login.validation';
 import useLogin from '@/features/auth/api/login';
 import Button from '@/shared/components/Button';
-import InputWithMessage from '@/shared/components/input/inputWithError';
+import InputWithMessage from '@/entities/auth/ui/input/inputWithError';
 import { LoginFormTypes } from '../model/type';
 import useLoginHandleChange from '../model/login.handleChage';
 
@@ -29,7 +29,10 @@ function LoginForm() {
   });
 
   // 폼 제출 핸들러 함수
-  const { handleSubmit } = useLogin({ loginFormValue, setErrors });
+  const { handleSubmit } = useLogin({
+    loginFormValue,
+    setErrors,
+  });
   const { email: emailError, password: passwordError } = errors;
 
   return (
