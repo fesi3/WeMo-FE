@@ -14,15 +14,13 @@ export function LoginPage() {
   });
 
   return (
-    <div className="flex h-screen flex-col items-center justify-center">
-      <LoginFormContainer>
-        <LoginForm
-          errors={errors}
-          setErrors={setErrors}
-          handleSubmit={handleSubmit}
-          requestStatus={requestStatus}
-        />
-      </LoginFormContainer>
-    </div>
+    <LoginFormContainer>
+      <LoginForm
+        errors={errors}
+        setErrors={setErrors}
+        handleSubmit={handleSubmit}
+        requestStatus={requestStatus}
+      />
+    </LoginFormContainer>
   );
 }

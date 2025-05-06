@@ -4,33 +4,31 @@ import { useRouter } from 'next/router';
 import { AxiosError } from 'axios';
 
 import { API_PATHS } from '@/shared/constants/apiPath';
-import fetchData from '@/shared/api/fetchData';
 import { RegisterErrorType } from '../model/register.validation';
-import { RegisterFormType } from '../ui/registerForm';
+import { RegisterFormTypes } from '../model/type';
 import { fieldKeywordMap } from '../model/fieldKeywordMap';
-
-const {
-  AUTH: { SIGNUP },
-} = API_PATHS;
+import axiosInstance from '@/shared/utils/axios';
 
 interface useRegisterMutation {
-  registerFormValue: RegisterFormType;
   setErrors: Dispatch<SetStateAction<RegisterErrorType>>;
 }
 
-function useRegisterMutation({
-  registerFormValue,
-  setErrors,
-}: useRegisterMutation) {
+function useRegisterMutation({ setErrors }: useRegisterMutation) {
   const router = useRouter();
 
-  return useMutation<RegisterFormType, AxiosError<{ message: string }>>({
-    mutationFn: () =>
-      fetchData({
-        param: SIGNUP,
+  return useMutation<
+    RegisterFormTypes,
+    AxiosError<{ message: string }>,
+    RegisterFormTypes
+  >({
+    mutationFn: async (registerFormValue: RegisterFormTypes) => {
+      const res = await axiosInstance({
         method: 'post',
-        requestData: registerFormValue,
-      }),
+        url: API_PATHS.AUTH.SIGNUP,
+        data: registerFormValue,
+      });
+      return res.data;
+    },
     onSuccess: () => {
       alert('회원가입이 완료되었습니다!');
       router.push('/login');

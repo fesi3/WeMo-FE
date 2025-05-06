@@ -3,23 +3,21 @@ import useSignupFormValidation, {
   RegisterErrorType,
 } from '@/features/auth/model/register.validation';
 import useRegisterMutation from './register.mutation';
-import { RegisterFormType } from '../ui/registerForm';
+import { RegisterFormTypes } from '../model/type';
 import { REGISTER_ERROR_MESSAGE } from '../model/message';
 import { resetFocusFlag } from '@/shared/components/input/HoC/withError';
 
 interface useRegisterProps {
-  registerFormValue: RegisterFormType;
   setErrors: Dispatch<SetStateAction<RegisterErrorType>>;
 }
 
-function useRegister({ registerFormValue, setErrors }: useRegisterProps) {
+function useRegister({ setErrors }: useRegisterProps) {
   const { validateRegisterForm } = useSignupFormValidation();
   const registerMutation = useRegisterMutation({
-    registerFormValue,
     setErrors,
   });
   // 폼 제출 함수
-  const handleSubmit = (registerFormValue: RegisterFormType) => {
+  const handleSubmit = (registerFormValue: RegisterFormTypes) => {
     const { email, nickname, companyName, password, passwordCheck } =
       registerFormValue;
 
@@ -38,12 +36,14 @@ function useRegister({ registerFormValue, setErrors }: useRegisterProps) {
       // 폼이 유효하면 mutation 호출
       if (isValid) {
         resetFocusFlag(); // 포커스 초기화
-        registerMutation.mutate();
+        registerMutation.mutate(registerFormValue);
       }
     }
   };
 
-  return { handleSubmit };
+  const { status: requestStatus } = registerMutation;
+
+  return { handleSubmit, requestStatus };
 }
 
 export default useRegister;
