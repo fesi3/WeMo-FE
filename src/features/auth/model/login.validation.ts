@@ -32,7 +32,7 @@ function useLoginValidation() {
     return errorMessage;
   };
 
-  const validateForm = (currentLoginFormValue: LoginFormTypes) => {
+  const isLoginFormValid = (currentLoginFormValue: LoginFormTypes) => {
     const newErrors: loginErrorType = {
       email: null,
       password: null,
@@ -57,7 +57,7 @@ function useLoginValidation() {
     }
   };
 
-  return { validateForm, validateField, errors, setErrors };
+  return { isLoginFormValid, validateField, errors, setErrors };
 }
 
 export default useLoginValidation;

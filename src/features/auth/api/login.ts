@@ -14,7 +14,7 @@ interface useLoginProps {
 // loginFormValue - 상위 컴포넌트로 부터 이메일과 비밃번호를 전달받음.
 // 유효성 검사 - 유효성 검사 성공 시, 서버에 로그인 요청 진행
 function useLogin({ setErrors, loginFormValue }: useLoginProps) {
-  const { validateForm } = useLoginValidation();
+  const { isLoginFormValid } = useLoginValidation();
   const loginMutation = useLoginMutaion({ loginFormValue, setErrors });
   const handleSubmit = async (loginFormValue: LoginFormTypes) => {
     const { email, password } = loginFormValue;
@@ -25,10 +25,8 @@ function useLogin({ setErrors, loginFormValue }: useLoginProps) {
         ['password']: LOGIN_ERROR_MESSAGE.PASSWORD_EMPTY,
       });
     } else {
-      // 폼 검증 실행
-      const isValid = validateForm(loginFormValue);
-      // 폼이 유효하면 mutation 호출
-      if (isValid) {
+      // 폼 검증 실행 -> 폼이 유효하면 mutation 호출
+      if (isLoginFormValid(loginFormValue)) {
         loginMutation.mutate();
       }
     }
