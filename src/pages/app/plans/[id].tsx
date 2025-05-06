@@ -1,5 +1,5 @@
 import PlanDetailMain from '@/entities/plan/planDetail/PlanDetailMain';
-import Header from '@/widgets/Header';
+import Header from '@/widgets/layout/Header';
 import { useRouter } from 'next/router';
 
 interface PlanDetailProps {

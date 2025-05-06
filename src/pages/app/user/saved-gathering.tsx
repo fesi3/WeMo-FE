@@ -4,7 +4,7 @@ import { PlanData } from '@/shared/types/plans';
 import { usePageInfiniteScroll } from '@/shared/hooks/usePageInfiniteScroll';
 import CardList from '@/entities/plan/plans/card/CardList';
 import Button from '@/shared/components/Button';
-import Header from '@/widgets/Header';
+import Header from '@/widgets/layout/Header';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/shared/lib/redux/store';
 import Image from 'next/image';

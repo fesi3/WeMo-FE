@@ -4,9 +4,8 @@ import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { LoginFormTypes } from '@/features/auth/model/type';
+import { loginErrorType, LoginFormTypes } from '@/features/auth/model/type';
 import { API_PATHS } from '@/shared/constants/apiPath';
-import { loginErrorType } from '@/features/auth/model/login.validation';
 import { login } from '@/shared/lib/redux/authReducers';
 import axiosInstance from '@/shared/utils/axios';
 
@@ -15,17 +14,20 @@ const {
 } = API_PATHS;
 
 interface useLoginMutaionProps {
-  loginFormValue: LoginFormTypes;
   setErrors: Dispatch<SetStateAction<loginErrorType>>;
 }
 
-function useLoginMutaion({ loginFormValue, setErrors }: useLoginMutaionProps) {
+function useLoginMutaion({ setErrors }: useLoginMutaionProps) {
   const router = useRouter();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
 
-  return useMutation<LoginFormTypes, AxiosError<{ message: string }>>({
-    mutationFn: async () => {
+  return useMutation<
+    LoginFormTypes,
+    AxiosError<{ message: string }>,
+    LoginFormTypes
+  >({
+    mutationFn: async (loginFormValue: LoginFormTypes) => {
       const res = await axiosInstance({
         method: 'post',
         url: SIGNIN,

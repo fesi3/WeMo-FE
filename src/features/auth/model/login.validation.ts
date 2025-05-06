@@ -2,9 +2,7 @@ import { useState } from 'react';
 
 import { EMAIL_REGEXP } from './regExp';
 import { LOGIN_ERROR_MESSAGE } from './message';
-import { LoginFormTypes } from './type';
-
-export type loginErrorType = Record<keyof LoginFormTypes, string | null>;
+import { loginErrorType, LoginFormTypes } from './type';
 
 // 로그인 폼의 유효성 검사를 통해 에러 메세지를 반환하는 함수 입니다.
 // 로그인 폼의 에러 메세지를 상태로 관리합니다.
