@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 import Button from '@/shared/components/Button';
-import InputWithLabel from '@/shared/components/input/inputWithLabel';
-import InputWithMessage from '@/shared/components/input/inputWithError';
+import InputWithLabel from '@/entities/auth/ui/input/inputWithLabel';
+import InputWithMessage from '@/entities/auth/ui/input/inputWithError';
 import useRegisterFormValidation from '../model/register.validation';
 import useRegister from '../api/register';
 import useRegisterHandleChange from '../model/register.handleChange';
