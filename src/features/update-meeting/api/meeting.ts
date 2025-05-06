@@ -4,7 +4,7 @@ import {
   CreateMeetingRequestBody,
   CreateMeetingResponse,
 } from '@/shared/types/api/meeting';
-import instance from '../../../shared/utils/axios';
+import axiosInstance from '../../../shared/utils/axios';
 import { AxiosRequestConfig, isAxiosError } from 'axios';
 import { ApiErrorResponse, ApiResponse } from '@/shared/types/api/apiResponse';
 import { showToast } from '@/shared/utils/handleToast';
@@ -12,7 +12,7 @@ import TOAST_MESSAGE from '@/shared/constants/toastMessage';
 
 export const createMeeting = async (requestBody: CreateMeetingRequestBody) => {
   try {
-    const response = await instance.post<CreateMeetingResponse>(
+    const response = await axiosInstance.post<CreateMeetingResponse>(
       API_PATHS.MEETING.CREATE,
       requestBody,
     );
@@ -38,7 +38,7 @@ export const fetchMeetingDetail = async (
   const config: AxiosRequestConfig = cookie
     ? { headers: { Cookie: cookie }, withCredentials: true }
     : {};
-  const response = await instance<MeetingDetailResponse>(
+  const response = await axiosInstance<MeetingDetailResponse>(
     API_PATHS.MEETING.GET_DETAIL(meetingId),
     config,
   );
@@ -48,7 +48,7 @@ export const fetchMeetingDetail = async (
 export const joinMeeting = async (meetingId: number) => {
   try {
     if (isNaN(meetingId)) throw new Error('유효하지 않은 모임ID입니다.');
-    const response = await instance.post<ApiResponse>(
+    const response = await axiosInstance.post<ApiResponse>(
       API_PATHS.MEETING.JOIN(meetingId),
     );
     showToast('success', TOAST_MESSAGE.JOIN_MEETING);
@@ -65,7 +65,7 @@ export const joinMeeting = async (meetingId: number) => {
 export const leaveMeeting = async (meetingId: number) => {
   try {
     if (isNaN(meetingId)) throw new Error('유효하지 않은 모임ID입니다.');
-    const response = await instance.delete<ApiResponse>(
+    const response = await axiosInstance.delete<ApiResponse>(
       API_PATHS.MEETING.LEAVE(meetingId),
     );
     showToast('success', TOAST_MESSAGE.LEAVE_MEETING);

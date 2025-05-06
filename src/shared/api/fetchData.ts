@@ -1,4 +1,4 @@
-import instance from '../utils/axios';
+import axiosInstance from '../utils/axios';
 
 interface FetchDataOptions<T> {
   param: string;
@@ -19,7 +19,7 @@ export default async function fetchData<T>({
   requestData,
 }: FetchDataOptions<T>): Promise<T> {
   if (requestData) {
-    const response = await instance.request<T>({
+    const response = await axiosInstance.request<T>({
       url: param,
       method,
       data: requestData,
@@ -30,7 +30,7 @@ export default async function fetchData<T>({
     return response.data;
   }
 
-  const response = await instance.request<T>({
+  const response = await axiosInstance.request<T>({
     url: param,
     method,
   });

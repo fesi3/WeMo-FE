@@ -9,7 +9,7 @@ const {
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
-const instance = axios.create({
+const axiosInstance = axios.create({
   baseURL,
   headers: {
     'Content-Type': 'application/json',
@@ -20,7 +20,7 @@ const instance = axios.create({
 // 무한 루프 예방 변수
 let isRefreshing = false;
 
-instance.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
@@ -39,16 +39,16 @@ instance.interceptors.response.use(
 
       try {
         console.log('🔄 액세스 토큰 요청 중...');
-        await instance.post(REFRESH_TOKEN);
+        await axiosInstance.post(REFRESH_TOKEN);
         console.log('✅ 액세스 토큰 갱신 성공');
         isRefreshing = false;
-        return instance(originalRequest); // 실패한 요청 재시도
+        return axiosInstance(originalRequest); // 실패한 요청 재시도
       } catch (refreshError: unknown) {
         console.error('❌ 액세스 토큰 갱신 실패', error);
 
         // Case 2: 리프레시 토큰 만료 -> 로그아웃 처리
         try {
-          await instance.post(SIGNOUT); // 서버에 로그아웃 요청
+          await axiosInstance.post(SIGNOUT); // 서버에 로그아웃 요청
           console.log('✅ SIGNOUT successful');
         } catch (signoutError: unknown) {
           if (isAxiosError(signoutError)) {
@@ -73,4 +73,4 @@ instance.interceptors.response.use(
   },
 );
 
-export default instance;
+export default axiosInstance;

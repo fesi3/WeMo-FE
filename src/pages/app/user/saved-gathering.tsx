@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import instance from '@/shared/utils/axios'; // ✅ axios instance 사용
+import axiosInstance from '@/shared/utils/axios'; // ✅ axios instance 사용
 import { PlanData } from '@/shared/types/plans';
 import { usePageInfiniteScroll } from '@/shared/hooks/usePageInfiniteScroll';
 import CardList from '@/entities/plan/plans/card/CardList';
@@ -36,7 +36,7 @@ export const SavedGatheringPage = () => {
     try {
       //console.log(`[API 요청] 찜한 일정 불러오기 (페이지: ${page})`);
 
-      const response = await instance.get(
+      const response = await axiosInstance.get(
         `/api/plans/like?page=${page}&size=10`,
       );
 

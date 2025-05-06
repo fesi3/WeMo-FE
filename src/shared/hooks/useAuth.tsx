@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 import { useDispatch } from 'react-redux';
 
 import { useQuery } from '@tanstack/react-query';
-import instance from '@/shared/utils/axios';
+import axiosInstance from '@/shared/utils/axios';
 import { API_PATHS } from '@/shared/constants/apiPath';
 import {
   clearUser,
@@ -23,7 +23,7 @@ function useAuth() {
   const dispatch = useDispatch();
 
   const fetchUserInfo = async () => {
-    const response = await instance.get(USER_INFO);
+    const response = await axiosInstance.get(USER_INFO);
     return response.data;
   };
 

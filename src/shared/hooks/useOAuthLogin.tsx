@@ -1,4 +1,4 @@
-import instance from '@/shared/utils/axios';
+import axiosInstance from '@/shared/utils/axios';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
@@ -20,7 +20,7 @@ function useOAuthLogin(platform: string) {
       //authcode를 쿼리스트링으로 담아서 리소스 서버에 요청을 보냅니다.
       // 서버에서는 전달받은 authcode를 갖고 googleAutherizationSever에서 accessToken을 발급 받아 내려줍니다.
       // 또한 서버에서는 accessToken을 활용해 사용자 정보를 구글서버에서 받아와 유저 정보를 저장합니다.
-      const response = await instance.get(
+      const response = await axiosInstance.get(
         `/login/oauth2/callback/${platform}?code=${authCode}`,
       );
       const { success } = response.data;

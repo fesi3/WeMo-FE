@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import instance from '@/shared/utils/axios';
+import axiosInstance from '@/shared/utils/axios';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/shared/lib/redux/store';
 import { showToast } from '@/shared/utils/handleToast';
@@ -23,10 +23,10 @@ const LikeButton = ({ planId, initialIsLiked }: LikeButtonProps) => {
 
     try {
       if (isLiked) {
-        await instance.delete(`/api/plans/like/${planId}`);
+        await axiosInstance.delete(`/api/plans/like/${planId}`);
         showToast('info', '좋아요를 취소했습니다.');
       } else {
-        await instance.post(`/api/plans/like/${planId}`, {});
+        await axiosInstance.post(`/api/plans/like/${planId}`, {});
         showToast('success', '일정에 좋아요를 눌렀습니다.');
       }
 

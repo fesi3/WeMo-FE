@@ -1,6 +1,6 @@
 import { useEffect, useRef, useCallback } from 'react';
 //import axios from 'axios';
-import instance from '@/shared/utils/axios';
+import axiosInstance from '@/shared/utils/axios';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/shared/lib/redux/store';
 import {
@@ -71,10 +71,10 @@ export const useCursorInfiniteScroll = ({
           let res;
           if (isLoggedIn) {
             // 회원이면 쿠키 포함 요청
-            res = await instance.get(url);
+            res = await axiosInstance.get(url);
           } else {
             // 비회원이면 쿠키 없이 요청
-            res = await instance.get(url, { withCredentials: false });
+            res = await axiosInstance.get(url, { withCredentials: false });
           }
 
           const newData = res.data;
