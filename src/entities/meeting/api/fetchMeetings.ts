@@ -1,4 +1,4 @@
-import instance from '@/shared/utils/axios';
+import axiosInstance from '@/shared/utils/axios';
 import { QueryFunctionContext } from '@tanstack/react-query';
 import { FetchMeetingsResponse } from '@/shared/types/api/meetingList';
 import { AxiosError } from 'axios';
@@ -12,7 +12,7 @@ export const fetchMeetings = async ({
   const [, selectedSort, selectedCategory] = queryKey;
 
   try {
-    const response = await instance.get('/api/meetings', {
+    const response = await axiosInstance.get('/api/meetings', {
       params: {
         sort: selectedSort,
         categoryId: selectedCategory === 0 ? undefined : selectedCategory,

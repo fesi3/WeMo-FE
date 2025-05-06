@@ -1,5 +1,5 @@
 import SignupForm from '@/features/auth/ui/registerForm';
-import Header from '@/widgets/Header';
+import Header from '@/widgets/layout/Header';
 
 export function Register() {
   return (

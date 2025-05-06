@@ -5,7 +5,7 @@ import useSignupFormValidation, {
 import useRegisterMutation from './register.mutation';
 import { RegisterFormType } from '../ui/registerForm';
 import { REGISTER_ERROR_MESSAGE } from '../model/message';
-import { resetFocusFlag } from '@/shared/lib/HOC/withError';
+import { resetFocusFlag } from '@/shared/components/input/HoC/withError';
 
 interface useRegisterProps {
   registerFormValue: RegisterFormType;

@@ -4,7 +4,7 @@ import MyPageTab from './MyPageTab';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/shared/lib/redux/store';
 import Pagination from './Pagination';
-import Sidebar from '../../widgets/Sidebar';
+import Sidebar from '../../widgets/profile/Sidebar';
 
 interface BaseMypageLayoutProps {
   children: ReactNode;

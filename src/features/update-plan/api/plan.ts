@@ -4,7 +4,7 @@ import {
   CreatePlanResponse,
   PlanDetailResponse,
 } from '@/shared/types/api/plan';
-import instance from '@/shared/utils/axios';
+import axiosInstance from '@/shared/utils/axios';
 import { ApiResponse } from '@/shared/types/api/apiResponse';
 import { showToast } from '@/shared/utils/handleToast';
 import TOAST_MESSAGE from '@/shared/constants/toastMessage';
@@ -20,7 +20,7 @@ export const createPlan = async ({
   requestBody,
 }: PostPlanParams) => {
   try {
-    const response = await instance.post<CreatePlanResponse>(
+    const response = await axiosInstance.post<CreatePlanResponse>(
       API_PATHS.PLAN.CREATE(meetingId),
       requestBody,
     );
@@ -39,7 +39,7 @@ export const fetchPlanDetail = async (planId: number, cookie?: string) => {
   const config: AxiosRequestConfig = cookie
     ? { headers: { Cookie: cookie }, withCredentials: true }
     : {};
-  const response = await instance<PlanDetailResponse>(
+  const response = await axiosInstance<PlanDetailResponse>(
     API_PATHS.PLAN.GET_DETAIL(planId),
     config,
   );
@@ -49,7 +49,7 @@ export const fetchPlanDetail = async (planId: number, cookie?: string) => {
 export const attendPlan = async (planId: number) => {
   try {
     if (isNaN(planId)) return;
-    const response = await instance.post<ApiResponse>(
+    const response = await axiosInstance.post<ApiResponse>(
       API_PATHS.PLAN.ATTEND(planId),
     );
     if (!response.data.success) {
@@ -66,7 +66,7 @@ export const attendPlan = async (planId: number) => {
 export const leavePlan = async (planId: number) => {
   try {
     if (isNaN(planId)) return;
-    const response = await instance.delete<ApiResponse>(
+    const response = await axiosInstance.delete<ApiResponse>(
       API_PATHS.PLAN.ATTEND(planId),
     );
     if (!response.data.success) {
@@ -83,7 +83,7 @@ export const leavePlan = async (planId: number) => {
 export const likePlan = async (planId: number) => {
   try {
     if (isNaN(planId)) return;
-    const response = await instance.post<ApiResponse>(
+    const response = await axiosInstance.post<ApiResponse>(
       API_PATHS.PLAN.LIKE(planId),
     );
     if (!response.data.success) {
@@ -100,7 +100,7 @@ export const likePlan = async (planId: number) => {
 export const unLikePlan = async (planId: number) => {
   try {
     if (isNaN(planId)) return;
-    const response = await instance.delete<ApiResponse>(
+    const response = await axiosInstance.delete<ApiResponse>(
       API_PATHS.PLAN.LIKE(planId),
     );
     if (!response.data.success) {

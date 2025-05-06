@@ -1,4 +1,4 @@
-import withLabel from '@/shared/lib/HOC/withLabel';
+import withLabel from '@/shared/components/input/HoC/withLabel';
 import InputWithMessage from './inputWithError';
 
 const InputWithLabel = withLabel(InputWithMessage);

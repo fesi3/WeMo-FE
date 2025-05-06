@@ -10,3 +10,5 @@ export interface RegisterFormTypes {
   password: string;
   passwordCheck: string;
 }
+
+export type loginErrorType = Record<keyof LoginFormTypes, string | null>;

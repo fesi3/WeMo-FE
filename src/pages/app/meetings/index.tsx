@@ -2,7 +2,7 @@ import { useState } from 'react';
 //import instance from '@/utils/axios';
 //import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 //import { InfiniteData } from '@tanstack/react-query';
-import Header from '@/widgets/Header';
+import Header from '@/widgets/layout/Header';
 import CardList from '@/entities/meeting/meetings/card/CardList';
 import MeetingsSortDropdown, {
   meetingsortOptions,

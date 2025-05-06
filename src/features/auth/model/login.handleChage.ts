@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction, useCallback } from 'react';
 import { debounce } from 'lodash';
 
-import { LoginFormTypes } from './type';
-import useLoginValidation, { loginErrorType } from './login.validation';
+import { loginErrorType, LoginFormTypes } from './type';
+import useLoginValidation from './login.validation';
 
 interface useLoginHandleChangeProps {
   setErrors: Dispatch<SetStateAction<loginErrorType>>;
