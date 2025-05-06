@@ -8,7 +8,7 @@ export const menuItems = [
   {
     name: '모든 리뷰',
     key: 2,
-    path: '/all-reviews',
+    path: '/reviews',
     icon: GNBReviewIcon,
   },
   {

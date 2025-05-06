@@ -25,7 +25,7 @@ export const API_PATHS = {
   },
   PLAN: {
     CREATE: (meetingId: number) => `/api/plans/${meetingId}`,
-    GET_ALL: (params: string) => `/api/plans?${params}`,
+    GET_ALL: `/api/plans`,
     GET_DETAIL: (planId: number) => `/api/plans/${planId}`,
     CANCEL: (planId: number) => `/api/plans/${planId}/cancel`,
     ATTEND: (planId: number) => `/api/plans/${planId}/attendance`,
