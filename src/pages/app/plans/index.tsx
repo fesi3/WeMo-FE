@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { SortOption } from '@/shared/types/reviewType';
 import { RegionOption, SubRegionOption } from '@/shared/types/reviewType';
-import Tabs from '@/entities/plan/plans/tab/Tabs';
+import Tabs from '@/widgets/tab/Tabs';
 import RenderTabContent from '@/widgets/plan/RenderTabContent';
 import { PlanListResponse } from '@/shared/types/plans';
 import { PlanTabTypes, PlanSubTabTypes } from '@/shared/types/tabs';

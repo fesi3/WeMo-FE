@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import CreateMeetingButton from '../editMeeting/CreateMeetingButton';
+import CreateMeetingButton from '../../entities/plan/plans/editMeeting/CreateMeetingButton';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/shared/lib/redux/store';
 import { PlanTabTypes } from '@/shared/types/tabs';
