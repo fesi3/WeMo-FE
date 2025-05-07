@@ -1,6 +1,6 @@
 import { PlanListResponse } from '@/shared/types/plans';
 
-export interface planInfiniteQueryResponseType {
+export interface PlanInfiniteQueryResponseType {
   pageParam: number[];
   pages: PlanListResponse[];
 }

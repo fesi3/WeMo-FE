@@ -1,40 +1,20 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-//import Greeting from '../Greeting';
-import CreateMeetingButton from '../editMeeting/CreateMeetingButton';
+import CreateMeetingButton from '../../entities/plan/plans/editMeeting/CreateMeetingButton';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/shared/lib/redux/store';
-
-//추후 UI컴포넌트와 기능 로직 분리리
-type TabItem = {
-  category: string;
-};
+import { PlanTabTypes } from '@/shared/types/tabs';
+import { fadeVariants, UNDERLINE_OFFSET } from '@/shared/constants/tabs';
 
 interface TabsProps {
-  tabs: TabItem[];
-  defaultTab?: string;
-  renderContent: (selectedLabel: string) => React.ReactNode;
-  onTabChange?: (selectedLabel: string) => void;
+  tabs: PlanTabTypes[];
+  renderContent: (selectedLabel: PlanTabTypes) => React.ReactNode;
+  onTabChange?: (selectedLabel: PlanTabTypes) => void;
   className?: string;
 }
 
-const UNDERLINE_OFFSET = 120;
-
-const fadeVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1 },
-  exit: { opacity: 0 },
-};
-
-export default function Tabs({
-  tabs,
-  defaultTab,
-  renderContent,
-  onTabChange,
-}: TabsProps) {
-  const [selectedTab, setSelectedTab] = useState<string>(
-    defaultTab || tabs[0]?.category,
-  );
+export default function Tabs({ tabs, renderContent, onTabChange }: TabsProps) {
+  const [selectedTab, setSelectedTab] = useState<PlanTabTypes>(tabs[0]);
 
   // 탭 버튼 DOM정보를 담을 ref 배열
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -58,7 +38,7 @@ export default function Tabs({
     };
   }
 
-  const handleTabClick = (tabCategory: string) => {
+  const handleTabClick = (tabCategory: PlanTabTypes) => {
     setSelectedTab(tabCategory);
     if (onTabChange) {
       onTabChange(tabCategory);
@@ -68,7 +48,7 @@ export default function Tabs({
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
   useEffect(() => {
-    const currentIndex = tabs.findIndex((t) => t.category === selectedTab);
+    const currentIndex = tabs.findIndex((item) => item === selectedTab);
     const currentTab = tabRefs.current[currentIndex];
 
     if (currentTab) {
@@ -86,19 +66,19 @@ export default function Tabs({
           className="relative mx-auto mb-4 flex w-full max-w-lg"
         >
           {tabs.map((tab, idx) => {
-            const isActive = tab.category === selectedTab;
+            const isActive = tab === selectedTab;
             return (
               <button
-                key={tab.category}
+                key={tab}
                 ref={(el) => {
                   tabRefs.current[idx] = el;
                 }}
-                onClick={() => handleTabClick(tab.category)}
+                onClick={() => handleTabClick(tab)}
                 className={`flex-1 py-2 text-center text-base transition-colors ${
                   isActive ? 'font-bold text-primary-40' : 'text-gray-500'
                 }`}
               >
-                {tab.category}
+                {tab}
               </button>
             );
           })}
@@ -127,16 +107,16 @@ export default function Tabs({
       <div className="min-h-[150px]">
         <AnimatePresence mode="wait">
           {tabs.map((tab) =>
-            tab.category === selectedTab ? (
+            tab === selectedTab ? (
               <motion.div
-                key={tab.category}
+                key={tab}
                 variants={fadeVariants}
                 initial="hidden"
                 animate="visible"
                 exit="exit"
                 transition={{ duration: 0.3 }}
               >
-                {renderContent(tab.category)}
+                {renderContent(tab)}
               </motion.div>
             ) : null,
           )}

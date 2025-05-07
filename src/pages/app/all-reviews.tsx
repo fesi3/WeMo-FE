@@ -1,4 +1,4 @@
-import Tabs from '@/entities/plan/plans/tab/Tabs';
+import Tabs from '@/widgets/tab/Tabs';
 import { GetStaticProps } from 'next';
 import { Review } from '@/shared/types/reviewType';
 
@@ -10,9 +10,7 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 import fetchReviews from '@/entities/review/api/reviews';
-
-const CATEGORIES = [{ category: '달램핏' }, { category: '워케이션' }];
-const DEFAULT_CATEGORY = CATEGORIES[0].category;
+import { tabs } from '@/shared/constants/tabs';
 
 interface ReviewPageProps {
   dehydratedState: DehydratedState;
@@ -23,8 +21,7 @@ export const ReviewPage = ({ dehydratedState }: ReviewPageProps) => {
     <HydrationBoundary state={dehydratedState}>
       <div className="mx-auto max-w-7xl px-4 py-2">
         <Tabs
-          tabs={CATEGORIES}
-          defaultTab={DEFAULT_CATEGORY}
+          tabs={tabs}
           renderContent={(category) => <ReviewContainer category={category} />}
         />
       </div>

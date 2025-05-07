@@ -2,21 +2,26 @@ import React, { useState, useEffect } from 'react';
 
 import { SortOption } from '@/shared/types/reviewType';
 import { RegionOption, SubRegionOption } from '@/shared/types/reviewType';
-import Tabs from '@/entities/plan/plans/tab/Tabs';
-import RenderTabContent from '@/entities/plan/plans/RenderTabContent';
-import { useCursorInfiniteScroll } from './model/useCursorInfiniteScrollPlans';
+import Tabs from '@/widgets/tab/Tabs';
+import RenderTabContent from '@/widgets/plan/RenderTabContent';
 import { PlanListResponse } from '@/shared/types/plans';
+import { PlanTabTypes, PlanSubTabTypes } from '@/shared/types/tabs';
+import { subTabs, tabs } from '@/shared/constants/tabs';
+import {
+  COMPLETE_MESSAGE,
+  LOADING_MESSAGE,
+} from '@/shared/constants/loadingMessage';
+import { useCursorInfiniteScroll } from './model/useCursorInfiniteScrollPlans';
 
 export const Home = () => {
   //탭 상태 관리 (달램핏, 워케이션)
-  const tabs = [{ category: '달램핏' }, { category: '워케이션' }];
-  const [activeTab, setActiveTab] = useState<string>('달램핏');
-  const [selectedCategory, setSelectedCategory] = useState<string>('달램핏');
+  const [selectedCategory, setSelectedCategory] = useState<PlanTabTypes>(
+    tabs[0],
+  );
 
   // 서브 카테고리 상태(전체, 오피스스트레칭, 마인드풀니스)
-  const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(
-    null,
-  );
+  const [selectedSubCategory, setSelectedSubCategory] =
+    useState<PlanSubTabTypes>(subTabs[0]);
 
   // 필터 상태 관리(날짜, 시/도, 구/시)
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
@@ -39,23 +44,21 @@ export const Home = () => {
       selectedSort,
     });
 
-  // 탭 변경 시 카테고리 업데이트
-  useEffect(() => {
-    setSelectedCategory(activeTab);
-    setSelectedSort(null);
-  }, [activeTab]);
-
   const plans =
     data?.pages.flatMap((page: PlanListResponse) => page.data.planList) ?? [];
+
+  // 탭 변경 시 카테고리 업데이트
+  useEffect(() => {
+    setSelectedSort(null);
+  }, [selectedCategory]);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-4">
       {/* 탭 컴포넌트 */}
       <Tabs
         tabs={tabs}
-        defaultTab="달램핏"
         onTabChange={(category) => {
-          setActiveTab(category);
+          setSelectedCategory(category);
         }}
         renderContent={(category) => (
           <div className="mt-4">
@@ -79,8 +82,8 @@ export const Home = () => {
         )}
       />
       <div ref={loaderRef} className="h-12"></div>
-      {isFetchingNextPage && <span>불러오는 중...</span>}
-      {!hasNextPage && <span>모두 불러왔습니다!</span>}
+      {isFetchingNextPage && <span>{LOADING_MESSAGE}</span>}
+      {!hasNextPage && <span>{COMPLETE_MESSAGE}</span>}
     </div>
   );
 };
