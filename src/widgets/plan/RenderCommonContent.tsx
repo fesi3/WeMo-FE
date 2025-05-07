@@ -8,8 +8,8 @@ import useHeaderHeight from '@/shared/hooks/useHeaderHeight';
 import { PlanSubTabTypes, PlanTabTypes } from '@/shared/types/tabs';
 import { tabs } from '@/shared/constants/tabs';
 
-import PlanFilter from './PlanFilter';
-import PlanList from './PlanList';
+import PlanFilter from '../../entities/plan/plans/PlanFilter';
+import PlanList from '../../entities/plan/plans/PlanList';
 
 interface RenderCommonContentProps {
   plans: PlanDataWithCategory[];

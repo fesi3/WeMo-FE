@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-//import Greeting from '../Greeting';
 import CreateMeetingButton from '../editMeeting/CreateMeetingButton';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/shared/lib/redux/store';

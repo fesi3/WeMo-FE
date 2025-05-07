@@ -1,14 +1,14 @@
 import React from 'react';
 import Greeting from '@/entities/plan/plans/Greeting';
 import SubCategoryFilter from '@/entities/plan/plans/SubCategoryFilter';
-import RenderCommonContent from '@/entities/plan/plans/RenderCommonContent';
+import RenderCommonContent from '@/widgets/plan/RenderCommonContent';
 import { PlanDataWithCategory } from '@/shared/types/plans';
 import { RegionOption, SubRegionOption } from '@/shared/types/reviewType';
 import { SortOption } from '@/shared/types/reviewType';
 import { motion, AnimatePresence } from 'motion/react';
 import useHeaderHeight from '@/shared/hooks/useHeaderHeight';
 import { PlanSubTabTypes, PlanTabTypes } from '@/shared/types/tabs';
-import { fadeVariants } from '@/shared/constants/tabs';
+import { fadeVariants, tabs } from '@/shared/constants/tabs';
 
 interface RenderTabContentProps {
   category: PlanTabTypes;
@@ -51,7 +51,7 @@ const RenderTabContent: React.FC<RenderTabContentProps> = ({
       {/* Greeting */}
       <Greeting />
       {/* SubCategoryFilter */}
-      {category === '달램핏' && (
+      {category === tabs[0] && (
         <div
           className="sticky z-10 bg-white pb-2 pt-4"
           style={{ top: `${headerHeight}px` }}
