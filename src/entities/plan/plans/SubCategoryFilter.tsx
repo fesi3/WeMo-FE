@@ -1,10 +1,11 @@
 import React from 'react';
-//import { motion, AnimatePresence } from 'motion/react';
 import Button from '@/shared/components/Button';
+import { PlanSubTabTypes } from '@/shared/types/tabs';
+import { subTabs } from '@/shared/constants/tabs';
 
 interface SubCategoryFilterProps {
-  selectedSubCategory: string | null;
-  setSelectedSubCategory: (category: string | null) => void;
+  selectedSubCategory: PlanSubTabTypes;
+  setSelectedSubCategory: (category: PlanSubTabTypes) => void;
 }
 
 const SubCategoryFilter = ({
@@ -14,24 +15,18 @@ const SubCategoryFilter = ({
   const commonButtonStyles =
     'rounded-2xl drop-shadow-[0_0_6px_rgba(0,0,0,0.2)] px-4 py-1';
 
-  const buttons = [
-    { text: '전체', category: null },
-    { text: '오피스', category: '오피스 스트레칭' },
-    { text: '마인드풀니스', category: '마인드풀니스' },
-  ];
-
   return (
     <div className="flex flex-col">
       <div className="flex gap-2 lg:gap-4">
-        {buttons.map(({ text, category }) => (
+        {subTabs.map((item) => (
           <Button
-            key={text}
-            text={text}
+            key={item}
+            text={item}
             variant="option"
-            onClick={() => setSelectedSubCategory(category)}
-            isActive={selectedSubCategory === category}
+            onClick={() => setSelectedSubCategory(item)}
+            isActive={selectedSubCategory === item}
             className={`${commonButtonStyles} ${
-              selectedSubCategory !== category ? 'bg-primary-70 text-white' : ''
+              selectedSubCategory !== item ? 'bg-primary-70 text-white' : ''
             }`}
           />
         ))}
