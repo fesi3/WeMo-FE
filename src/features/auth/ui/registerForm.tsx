@@ -1,34 +1,40 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 import Button from '@/shared/components/Button';
 import InputWithLabel from '@/entities/auth/ui/input/inputWithLabel';
 import InputWithMessage from '@/entities/auth/ui/input/inputWithError';
-import useRegisterFormValidation from '../model/register.validation';
-import useRegister from '../api/register';
+
 import useRegisterHandleChange from '../model/register.handleChange';
-export interface RegisterFormType {
-  email: string | null;
-  nickname: string | null;
-  companyName: string | null;
-  password: string | null;
-  passwordCheck: string | null;
+import { RegisterFormTypes } from '../model/type';
+import { RegisterErrorType } from '../model/register.validation';
+
+interface RegisterFormProps {
+  handleSubmit: (registerFormValue: RegisterFormTypes) => void;
+  errors: RegisterErrorType;
+  setErrors: Dispatch<SetStateAction<RegisterErrorType>>;
+  requestStatus?: 'success' | 'error' | 'idle' | 'pending';
 }
 
-function RegisterForm() {
-  const [registerFormValue, setRegisterFormValue] = useState<RegisterFormType>({
-    email: null,
-    nickname: null,
-    companyName: null,
-    password: null,
-    passwordCheck: null,
-  });
+function RegisterForm({
+  handleSubmit,
+  errors,
+  setErrors,
+  requestStatus,
+}: RegisterFormProps) {
+  const [registerFormValue, setRegisterFormValue] = useState<RegisterFormTypes>(
+    {
+      email: null,
+      nickname: null,
+      companyName: null,
+      password: null,
+      passwordCheck: null,
+    },
+  );
 
-  const { errors, setErrors } = useRegisterFormValidation();
   const { handleChange } = useRegisterHandleChange({
     setRegisterFormValue,
     setErrors,
   });
-  const { handleSubmit } = useRegister({ registerFormValue, setErrors });
 
   return (
     <form
@@ -91,7 +97,11 @@ function RegisterForm() {
         size={'large'}
         width={324}
         height={42}
-        disabled={Object.values(errors).some((error) => (error ? true : false))}
+        disabled={
+          Object.values(errors).some((error) => (error ? true : false)) ||
+          requestStatus === 'pending' ||
+          requestStatus === 'success'
+        }
       />
     </form>
   );

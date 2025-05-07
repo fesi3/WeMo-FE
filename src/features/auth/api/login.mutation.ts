@@ -9,10 +9,6 @@ import { API_PATHS } from '@/shared/constants/apiPath';
 import { login } from '@/shared/lib/redux/authReducers';
 import axiosInstance from '@/shared/utils/axios';
 
-const {
-  AUTH: { SIGNIN },
-} = API_PATHS;
-
 interface useLoginMutaionProps {
   setErrors: Dispatch<SetStateAction<loginErrorType>>;
 }
@@ -30,7 +26,7 @@ function useLoginMutaion({ setErrors }: useLoginMutaionProps) {
     mutationFn: async (loginFormValue: LoginFormTypes) => {
       const res = await axiosInstance({
         method: 'post',
-        url: SIGNIN,
+        url: API_PATHS.AUTH.SIGNIN,
         data: loginFormValue,
       });
       return res.data;
