@@ -1,14 +1,15 @@
 import React from 'react';
-//import { useSelector } from 'react-redux';
-//import { RootState } from '@/redux/store';
-import PlanFilter from './PlanFilter';
-//import CreateMeetingButton from './editMeeting/CreateMeetingButton';
-import PlanList from './PlanList';
+
 import SortDropdown from '@/shared/components/dropdown/SortDropdown';
 import { SortOption } from '@/shared/types/reviewType';
 import { PlanDataWithCategory } from '@/shared/types/plans';
 import { RegionOption, SubRegionOption } from '@/shared/types/reviewType';
 import useHeaderHeight from '@/shared/hooks/useHeaderHeight';
+import { PlanSubTabTypes, PlanTabTypes } from '@/shared/types/tabs';
+import { tabs } from '@/shared/constants/tabs';
+
+import PlanFilter from '../../entities/plan/plans/PlanFilter';
+import PlanList from '../../entities/plan/plans/PlanList';
 
 interface RenderCommonContentProps {
   plans: PlanDataWithCategory[];
@@ -20,8 +21,8 @@ interface RenderCommonContentProps {
   setSelectedSubRegion: React.Dispatch<
     React.SetStateAction<SubRegionOption | null>
   >;
-  selectedCategory: string;
-  selectedSubCategory: string | null;
+  selectedCategory: PlanTabTypes;
+  selectedSubCategory: PlanSubTabTypes;
   selectedSort: SortOption | null;
   setSelectedSort: React.Dispatch<React.SetStateAction<SortOption | null>>;
 }
@@ -48,7 +49,7 @@ const RenderCommonContent: React.FC<RenderCommonContentProps> = ({
 
   const { headerHeight } = useHeaderHeight();
   const computedTop =
-    selectedCategory === '워케이션' ? headerHeight : headerHeight + 50;
+    selectedCategory === tabs[1] ? headerHeight : headerHeight + 50;
 
   return (
     <div>

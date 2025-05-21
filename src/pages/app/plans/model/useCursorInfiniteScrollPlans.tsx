@@ -11,7 +11,7 @@ import {
 import { getCategoryId } from '@/shared/utils/categoryUtils';
 import { PlanListResponse } from '@/shared/types/plans';
 import getPlans from '../api/getPlans';
-import { planInfiniteQueryResponseType } from './type';
+import { PlanInfiniteQueryResponseType } from './type';
 
 interface UseCursorInfiniteScrollProps {
   selectedCategory: string | null;
@@ -36,7 +36,7 @@ export const useCursorInfiniteScroll = ({
     useInfiniteQuery<
       PlanListResponse,
       Error,
-      planInfiniteQueryResponseType,
+      PlanInfiniteQueryResponseType,
       (string | { sortParam: string; categoryParam: number })[],
       number | null
     >({
